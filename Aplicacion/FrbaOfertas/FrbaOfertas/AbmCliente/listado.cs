@@ -44,7 +44,7 @@ namespace FrbaOfertas.AbmCliente
 
                 DataTable tabla_clientes = new DataTable();
                 adapter.Fill(tabla_clientes);
-
+                
                 contenedor_clientes.DataSource = tabla_clientes;
                 conn.Close();
             }

@@ -16,5 +16,24 @@ namespace FrbaOfertas
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form altaCliente = new AbmCliente.AltaCliente();
+            altaCliente.Show();
+            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form listado = new AbmCliente.frm_listado_clientes();
+            listado.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form listado = new AbmCliente.frm_listado_clientes();
+            listado.Show();
+        }
     }
 }
