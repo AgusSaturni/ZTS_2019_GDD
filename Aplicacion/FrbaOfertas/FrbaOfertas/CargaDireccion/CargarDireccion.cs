@@ -22,13 +22,17 @@ namespace FrbaOfertas.CargaDireccion
         private string telefono;
         private object fechaDeNacimiento;
         private string mail;
+        private string razonSocial;
+        private string rubro;
+        private string cuit;
+        private string contacto;
 
         public CargarDireccion()
         {
             InitializeComponent();
         }
 
-        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail)
+        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail,string rs,string cuit,string rubro, string contacto)
         {
             InitializeComponent();
             this.usuario = usuario;
@@ -40,6 +44,10 @@ namespace FrbaOfertas.CargaDireccion
             this.telefono = telefono;
             this.fechaDeNacimiento = fechaDeNacimiento;
             this.mail = mail;
+            this.razonSocial = rs;
+            this.cuit = cuit;
+            this.rubro = rubro;
+            this.contacto = contacto;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -147,7 +155,7 @@ namespace FrbaOfertas.CargaDireccion
                 command3.Parameters.Add(mail_cliente);
 
                 SqlParameter direccion_Cliente = new SqlParameter("@Direccion", SqlDbType.Char);
-                direccion.Direction = ParameterDirection.Input;
+                direccion_Cliente.Direction = ParameterDirection.Input;
                 command3.Parameters.Add(direccion_Cliente);
 
                 nombre_cliente.Value = nombre;
@@ -166,18 +174,87 @@ namespace FrbaOfertas.CargaDireccion
                         command2.ExecuteNonQuery();
                         command3.ExecuteNonQuery();
 
-                        MessageBox.Show("hecho");
+                        MessageBox.Show("Hecho");
                         this.Visible = false;
                     }
                     catch { }
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Faltan completar campos");
                 }
+            }
+            else
+            {
+                SqlCommand command3 = new SqlCommand("registrar_usuario_proveedor", conn);
+                command3.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter razon_social1 = new SqlParameter("@Razon_Social", SqlDbType.Char);
+                razon_social1.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(razon_social1);
+
+
+                SqlParameter mail_Proveedor = new SqlParameter("@Mail", SqlDbType.Char);
+                mail_Proveedor.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(mail_Proveedor);
+
+                SqlParameter telefono_proveedor = new SqlParameter("@Telefono", SqlDbType.Float);
+                telefono_proveedor.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(telefono_proveedor);
+
+                SqlParameter cuit1 = new SqlParameter("@CUIT", SqlDbType.Char);
+                cuit1.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(cuit1);
+
+                SqlParameter rubro1 = new SqlParameter("@Rubro", SqlDbType.Char);
+                rubro1.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(rubro1);
+
+                SqlParameter contacto1 = new SqlParameter("@Nombre_contacto", SqlDbType.Char);
+                contacto1.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(contacto1);
+
+                SqlParameter direccion_Proveedor = new SqlParameter("@Direccion", SqlDbType.Char);
+                direccion_Proveedor.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(direccion_Proveedor);
+
+
+                razon_social1.Value = razonSocial;
+                cuit1.Value = cuit;  
+                telefono_proveedor.Value = telefono;
+                rubro1.Value = rubro;
+                mail_Proveedor.Value = mail;
+                direccion_Proveedor.Value = Direccion.Text;
+                contacto1.Value = contacto;
+
+
+                if (direccion.Value.ToString() != "" && codPostal.Value.ToString() != "" && localidad.Value.ToString() != "" && ciudad.Value.ToString() != "" && nroPiso.Value.ToString() != "" && dpto.Value.ToString() != "")
+                {
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        command2.ExecuteNonQuery();
+                        command3.ExecuteNonQuery();
+
+                        MessageBox.Show("Hecho");
+                        this.Visible = false;
+                    }
+                    catch { }
+                }
+                else
+                {
+                    MessageBox.Show("Faltan completar campos");
+                }
+
             }
         }
 
         private void Direccion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CargarDireccion_Load(object sender, EventArgs e)
         {
 
         } 

@@ -71,6 +71,11 @@ namespace FrbaOfertas
                         this.Visible = false;
                         registroCliente.Show();
                         break;
+                    case "Proveedor":
+                        Form registroProveedor = new AbmProveedor.AltaProveedor(usuario, password, rol.ToString());
+                        this.Visible = false;
+                        registroProveedor.Show();
+                        break;
                 }
             }
             else {

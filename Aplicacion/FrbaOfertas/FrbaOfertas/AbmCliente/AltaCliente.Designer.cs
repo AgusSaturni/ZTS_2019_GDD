@@ -50,6 +50,7 @@
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(228, 20);
             this.Nombre.TabIndex = 0;
+            this.Nombre.TextChanged += new System.EventHandler(this.Nombre_TextChanged);
             // 
             // Apellido
             // 
@@ -57,6 +58,7 @@
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(228, 20);
             this.Apellido.TabIndex = 1;
+            this.Apellido.TextChanged += new System.EventHandler(this.Apellido_TextChanged);
             // 
             // label1
             // 
@@ -76,6 +78,7 @@
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Apellido(*)";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // Siguiente
             // 
@@ -93,6 +96,7 @@
             this.Dni.Name = "Dni";
             this.Dni.Size = new System.Drawing.Size(228, 20);
             this.Dni.TabIndex = 6;
+            this.Dni.TextChanged += new System.EventHandler(this.Dni_TextChanged);
             // 
             // label3
             // 
@@ -102,6 +106,7 @@
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "DNI(*)";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // Telefono
             // 
@@ -109,6 +114,7 @@
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(228, 20);
             this.Telefono.TabIndex = 8;
+            this.Telefono.TextChanged += new System.EventHandler(this.Telefono_TextChanged);
             // 
             // label4
             // 
@@ -118,6 +124,7 @@
             this.label4.Size = new System.Drawing.Size(49, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Telefono";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -127,6 +134,7 @@
             this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "Mail(*)";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -136,6 +144,7 @@
             this.label6.Size = new System.Drawing.Size(108, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Fecha de Nacimiento";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // FechaNacimiento
             // 
@@ -143,6 +152,7 @@
             this.FechaNacimiento.Name = "FechaNacimiento";
             this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
             this.FechaNacimiento.TabIndex = 13;
+            this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
             // 
             // Mail
             // 
@@ -150,6 +160,7 @@
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(228, 20);
             this.Mail.TabIndex = 14;
+            this.Mail.TextChanged += new System.EventHandler(this.Mail_TextChanged);
             // 
             // label8
             // 
@@ -159,6 +170,7 @@
             this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "(*) son Obligatorios";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // AltaCliente
             // 

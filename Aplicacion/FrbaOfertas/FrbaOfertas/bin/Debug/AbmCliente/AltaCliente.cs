@@ -75,7 +75,7 @@ namespace FrbaOfertas.AbmCliente
             if (nombre != "" && apellido != "" && DNI != "" && telefono != "" && mail != "")
             {
                 this.Visible = false;
-                CargaDireccion.CargarDireccion direccion =  new CargaDireccion.CargarDireccion(usuario, password, rol, nombre, apellido, DNI, telefono, fechaDeNacimiento, mail);
+                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password, rol, nombre, apellido, DNI, telefono, fechaDeNacimiento, mail,null, null, null, null);
                 direccion.Show();
             }
             else {
@@ -127,6 +127,66 @@ namespace FrbaOfertas.AbmCliente
      
            
             
+        }
+
+        private void Mail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Telefono_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dni_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Apellido_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Nombre_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
