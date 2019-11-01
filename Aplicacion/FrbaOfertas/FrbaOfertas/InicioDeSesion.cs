@@ -39,30 +39,73 @@ namespace FrbaOfertas
             SqlCommand command = new SqlCommand("verificar", conn);
             command.CommandType = CommandType.StoredProcedure;
 
+            SqlCommand command1 = new SqlCommand("verificar_rol_administrador", conn);
+            command1.CommandType = CommandType.StoredProcedure;
+
+            SqlCommand command2 = new SqlCommand("verificar_rol_cliente", conn);
+            command2.CommandType = CommandType.StoredProcedure;
+
+            SqlCommand command3 = new SqlCommand("verificar_rol_proveedor", conn);
+            command3.CommandType = CommandType.StoredProcedure;
+
+
 
             SqlParameter username = new SqlParameter("@Username", SqlDbType.Char);
             username.Direction = ParameterDirection.Input;
             command.Parameters.Add(username);
+
+            SqlParameter username1 = new SqlParameter("@Username", SqlDbType.Char);
+            username.Direction = ParameterDirection.Input;
+            command1.Parameters.Add(username1);
+
+            SqlParameter username2 = new SqlParameter("@Username", SqlDbType.Char);
+            username.Direction = ParameterDirection.Input;
+            command2.Parameters.Add(username2);
+
+            SqlParameter username3 = new SqlParameter("@Username", SqlDbType.Char);
+            username.Direction = ParameterDirection.Input;
+            command3.Parameters.Add(username3);
 
             SqlParameter password = new SqlParameter("@Password", SqlDbType.Char);
             password.Direction = ParameterDirection.Input;
             command.Parameters.Add(password);
 
             username.Value = Usuario.Text;
+            username1.Value = Usuario.Text;
+            username2.Value = Usuario.Text;
+            username3.Value = Usuario.Text;
             password.Value = Password.Text;
 
             try
             {
                 command.ExecuteNonQuery();
-                Form menuABM = new MenuABM();
-                menuABM.Show();
-                this.Visible = false;
+
+                try
+                {
+                    command1.ExecuteNonQuery();
+                    Form menuABM = new MenuABM();
+                    menuABM.Show();
+                    this.Visible = false;
+                    return;
+                }
+                catch
+                {
+                    try
+                    {
+                        command2.ExecuteNonQuery();
+                        Form menuCliente = new AbmCliente.MenuCliente();
+                        menuCliente.Show();
+                        this.Visible = false;
+                        return;
+
+                    }
+                    catch { }
+                }
             }
             catch {
                 MessageBox.Show("Error de logueo, Usuario o Contraseña INVALIDOS");
             }
-
-
+           
         }
     }
 }

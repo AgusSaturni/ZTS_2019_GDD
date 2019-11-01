@@ -61,7 +61,7 @@ namespace FrbaOfertas
             password = Password.Text;
             
 
-            if (indice != -1 && usuario != null && password != null)
+            if (indice != -1 && usuario != "" && password != "")
             {
                 rol = Rol.Items[indice];
                 switch (rol.ToString())

@@ -35,5 +35,12 @@ namespace FrbaOfertas
             Form listado = new AbmCliente.frm_listado_clientes();
             listado.Show();
         }
+
+        private void CerrarSesion_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            Form inicio_sesion = new InicioDeSesion();
+            inicio_sesion.Show();
+        }
     }
 }

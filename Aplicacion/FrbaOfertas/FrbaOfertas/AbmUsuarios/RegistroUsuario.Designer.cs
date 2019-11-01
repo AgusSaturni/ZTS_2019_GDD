@@ -78,7 +78,6 @@
             // 
             this.Rol.FormattingEnabled = true;
             this.Rol.Items.AddRange(new object[] {
-            "Administrador",
             "Cliente",
             "Proveedor"});
             this.Rol.Location = new System.Drawing.Point(63, 178);

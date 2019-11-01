@@ -170,7 +170,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "CargarDireccion";
-            this.Text = "Form1";
+            this.Text = "Cargar Direccion";
             this.Load += new System.EventHandler(this.CargarDireccion_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
