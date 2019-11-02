@@ -54,7 +54,7 @@ namespace FrbaOfertas.AbmProveedor
             if (razonSocial != "" && telefono != "" && cuit != "" && rubro != "" && mail != "" && contacto != "")
             {
                 this.Visible = false;
-                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(password, usuario,rol, null, null, null, telefono, null, mail,razonSocial,cuit,rubro,contacto);
+                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password,rol, null, null, null, telefono, null, mail,razonSocial,cuit,rubro,contacto);
                 direccion.Show();
             }
             else

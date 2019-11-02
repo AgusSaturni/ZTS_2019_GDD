@@ -12,10 +12,24 @@ namespace FrbaOfertas.AbmCliente
 {
     public partial class MenuCliente : Form
     {
+        private string username;
+
+        
+
+        
+
         public MenuCliente()
         {
             InitializeComponent();
         }
+
+        public MenuCliente(string username_Recibido)
+        {
+            InitializeComponent();
+            this.username = username_Recibido;
+        }
+
+
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -28,7 +42,7 @@ namespace FrbaOfertas.AbmCliente
         private void button2_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            Form cargaCredito = new FrbaOfertas.CragaCredito.CargaDeCredito();
+            Form cargaCredito = new FrbaOfertas.CragaCredito.CargaDeCredito(username);
             cargaCredito.Show();
         }
     }

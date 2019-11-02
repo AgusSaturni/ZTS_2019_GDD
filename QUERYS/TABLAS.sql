@@ -32,6 +32,7 @@ SELECT DISTINCT Cli_Ciudad,Cli_Direccion FROM gd_esquema.Maestra
 CREATE TABLE CLIENTES
 ( Indice INT IDENTITY(1,1) NOT NULL ,
   Cliente_Id AS 'ClienteID' +  CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+  username char(50) default null,
   Nombre char(50) not null,
   Apellido char (50) not null,
   DNI numeric(18,0) not null,
@@ -42,11 +43,12 @@ CREATE TABLE CLIENTES
   DineroDisponible int default 200,
   Estado char(20) default 'Habilitado'
   PRIMARY KEY(CLIENTE_Id),
-  FOREIGN KEY(Direccion) REFERENCES Direccion(Direccion)
+  FOREIGN KEY(Direccion) REFERENCES Direccion(Direccion),
+  FOREIGN KEY(username) REFERENCES Usuarios(username)
 )
 
 
-INSERT INTO CLIENTES (Nombre, Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
+INSERT INTO CLIENTES (,Nombre, Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
 (SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,Cli_Direccion,Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
 ---PROVEEDORES--------------------------
@@ -54,6 +56,7 @@ CREATE TABLE PROVEEDORES
 (	Indice INT IDENTITY(1,1) NOT NULL,
 	Proveedor_Id AS 'ProveedorID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
 	Razon_Social char(50) unique not null,
+	username char(50) default null,
 	Direccion char(100),
 	Telefono numeric(18,0),
 	CUIT char(20) unique not null,	

@@ -129,6 +129,11 @@ namespace FrbaOfertas.CargaDireccion
                 SqlCommand command3 = new SqlCommand("registrar_usuario_cliente", conn);
                 command3.CommandType = CommandType.StoredProcedure;
 
+                SqlParameter username2 = new SqlParameter("@Username", SqlDbType.Char);
+                username2.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(username2);
+
+
                 SqlParameter nombre_cliente = new SqlParameter("@Nombre", SqlDbType.Char);
                 nombre_cliente.Direction = ParameterDirection.Input;
                 command3.Parameters.Add(nombre_cliente);
@@ -158,6 +163,7 @@ namespace FrbaOfertas.CargaDireccion
                 direccion_Cliente.Direction = ParameterDirection.Input;
                 command3.Parameters.Add(direccion_Cliente);
 
+                username2.Value = usuario;
                 nombre_cliente.Value = nombre;
                 apellido_cliente.Value = apellido;
                 DNI_cliente.Value = DNI;
@@ -189,6 +195,11 @@ namespace FrbaOfertas.CargaDireccion
                 SqlCommand command3 = new SqlCommand("registrar_usuario_proveedor", conn);
                 command3.CommandType = CommandType.StoredProcedure;
 
+                SqlParameter username3 = new SqlParameter("@Username", SqlDbType.Char);
+                username3.Direction = ParameterDirection.Input;
+                command3.Parameters.Add(username3);
+
+
                 SqlParameter razon_social1 = new SqlParameter("@Razon_Social", SqlDbType.Char);
                 razon_social1.Direction = ParameterDirection.Input;
                 command3.Parameters.Add(razon_social1);
@@ -218,7 +229,7 @@ namespace FrbaOfertas.CargaDireccion
                 direccion_Proveedor.Direction = ParameterDirection.Input;
                 command3.Parameters.Add(direccion_Proveedor);
 
-
+                username3.Value = usuario;
                 razon_social1.Value = razonSocial;
                 cuit1.Value = cuit;  
                 telefono_proveedor.Value = telefono;

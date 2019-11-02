@@ -92,8 +92,9 @@ namespace FrbaOfertas
                 {
                     try
                     {
+                       
                         command2.ExecuteNonQuery();
-                        Form menuCliente = new AbmCliente.MenuCliente();
+                        Form menuCliente = new AbmCliente.MenuCliente(Usuario.Text);
                         menuCliente.Show();
                         this.Visible = false;
                         return;
@@ -105,7 +106,9 @@ namespace FrbaOfertas
             catch {
                 MessageBox.Show("Error de logueo, Usuario o Contraseña INVALIDOS");
             }
-           
+
+            conn.Close();
         }
     }
+    
 }

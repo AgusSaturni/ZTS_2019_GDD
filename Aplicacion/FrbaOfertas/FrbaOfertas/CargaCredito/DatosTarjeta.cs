@@ -26,5 +26,10 @@ namespace FrbaOfertas.CargaCredito
             this.monto_entero = monto_entero;
             this.TipoDePago = TipoDePago;
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
