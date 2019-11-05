@@ -24,15 +24,19 @@ END
 
 
 -------------------------------------------------------
-CREATE PROCEDURE registrar_usuario_cliente(@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,
+CREATE PROCEDURE registrar_usuario_cliente(@username char(50),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,
 											@Direccion char(100))
 
 AS BEGIN
+
+DECLARE @direcc_id int
+set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+
 	IF NOT EXISTS(select nombre,apellido,DNI,telefono,mail,fecha_nacimiento from CLIENTES where dni=@DNI)
 		BEGIN
 		
-			insert into CLIENTES(Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
-			values(@nombre,@apellido,@DNI,@Direccion,@telefono,@mail,@fecha_nacimiento)
+			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
+			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento)
 		END
 	ELSE
 		BEGIN
@@ -40,17 +44,22 @@ AS BEGIN
 		END
 END
 
-
+drop procedure registrar_usuario_cliente
 --------------------------------------------------------------
 
-CREATE PROCEDURE registrar_usuario_proveedor(@razon_social char(50),@mail char(50),
+CREATE PROCEDURE registrar_usuario_proveedor(@username char(50),@razon_social char(50),@mail char(50),
 											@telefono numeric(18,0),@cuit char(20),@rubro char(255),@nombre_contacto char(50),@Direccion char(100))									
 AS BEGIN
+
+
+DECLARE @direcc_id int
+set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+
 	IF NOT EXISTS(select * from PROVEEDORES where razon_social = @razon_social) and NOT EXISTS (select * from PROVEEDORES where cuit = @cuit)
 		begin
 	
 			insert into PROVEEDORES(Razon_Social,mail,Telefono,Direccion,CUIT,Nombre_contacto)
-			values(@razon_social,@mail,@telefono,@Direccion,@cuit,@nombre_contacto)
+			values(@razon_social,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
 
 			insert into RUBROS(Proveedor_Id,Rubro_descripcion)
 			(select proveedor_id,@rubro from PROVEEDORES where Razon_Social = @razon_social)
@@ -68,7 +77,7 @@ AS BEGIN
 	insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
 			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 END
-execute registrar_Domicilio 'lobos',4535,'Nueos','Buenos',12,'asdd'
+
 
 -------------MODIFICACION_PASSWORD------------------------
 
@@ -100,3 +109,38 @@ AS BEGIN
 update USUARIOS
 set Estado = 'Habilitado' where username = @username
 END
+
+-------------VERIFICACION_LOGUEO--------------------
+CREATE PROCEDURE verificar(@username char(50),@password char(50))
+AS BEGIN
+if not exists(select username,password from USUARIOS where Username = @username and Password = @password)
+	begin
+		THROW 50006, 'error de logueo. Usuario o Contraseña invalidos ', 1
+	end
+END
+
+
+-------------VERIFICACION_ROL_Administrador--------
+CREATE PROCEDURE verificar_rol_administrador(@username char(50))
+as begin
+	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Administrador' and Username = @username)
+	BEGIN
+	THROW 50007, 'No es administrador ', 1
+	END
+end
+-------------VERIFICACION_ROL_Cliente--------
+CREATE PROCEDURE verificar_rol_cliente(@username char(50))
+as begin
+	BEGIN
+	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Cliente'and Username = @username)
+	THROW 50008, 'No es Cliente ', 1
+	END
+end
+-------------VERIFICACION_ROL_Proveedor--------
+CREATE PROCEDURE verificar_rol_proveedor(@username char(50))
+as begin
+	BEGIN
+	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Proveedor'and Username = @username)
+	THROW 50009, 'No es Proveedor ', 1
+	END
+end

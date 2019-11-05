@@ -32,8 +32,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.usuario = new System.Windows.Forms.Label();
+            this.saldo = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -75,23 +75,21 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "USUARIO:";
             // 
-            // label3
+            // usuario
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(86, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "------";
+            this.usuario.AutoSize = true;
+            this.usuario.Location = new System.Drawing.Point(86, 19);
+            this.usuario.Name = "usuario";
+            this.usuario.Size = new System.Drawing.Size(0, 13);
+            this.usuario.TabIndex = 4;
             // 
-            // label4
+            // saldo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(143, 54);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(25, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "------";
+            this.saldo.AutoSize = true;
+            this.saldo.Location = new System.Drawing.Point(143, 54);
+            this.saldo.Name = "saldo";
+            this.saldo.Size = new System.Drawing.Size(0, 13);
+            this.saldo.TabIndex = 5;
             // 
             // button3
             // 
@@ -119,8 +117,8 @@
             this.ClientSize = new System.Drawing.Size(295, 265);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.saldo);
+            this.Controls.Add(this.usuario);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -138,8 +136,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label usuario;
+        private System.Windows.Forms.Label saldo;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
     }

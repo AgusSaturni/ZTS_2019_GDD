@@ -32,7 +32,7 @@ namespace FrbaOfertas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form listado = new AbmCliente.frm_listado_clientes();
+            Form listado = new AbmCliente.frm_clie_bajas();
             listado.Show();
         }
 

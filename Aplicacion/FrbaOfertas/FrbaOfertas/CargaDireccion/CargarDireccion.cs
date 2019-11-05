@@ -57,7 +57,7 @@ namespace FrbaOfertas.CargaDireccion
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string cadenaConex = @"Data Source=LAPTOP-3SMJF7AG\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
+             string cadenaConex = @"Data Source=LAPTOP-3SMJF7AG\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
             SqlConnection conn = new SqlConnection(cadenaConex);
 
             conn.Open();

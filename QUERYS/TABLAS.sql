@@ -1,7 +1,8 @@
 use GD2C2019
 
-SELECT *  FROM gd_esquema.Maestra
+SELECT *  FROM gd_esquema.Maestra 
 
+select * from USUARIOS
 ----CREACION DE TABLAS-------------
 
  ---USUARIOS--------------------
@@ -12,21 +13,25 @@ CREATE TABLE USUARIOS
   PRIMARY KEY(Username)
 )
 
+
 ---Direccion---------------------------
 CREATE TABLE DIRECCION
 (
+	Id_Direccion INT IDENTITY(0,1) PRIMARY KEY not null,
     Direccion char(100) not null,
     Codigo_Postal int ,
     Localidad char(50),
     Ciudad char (50) not null,
     Numero_Piso int,
     Depto char(10)
-	PRIMARY KEY(Direccion)
 )
+
+insert into direccion(Direccion,Ciudad)
+SELECT DISTINCT Cli_Direccion,Cli_Ciudad FROM gd_esquema.Maestra
 
 
 insert into direccion(Direccion,Ciudad)
-SELECT DISTINCT Cli_Ciudad,Cli_Direccion FROM gd_esquema.Maestra
+SELECT DISTINCT Provee_Dom,Provee_Ciudad FROM gd_esquema.Maestra where Provee_Ciudad is not null
 
 ----CLIENTE----------------
 CREATE TABLE CLIENTES
@@ -36,14 +41,14 @@ CREATE TABLE CLIENTES
   Nombre char(50) not null,
   Apellido char (50) not null,
   DNI numeric(18,0) not null,
-  Direccion char(100),
+  Direccion int,
   Telefono numeric(18,0),
   Mail	char(50),			
   Fecha_Nacimiento datetime,
   DineroDisponible int default 200,
   Estado char(20) default 'Habilitado'
   PRIMARY KEY(CLIENTE_Id),
-  FOREIGN KEY(Direccion) REFERENCES Direccion(Direccion),
+  FOREIGN KEY(Direccion) REFERENCES Direccion(Id_Direccion),
   FOREIGN KEY(username) REFERENCES Usuarios(username)
 )
 
@@ -51,25 +56,47 @@ CREATE TABLE CLIENTES
 INSERT INTO CLIENTES (,Nombre, Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
 (SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,Cli_Direccion,Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
+INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimiento)
+(SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,
+(SELECT Id_direccion from DIRECCION where Direccion = Cli_Direccion),
+Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
+
+insert into USUARIOS (Username, Password) 
+(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), DNI from CLIENTES)
+
+update CLIENTES 
+set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3)
+
+
+
+
 ---PROVEEDORES--------------------------
 CREATE TABLE PROVEEDORES
 (	Indice INT IDENTITY(1,1) NOT NULL,
 	Proveedor_Id AS 'ProveedorID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
 	Razon_Social char(50) unique not null,
 	username char(50) default null,
-	Direccion char(100),
+	Direccion int,
 	Telefono numeric(18,0),
 	CUIT char(20) unique not null,	
 	Mail char(50),
 	Nombre_contacto char(50),
 	Estado char(20) default 'Habilitado'
 	PRIMARY KEY(Proveedor_Id),
-	FOREIGN KEY(Direccion) REFERENCES Direccion(Direccion)
+	FOREIGN KEY(Direccion) REFERENCES Direccion(id_direccion)
 )
 
 INSERT INTO PROVEEDORES
 (Razon_Social,Direccion,Telefono,CUIT)
-(select distinct Provee_RS,Provee_Dom,Provee_Telefono,Provee_CUIT from gd_esquema.Maestra where provee_rs is not null)
+(select distinct Provee_RS,(SELECT Id_direccion from DIRECCION where Direccion = Provee_Dom),Provee_Telefono,Provee_CUIT from gd_esquema.Maestra
+where provee_Rs is not null)
+
+
+insert into USUARIOS (Username, Password) 
+(select ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3), CUIT from PROVEEDORES)
+
+update CLIENTES 
+set username = B.username from PROVEEDORES as A,USUARIOS as B where B.Username = ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3)
 
 
 
@@ -113,30 +140,50 @@ CREATE TABLE OFERTAS
 )
 
 
+
 INSERT INTO OFERTAS
 (Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,fecha_compra,codigo)
 (select p.Proveedor_id, Oferta_Precio, Oferta_Precio_Ficticio,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Descripcion,Oferta_Cantidad,Oferta_Fecha_Compra,Oferta_Codigo from gd_esquema.Maestra gd join proveedores p
 on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
+---------------TARJETA------------
+
+CREATE TABLE TARJETAS
+( Indice INT IDENTITY(1,1) NOT NULL,
+  Tarjeta_Id AS 'TarjetaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+  Cliente_Id varchar(17),
+  Numero_Tarjeta numeric(20),
+  Codigo_Seguridad numeric(3),
+  tipo_Tarjeta char(20)
+  PRIMARY KEY(Tarjeta_Id)
+  FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id)
+)
+
+INSERT INTO TARJETAS (Cliente_Id,tipo_Tarjeta)
+(select DISTINCT Cliente_Id,Tipo_Pago_Desc from gd_esquema.Maestra gd join CLIENTES c on gd.Cli_Nombre = c.Nombre
+where Tipo_Pago_Desc is not null)
+
 ---CUENTA----------------
 CREATE TABLE CARGAS
 (
 	Indice INT IDENTITY(1,1) NOT NULL,
 	Carga_Id AS 'CargaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	Cliente_Id varchar(17) not null,
+	Tarjeta_Id varchar(17),
 	Fecha datetime not null,
 	Monto numeric(10,0) not null,
 	Tipo_Pago char(50) not null
 	PRIMARY KEY(Carga_Id)
-	FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id)
+	FOREIGN KEY(Tarjeta_Id) REFERENCES TARJETAS(Tarjeta_Id)
 )
 
 
-INSERT INTO CARGAS 
-(Cliente_Id,Fecha,Monto,Tipo_Pago)
-(select  c.cliente_id ,Carga_fecha, Carga_Credito, Tipo_Pago_Desc from gd_esquema.Maestra gd join clientes c on gd.Cli_Nombre = c.nombre
-and Carga_Fecha is not null)
+
+INSERT INTO CARGAS (Tarjeta_Id,Fecha,Monto,Tipo_Pago)
+(select  t.tarjeta_id ,Carga_fecha, Carga_Credito, Tipo_Pago_Desc from gd_esquema.Maestra gd 
+join clientes c on gd.Cli_Nombre = c.nombre
+join TARJETAS t on c.Cliente_Id = t.cliente_id
+where Carga_Fecha is not null)
 
 
 ---FACTURAS---------------------
@@ -186,6 +233,8 @@ CREATE TABLE ROLES_POR_USUARIO
  FOREIGN KEY(Username) References Usuarios(Username)
 )
 
+insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Proveedor',username from PROVEEDORES)
+
 
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES
@@ -217,7 +266,6 @@ CREATE TABLE COMPRAS
   FOREIGN KEY(Oferta_Id) REFERENCES OFERTAS(Oferta_Id)
 )
 
-
 ---CUPONES----------------------
 CREATE TABLE CUPONES
 ( Indice INT IDENTITY(1,1) NOT NULL,
@@ -231,15 +279,4 @@ CREATE TABLE CUPONES
 
 
 
----------------TARJETA------------
-CREATE TABLE TARJETAS
-( Indice INT IDENTITY(1,1) NOT NULL,
-  Tarjeta_Id AS 'TarjetaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Carga_Id varchar(16) not null,
-  Numero numeric(20),
-  Codigo_Seguridad numeric(3)
-)
-
-INSERT INTO TARJETAS (Carga_Id)
-(select Tipo_Pago_Desc from gd_esquema.Maestra where Tipo_Pago_Desc = 'Crédito')
 
