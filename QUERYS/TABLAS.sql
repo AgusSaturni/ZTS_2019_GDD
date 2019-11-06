@@ -3,12 +3,14 @@ use GD2C2019
 SELECT *  FROM gd_esquema.Maestra 
 
 select * from USUARIOS
+
 ----CREACION DE TABLAS-------------
+
 
  ---USUARIOS--------------------
 CREATE TABLE USUARIOS
 ( Username char(50) not null,
-  Password char(255) not null,
+  Password	char(255) not null,
   Estado char(20) default 'Habilitado'
   PRIMARY KEY(Username)
 )
@@ -53,8 +55,6 @@ CREATE TABLE CLIENTES
 )
 
 
-INSERT INTO CLIENTES (,Nombre, Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
-(SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,Cli_Direccion,Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
 INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimiento)
 (SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,
@@ -62,15 +62,13 @@ INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimie
 Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
 insert into USUARIOS (Username, Password) 
-(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), HASHBYTES('SHA2_256',cast(dni as char(255))) from CLIENTES)
+(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), HASHBYTES('SHA2_256',cast(dni as char)) from CLIENTES)
 
 update CLIENTES 
 set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3)
 
 
-update USUARIOS
-set Password = (select HASHBYTES('SHA2_256',cast(345 as char)) from CLIENTES)
-  
+
 ---PROVEEDORES--------------------------
 CREATE TABLE PROVEEDORES
 (	Indice INT IDENTITY(1,1) NOT NULL,
@@ -229,6 +227,7 @@ CREATE TABLE ROLES_POR_USUARIO
  FOREIGN KEY(Username) References Usuarios(Username)
 )
 
+insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Cliente',username from CLIENTES)
 insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Proveedor',username from PROVEEDORES)
 
 

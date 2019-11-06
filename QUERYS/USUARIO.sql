@@ -10,7 +10,7 @@ AS BEGIN
 	IF NOT EXISTS(select * from USUARIOS where Username = @Username)
 		  begin  
 			insert into USUARIOS(Username,Password)
-			values(@username,@password)
+			values(@username, HASHBYTES('SHA2_256',@Password))
 
 			insert into ROLES_POR_USUARIO(Rol_Id,Username)
 			values(@Rol,@username)
@@ -79,14 +79,14 @@ AS BEGIN
 END
 
 
--------------MODIFICACION_PASSWORD------------------------
+-------------MODIFICACION_PASSWORD--------HAY QUE RETOCAR----------------
 
 CREATE PROCEDURE modificar_password(@username char(50), @vieja_password char(50), @nueva_password char(50))
 AS BEGIN
-IF((select password from USUARIOS where username = @username) = @vieja_password )
+IF((select password from USUARIOS where username = @username) = HASHBYTES('SHA2_256',@vieja_password) )
 		begin
 			update USUARIOS
-			set password = @nueva_password where username = @username
+			set password =HASHBYTES('SHA2_256',@nueva_password)  where username = @username
 		end
 ELSE
 	begin
@@ -113,7 +113,9 @@ END
 -------------VERIFICACION_LOGUEO--------------------
 CREATE PROCEDURE verificar(@username char(50),@password char(50))
 AS BEGIN
-if not exists(select username,password from USUARIOS where Username = @username and Password = @password)
+DECLARE @contraseña_encriptada char(255);
+set @contraseña_encriptada = HASHBYTES('SHA2_256',RTRIM(@Password))
+if not exists(select username,password from USUARIOS where Username = @username and Password = @contraseña_encriptada)
 	begin
 		THROW 50006, 'error de logueo. Usuario o Contraseña invalidos ', 1
 	end
