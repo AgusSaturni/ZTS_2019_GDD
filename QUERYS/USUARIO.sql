@@ -58,8 +58,8 @@ set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = 
 	IF NOT EXISTS(select * from PROVEEDORES where razon_social = @razon_social) and NOT EXISTS (select * from PROVEEDORES where cuit = @cuit)
 		begin
 	
-			insert into PROVEEDORES(Razon_Social,mail,Telefono,Direccion,CUIT,Nombre_contacto)
-			values(@razon_social,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
+			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto)
+			values(@razon_social,@username,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
 
 			insert into RUBROS(Proveedor_Id,Rubro_descripcion)
 			(select proveedor_id,@rubro from PROVEEDORES where Razon_Social = @razon_social)

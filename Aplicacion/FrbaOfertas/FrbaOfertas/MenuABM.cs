@@ -42,5 +42,17 @@ namespace FrbaOfertas
             Form inicio_sesion = new InicioDeSesion();
             inicio_sesion.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form bajas = new AbmProveedor.listado_proveedores();
+            bajas.Show();
+            
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

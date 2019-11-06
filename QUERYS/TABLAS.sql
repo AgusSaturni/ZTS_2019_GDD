@@ -8,7 +8,7 @@ select * from USUARIOS
  ---USUARIOS--------------------
 CREATE TABLE USUARIOS
 ( Username char(50) not null,
-  Password char(50) not null,
+  Password char(255) not null,
   Estado char(20) default 'Habilitado'
   PRIMARY KEY(Username)
 )
@@ -62,14 +62,15 @@ INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimie
 Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
 insert into USUARIOS (Username, Password) 
-(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), DNI from CLIENTES)
+(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), HASHBYTES('SHA2_256',cast(dni as char(255))) from CLIENTES)
 
 update CLIENTES 
 set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3)
 
 
-
-
+update USUARIOS
+set Password = (select HASHBYTES('SHA2_256',cast(345 as char)) from CLIENTES)
+  
 ---PROVEEDORES--------------------------
 CREATE TABLE PROVEEDORES
 (	Indice INT IDENTITY(1,1) NOT NULL,
@@ -93,10 +94,7 @@ where provee_Rs is not null)
 
 
 insert into USUARIOS (Username, Password) 
-(select ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3), CUIT from PROVEEDORES)
-
-update CLIENTES 
-set username = B.username from PROVEEDORES as A,USUARIOS as B where B.Username = ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3)
+(select ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3),HASHBYTES('SHA2_256',CUIT) from PROVEEDORES)
 
 
 
@@ -138,8 +136,6 @@ CREATE TABLE OFERTAS
 	PRIMARY KEY(Oferta_Id),
 	FOREIGN KEY(Proveedor_referenciado) REFERENCES PROVEEDORES (Proveedor_Id)
 )
-
-
 
 INSERT INTO OFERTAS
 (Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,fecha_compra,codigo)

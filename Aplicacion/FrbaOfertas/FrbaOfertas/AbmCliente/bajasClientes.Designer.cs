@@ -64,6 +64,7 @@
             this.bt_habilitar.TabIndex = 19;
             this.bt_habilitar.Text = "Habilitar";
             this.bt_habilitar.UseVisualStyleBackColor = true;
+            this.bt_habilitar.Click += new System.EventHandler(this.bt_habilitar_Click);
             // 
             // bt_cancelar
             // 
@@ -94,6 +95,7 @@
             this.bt_deshabilitar.TabIndex = 16;
             this.bt_deshabilitar.Text = "Deshabilitar";
             this.bt_deshabilitar.UseVisualStyleBackColor = true;
+            this.bt_deshabilitar.Click += new System.EventHandler(this.bt_deshabilitar_Click);
             // 
             // contenedor_estado
             // 

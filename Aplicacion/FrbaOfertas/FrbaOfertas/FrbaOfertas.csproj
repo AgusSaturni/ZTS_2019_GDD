@@ -61,11 +61,11 @@
     <Compile Include="AbmCliente\bajasClientes.Designer.cs">
       <DependentUpon>bajasClientes.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmCliente\listado.cs">
+    <Compile Include="AbmCliente\listado_cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCliente\listado.Designer.cs">
-      <DependentUpon>listado.cs</DependentUpon>
+    <Compile Include="AbmCliente\listado_cliente.Designer.cs">
+      <DependentUpon>listado_cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmCliente\MenuCliente.cs">
       <SubType>Form</SubType>
@@ -84,6 +84,18 @@
     </Compile>
     <Compile Include="AbmProveedor\AltaProveedor.Designer.cs">
       <DependentUpon>AltaProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmProveedor\listado_proveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor\listado_proveedores.Designer.cs">
+      <DependentUpon>listado_proveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmProveedor\Modificaciones Proveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor\Modificaciones Proveedores.Designer.cs">
+      <DependentUpon>Modificaciones Proveedores.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\Form1.cs">
       <SubType>Form</SubType>
@@ -159,7 +171,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Usuario.cs" />
     <EmbeddedResource Include="AbmCliente\AltaCliente.resx">
       <DependentUpon>AltaCliente.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -167,8 +178,8 @@
     <EmbeddedResource Include="AbmCliente\bajasClientes.resx">
       <DependentUpon>bajasClientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmCliente\listado.resx">
-      <DependentUpon>listado.cs</DependentUpon>
+    <EmbeddedResource Include="AbmCliente\listado_cliente.resx">
+      <DependentUpon>listado_cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\MenuCliente.resx">
       <DependentUpon>MenuCliente.cs</DependentUpon>
@@ -178,6 +189,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmProveedor\AltaProveedor.resx">
       <DependentUpon>AltaProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\listado_proveedores.resx">
+      <DependentUpon>listado_proveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\Modificaciones Proveedores.resx">
+      <DependentUpon>Modificaciones Proveedores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

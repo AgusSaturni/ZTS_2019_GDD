@@ -16,5 +16,15 @@ namespace FrbaOfertas.AbmCliente
         {
             InitializeComponent();
         }
+
+        private void bt_deshabilitar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt_habilitar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

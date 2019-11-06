@@ -135,8 +135,83 @@ namespace FrbaOfertas.AbmCliente
 
         }
 
+        private void txt_estado_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt_modificar_Click_1(object sender, EventArgs e)
+        {
+            txt_nombre.ReadOnly = false;
+            txt_dni.ReadOnly = false;
+            txt_apellido.ReadOnly = false;
+            txt_email.ReadOnly = false;
+            txt_fecha.ReadOnly = false;
+            txt_telefono.ReadOnly = false;
+            txt_nombre.ReadOnly = false;
+
+            txt_direccion.ReadOnly = false;
+            txt_ciudad.ReadOnly = false;
+            txt_codigopostal.ReadOnly = false;
+            txt_depto.ReadOnly = false;
+            txt_piso.ReadOnly = false;
+            txt_codigopostal.ReadOnly = false;
+            txt_localidad.ReadOnly = false;
+
+        }
+
+        private void bt_guardar_Click(object sender, EventArgs e)
+        {
+            conexionBD cadena_conexion = new conexionBD();
+            SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
 
 
+            if (txt_nombre.ReadOnly == true)
+            {
+                MessageBox.Show("Modifique algun parametro");
+                return;
+            }
+            try
+            {
+                SqlCommand command = new SqlCommand("actualizar_cliente", conexion);
+                command.CommandType = CommandType.StoredProcedure;
+
+
+                //Si dejo espacios vacios en los TXT, el Int32.parse me tira error (Esto sucede para los datos numericos). Hay q revisar eso
+
+                command.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = (txt_nombre.Text);
+                command.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = (txt_apellido.Text);
+                command.Parameters.AddWithValue("@DNI", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
+                command.Parameters.AddWithValue("@telefono", SqlDbType.Float).Value = Int64.Parse(txt_telefono.Text);
+                command.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = (txt_email.Text);
+                command.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = (txt_fecha.Text);
+                command.Parameters.AddWithValue("@direccion", SqlDbType.Char).Value = (txt_direccion.Text);
+                command.Parameters.AddWithValue("@CP", SqlDbType.Int).Value = Int32.Parse(txt_codigopostal.Text);
+                command.Parameters.AddWithValue("@Loc", SqlDbType.Char).Value = (txt_localidad.Text);
+                command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
+                command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
+
+                conexion.Open();
+                command.ExecuteNonQuery();
+                conexion.Close();
+
+                MessageBox.Show("Cliente Modificado");
+
+            }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+            }
+
+            this.Hide();
+        }
+
+        private void bt_cancelar_Click_1(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
 
     }
+
 }

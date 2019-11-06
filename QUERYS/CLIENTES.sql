@@ -1,10 +1,10 @@
---------BAJA_LOGICA_CLIENTE--------------------------
+--------BAJA_LOGICA_CLIENTE-------------------------
 CREATE PROCEDURE baja_logica_cliente(@DNI_CLIENTE numeric(18,0))
 AS BEGIN
 	
 	DECLARE @username char(50) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
 
-	if((select Estado from CLIENTES where dni = @DNI_CLIENTE) = 'Habilitado')
+	if exists (select Estado from CLIENTES where dni = @DNI_CLIENTE and Estado = 'Habilitado')
 		begin
 			update CLIENTES
 			set Estado = 'Inhabilitado' where DNI = @DNI_CLIENTE
@@ -36,6 +36,7 @@ AS BEGIN
 		end
 END
 
+-----------------------------ACTUALIZAR_CLIENTE------------------------------------------------------  
 
 Create Procedure actualizar_cliente(@nombre char(50), @apellido char(50), @DNI numeric(18,0), @telefono numeric(18,0),
 @mail char(50),@fecha char(50), @direccion char(100), @CP int, @Loc char(50), @Npiso int, @depto char(10))

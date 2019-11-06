@@ -241,16 +241,16 @@ namespace FrbaOfertas.CargaDireccion
 
                 if (direccion.Value.ToString() != "" && codPostal.Value.ToString() != "" && localidad.Value.ToString() != "" && ciudad.Value.ToString() != "" && nroPiso.Value.ToString() != "" && dpto.Value.ToString() != "")
                 {
-                    try
-                    {
+                  //  try
+                  //  {
                         command.ExecuteNonQuery();
                         command2.ExecuteNonQuery();
                         command3.ExecuteNonQuery();
 
                         MessageBox.Show("Hecho");
                         this.Visible = false;
-                    }
-                    catch { }
+                 //   }
+                   // catch { }
                 }
                 else
                 {

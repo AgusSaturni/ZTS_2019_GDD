@@ -1,37 +1,30 @@
 -----------------BAJA_LOGICA_PROVEEDOR-------------------------
-CREATE PROCEDURE baja_logica_proveedor(@razon_social char(50))
+CREATE PROCEDURE baja_logica_proveedor(@CUIT char(20))
 AS BEGIN
-	BEGIN try
-	if((select Estado from PROVEEDORES where razon_social = @razon_social) = 'Habilitado')
+	if((select Estado from PROVEEDORES where CUIT = @CUIT) = 'Habilitado')
 		begin
 			update PROVEEDORES
-			set Estado = 'Inhabilitado' where razon_social = @razon_social
+			set Estado = 'Inhabilitado' where CUIT = @CUIT
 		end
 	else
 		begin
 			throw 50003, 'El Proveedor ya esta Inhabilitado',1
 		end
-END TRY
-BEGIN catch
-	throw 50004, 'No existe el Proveedor',1;
-END catch
+
 END
 
+
 -----------------HABILITAR_PROVEEDOR-----------------------------
-CREATE PROCEDURE habilitar_proveedor(@razon_social char(50))
+CREATE PROCEDURE habilitar_proveedor(@CUIT char(20))
 AS BEGIN
-	BEGIN try
-	if((select Estado from PROVEEDORES where razon_social = @razon_social) = 'Inhabilitado')
+	if((select Estado from PROVEEDORES where cuit = @CUIT) = 'Inhabilitado')
 		begin
 			update PROVEEDORES
-			set Estado = 'Habilitado' where razon_social = @razon_social
+			set Estado = 'Habilitado' where CUIT = @CUIT
 		end
 	else
 		begin
 			throw 50003, 'El Proveedor ya esta Habilitado',1
-		end
-END TRY
-BEGIN catch
-	throw 50004, 'No existe el Proveedor',1;
-END catch
+		END
 END
+

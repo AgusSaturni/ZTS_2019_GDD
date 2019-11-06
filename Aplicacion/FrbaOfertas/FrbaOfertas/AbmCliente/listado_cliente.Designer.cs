@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contenedor_clientes = new System.Windows.Forms.DataGridView();
             this.dgv_eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgv_modificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,8 +54,9 @@
             this.contenedor_clientes.AllowUserToDeleteRows = false;
             this.contenedor_clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_clientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgv_eliminar});
-            this.contenedor_clientes.Location = new System.Drawing.Point(11, 151);
+            this.dgv_eliminar,
+            this.dgv_modificar});
+            this.contenedor_clientes.Location = new System.Drawing.Point(11, 152);
             this.contenedor_clientes.Margin = new System.Windows.Forms.Padding(2);
             this.contenedor_clientes.Name = "contenedor_clientes";
             this.contenedor_clientes.ReadOnly = true;
@@ -64,13 +67,22 @@
             // 
             // dgv_eliminar
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_eliminar.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_eliminar.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_eliminar.HeaderText = "Eliminar";
             this.dgv_eliminar.Name = "dgv_eliminar";
             this.dgv_eliminar.ReadOnly = true;
             this.dgv_eliminar.Width = 50;
+            // 
+            // dgv_modificar
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomLeft;
+            this.dgv_modificar.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgv_modificar.HeaderText = "Modificar";
+            this.dgv_modificar.Name = "dgv_modificar";
+            this.dgv_modificar.ReadOnly = true;
+            this.dgv_modificar.Width = 55;
             // 
             // groupBox1
             // 
@@ -84,7 +96,7 @@
             this.groupBox1.Controls.Add(this.txt_DNI);
             this.groupBox1.Controls.Add(this.txt_apellido);
             this.groupBox1.Controls.Add(this.txt_nombre);
-            this.groupBox1.Location = new System.Drawing.Point(11, 11);
+            this.groupBox1.Location = new System.Drawing.Point(11, 12);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -92,6 +104,7 @@
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label4
             // 
@@ -141,7 +154,6 @@
             this.bt_limpiar.TabIndex = 5;
             this.bt_limpiar.Text = "Limpiar";
             this.bt_limpiar.UseVisualStyleBackColor = true;
-            this.bt_limpiar.Click += new System.EventHandler(this.bt_limpiar_Click_1);
             // 
             // bt_buscar
             // 
@@ -190,11 +202,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 433);
+            this.ClientSize = new System.Drawing.Size(446, 437);
             this.Controls.Add(this.contenedor_clientes);
             this.Controls.Add(this.groupBox1);
             this.Name = "frm_listado_clientes";
-            this.Text = "listado";
+            this.Text = "listado_cliente";
+            this.Load += new System.EventHandler(this.frm_listado_clientes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_clientes)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -206,6 +219,7 @@
 
         private System.Windows.Forms.DataGridView contenedor_clientes;
         private System.Windows.Forms.DataGridViewButtonColumn dgv_eliminar;
+        private System.Windows.Forms.DataGridViewButtonColumn dgv_modificar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
@@ -217,6 +231,5 @@
         private System.Windows.Forms.TextBox txt_DNI;
         private System.Windows.Forms.TextBox txt_apellido;
         private System.Windows.Forms.TextBox txt_nombre;
-
     }
 }

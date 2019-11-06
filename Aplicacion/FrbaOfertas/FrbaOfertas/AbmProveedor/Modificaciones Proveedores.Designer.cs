@@ -1,6 +1,6 @@
-﻿namespace FrbaOfertas.AbmCliente
+﻿namespace FrbaOfertas.AbmProveedor
 {
-    partial class frm_clie_bajas
+    partial class Modificaciones_Proveedores
     {
         /// <summary>
         /// Required designer variable.
@@ -50,18 +50,18 @@
             this.contenedor_estado = new System.Windows.Forms.GroupBox();
             this.txt_estado = new System.Windows.Forms.TextBox();
             this.contenedor_info_cliente = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txt_Contacto = new System.Windows.Forms.TextBox();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_email = new System.Windows.Forms.TextBox();
             this.txt_telefono = new System.Windows.Forms.TextBox();
             this.txt_id = new System.Windows.Forms.TextBox();
-            this.txt_nombre = new System.Windows.Forms.TextBox();
-            this.txt_apellido = new System.Windows.Forms.TextBox();
-            this.txt_dni = new System.Windows.Forms.TextBox();
-            this.txt_fecha = new System.Windows.Forms.TextBox();
+            this.txt_RazonSoc = new System.Windows.Forms.TextBox();
+            this.txt_Rubro = new System.Windows.Forms.TextBox();
+            this.txt_CUIT = new System.Windows.Forms.TextBox();
             this.lbl_DNI = new System.Windows.Forms.Label();
             this.lbl_id = new System.Windows.Forms.Label();
-            this.lbl_nacimiento = new System.Windows.Forms.Label();
             this.lbl_mail = new System.Windows.Forms.Label();
             this.lbl_apellido = new System.Windows.Forms.Label();
             this.lbl_nombre = new System.Windows.Forms.Label();
@@ -87,12 +87,12 @@
             this.groupBox3.Controls.Add(this.txt_ciudad);
             this.groupBox3.Controls.Add(this.txt_direccion);
             this.groupBox3.Controls.Add(this.lbl_direccion);
-            this.groupBox3.Location = new System.Drawing.Point(320, 114);
+            this.groupBox3.Location = new System.Drawing.Point(334, 119);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(256, 187);
-            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ubicacion del Cliente";
             // 
@@ -220,12 +220,12 @@
             // 
             this.groupBox2.Controls.Add(this.bt_cancelar);
             this.groupBox2.Controls.Add(this.bt_habilitar);
-            this.groupBox2.Location = new System.Drawing.Point(320, 305);
+            this.groupBox2.Location = new System.Drawing.Point(334, 310);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(256, 83);
-            this.groupBox2.TabIndex = 30;
+            this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             // 
             // bt_cancelar
@@ -237,7 +237,7 @@
             this.bt_cancelar.TabIndex = 12;
             this.bt_cancelar.Text = "Cancelar";
             this.bt_cancelar.UseVisualStyleBackColor = true;
-            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click_1);
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
             // 
             // bt_habilitar
             // 
@@ -246,7 +246,7 @@
             this.bt_habilitar.Name = "bt_habilitar";
             this.bt_habilitar.Size = new System.Drawing.Size(233, 28);
             this.bt_habilitar.TabIndex = 13;
-            this.bt_habilitar.Text = "Habilitar Cliente";
+            this.bt_habilitar.Text = "Habilitar Proveedor";
             this.bt_habilitar.UseVisualStyleBackColor = true;
             this.bt_habilitar.Click += new System.EventHandler(this.bt_habilitar_Click);
             // 
@@ -254,12 +254,12 @@
             // 
             this.groupBox1.Controls.Add(this.bt_modificar);
             this.groupBox1.Controls.Add(this.bt_guardar);
-            this.groupBox1.Location = new System.Drawing.Point(11, 305);
+            this.groupBox1.Location = new System.Drawing.Point(25, 310);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(304, 83);
-            this.groupBox1.TabIndex = 29;
+            this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             // 
             // bt_modificar
@@ -269,9 +269,9 @@
             this.bt_modificar.Name = "bt_modificar";
             this.bt_modificar.Size = new System.Drawing.Size(277, 27);
             this.bt_modificar.TabIndex = 24;
-            this.bt_modificar.Text = "Modificar Cliente";
+            this.bt_modificar.Text = "Modificar Proveedor";
             this.bt_modificar.UseVisualStyleBackColor = true;
-            this.bt_modificar.Click += new System.EventHandler(this.bt_modificar_Click_1);
+            this.bt_modificar.Click += new System.EventHandler(this.bt_modificar_Click);
             // 
             // bt_guardar
             // 
@@ -282,17 +282,16 @@
             this.bt_guardar.TabIndex = 10;
             this.bt_guardar.Text = "Guardar Modificacion";
             this.bt_guardar.UseVisualStyleBackColor = true;
-            this.bt_guardar.Click += new System.EventHandler(this.bt_guardar_Click);
             // 
             // contenedor_estado
             // 
             this.contenedor_estado.Controls.Add(this.txt_estado);
-            this.contenedor_estado.Location = new System.Drawing.Point(320, 21);
+            this.contenedor_estado.Location = new System.Drawing.Point(334, 26);
             this.contenedor_estado.Margin = new System.Windows.Forms.Padding(2);
             this.contenedor_estado.Name = "contenedor_estado";
             this.contenedor_estado.Padding = new System.Windows.Forms.Padding(2);
             this.contenedor_estado.Size = new System.Drawing.Size(256, 90);
-            this.contenedor_estado.TabIndex = 28;
+            this.contenedor_estado.TabIndex = 33;
             this.contenedor_estado.TabStop = false;
             this.contenedor_estado.Text = "Estado";
             // 
@@ -307,34 +306,53 @@
             this.txt_estado.Size = new System.Drawing.Size(229, 59);
             this.txt_estado.TabIndex = 14;
             this.txt_estado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txt_estado.TextChanged += new System.EventHandler(this.txt_estado_TextChanged);
             // 
             // contenedor_info_cliente
             // 
+            this.contenedor_info_cliente.Controls.Add(this.label7);
+            this.contenedor_info_cliente.Controls.Add(this.txt_Contacto);
             this.contenedor_info_cliente.Controls.Add(this.txt_username);
             this.contenedor_info_cliente.Controls.Add(this.label1);
             this.contenedor_info_cliente.Controls.Add(this.txt_email);
             this.contenedor_info_cliente.Controls.Add(this.txt_telefono);
             this.contenedor_info_cliente.Controls.Add(this.txt_id);
-            this.contenedor_info_cliente.Controls.Add(this.txt_nombre);
-            this.contenedor_info_cliente.Controls.Add(this.txt_apellido);
-            this.contenedor_info_cliente.Controls.Add(this.txt_dni);
-            this.contenedor_info_cliente.Controls.Add(this.txt_fecha);
+            this.contenedor_info_cliente.Controls.Add(this.txt_RazonSoc);
+            this.contenedor_info_cliente.Controls.Add(this.txt_Rubro);
+            this.contenedor_info_cliente.Controls.Add(this.txt_CUIT);
             this.contenedor_info_cliente.Controls.Add(this.lbl_DNI);
             this.contenedor_info_cliente.Controls.Add(this.lbl_id);
-            this.contenedor_info_cliente.Controls.Add(this.lbl_nacimiento);
             this.contenedor_info_cliente.Controls.Add(this.lbl_mail);
             this.contenedor_info_cliente.Controls.Add(this.lbl_apellido);
             this.contenedor_info_cliente.Controls.Add(this.lbl_nombre);
             this.contenedor_info_cliente.Controls.Add(this.lbl_telefono);
-            this.contenedor_info_cliente.Location = new System.Drawing.Point(11, 21);
+            this.contenedor_info_cliente.Location = new System.Drawing.Point(25, 26);
             this.contenedor_info_cliente.Margin = new System.Windows.Forms.Padding(2);
             this.contenedor_info_cliente.Name = "contenedor_info_cliente";
             this.contenedor_info_cliente.Padding = new System.Windows.Forms.Padding(2);
             this.contenedor_info_cliente.Size = new System.Drawing.Size(304, 280);
-            this.contenedor_info_cliente.TabIndex = 27;
+            this.contenedor_info_cliente.TabIndex = 32;
             this.contenedor_info_cliente.TabStop = false;
             this.contenedor_info_cliente.Text = "Informacion del Cliente";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(15, 252);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 17);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Contacto";
+            // 
+            // txt_Contacto
+            // 
+            this.txt_Contacto.Location = new System.Drawing.Point(162, 252);
+            this.txt_Contacto.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Contacto.Name = "txt_Contacto";
+            this.txt_Contacto.ReadOnly = true;
+            this.txt_Contacto.Size = new System.Drawing.Size(131, 20);
+            this.txt_Contacto.TabIndex = 24;
             // 
             // txt_username
             // 
@@ -358,7 +376,7 @@
             // 
             // txt_email
             // 
-            this.txt_email.Location = new System.Drawing.Point(162, 256);
+            this.txt_email.Location = new System.Drawing.Point(162, 217);
             this.txt_email.Margin = new System.Windows.Forms.Padding(2);
             this.txt_email.Name = "txt_email";
             this.txt_email.ReadOnly = true;
@@ -367,7 +385,7 @@
             // 
             // txt_telefono
             // 
-            this.txt_telefono.Location = new System.Drawing.Point(162, 225);
+            this.txt_telefono.Location = new System.Drawing.Point(162, 186);
             this.txt_telefono.Margin = new System.Windows.Forms.Padding(2);
             this.txt_telefono.Name = "txt_telefono";
             this.txt_telefono.ReadOnly = true;
@@ -383,41 +401,32 @@
             this.txt_id.Size = new System.Drawing.Size(131, 20);
             this.txt_id.TabIndex = 18;
             // 
-            // txt_nombre
+            // txt_RazonSoc
             // 
-            this.txt_nombre.Location = new System.Drawing.Point(162, 89);
-            this.txt_nombre.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_nombre.Name = "txt_nombre";
-            this.txt_nombre.ReadOnly = true;
-            this.txt_nombre.Size = new System.Drawing.Size(131, 20);
-            this.txt_nombre.TabIndex = 17;
+            this.txt_RazonSoc.Location = new System.Drawing.Point(162, 89);
+            this.txt_RazonSoc.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_RazonSoc.Name = "txt_RazonSoc";
+            this.txt_RazonSoc.ReadOnly = true;
+            this.txt_RazonSoc.Size = new System.Drawing.Size(131, 20);
+            this.txt_RazonSoc.TabIndex = 17;
             // 
-            // txt_apellido
+            // txt_Rubro
             // 
-            this.txt_apellido.Location = new System.Drawing.Point(162, 123);
-            this.txt_apellido.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_apellido.Name = "txt_apellido";
-            this.txt_apellido.ReadOnly = true;
-            this.txt_apellido.Size = new System.Drawing.Size(131, 20);
-            this.txt_apellido.TabIndex = 16;
+            this.txt_Rubro.Location = new System.Drawing.Point(162, 123);
+            this.txt_Rubro.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Rubro.Name = "txt_Rubro";
+            this.txt_Rubro.ReadOnly = true;
+            this.txt_Rubro.Size = new System.Drawing.Size(131, 20);
+            this.txt_Rubro.TabIndex = 16;
             // 
-            // txt_dni
+            // txt_CUIT
             // 
-            this.txt_dni.Location = new System.Drawing.Point(162, 159);
-            this.txt_dni.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_dni.Name = "txt_dni";
-            this.txt_dni.ReadOnly = true;
-            this.txt_dni.Size = new System.Drawing.Size(131, 20);
-            this.txt_dni.TabIndex = 15;
-            // 
-            // txt_fecha
-            // 
-            this.txt_fecha.Location = new System.Drawing.Point(162, 193);
-            this.txt_fecha.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_fecha.Name = "txt_fecha";
-            this.txt_fecha.ReadOnly = true;
-            this.txt_fecha.Size = new System.Drawing.Size(131, 20);
-            this.txt_fecha.TabIndex = 14;
+            this.txt_CUIT.Location = new System.Drawing.Point(162, 159);
+            this.txt_CUIT.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_CUIT.Name = "txt_CUIT";
+            this.txt_CUIT.ReadOnly = true;
+            this.txt_CUIT.Size = new System.Drawing.Size(131, 20);
+            this.txt_CUIT.TabIndex = 15;
             // 
             // lbl_DNI
             // 
@@ -426,9 +435,9 @@
             this.lbl_DNI.Location = new System.Drawing.Point(12, 158);
             this.lbl_DNI.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_DNI.Name = "lbl_DNI";
-            this.lbl_DNI.Size = new System.Drawing.Size(32, 17);
+            this.lbl_DNI.Size = new System.Drawing.Size(41, 17);
             this.lbl_DNI.TabIndex = 3;
-            this.lbl_DNI.Text = "DNI";
+            this.lbl_DNI.Text = "CUIT";
             // 
             // lbl_id
             // 
@@ -441,22 +450,11 @@
             this.lbl_id.TabIndex = 0;
             this.lbl_id.Text = "ID";
             // 
-            // lbl_nacimiento
-            // 
-            this.lbl_nacimiento.AutoSize = true;
-            this.lbl_nacimiento.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_nacimiento.Location = new System.Drawing.Point(12, 192);
-            this.lbl_nacimiento.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_nacimiento.Name = "lbl_nacimiento";
-            this.lbl_nacimiento.Size = new System.Drawing.Size(146, 17);
-            this.lbl_nacimiento.TabIndex = 7;
-            this.lbl_nacimiento.Text = "Fecha de Nacimiento";
-            // 
             // lbl_mail
             // 
             this.lbl_mail.AutoSize = true;
             this.lbl_mail.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_mail.Location = new System.Drawing.Point(12, 257);
+            this.lbl_mail.Location = new System.Drawing.Point(12, 218);
             this.lbl_mail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_mail.Name = "lbl_mail";
             this.lbl_mail.Size = new System.Drawing.Size(45, 17);
@@ -470,9 +468,9 @@
             this.lbl_apellido.Location = new System.Drawing.Point(12, 123);
             this.lbl_apellido.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_apellido.Name = "lbl_apellido";
-            this.lbl_apellido.Size = new System.Drawing.Size(58, 17);
+            this.lbl_apellido.Size = new System.Drawing.Size(48, 17);
             this.lbl_apellido.TabIndex = 2;
-            this.lbl_apellido.Text = "Apellido";
+            this.lbl_apellido.Text = "Rubro";
             // 
             // lbl_nombre
             // 
@@ -481,33 +479,33 @@
             this.lbl_nombre.Location = new System.Drawing.Point(12, 88);
             this.lbl_nombre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_nombre.Name = "lbl_nombre";
-            this.lbl_nombre.Size = new System.Drawing.Size(60, 17);
+            this.lbl_nombre.Size = new System.Drawing.Size(95, 17);
             this.lbl_nombre.TabIndex = 1;
-            this.lbl_nombre.Text = "Nombre";
+            this.lbl_nombre.Text = "Razon Social";
             // 
             // lbl_telefono
             // 
             this.lbl_telefono.AutoSize = true;
             this.lbl_telefono.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_telefono.Location = new System.Drawing.Point(12, 226);
+            this.lbl_telefono.Location = new System.Drawing.Point(12, 187);
             this.lbl_telefono.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_telefono.Name = "lbl_telefono";
             this.lbl_telefono.Size = new System.Drawing.Size(62, 17);
             this.lbl_telefono.TabIndex = 5;
             this.lbl_telefono.Text = "Telefono";
             // 
-            // frm_clie_bajas
+            // Modificaciones_Proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 408);
+            this.ClientSize = new System.Drawing.Size(615, 419);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.contenedor_estado);
             this.Controls.Add(this.contenedor_info_cliente);
-            this.Name = "frm_clie_bajas";
-            this.Text = "Modificaciones_Clientes";
+            this.Name = "Modificaciones_Proveedores";
+            this.Text = "Modificaciones_Proveedores";
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -544,18 +542,18 @@
         private System.Windows.Forms.GroupBox contenedor_estado;
         public System.Windows.Forms.TextBox txt_estado;
         private System.Windows.Forms.GroupBox contenedor_info_cliente;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.TextBox txt_Contacto;
         public System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.TextBox txt_email;
         public System.Windows.Forms.TextBox txt_telefono;
         public System.Windows.Forms.TextBox txt_id;
-        public System.Windows.Forms.TextBox txt_nombre;
-        public System.Windows.Forms.TextBox txt_apellido;
-        public System.Windows.Forms.TextBox txt_dni;
-        public System.Windows.Forms.TextBox txt_fecha;
+        public System.Windows.Forms.TextBox txt_RazonSoc;
+        public System.Windows.Forms.TextBox txt_Rubro;
+        public System.Windows.Forms.TextBox txt_CUIT;
         private System.Windows.Forms.Label lbl_DNI;
         private System.Windows.Forms.Label lbl_id;
-        private System.Windows.Forms.Label lbl_nacimiento;
         private System.Windows.Forms.Label lbl_mail;
         private System.Windows.Forms.Label lbl_apellido;
         private System.Windows.Forms.Label lbl_nombre;
