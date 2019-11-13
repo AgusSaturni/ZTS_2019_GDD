@@ -16,7 +16,8 @@ namespace FrbaOfertas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InicioDeSesion());
+           // Application.Run(new CrearOferta.CargaOferta());
+           Application.Run(new InicioDeSesion());
            //Application.Run(new AbmCliente.frm_listado_clientes());
         }
     }

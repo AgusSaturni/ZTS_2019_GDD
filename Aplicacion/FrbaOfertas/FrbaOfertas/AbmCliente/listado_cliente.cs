@@ -18,6 +18,8 @@ namespace FrbaOfertas.AbmCliente
         public frm_listado_clientes()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void Listado_Load(object sender, EventArgs e)
@@ -34,9 +36,9 @@ namespace FrbaOfertas.AbmCliente
             if (query == "") { MessageBox.Show("Ingrese Parametros"); }
             else
             {
-                conexionBD cadena_conexion = new conexionBD();
-
-                SqlConnection conn = new SqlConnection(cadena_conexion.get_conexion());
+                conexionBD conexion = conexionBD.getConexion();
+               
+                SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
 
@@ -56,7 +58,7 @@ namespace FrbaOfertas.AbmCliente
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("SELECT Cliente_Id,username, nombre, apellido, DNI, telefono, mail, Fecha_Nacimiento, DineroDisponible, estado, d.Direccion, Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto FROM CLIENTES c join DIRECCION d on c.direccion = d.id_direccion WHERE ");
+            sb.Append("SELECT Cliente_Id, username, nombre, apellido, DNI, telefono, mail, Fecha_Nacimiento, DineroDisponible, estado, d.Direccion, Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto FROM CLIENTES c join DIRECCION d on c.direccion = d.id_direccion WHERE ");
 
             ArrayList Query = new ArrayList();
 
@@ -113,20 +115,20 @@ namespace FrbaOfertas.AbmCliente
         {
             if (contenedor_clientes.CurrentCell.ColumnIndex == 0)
             {
-                conexionBD cadena_conexion = new conexionBD();
-                SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
+                conexionBD conexion = conexionBD.getConexion();
+                SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
              try
                 {
                     var row = contenedor_clientes.CurrentRow;
 
-                    SqlCommand command = new SqlCommand("baja_logica_cliente", conexion);
+                    SqlCommand command = new SqlCommand("baja_logica_cliente", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Float).Value = Int32.Parse(row.Cells[6].Value.ToString());
-                   
-                    conexion.Open();
+
+                    conexion_sql.Open();
                     command.ExecuteNonQuery();
-                    conexion.Close();
+                    conexion_sql.Close();
         
                     MessageBox.Show("Cliente Inhabilitado");
                     //Hacer un refresh
@@ -134,7 +136,7 @@ namespace FrbaOfertas.AbmCliente
                 }
              catch (SqlException exepcion)
                {
-                    SqlError errores = exepcion.Errors[0];
+                   SqlError errores = exepcion.Errors[0];
                    MessageBox.Show(errores.Message.ToString());
                }
             }

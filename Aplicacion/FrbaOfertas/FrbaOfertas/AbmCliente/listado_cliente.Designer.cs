@@ -109,35 +109,39 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(22, 105);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.Size = new System.Drawing.Size(41, 14);
             this.label4.TabIndex = 7;
             this.label4.Text = "EMAIL";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(17, 50);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(52, 14);
             this.label2.TabIndex = 7;
             this.label2.Text = "Apellido";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(27, 79);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
+            this.label3.Size = new System.Drawing.Size(24, 14);
             this.label3.TabIndex = 8;
             this.label3.Text = "DNI";
             // 
             // label1
             // 
+            this.label1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(17, 25);
             this.label1.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label1.Name = "label1";
@@ -147,6 +151,7 @@
             // 
             // bt_limpiar
             // 
+            this.bt_limpiar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.bt_limpiar.Location = new System.Drawing.Point(284, 77);
             this.bt_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_limpiar.Name = "bt_limpiar";
@@ -157,6 +162,7 @@
             // 
             // bt_buscar
             // 
+            this.bt_buscar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.bt_buscar.Location = new System.Drawing.Point(284, 37);
             this.bt_buscar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_buscar.Name = "bt_buscar";

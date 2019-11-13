@@ -1,16 +1,10 @@
-
-drop procedure registrar_usuario
-drop procedure registrar_usuario_cliente
-drop procedure registrar_usuario_proveedor
-
-
 ------REGISTRO_USUARIO------------
 CREATE PROCEDURE registrar_usuario(@Username char(50), @Password char(50),@Rol char(20))
 AS BEGIN
 	IF NOT EXISTS(select * from USUARIOS where Username = @Username)
 		  begin  
 			insert into USUARIOS(Username,Password)
-			values(@username, HASHBYTES('SHA2_256',@Password))
+			values(@username,  HASHBYTES('SHA2_256',(rtrim(@password))))
 
 			insert into ROLES_POR_USUARIO(Rol_Id,Username)
 			values(@Rol,@username)
@@ -20,9 +14,7 @@ AS BEGIN
 			THROW 50000,'Ya existe ese Nombre de Usuario',1
 		  end 
 END
-
-
-
+	
 -------------------------------------------------------
 CREATE PROCEDURE registrar_usuario_cliente(@username char(50),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,
 											@Direccion char(100))
@@ -70,6 +62,8 @@ set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = 
 		end
 END
 
+
+
 --------------Registrar Domicilio-------------------------
 CREATE PROCEDURE registrar_Domicilio(@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
 									  ,@ciudad char(50),@nro_piso int,@Depto char(10))
@@ -111,13 +105,13 @@ set Estado = 'Habilitado' where username = @username
 END
 
 -------------VERIFICACION_LOGUEO--------------------
-CREATE PROCEDURE verificar(@username char(50),@password char(50))
+CREATE PROCEDURE verificar_usuario(@username char(50),@password char(50))
 AS BEGIN
 DECLARE @contraseña_encriptada char(255);
-set @contraseña_encriptada = HASHBYTES('SHA2_256',RTRIM(@Password))
-if not exists(select username,password from USUARIOS where Username = @username and Password = @contraseña_encriptada)
+set @contraseña_encriptada = HASHBYTES('SHA2_256',(rtrim(@password)))
+if not exists(select 1 from USUARIOS where Username = @username and Password = @contraseña_encriptada)
 	begin
-		THROW 50006, 'error de logueo. Usuario o Contraseña invalidos ', 1
+		THROW 50006, 'Usuario y/o Contraseña Invalidos ', 1
 	end
 END
 
@@ -130,6 +124,7 @@ as begin
 	THROW 50007, 'No es administrador ', 1
 	END
 end
+
 -------------VERIFICACION_ROL_Cliente--------
 CREATE PROCEDURE verificar_rol_cliente(@username char(50))
 as begin
@@ -138,6 +133,8 @@ as begin
 	THROW 50008, 'No es Cliente ', 1
 	END
 end
+
+
 -------------VERIFICACION_ROL_Proveedor--------
 CREATE PROCEDURE verificar_rol_proveedor(@username char(50))
 as begin
@@ -146,3 +143,4 @@ as begin
 	THROW 50009, 'No es Proveedor ', 1
 	END
 end
+

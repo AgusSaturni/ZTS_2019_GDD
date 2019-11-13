@@ -14,12 +14,35 @@ namespace FrbaOfertas
 {
     public partial class RegistroUsuario : Form
     {
+        
+        object rol;
+
         public RegistroUsuario()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        public RegistroUsuario(object rol_recibido)
+        {
+            InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            rol = rol_recibido;
+            if (rol.ToString() == "Proveedor")
+            {
+                Rol.SelectedIndex = 1;
+                Rol.Enabled = false;
+            }
+            if (rol.ToString() == "Cliente")
+            {
+                Rol.SelectedIndex = 0;
+                Rol.Enabled = false;
+            }
+        }
+
+        private  void label1_Click(object sender, EventArgs e)
         {
 
         }
@@ -53,10 +76,11 @@ namespace FrbaOfertas
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             int indice =  Rol.SelectedIndex;
             string usuario;
             string password;
-            object rol;
+            
 
             usuario = Usuario.Text;        
             password = Password.Text;
@@ -66,6 +90,7 @@ namespace FrbaOfertas
             if (indice != -1 && usuario != "" && password != "")
             {
                 rol = Rol.Items[indice];
+                
                 switch (rol.ToString())
                 {
                     case "Cliente":
@@ -84,6 +109,12 @@ namespace FrbaOfertas
                 MessageBox.Show("Faltan completar campos");
             }
           
+        }
+
+        private void bt_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
         }
    
     }

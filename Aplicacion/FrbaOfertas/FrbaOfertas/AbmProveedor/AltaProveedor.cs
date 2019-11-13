@@ -49,9 +49,9 @@ namespace FrbaOfertas.AbmProveedor
             string mail = Mail.Text;
             string contacto = Contacto.Text;
 
+     
 
-
-            if (razonSocial != "" && telefono != "" && cuit != "" && rubro != "" && mail != "" && contacto != "")
+            if (razonSocial != "" && telefono != "" && cuit != "" && rubro != "" && mail != "")
             {
                 this.Visible = false;
                 CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password,rol, null, null, null, telefono, null, mail,razonSocial,cuit,rubro,contacto);

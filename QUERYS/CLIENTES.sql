@@ -38,11 +38,11 @@ END
 
 -----------------------------ACTUALIZAR_CLIENTE------------------------------------------------------  
 
-Create Procedure actualizar_cliente(@nombre char(50), @apellido char(50), @DNI numeric(18,0), @telefono numeric(18,0),
+Create Procedure actualizar_cliente(@username char(50),@nombre char(50), @apellido char(50), @DNI numeric(18,0), @telefono numeric(18,0),
 @mail char(50),@fecha char(50), @direccion char(100), @CP int, @Loc char(50), @Npiso int, @depto char(10))
 AS BEGIN
 
-	declare @direcID int = (select direccion from CLIENTES where DNI = @DNI)
+	declare @direcID int = (select direccion from CLIENTES where username = @username)
 
 	update DIRECCION 
 		set 
@@ -60,7 +60,8 @@ AS BEGIN
 			DNI = @DNI,
 			Telefono = @telefono,
 			Mail = @mail
-	where DNI = @DNI
+	where username = @username
 
 END
 
+drop procedure actualizar_cliente

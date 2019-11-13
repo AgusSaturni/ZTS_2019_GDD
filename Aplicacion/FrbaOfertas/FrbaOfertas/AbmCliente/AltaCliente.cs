@@ -22,6 +22,8 @@ namespace FrbaOfertas.AbmCliente
         public AltaCliente()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         public AltaCliente(string usuario, string password, string rol)
@@ -187,6 +189,13 @@ namespace FrbaOfertas.AbmCliente
         private void Nombre_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void bt_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form registro = new RegistroUsuario();
+            registro.Show();
         }
     }
 }

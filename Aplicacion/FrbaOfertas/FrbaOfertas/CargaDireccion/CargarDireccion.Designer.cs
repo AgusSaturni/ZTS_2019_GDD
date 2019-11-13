@@ -41,14 +41,19 @@
             this.NroPiso = new System.Windows.Forms.TextBox();
             this.Departamento = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bt_volver = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 37);
+            this.label1.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(18, 41);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.Size = new System.Drawing.Size(83, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Direccion";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -56,124 +61,164 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 81);
+            this.label2.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 90);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(119, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "Codigo Postal";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(33, 119);
+            this.label3.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(18, 139);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.Size = new System.Drawing.Size(85, 24);
             this.label3.TabIndex = 2;
             this.label3.Text = "Localidad";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(43, 155);
+            this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(18, 186);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
+            this.label4.Size = new System.Drawing.Size(65, 24);
             this.label4.TabIndex = 3;
             this.label4.Text = "Ciudad";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(33, 191);
+            this.label5.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(18, 241);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 13);
+            this.label5.Size = new System.Drawing.Size(82, 24);
             this.label5.TabIndex = 4;
             this.label5.Text = " Nro Piso";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(28, 223);
+            this.label6.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(18, 295);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 13);
+            this.label6.Size = new System.Drawing.Size(123, 24);
             this.label6.TabIndex = 5;
             this.label6.Text = " Departamento";
             // 
             // Direccion
             // 
-            this.Direccion.Location = new System.Drawing.Point(106, 37);
+            this.Direccion.Location = new System.Drawing.Point(172, 41);
+            this.Direccion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Direccion.Name = "Direccion";
-            this.Direccion.Size = new System.Drawing.Size(198, 20);
+            this.Direccion.Size = new System.Drawing.Size(295, 30);
             this.Direccion.TabIndex = 6;
             this.Direccion.TextChanged += new System.EventHandler(this.Direccion_TextChanged);
             // 
             // CodigoPostal
             // 
-            this.CodigoPostal.Location = new System.Drawing.Point(155, 81);
+            this.CodigoPostal.Location = new System.Drawing.Point(172, 88);
+            this.CodigoPostal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CodigoPostal.Name = "CodigoPostal";
-            this.CodigoPostal.Size = new System.Drawing.Size(92, 20);
+            this.CodigoPostal.Size = new System.Drawing.Size(295, 30);
             this.CodigoPostal.TabIndex = 7;
             // 
             // Localidad
             // 
-            this.Localidad.Location = new System.Drawing.Point(106, 119);
+            this.Localidad.Location = new System.Drawing.Point(172, 137);
+            this.Localidad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Localidad.Name = "Localidad";
-            this.Localidad.Size = new System.Drawing.Size(198, 20);
+            this.Localidad.Size = new System.Drawing.Size(295, 30);
             this.Localidad.TabIndex = 8;
             // 
             // Ciudad
             // 
-            this.Ciudad.Location = new System.Drawing.Point(106, 155);
+            this.Ciudad.Location = new System.Drawing.Point(172, 186);
+            this.Ciudad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Ciudad.Name = "Ciudad";
-            this.Ciudad.Size = new System.Drawing.Size(198, 20);
+            this.Ciudad.Size = new System.Drawing.Size(295, 30);
             this.Ciudad.TabIndex = 9;
             // 
             // NroPiso
             // 
-            this.NroPiso.Location = new System.Drawing.Point(155, 188);
+            this.NroPiso.Location = new System.Drawing.Point(172, 239);
+            this.NroPiso.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.NroPiso.Name = "NroPiso";
-            this.NroPiso.Size = new System.Drawing.Size(88, 20);
+            this.NroPiso.Size = new System.Drawing.Size(295, 30);
             this.NroPiso.TabIndex = 10;
             // 
             // Departamento
             // 
-            this.Departamento.Location = new System.Drawing.Point(111, 220);
+            this.Departamento.Location = new System.Drawing.Point(172, 295);
+            this.Departamento.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Departamento.Name = "Departamento";
-            this.Departamento.Size = new System.Drawing.Size(193, 20);
+            this.Departamento.Size = new System.Drawing.Size(295, 30);
             this.Departamento.TabIndex = 11;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(263, 284);
+            this.button1.Location = new System.Drawing.Point(243, 358);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(224, 35);
             this.button1.TabIndex = 12;
-            this.button1.Text = "Hecho";
+            this.button1.Text = "Finalizar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.bt_volver);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.Departamento);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.NroPiso);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.Ciudad);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.Localidad);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.CodigoPostal);
+            this.groupBox1.Controls.Add(this.Direccion);
+            this.groupBox1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(490, 417);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Datos de Ubicacion";
+            // 
+            // bt_volver
+            // 
+            this.bt_volver.Location = new System.Drawing.Point(12, 358);
+            this.bt_volver.Name = "bt_volver";
+            this.bt_volver.Size = new System.Drawing.Size(224, 35);
+            this.bt_volver.TabIndex = 13;
+            this.bt_volver.Text = "Volver";
+            this.bt_volver.UseVisualStyleBackColor = true;
+            // 
             // CargarDireccion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 330);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.Departamento);
-            this.Controls.Add(this.NroPiso);
-            this.Controls.Add(this.Ciudad);
-            this.Controls.Add(this.Localidad);
-            this.Controls.Add(this.CodigoPostal);
-            this.Controls.Add(this.Direccion);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(515, 448);
+            this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CargarDireccion";
             this.Text = "Cargar Direccion";
             this.Load += new System.EventHandler(this.CargarDireccion_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -192,5 +237,7 @@
         private System.Windows.Forms.TextBox NroPiso;
         private System.Windows.Forms.TextBox Departamento;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button bt_volver;
     }
 }

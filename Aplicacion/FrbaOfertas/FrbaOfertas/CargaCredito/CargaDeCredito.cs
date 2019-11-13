@@ -58,8 +58,8 @@ namespace FrbaOfertas.CragaCredito
             string cadenaConex = @"Data Source=LAPTOP-3SMJF7AG\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
             SqlConnection conn = new SqlConnection(cadenaConex);
             
-           try
-            {
+          // try
+          //  {
                 conn.Open();
                 string nroTarjeta = NroTarjeta.Text;
                 string codSegu = CodSegu.Text;
@@ -69,7 +69,7 @@ namespace FrbaOfertas.CragaCredito
                 
                     if (indice != -1 && monto != "" && nroTarjeta != "" && codSegu != "")
                           {
-                           if(nroTarjeta.Length == 16 && codSegu.Length == 3)
+                           if((nroTarjeta.Length == 16) && (codSegu.Length == 3))
                            {
                             object TipoDePago = TipoPago.Items[indice];
                             int monto_entero = Int32.Parse(monto);
@@ -108,7 +108,7 @@ namespace FrbaOfertas.CragaCredito
                             monto1.Value = monto;
                             fecha1.Value = fecha;
 
-                          
+                           
                             command.ExecuteNonQuery();
                             MessageBox.Show("Carga realizada con éxito");
 
@@ -121,16 +121,21 @@ namespace FrbaOfertas.CragaCredito
                     MessageBox.Show("Faltan completar campos.");
                 }
                     conn.Close();
-           }
+          // }
 
-           catch (System.FormatException)
-           {
-                MessageBox.Show("El monto debe ser un numero entero");
-          }
-           catch (System.Data.SqlClient.SqlException)
-           {
-               MessageBox.Show("Error datos de tarjeta inválidos");
-           }
+         //  catch (System.FormatException)
+         //  {
+               // MessageBox.Show("El monto debe ser un numero entero");
+        //  }
+           //catch (System.Data.SqlClient.SqlException)
+          // {
+            //   MessageBox.Show("Error datos de tarjeta inválidos");
+          // }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

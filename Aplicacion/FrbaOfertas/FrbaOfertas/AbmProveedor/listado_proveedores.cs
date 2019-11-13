@@ -27,9 +27,9 @@ namespace FrbaOfertas.AbmProveedor
             if (query == "") { MessageBox.Show("Ingrese Parametros"); }
             else
             {
-                conexionBD cadena_conexion = new conexionBD();
+                conexionBD conexion = conexionBD.getConexion();
 
-                SqlConnection conn = new SqlConnection(cadena_conexion.get_conexion());
+                SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
 
@@ -95,20 +95,20 @@ namespace FrbaOfertas.AbmProveedor
         {
             if (contenedor_proveedores.CurrentCell.ColumnIndex == 0)
             {
-                conexionBD cadena_conexion = new conexionBD();
-                SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
+                conexionBD conexion = conexionBD.getConexion();
+                SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
                 try
                 {
                     var row = contenedor_proveedores.CurrentRow;
 
-                    SqlCommand command = new SqlCommand("baja_logica_proveedor", conexion);
+                    SqlCommand command = new SqlCommand("baja_logica_proveedor", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = row.Cells[7].Value.ToString();
-                  
-                    conexion.Open();
+
+                    conexion_sql.Open();
                     command.ExecuteNonQuery();
-                    conexion.Close();
+                    conexion_sql.Close();
 
                     MessageBox.Show("Proveedor Inhabilitado");
                     //Hacer un refresh
@@ -152,6 +152,11 @@ namespace FrbaOfertas.AbmProveedor
                 }
               
             }
+
+        private void asd_Click(object sender, EventArgs e)
+        {
+
+        }
 
         }
     }

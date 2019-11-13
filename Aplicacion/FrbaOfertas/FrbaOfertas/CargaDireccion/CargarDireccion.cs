@@ -30,6 +30,8 @@ namespace FrbaOfertas.CargaDireccion
         public CargarDireccion()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail,string rs,string cuit,string rubro, string contacto)
@@ -57,8 +59,9 @@ namespace FrbaOfertas.CargaDireccion
 
         private void button1_Click(object sender, EventArgs e)
         {
-             string cadenaConex = @"Data Source=LAPTOP-3SMJF7AG\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
-            SqlConnection conn = new SqlConnection(cadenaConex);
+           
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
             conn.Open();
 
@@ -247,7 +250,7 @@ namespace FrbaOfertas.CargaDireccion
                         command2.ExecuteNonQuery();
                         command3.ExecuteNonQuery();
 
-                        MessageBox.Show("Hecho");
+                        MessageBox.Show("Usuario Registrado");
                         this.Visible = false;
                  //   }
                    // catch { }
@@ -256,6 +259,8 @@ namespace FrbaOfertas.CargaDireccion
                 {
                     MessageBox.Show("Faltan completar campos");
                 }
+
+                conn.Close();
 
             }
         }

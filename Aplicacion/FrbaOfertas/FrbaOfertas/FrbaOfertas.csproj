@@ -55,12 +55,6 @@
       <DependentUpon>AltaCliente.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="AbmCliente\bajasClientes.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCliente\bajasClientes.Designer.cs">
-      <DependentUpon>bajasClientes.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmCliente\listado_cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,12 +97,6 @@
     <Compile Include="AbmRol\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="CargaCredito\DatosTarjeta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CargaCredito\DatosTarjeta.Designer.cs">
-      <DependentUpon>DatosTarjeta.cs</DependentUpon>
-    </Compile>
     <Compile Include="CargaDireccion\CargarDireccion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,12 +115,12 @@
     <Compile Include="CargaCredito\CargaDeCredito.Designer.cs">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConexionBD.cs" />
-    <Compile Include="CrearOferta\Form1.cs">
+    <Compile Include="Manejo Logico\ConexionBD.cs" />
+    <Compile Include="CrearOferta\CargaOferta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CrearOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CrearOferta\CargaOferta.Designer.cs">
+      <DependentUpon>CargaOferta.cs</DependentUpon>
     </Compile>
     <Compile Include="Facturar\Form1.cs">
       <SubType>Form</SubType>
@@ -146,10 +134,10 @@
     <Compile Include="AbmUsuarios\RegistroUsuario.Designer.cs">
       <DependentUpon>RegistroUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="InicioDeSesion.cs">
+    <Compile Include="Interfaces\InicioDeSesion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InicioDeSesion.Designer.cs">
+    <Compile Include="Interfaces\InicioDeSesion.Designer.cs">
       <DependentUpon>InicioDeSesion.cs</DependentUpon>
     </Compile>
     <Compile Include="GD2C2019DataSet.Designer.cs">
@@ -157,26 +145,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2019DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\menu_principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\menu_principal.Designer.cs">
+      <DependentUpon>menu_principal.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListadoEstadistico\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manejo Logico\Singleton Usuario.cs" />
     <Compile Include="MenuABM.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MenuABM.Designer.cs">
       <DependentUpon>MenuABM.cs</DependentUpon>
     </Compile>
+    <Compile Include="MenuAdmin\ABMClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuAdmin\ABMClientes.Designer.cs">
+      <DependentUpon>ABMClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuAdmin\ABMProveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuAdmin\ABMProveedores.Designer.cs">
+      <DependentUpon>ABMProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AbmCliente\AltaCliente.resx">
       <DependentUpon>AltaCliente.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCliente\bajasClientes.resx">
-      <DependentUpon>bajasClientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\listado_cliente.resx">
       <DependentUpon>listado_cliente.cs</DependentUpon>
@@ -202,20 +206,29 @@
     <EmbeddedResource Include="CargaCredito\CargaDeCredito.resx">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CargaCredito\DatosTarjeta.resx">
-      <DependentUpon>DatosTarjeta.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CargaDireccion\CargarDireccion.resx">
       <DependentUpon>CargarDireccion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InicioDeSesion.resx">
+    <EmbeddedResource Include="CrearOferta\CargaOferta.resx">
+      <DependentUpon>CargaOferta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\InicioDeSesion.resx">
       <DependentUpon>InicioDeSesion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuarios\RegistroUsuario.resx">
       <DependentUpon>RegistroUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\menu_principal.resx">
+      <DependentUpon>menu_principal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MenuABM.resx">
       <DependentUpon>MenuABM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuAdmin\ABMClientes.resx">
+      <DependentUpon>ABMClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuAdmin\ABMProveedores.resx">
+      <DependentUpon>ABMProveedores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -252,6 +265,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Interfaces\Logos-UTN.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

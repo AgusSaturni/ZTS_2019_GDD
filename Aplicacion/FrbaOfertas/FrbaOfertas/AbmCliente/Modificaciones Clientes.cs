@@ -15,6 +15,8 @@ namespace FrbaOfertas.AbmCliente
         public frm_clie_bajas()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void frm_clie_bajas_Load(object sender, EventArgs e)
@@ -36,18 +38,18 @@ namespace FrbaOfertas.AbmCliente
 
         private void bt_habilitar_Click(object sender, EventArgs e)
         {
-            conexionBD cadena_conexion = new conexionBD();
-            SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
             try
             {
-                SqlCommand command = new SqlCommand("habilitar_cliente", conexion);
+                SqlCommand command = new SqlCommand("habilitar_cliente", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
 
-                conexion.Open();
+                conexion_sql.Open();
                 command.ExecuteNonQuery();
-                conexion.Close();
+                conexion_sql.Close();
 
                 MessageBox.Show("Cliente Habilitado");
 
@@ -64,8 +66,8 @@ namespace FrbaOfertas.AbmCliente
         //este es guardar, no me deja cambiarle el nombre
         private void bt_deshabilitar_Click(object sender, EventArgs e)
         {
-            conexionBD cadena_conexion = new conexionBD();
-            SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
 
             if (txt_nombre.ReadOnly == true)
@@ -75,7 +77,7 @@ namespace FrbaOfertas.AbmCliente
             }
             try
             {
-                SqlCommand command = new SqlCommand("actualizar_cliente", conexion);
+                SqlCommand command = new SqlCommand("actualizar_cliente", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
 
 
@@ -93,9 +95,9 @@ namespace FrbaOfertas.AbmCliente
                 command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
                 command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
 
-                conexion.Open();
+                conexion_sql.Open();
                 command.ExecuteNonQuery();
-                conexion.Close();
+                conexion_sql.Close();
 
                 MessageBox.Show("Cliente Modificado");
 
@@ -162,8 +164,8 @@ namespace FrbaOfertas.AbmCliente
 
         private void bt_guardar_Click(object sender, EventArgs e)
         {
-            conexionBD cadena_conexion = new conexionBD();
-            SqlConnection conexion = new SqlConnection(cadena_conexion.get_conexion());
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
 
             if (txt_nombre.ReadOnly == true)
@@ -173,15 +175,15 @@ namespace FrbaOfertas.AbmCliente
             }
             try
             {
-                SqlCommand command = new SqlCommand("actualizar_cliente", conexion);
+                SqlCommand command = new SqlCommand("actualizar_cliente", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
 
 
                 //Si dejo espacios vacios en los TXT, el Int32.parse me tira error (Esto sucede para los datos numericos). Hay q revisar eso
-
+                command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = (txt_username.Text);
                 command.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = (txt_nombre.Text);
                 command.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = (txt_apellido.Text);
-                command.Parameters.AddWithValue("@DNI", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
+                command.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = Int64.Parse(txt_dni.Text);         
                 command.Parameters.AddWithValue("@telefono", SqlDbType.Float).Value = Int64.Parse(txt_telefono.Text);
                 command.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = (txt_email.Text);
                 command.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = (txt_fecha.Text);
@@ -191,9 +193,9 @@ namespace FrbaOfertas.AbmCliente
                 command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
                 command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
 
-                conexion.Open();
+                conexion_sql.Open();
                 command.ExecuteNonQuery();
-                conexion.Close();
+                conexion_sql.Close();
 
                 MessageBox.Show("Cliente Modificado");
 

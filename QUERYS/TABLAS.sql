@@ -1,11 +1,9 @@
 use GD2C2019
 
-SELECT *  FROM gd_esquema.Maestra 
-
-select * from USUARIOS
+--SELECT *  FROM gd_esquema.Maestra 
 
 ----CREACION DE TABLAS-------------
-
+select * from ROLES_POR_USUARIO where username = 'IRINA936'
 
  ---USUARIOS--------------------
 CREATE TABLE USUARIOS
@@ -14,7 +12,8 @@ CREATE TABLE USUARIOS
   Estado char(20) default 'Habilitado'
   PRIMARY KEY(Username)
 )
-
+--Usuario ADMIN GENERAL
+insert into USUARIOS (username,Password) values ('ADMIN_ALL',HASHBYTES('SHA2_256','frba1234'))
 
 ---Direccion---------------------------
 CREATE TABLE DIRECCION
@@ -55,18 +54,16 @@ CREATE TABLE CLIENTES
 )
 
 
-
 INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimiento)
 (SELECT DISTINCT Cli_Nombre, Cli_apellido,Cli_Dni,
 (SELECT Id_direccion from DIRECCION where Direccion = Cli_Direccion),
 Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 
 insert into USUARIOS (Username, Password) 
-(select ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3), HASHBYTES('SHA2_256',cast(dni as char)) from CLIENTES)
+(select  ltrim(rtrim(Nombre)) + ltrim(rtrim(SUBSTRING(convert(char(15),DNI),1,3))), HASHBYTES('SHA2_256',ltrim(rtrim(cast(dni as char)))) from CLIENTES)
 
 update CLIENTES 
-set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = ltrim(rtrim(nombre)) + SUBSTRING(convert(char(15),DNI),1,3)
-
+set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = ltrim(rtrim(Nombre)) + ltrim(rtrim(SUBSTRING(convert(char(15),DNI),1,3)))
 
 
 ---PROVEEDORES--------------------------
@@ -92,8 +89,10 @@ where provee_Rs is not null)
 
 
 insert into USUARIOS (Username, Password) 
-(select ltrim(rtrim(Razon_Social)) + SUBSTRING(convert(char(15),CUIT),1,3),HASHBYTES('SHA2_256',CUIT) from PROVEEDORES)
+(select 'pr' + ltrim(rtrim(cast(Indice as char))) + ltrim(rtrim(SUBSTRING(cast(CUIT as char),1,4))),HASHBYTES('SHA2_256',ltrim(rtrim(CUIT))) from PROVEEDORES)
 
+update PROVEEDORES 
+set username = B.username from PROVEEDORES as A,USUARIOS as B where B.Username =  ( select 'pr' + ltrim(rtrim(cast(Indice as char))) + ltrim(rtrim(SUBSTRING(cast(CUIT as char),1,4))) )
 
 
 -----------RUBROS------------------
@@ -111,12 +110,13 @@ INSERT INTO RUBROS (Proveedor_Id,rubro_descripcion)
 
 
 ---ADMINISTRATIVOS--------------
-CREATE TABLE ADMINISTRATIVOS
-	(Indice INT IDENTITY(1,1) NOT NULL,
-	Administrativo_Id AS 'AdministrativoID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	PRIMARY KEY(Administrativo_Id)
-	)
+--CREATE TABLE ADMINISTRATIVOS
+--(Indice INT IDENTITY(1,1) NOT NULL,
+--Administrativo_Id AS 'AdministrativoID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+--username char(50) null,
+--PRIMARY KEY(Administrativo_Id)
 
+--)
 
 ---OFERTA---------------
 CREATE TABLE OFERTAS
@@ -141,6 +141,7 @@ INSERT INTO OFERTAS
 on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
+select * from OFERTAS
 ---------------TARJETA------------
 
 CREATE TABLE TARJETAS
@@ -229,7 +230,7 @@ CREATE TABLE ROLES_POR_USUARIO
 
 insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Cliente',username from CLIENTES)
 insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Proveedor',username from PROVEEDORES)
-
+insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','ADMIN_ALL')
 
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES
@@ -239,6 +240,20 @@ CREATE TABLE FUNCIONES
   PRIMARY KEY(Funcion_Id)
 )
 
+insert into FUNCIONES (Descripcion) values ('ABM Roles')
+insert into FUNCIONES (Descripcion) values ('ABM Clientes')
+insert into FUNCIONES (Descripcion) values ('ABM Proveedores')
+insert into FUNCIONES (Descripcion) values ('Listado Estadistico')
+insert into FUNCIONES (Descripcion) values ('Comprar Oferta')
+insert into FUNCIONES (Descripcion) values ('Registrar Usuarios')
+insert into FUNCIONES (Descripcion) values ('Cargar Credito')
+insert into FUNCIONES (Descripcion) values ('Confeccion y Publicacion de Ofertas')
+insert into FUNCIONES (Descripcion) values ('Comprar Ofertas')
+insert into FUNCIONES (Descripcion) values ('Entrega/Consumo de Oferta')
+insert into FUNCIONES (Descripcion) values ('Facturar a Proveedor')
+
+
+
 ---Funcione Por Rol------------
 CREATE TABLE FUNCIONES_POR_ROL
 (Rol_Id char(20) not null,
@@ -246,6 +261,15 @@ CREATE TABLE FUNCIONES_POR_ROL
  FOREIGN KEY(Rol_Id) REFERENCES ROLES(Rol_Id),
  FOREIGN KEY(Funcion_Id) REFERENCES FUNCIONES(Funcion_Id)
 )
+
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID1')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID2')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID3')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID4')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID5')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID6')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID7')
+
 
 
 ---COMPRAS----------------------
