@@ -93,7 +93,7 @@ namespace FrbaOfertas.CrearOferta
             precio_lista.Value = PrecioLista.Text;
             cant_disponible.Value = Cantidad.Value;
             codigo.Value = CrearPassword(50);
-            proveedor_ref.Value = "Proveedor_hardcoded";
+            proveedor_ref.Value = username;
 
             command.ExecuteNonQuery();
             MessageBox.Show("Hecho");

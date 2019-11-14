@@ -77,6 +77,16 @@ namespace FrbaOfertas
         private void button1_Click(object sender, EventArgs e)
         {
 
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
+
+             SqlCommand verificacion_usuario = new SqlCommand("verificar_existencia_de_usuario", conexion_sql);
+             verificacion_usuario.CommandType = CommandType.StoredProcedure;
+
+            verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
+                 
+
+
             int indice =  Rol.SelectedIndex;
             string usuario;
             string password;
@@ -85,30 +95,44 @@ namespace FrbaOfertas
             usuario = Usuario.Text;        
             password = Password.Text;
 
-           
+        
 
-            if (indice != -1 && usuario != "" && password != "")
+            try
             {
-                rol = Rol.Items[indice];
-                
-                switch (rol.ToString())
+                conexion_sql.Open();
+                verificacion_usuario.ExecuteNonQuery();
+
+                if (indice != -1 && usuario != "" && password != "")
                 {
-                    case "Cliente":
-                        Form registroCliente = new AbmCliente.AltaCliente(usuario, password, rol.ToString());
-                        this.Visible = false;
-                        registroCliente.Show();
-                        break;
-                    case "Proveedor":
-                        Form registroProveedor = new AbmProveedor.AltaProveedor(usuario, password, rol.ToString());
-                        this.Visible = false;
-                        registroProveedor.Show();
-                        break;
+
+                    rol = Rol.Items[indice];
+
+
+                    switch (rol.ToString())
+                    {
+                        case "Cliente":
+                            Form registroCliente = new AbmCliente.AltaCliente(usuario, password, rol.ToString());
+                            this.Visible = false;
+                            registroCliente.Show();
+                            break;
+                        case "Proveedor":
+                            Form registroProveedor = new AbmProveedor.AltaProveedor(usuario, password, rol.ToString());
+                            this.Visible = false;
+                            registroProveedor.Show();
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Faltan completar campos");
                 }
             }
-            else {
-                MessageBox.Show("Faltan completar campos");
+            catch(Exception)
+            {
+                MessageBox.Show("Nombre de Usuario ya existente. Pruebe otro.");
             }
-          
+
+            
         }
 
         private void bt_cancelar_Click(object sender, EventArgs e)

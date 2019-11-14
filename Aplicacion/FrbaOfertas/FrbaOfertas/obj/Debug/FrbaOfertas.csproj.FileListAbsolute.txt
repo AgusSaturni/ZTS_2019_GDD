@@ -27,7 +27,6 @@ C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.pdb
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csprojResolveAssemblyReference.cache
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.AltaCliente.resources
-C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.bajasClientes.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.frm_listado_clientes.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Form1.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CargaDireccion.CargarDireccion.resources
@@ -39,7 +38,6 @@ C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.AltaProveedor.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.MenuCliente.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.CargaDeCredito.resources
-C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CargaCredito.DatosTarjeta.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.frm_clie_bajas.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.listado_proveedores.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.Modificaciones_Proveedores.resources
@@ -125,3 +123,7 @@ C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GD
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMProveedores.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Properties.Resources.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.Cache
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CrearOferta.CargaOferta.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Interfaces.menu_principal.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMClientes.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMProveedores.resources

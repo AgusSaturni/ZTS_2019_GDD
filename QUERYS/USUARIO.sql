@@ -1,75 +1,60 @@
-------REGISTRO_USUARIO------------
-CREATE PROCEDURE registrar_usuario(@Username char(50), @Password char(50),@Rol char(20))
+--HACER ESTO PRIMERO--
+drop procedure registrar_Domicilio
+drop procedure registrar_usuario
+drop procedure registrar_usuario_cliente
+drop procedure registrar_usuario_proveedor
+
+
+------REGISTRO_USUARIO_Cliente------------
+CREATE PROCEDURE registrar_usuario_cliente(@Username char(50), @Password char(50),@Rol char(20),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
+									  ,@ciudad char(50),@nro_piso int,@Depto char(10))
 AS BEGIN
-	IF NOT EXISTS(select * from USUARIOS where Username = @Username)
-		  begin  
+
+DECLARE @direcc_id int
+set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+
 			insert into USUARIOS(Username,Password)
 			values(@username,  HASHBYTES('SHA2_256',(rtrim(@password))))
 
 			insert into ROLES_POR_USUARIO(Rol_Id,Username)
 			values(@Rol,@username)
-		  end
-	ELSE
-		  begin
-			THROW 50000,'Ya existe ese Nombre de Usuario',1
-		  end 
-END
-	
--------------------------------------------------------
-CREATE PROCEDURE registrar_usuario_cliente(@username char(50),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,
-											@Direccion char(100))
 
-AS BEGIN
+			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
+			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 
-DECLARE @direcc_id int
-set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
-
-	IF NOT EXISTS(select nombre,apellido,DNI,telefono,mail,fecha_nacimiento from CLIENTES where dni=@DNI)
-		BEGIN
-		
 			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
-			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento)
-		END
-	ELSE
-		BEGIN
-			THROW 50005,'ALERTA REGISTRO CLIENTE GEMELO',1
-		END
+			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento)	  
+	
 END
 
-drop procedure registrar_usuario_cliente
 --------------------------------------------------------------
 
-CREATE PROCEDURE registrar_usuario_proveedor(@username char(50),@razon_social char(50),@mail char(50),
-											@telefono numeric(18,0),@cuit char(20),@rubro char(255),@nombre_contacto char(50),@Direccion char(100))									
+CREATE PROCEDURE registrar_usuario_proveedor(@Username char(50), @Password char(50),@Rol char(20),@Razon_social char(50),@Mail char(50),
+											@Telefono numeric(18,0),@CUIT char(20),@Rubro char(255),@Nombre_contacto char(50),@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
+									  ,@Ciudad char(50),@Nro_piso int,@Depto char(10))									
 AS BEGIN
 
 
 DECLARE @direcc_id int
 set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
 
-	IF NOT EXISTS(select * from PROVEEDORES where razon_social = @razon_social) and NOT EXISTS (select * from PROVEEDORES where cuit = @cuit)
-		begin
+
+			insert into USUARIOS(Username,Password)
+			values(@username,  HASHBYTES('SHA2_256',(rtrim(@password))))
+
+			insert into ROLES_POR_USUARIO(Rol_Id,Username)
+			values(@Rol,@username)
+
+			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
+			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 	
+		
 			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto)
 			values(@razon_social,@username,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
 
 			insert into RUBROS(Proveedor_Id,Rubro_descripcion)
 			(select proveedor_id,@rubro from PROVEEDORES where Razon_Social = @razon_social)
-		end
-	ELSE
-		begin
-			THROW 50004,'PROVEEDOR YA REGISTRADO',1
-		end
-END
-
-
-
---------------Registrar Domicilio-------------------------
-CREATE PROCEDURE registrar_Domicilio(@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
-									  ,@ciudad char(50),@nro_piso int,@Depto char(10))
-AS BEGIN
-	insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
-			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
+	
 END
 
 
@@ -103,6 +88,26 @@ AS BEGIN
 update USUARIOS
 set Estado = 'Habilitado' where username = @username
 END
+
+-------------------Verificacion existencia usuario------------------
+
+CREATE PROCEDURE verificar_existencia_de_usuario(@username char(50))
+as begin
+if exists(select * from USUARIOS where Username = RTRIM(@username))
+	begin
+		throw 50001,'Error, nombre de usuario ya existente. Elija otro.',1
+	end
+end
+
+-----------------Verificacion existencia cliente gemelo--------------
+CREATE PROCEDURE verificar_existencia_cliente_gemelo(@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime)
+as begin
+	if exists(select * from CLIENTES where nombre=@nombre and Apellido = @apellido and DNI=@DNI and Telefono = @telefono and Mail=@mail and Fecha_Nacimiento =@fecha_nacimiento)
+		OR EXISTS (select * from CLIENTES where DNI = @DNI)
+		begin
+			throw 50004,'Error cliente gemelo',1
+		end
+end
 
 -------------VERIFICACION_LOGUEO--------------------
 CREATE PROCEDURE verificar_usuario(@username char(50),@password char(50))
