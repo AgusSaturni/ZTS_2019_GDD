@@ -269,6 +269,7 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID4'
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID5')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID6')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID7')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Proveedor','FuncionID8')
 
 
 

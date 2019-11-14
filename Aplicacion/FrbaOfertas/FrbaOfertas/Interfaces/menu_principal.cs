@@ -14,6 +14,7 @@ namespace FrbaOfertas.Interfaces
     public partial class menu_principal : Form
     {
         private string username;
+        private string[] vec_funciones;
 
         public menu_principal()
         {
@@ -82,6 +83,9 @@ namespace FrbaOfertas.Interfaces
                         credito.Show();
                         break;
                     case "Confeccion y Publicacion de Ofertas":
+                        this.Hide();
+                        Form carga_oferta = new CrearOferta.CargaOferta(username);
+                        carga_oferta.Show();
                         break;
                     case "Comprar Ofertas":
                         break;
