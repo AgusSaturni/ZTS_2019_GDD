@@ -9,9 +9,8 @@ drop procedure registrar_usuario_proveedor
 CREATE PROCEDURE registrar_usuario_cliente(@Username char(50), @Password char(50),@Rol char(20),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
 									  ,@ciudad char(50),@nro_piso int,@Depto char(10))
 AS BEGIN
-
-DECLARE @direcc_id int
-set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+	begin try
+		begin transaction
 
 			insert into USUARIOS(Username,Password)
 			values(@username,  HASHBYTES('SHA2_256',(rtrim(@password))))
@@ -22,9 +21,19 @@ set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = 
 			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
 			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 
+			
+DECLARE @direcc_id int
+set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+
+
 			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
 			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento)	  
 	
+		commit transaction
+	end try
+	begin catch
+			rollback transaction
+	end catch
 END
 
 --------------------------------------------------------------
@@ -33,11 +42,8 @@ CREATE PROCEDURE registrar_usuario_proveedor(@Username char(50), @Password char(
 											@Telefono numeric(18,0),@CUIT char(20),@Rubro char(255),@Nombre_contacto char(50),@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
 									  ,@Ciudad char(50),@Nro_piso int,@Depto char(10))									
 AS BEGIN
-
-
-DECLARE @direcc_id int
-set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
-
+	begin try
+		begin transaction
 
 			insert into USUARIOS(Username,Password)
 			values(@username,  HASHBYTES('SHA2_256',(rtrim(@password))))
@@ -47,14 +53,24 @@ set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = 
 
 			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
 			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
-	
+		
+
+DECLARE @direcc_id int
+set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+
 		
 			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto)
 			values(@razon_social,@username,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
 
 			insert into RUBROS(Proveedor_Id,Rubro_descripcion)
 			(select proveedor_id,@rubro from PROVEEDORES where Razon_Social = @razon_social)
-	
+		
+		commit transaction
+	end try
+	begin catch
+			rollback transaction
+	end catch
+
 END
 
 
