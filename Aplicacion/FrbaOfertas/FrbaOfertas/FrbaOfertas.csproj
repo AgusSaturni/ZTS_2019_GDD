@@ -115,6 +115,12 @@
     <Compile Include="CargaCredito\CargaDeCredito.Designer.cs">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.Designer.cs">
+      <DependentUpon>Entrega_ConsumoOferta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manejo Logico\ConexionBD.cs" />
     <Compile Include="CrearOferta\CargaOferta.cs">
       <SubType>Form</SubType>
@@ -211,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\CargaOferta.resx">
       <DependentUpon>CargaOferta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.resx">
+      <DependentUpon>Entrega_ConsumoOferta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\InicioDeSesion.resx">
       <DependentUpon>InicioDeSesion.cs</DependentUpon>

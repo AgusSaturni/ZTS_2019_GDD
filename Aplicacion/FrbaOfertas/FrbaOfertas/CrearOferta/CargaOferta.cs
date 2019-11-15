@@ -45,7 +45,6 @@ namespace FrbaOfertas.CrearOferta
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
@@ -98,7 +97,6 @@ namespace FrbaOfertas.CrearOferta
             command.ExecuteNonQuery();
             MessageBox.Show("Hecho");
             conn.Close();
-
         }
     }
 
