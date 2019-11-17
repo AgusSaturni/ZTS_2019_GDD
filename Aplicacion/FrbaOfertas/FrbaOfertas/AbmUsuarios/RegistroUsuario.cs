@@ -27,8 +27,6 @@ namespace FrbaOfertas
         public RegistroUsuario(object rol_recibido)
         {
             InitializeComponent();
-            MaximizeBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             rol = rol_recibido;
             if (rol.ToString() == "Proveedor")
             {
@@ -84,8 +82,6 @@ namespace FrbaOfertas
              verificacion_usuario.CommandType = CommandType.StoredProcedure;
 
             verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
-                 
-
 
             int indice =  Rol.SelectedIndex;
             string usuario;
@@ -95,7 +91,6 @@ namespace FrbaOfertas
             usuario = Usuario.Text;        
             password = Password.Text;
 
-        
 
             try
             {
@@ -121,6 +116,7 @@ namespace FrbaOfertas
                             registroProveedor.Show();
                             break;
                     }
+                    this.Hide();
                 }
                 else
                 {
@@ -138,6 +134,8 @@ namespace FrbaOfertas
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+          //  Form inicio_sension = new Interfaces.InicioDeSesion();
+          //  inicio_sension.Show();
 
         }
    

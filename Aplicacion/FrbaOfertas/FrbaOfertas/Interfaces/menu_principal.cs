@@ -65,6 +65,8 @@ namespace FrbaOfertas.Interfaces
                 switch (comboBox_funciones.SelectedItem.ToString())
                 {
                     case "ABM Roles":
+                        Form menu_rol = new MenuAdmin.ABMRoles();
+                        menu_rol.Show();
                         break;
                     case "ABM Clientes":
                         Form formulario = new MenuAdmin.ABMClientes();
@@ -98,11 +100,13 @@ namespace FrbaOfertas.Interfaces
                         registro.Show();
                         break;
                 }
+                this.Hide();
             }
             else
             {
                 MessageBox.Show("Elija una acción a realizar");
             }
+
 
         }
 

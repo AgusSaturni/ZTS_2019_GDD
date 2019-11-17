@@ -113,6 +113,11 @@ namespace FrbaOfertas.AbmCliente
 
         private void contenedor_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (contenedor_clientes.Rows.Count == 0) 
+            {
+                MessageBox.Show("Aplique algun filtro.");
+                return;
+            }
             if (contenedor_clientes.CurrentCell.ColumnIndex == 0)
             {
                 conexionBD conexion = conexionBD.getConexion();

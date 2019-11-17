@@ -1,8 +1,13 @@
 --------BAJA_LOGICA_CLIENTE-------------------------
+drop procedure baja_logica_cliente
+drop procedure Eliminar_Cliente
+drop procedure habilitar_cliente
+drop procedure actualizar_cliente
+
 CREATE PROCEDURE baja_logica_cliente(@DNI_CLIENTE numeric(18,0))
 AS BEGIN
 	
-	DECLARE @username char(50) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
+	DECLARE @username varchar(255) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
 
 	if exists (select Estado from CLIENTES where dni = @DNI_CLIENTE and Estado = 'Habilitado')
 		begin
@@ -21,7 +26,7 @@ END
 CREATE PROCEDURE habilitar_cliente(@DNI_CLIENTE numeric(18,0))
 AS BEGIN
 
-	DECLARE @username char(50) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
+	DECLARE @username varchar(255) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
 
 	if((select Estado from CLIENTES where dni = @DNI_CLIENTE) = 'Inhabilitado')
 		begin
@@ -38,8 +43,8 @@ END
 
 -----------------------------ACTUALIZAR_CLIENTE------------------------------------------------------  
 
-Create Procedure actualizar_cliente(@username char(50),@nombre char(50), @apellido char(50), @DNI numeric(18,0), @telefono numeric(18,0),
-@mail char(50),@fecha char(50), @direccion char(100), @CP int, @Loc char(50), @Npiso int, @depto char(10))
+Create Procedure actualizar_cliente(@username varchar(255),@nombre varchar(255), @apellido varchar(255), @DNI numeric(18,0), @telefono numeric(18,0),
+@mail varchar(255),@fecha varchar(255), @direccion varchar(255), @CP int, @Loc varchar(255), @Npiso int, @depto varchar(255))
 AS BEGIN
 
 	declare @direcID int = (select direccion from CLIENTES where username = @username)
@@ -64,4 +69,3 @@ AS BEGIN
 
 END
 
-drop procedure actualizar_cliente

@@ -17,6 +17,8 @@ namespace FrbaOfertas.AbmProveedor
         public listado_proveedores()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void bt_buscar_Click(object sender, EventArgs e)
@@ -93,6 +95,11 @@ namespace FrbaOfertas.AbmProveedor
 
         private void contenedor_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (contenedor_proveedores.Rows.Count == 0)
+            {
+                MessageBox.Show("Aplique algun filtro.");
+                return;
+            }
             if (contenedor_proveedores.CurrentCell.ColumnIndex == 0)
             {
                 conexionBD conexion = conexionBD.getConexion();
@@ -145,6 +152,7 @@ namespace FrbaOfertas.AbmProveedor
                     formulario_bajas.txt_ciudad.Text = row.Cells[13].Value.ToString();
                     formulario_bajas.txt_piso.Text = row.Cells[14].Value.ToString();
                     formulario_bajas.txt_depto.Text = row.Cells[15].Value.ToString();
+                    formulario_bajas.txt_estado.Text = row.Cells[16].Value.ToString();
 
 
 

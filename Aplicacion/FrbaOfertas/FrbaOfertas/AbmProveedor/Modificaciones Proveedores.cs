@@ -16,6 +16,8 @@ namespace FrbaOfertas.AbmProveedor
         public Modificaciones_Proveedores()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void bt_habilitar_Click(object sender, EventArgs e)
@@ -79,13 +81,17 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Modifique algun parametro");
                 return;
             }
+            if (this.verificar_parametros()) 
+            {
+                MessageBox.Show("Complete Todos los Parametros");
+                return;
+            }
+
             try
             {
                 SqlCommand command = new SqlCommand("actualizar_proveedor", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
 
-
-                //Si dejo espacios vacios en los TXT, el Int32.parse me tira error (Esto sucede para los datos numericos). Hay q revisar eso
                 command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = (txt_username.Text);
                 command.Parameters.AddWithValue("@razonSocial", SqlDbType.Char).Value = (txt_RazonSoc.Text);
                 command.Parameters.AddWithValue("@rubro", SqlDbType.Char).Value = (txt_Rubro.Text);
@@ -114,6 +120,18 @@ namespace FrbaOfertas.AbmProveedor
             }
 
             this.Hide();
+        }
+
+        private bool verificar_parametros()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void txt_estado_TextChanged(object sender, EventArgs e)

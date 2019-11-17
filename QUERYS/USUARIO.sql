@@ -3,11 +3,12 @@ drop procedure registrar_Domicilio
 drop procedure registrar_usuario
 drop procedure registrar_usuario_cliente
 drop procedure registrar_usuario_proveedor
+drop procedure verificar_usuario
 
 
 ------REGISTRO_USUARIO_Cliente------------
-CREATE PROCEDURE registrar_usuario_cliente(@Username char(50), @Password char(50),@Rol char(20),@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime,@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
-									  ,@ciudad char(50),@nro_piso int,@Depto char(10))
+CREATE PROCEDURE registrar_usuario_cliente(@Username varchar(255), @Password varchar(255),@Rol varchar(255),@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime,@Direccion varchar(255),@codigo_Postal numeric(4,0),@Localidad varchar(255)
+									  ,@ciudad varchar(255),@nro_piso int,@Depto varchar(255))
 AS BEGIN
 	begin try
 		begin transaction
@@ -22,8 +23,8 @@ AS BEGIN
 			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 
 			
-DECLARE @direcc_id int
-set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+			DECLARE @direcc_id int
+			set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
 
 
 			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
@@ -38,9 +39,9 @@ END
 
 --------------------------------------------------------------
 
-CREATE PROCEDURE registrar_usuario_proveedor(@Username char(50), @Password char(50),@Rol char(20),@Razon_social char(50),@Mail char(50),
-											@Telefono numeric(18,0),@CUIT char(20),@Rubro char(255),@Nombre_contacto char(50),@Direccion char(100),@codigo_Postal numeric(4,0),@Localidad char(50)
-									  ,@Ciudad char(50),@Nro_piso int,@Depto char(10))									
+CREATE PROCEDURE registrar_usuario_proveedor(@Username varchar(255), @Password varchar(255),@Rol varchar(255),@Razon_social varchar(255),@Mail varchar(255),
+											@Telefono numeric(18,0),@CUIT varchar(255),@Rubro varchar(255),@Nombre_contacto varchar(255),@Direccion varchar(255),@codigo_Postal numeric(4,0),@Localidad varchar(255)
+									  ,@Ciudad varchar(255),@Nro_piso int,@Depto varchar(255))									
 AS BEGIN
 	begin try
 		begin transaction
@@ -55,8 +56,8 @@ AS BEGIN
 			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
 		
 
-DECLARE @direcc_id int
-set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+			DECLARE @direcc_id int
+			set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
 
 		
 			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto)
@@ -76,7 +77,7 @@ END
 
 -------------MODIFICACION_PASSWORD--------HAY QUE RETOCAR----------------
 
-CREATE PROCEDURE modificar_password(@username char(50), @vieja_password char(50), @nueva_password char(50))
+CREATE PROCEDURE modificar_password(@username varchar(255), @vieja_password varchar(255), @nueva_password varchar(255))
 AS BEGIN
 IF((select password from USUARIOS where username = @username) = HASHBYTES('SHA2_256',@vieja_password) )
 		begin
@@ -91,23 +92,21 @@ END
 
 
 -------------BAJA_LOGICA_USUARIO--------------------------
-
-CREATE PROCEDURE baja_usuario(@username char(50))
+CREATE PROCEDURE baja_usuario(@username varchar(255))
 AS BEGIN
 update USUARIOS
 set Estado = 'Deshabilitado' where username = @username
 END
 
 ------------HABILITACION_USUARIO---------------------------
-CREATE PROCEDURE habilitacion_usuario(@username char(50))
+CREATE PROCEDURE habilitacion_usuario(@username varchar(255))
 AS BEGIN
 update USUARIOS
 set Estado = 'Habilitado' where username = @username
 END
 
 -------------------Verificacion existencia usuario------------------
-
-CREATE PROCEDURE verificar_existencia_de_usuario(@username char(50))
+CREATE PROCEDURE verificar_existencia_de_usuario(@username varchar(255))
 as begin
 if exists(select * from USUARIOS where Username = RTRIM(@username))
 	begin
@@ -116,7 +115,7 @@ if exists(select * from USUARIOS where Username = RTRIM(@username))
 end
 
 -----------------Verificacion existencia cliente gemelo--------------
-CREATE PROCEDURE verificar_existencia_cliente_gemelo(@nombre char(20),@apellido char(20),@DNI numeric(18,0),@telefono numeric(18,0),@mail char(50),@fecha_nacimiento datetime)
+CREATE PROCEDURE verificar_existencia_cliente_gemelo(@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime)
 as begin
 	if exists(select * from CLIENTES where nombre=@nombre and Apellido = @apellido and DNI=@DNI and Telefono = @telefono and Mail=@mail and Fecha_Nacimiento =@fecha_nacimiento)
 		OR EXISTS (select * from CLIENTES where DNI = @DNI)
@@ -126,7 +125,8 @@ as begin
 end
 
 -------------VERIFICACION_LOGUEO--------------------
-CREATE PROCEDURE verificar_usuario(@username char(50),@password char(50))
+
+CREATE PROCEDURE verificar_usuario(@username varchar(255),@password varchar(255))
 AS BEGIN
 DECLARE @contraseña_encriptada char(255);
 set @contraseña_encriptada = HASHBYTES('SHA2_256',(rtrim(@password)))
@@ -138,7 +138,7 @@ END
 
 
 -------------VERIFICACION_ROL_Administrador--------
-CREATE PROCEDURE verificar_rol_administrador(@username char(50))
+CREATE PROCEDURE verificar_rol_administrador(@username varchar(255))
 as begin
 	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Administrador' and Username = @username)
 	BEGIN
@@ -147,7 +147,7 @@ as begin
 end
 
 -------------VERIFICACION_ROL_Cliente--------
-CREATE PROCEDURE verificar_rol_cliente(@username char(50))
+CREATE PROCEDURE verificar_rol_cliente(@username varchar(255))
 as begin
 	BEGIN
 	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Cliente'and Username = @username)
@@ -157,7 +157,7 @@ end
 
 
 -------------VERIFICACION_ROL_Proveedor--------
-CREATE PROCEDURE verificar_rol_proveedor(@username char(50))
+CREATE PROCEDURE verificar_rol_proveedor(@username varchar(255))
 as begin
 	BEGIN
 	if not exists(select username from ROLES_POR_USUARIO where Rol_Id = 'Proveedor'and Username = @username)

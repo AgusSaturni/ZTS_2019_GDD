@@ -16,6 +16,8 @@ namespace FrbaOfertas.MenuAdmin
         public ABMClientes()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -28,6 +30,13 @@ namespace FrbaOfertas.MenuAdmin
         {
             Form alta = new RegistroUsuario("Cliente");
             alta.Show();
+        }
+
+        private void bt_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form menu = new Interfaces.menu_principal();
+            menu.Show();
         }
     }
 }

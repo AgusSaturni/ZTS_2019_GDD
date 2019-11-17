@@ -44,18 +44,22 @@ namespace FrbaOfertas.Manejo_Logico
             
             conexion_sql.Open();
             //------------------------------------------------------------Ojo si tira error hacer trim del username
-            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion FROM ROLES_POR_USUARIO RPU join FUNCIONES_POR_ROL FPR  on RPU.Rol_Id = FPR.Rol_Id JOIN Funciones F on FPR.Funcion_Id = F.Funcion_Id where username = '" + username.Trim() + "'";
+            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion, R.Estado FROM ROLES_POR_USUARIO RPU join FUNCIONES_POR_ROL FPR  on RPU.Rol_Id = FPR.Rol_Id JOIN Funciones F on FPR.Funcion_Id = F.Funcion_Id JOIN ROLES R on R.Rol_Id = RPU.Rol_Id where username = '" + username.Trim() + "'";
  
             SqlCommand cmd = new SqlCommand(consulta_roles, conexion_sql);
             SqlDataReader reader = cmd.ExecuteReader();
  
             while (reader.Read())
             {
-                if (!Roles.Any(x => x == reader[0].ToString()))
+                if(reader[2].ToString() != "Deshabilitado")
                 {
-                    Roles.Add(reader[0].ToString().Trim());
-                } 
-                Permisos.Add(reader[1].ToString().Trim());
+                    if (!Roles.Any(x => x == reader[0].ToString().Trim()))
+                    {
+                        Roles.Add(reader[0].ToString().Trim());
+                    }
+                    Permisos.Add(reader[1].ToString().Trim());
+ 
+                }
             }
             conexion_sql.Close();
 
@@ -63,6 +67,7 @@ namespace FrbaOfertas.Manejo_Logico
         }
 
         public List<String> get_permisos() { return this.Permisos; }
+        public List<String> get_roles() { return this.Roles; }
         public String get_username() { return this.username;  }
      }
 

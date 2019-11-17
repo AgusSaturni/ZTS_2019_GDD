@@ -1,5 +1,6 @@
+
 -----------------BAJA_LOGICA_PROVEEDOR-------------------------
-CREATE PROCEDURE baja_logica_proveedor(@CUIT char(20))
+CREATE PROCEDURE baja_logica_proveedor(@CUIT varchar(255))
 AS BEGIN
 	if((select Estado from PROVEEDORES where CUIT = @CUIT) = 'Habilitado')
 		begin
@@ -15,7 +16,7 @@ END
 
 
 -----------------HABILITAR_PROVEEDOR-----------------------------
-CREATE PROCEDURE habilitar_proveedor(@CUIT char(20))
+CREATE PROCEDURE habilitar_proveedor(@CUIT varchar(255))
 AS BEGIN
 	if((select Estado from PROVEEDORES where cuit = @CUIT) = 'Inhabilitado')
 		begin
@@ -28,8 +29,8 @@ AS BEGIN
 		END
 END
 --------------------actualizar_proveedor---------------------------
-Create Procedure actualizar_proveedor(@username char(50),@razonSocial char(50), @rubro char(50), @CUIT char(20), @telefono numeric(18,0),
-@mail char(50),@contacto char(50), @direccion char(100), @CP int, @Loc char(50), @Npiso int, @depto char(10))
+Create Procedure actualizar_proveedor(@username varchar(255),@razonSocial varchar(255), @rubro varchar(255), @CUIT varchar(255), @telefono numeric(18,0),
+@mail varchar(255),@contacto varchar(255), @direccion varchar(255), @CP int, @Loc varchar(255), @Npiso int, @depto varchar(255))
 AS BEGIN
 
 	declare @direcID int = (select direccion from PROVEEDORES where username = @username)
@@ -52,10 +53,10 @@ AS BEGIN
 			Nombre_contacto = @contacto
 	where username = @username
 
-declare @id_proveedor varchar(19) = (select Proveedor_Id from PROVEEDORES where username = @username)
+	declare @id_proveedor varchar(19) = (select Proveedor_Id from PROVEEDORES where username = @username)
 
 	update RUBROS
 	set
 	rubro_descripcion = @rubro
-	where Proveedor_Id =@id_proveedor
+	where Proveedor_Id = @id_proveedor
 END

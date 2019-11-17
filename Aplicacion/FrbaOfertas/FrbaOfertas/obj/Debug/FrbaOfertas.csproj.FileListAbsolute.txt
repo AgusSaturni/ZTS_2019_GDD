@@ -57,9 +57,7 @@ C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacio
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.AltaProveedor.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.listado_proveedores.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.Modificaciones_Proveedores.resources
-C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Form1.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.CargaDeCredito.resources
-C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CargaCredito.DatosTarjeta.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CargaDireccion.CargarDireccion.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.InicioDeSesion.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.RegistroUsuario.resources
@@ -128,3 +126,9 @@ C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMClientes.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMProveedores.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Entrega_ConsumoOferta.Entrega_ConsumoOferta.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CrearOferta.CargaOferta.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Entrega_ConsumoOferta.Entrega_ConsumoOferta.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMClientes.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMProveedores.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMRoles.resources
+C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Modificacion_Roles.resources

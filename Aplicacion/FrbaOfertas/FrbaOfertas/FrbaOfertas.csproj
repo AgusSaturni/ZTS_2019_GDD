@@ -91,11 +91,11 @@
     <Compile Include="AbmProveedor\Modificaciones Proveedores.Designer.cs">
       <DependentUpon>Modificaciones Proveedores.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\Modificacion_Roles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\Modificacion_Roles.Designer.cs">
+      <DependentUpon>Modificacion_Roles.cs</DependentUpon>
     </Compile>
     <Compile Include="CargaDireccion\CargarDireccion.cs">
       <SubType>Form</SubType>
@@ -163,6 +163,7 @@
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manejo Logico\helperControls.cs" />
     <Compile Include="Manejo Logico\Singleton Usuario.cs" />
     <Compile Include="MenuABM.cs">
       <SubType>Form</SubType>
@@ -181,6 +182,12 @@
     </Compile>
     <Compile Include="MenuAdmin\ABMProveedores.Designer.cs">
       <DependentUpon>ABMProveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuAdmin\ABMRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuAdmin\ABMRoles.Designer.cs">
+      <DependentUpon>ABMRoles.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,8 +213,8 @@
     <EmbeddedResource Include="AbmProveedor\Modificaciones Proveedores.resx">
       <DependentUpon>Modificaciones Proveedores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\Modificacion_Roles.resx">
+      <DependentUpon>Modificacion_Roles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CargaCredito\CargaDeCredito.resx">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
@@ -238,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MenuAdmin\ABMProveedores.resx">
       <DependentUpon>ABMProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuAdmin\ABMRoles.resx">
+      <DependentUpon>ABMRoles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -278,6 +288,7 @@
   <ItemGroup>
     <Content Include="Interfaces\Logos-UTN.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
