@@ -1,6 +1,6 @@
 -------------CARGAR_SALDO---------------------
-CREATE PROCEDURE cargar_saldo(@username char(50),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_pago char(20),@monto numeric(10,0),
-							  @fecha char(10))
+CREATE PROCEDURE cargar_saldo(@username varchar(50),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_pago varchar(20),@monto numeric(10,0),
+							  @fecha varchar(10))
 AS BEGIN
 
 declare @fecha_convertida datetime

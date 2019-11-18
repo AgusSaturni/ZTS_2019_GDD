@@ -41,8 +41,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.Cantidad = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
+            this.CantMax = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Cantidad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CantMax)).BeginInit();
             this.SuspendLayout();
             // 
             // Descripcion
@@ -159,15 +161,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // CantMax
+            // 
+            this.CantMax.Location = new System.Drawing.Point(51, 339);
+            this.CantMax.Name = "CantMax";
+            this.CantMax.Size = new System.Drawing.Size(120, 20);
+            this.CantMax.TabIndex = 37;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(22, 297);
+            this.label5.Location = new System.Drawing.Point(22, 310);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(182, 16);
-            this.label5.TabIndex = 37;
-            this.label5.Text = "Proveedor Referenciado";
+            this.label5.Size = new System.Drawing.Size(212, 16);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "Cantidad máxima por Usuario";
             // 
             // CargaOferta
             // 
@@ -175,6 +184,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 378);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.CantMax);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Cantidad);
             this.Controls.Add(this.label7);
@@ -191,6 +201,7 @@
             this.Name = "CargaOferta";
             this.Text = "Carga de Oferta";
             ((System.ComponentModel.ISupportInitialize)(this.Cantidad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CantMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,6 +222,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown Cantidad;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.NumericUpDown CantMax;
         private System.Windows.Forms.Label label5;
     }
 }

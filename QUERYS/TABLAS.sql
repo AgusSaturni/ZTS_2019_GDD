@@ -1,4 +1,6 @@
 use GD2C2019
+select * from gd_esquema.Maestra
+
 
 --FORMA DE BORRAR TODO DE UNA
 /*
@@ -12,7 +14,6 @@ drop table PROVEEDORES
 drop table DIRECCION
 drop table USUARIOS
 */
-SELECT * FROM CLIENTES
 
 ----CREACION DE TABLAS-------------
  ---USUARIOS--------------------
@@ -123,14 +124,6 @@ INSERT INTO RUBROS (Proveedor_Id,rubro_descripcion)
 (SELECT DISTINCT Proveedor_Id,Provee_Rubro from gd_esquema.Maestra f join proveedores p on f.Provee_RS=p.Razon_Social)
 
 
----ADMINISTRATIVOS--------------
---CREATE TABLE ADMINISTRATIVOS
---(Indice INT IDENTITY(1,1) NOT NULL,
---Administrativo_Id AS 'AdministrativoID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
---username char(50) null,
---PRIMARY KEY(Administrativo_Id)
-
---)
 
 ---OFERTA---------------
 CREATE TABLE OFERTAS
@@ -142,22 +135,22 @@ CREATE TABLE OFERTAS
 	Fecha_Vencimiento datetime not null,
 	Descripcion varchar(255),
 	Cantidad_disponible numeric(18,0),
-	Fecha_Compra datetime,
+	cantidad_maxima_por_usuario int,
 	Codigo varchar(255) not null,
 	Proveedor_referenciado varchar(19)
 	PRIMARY KEY(Oferta_Id),
 	FOREIGN KEY(Proveedor_referenciado) REFERENCES PROVEEDORES (Proveedor_Id)
 )
 
---revisar TIRA 284 MIL LINEAS
-delete from OFERTAS
+
 INSERT INTO OFERTAS
-(Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,fecha_compra,codigo)
-(select p.Proveedor_id, Oferta_Precio, Oferta_Precio_Ficticio,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Descripcion,Oferta_Cantidad,Oferta_Fecha_Compra,Oferta_Codigo from gd_esquema.Maestra gd join proveedores p
+(Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,cantidad_maxima_por_usuario,codigo)
+(select distinct p.Proveedor_id, Oferta_Precio, Oferta_Precio_Ficticio,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Descripcion,Oferta_Cantidad,Oferta_Cantidad,Oferta_Codigo from gd_esquema.Maestra gd join proveedores p
 on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
-select * from OFERTAS
+
+
 ---------------TARJETA------------
 
 CREATE TABLE TARJETAS
@@ -170,6 +163,8 @@ CREATE TABLE TARJETAS
   PRIMARY KEY(Tarjeta_Id)
   FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id)
 )
+
+
 
 INSERT INTO TARJETAS (Cliente_Id,tipo_Tarjeta)
 (select DISTINCT Cliente_Id,Tipo_Pago_Desc from gd_esquema.Maestra gd join CLIENTES c on gd.Cli_Nombre = c.Nombre
@@ -190,10 +185,11 @@ CREATE TABLE CARGAS
 
 
 INSERT INTO CARGAS (Tarjeta_Id,Fecha,Monto,Tipo_Pago)
-(select  t.tarjeta_id ,Carga_fecha, Carga_Credito, Tipo_Pago_Desc from gd_esquema.Maestra gd 
+(select  distinct t.tarjeta_id ,Carga_fecha, Carga_Credito, Tipo_Pago_Desc from gd_esquema.Maestra gd 
 join clientes c on gd.Cli_Nombre = c.nombre
 join TARJETAS t on c.Cliente_Id = t.cliente_id
 where Carga_Fecha is not null)
+
 
 
 ---FACTURAS---------------------
@@ -290,24 +286,42 @@ CREATE TABLE COMPRAS
   Compra_Id AS 'CompraID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
   Oferta_Id varchar(16),
   Cliente_Id varchar(17),
-  Fecha datetime not null,
-  Cantidad numeric(18,0) not null
-  PRIMARY KEY(Compra_Id)
+  Fecha_compra datetime not null,
+  PRIMARY KEY(Compra_Id),
   FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id),
   FOREIGN KEY(Oferta_Id) REFERENCES OFERTAS(Oferta_Id)
 )
+
+
+
+insert into compras(oferta_id,cliente_id,fecha_Compra)
+(select distinct o.oferta_id,cliente_id,oferta_Fecha_compra from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.codigo
+join CLIENTES c on gd.Cli_Dni = c.DNI)
+
 
 ---CUPONES----------------------
 CREATE TABLE CUPONES
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Cupon_Id AS 'CuponID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+  Oferta_Id varchar(16),
   Compra_Id varchar(16),
-  Fecha_Consumo datetime not null,
-  Fecha_Vencimiento datetime not null
-  PRIMARY KEY(Cupon_Id)
-  FOREIGN KEY(Compra_Id) REFERENCES COMPRAS(Compra_Id)
+  Fecha_Consumo datetime,
+  PRIMARY KEY(Cupon_Id),
+  FOREIGN KEY(Compra_Id) REFERENCES COMPRAS(Compra_Id),
+  FOREIGN KEY(Oferta_Id) REFERENCES OFERTAS(Oferta_Id)
 )
 
 
+insert into CUPONES (Oferta_Id,Compra_Id,Fecha_Consumo)
+(select distinct c.oferta_id,compra_id, Oferta_Entregado_Fecha from gd_esquema.Maestra gd
+join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra
+where gd.Oferta_Fecha_Compra is not null)
 
+
+
+drop table CUPONES
+
+select  oferta_id,compra_id,fecha_consumo, (select COUNT(*) from ) from cupones
+where fecha_consumo = '2020-12-13 00:00:00.000'
+group by oferta_id,compra_id,fecha_consumo
 

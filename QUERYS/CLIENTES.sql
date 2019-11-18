@@ -68,4 +68,3 @@ AS BEGIN
 	where username = @username
 
 END
-

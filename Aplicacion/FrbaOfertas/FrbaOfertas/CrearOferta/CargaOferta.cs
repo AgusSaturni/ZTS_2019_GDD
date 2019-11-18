@@ -77,6 +77,11 @@ namespace FrbaOfertas.CrearOferta
             cant_disponible.Direction = ParameterDirection.Input;
             command.Parameters.Add(cant_disponible);
 
+            SqlParameter cant_max = new SqlParameter("@cantidad_maxima_por_usuario", SqlDbType.Int);
+            cant_max.Direction = ParameterDirection.Input;
+            command.Parameters.Add(cant_max);
+
+
             SqlParameter codigo = new SqlParameter("@codigo", SqlDbType.Char);
             codigo.Direction = ParameterDirection.Input;
             command.Parameters.Add(codigo);
@@ -92,11 +97,17 @@ namespace FrbaOfertas.CrearOferta
             precio_lista.Value = PrecioLista.Text;
             cant_disponible.Value = Cantidad.Value;
             codigo.Value = CrearPassword(50);
+            cant_max.Value = CantMax.Value;
             proveedor_ref.Value = username;
 
             command.ExecuteNonQuery();
             MessageBox.Show("Hecho");
             conn.Close();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

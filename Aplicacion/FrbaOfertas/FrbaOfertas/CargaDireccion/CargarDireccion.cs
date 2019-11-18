@@ -247,7 +247,8 @@ namespace FrbaOfertas.CargaDireccion
                     command1.ExecuteNonQuery();
                     MessageBox.Show("Hecho");
                     conn.Close();
-
+                    this.Visible = false;
+                   
 
                 break;
             }    
@@ -259,6 +260,11 @@ namespace FrbaOfertas.CargaDireccion
         }
 
         private void CargarDireccion_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         } 

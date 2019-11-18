@@ -98,6 +98,8 @@ update USUARIOS
 set Estado = 'Deshabilitado' where username = @username
 END
 
+
+
 ------------HABILITACION_USUARIO---------------------------
 CREATE PROCEDURE habilitacion_usuario(@username varchar(255))
 AS BEGIN
@@ -135,7 +137,6 @@ if not exists(select 1 from USUARIOS where Username = @username and Password = @
 		THROW 50006, 'Usuario y/o Contraseña Invalidos ', 1
 	end
 END
-
 
 -------------VERIFICACION_ROL_Administrador--------
 CREATE PROCEDURE verificar_rol_administrador(@username varchar(255))
