@@ -47,6 +47,7 @@ namespace FrbaOfertas.AbmCliente
                 SqlCommand command = new SqlCommand("habilitar_cliente", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
+                command.Parameters.AddWithValue("@username", SqlDbType.Int).Value = txt_username.Text;
 
                 conexion_sql.Open();
                 command.ExecuteNonQuery();

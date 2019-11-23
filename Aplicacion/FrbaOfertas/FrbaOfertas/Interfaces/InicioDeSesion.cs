@@ -69,17 +69,27 @@ namespace FrbaOfertas
             }
             catch (SqlException exepcion)
             {
+
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+
                 contador++;
                 if (contador == 3)
                 {
                     contador = 0;
-                    //Bloquear usuario
+                    SqlCommand inhabilitar_usuario = new SqlCommand("inhabilitacion_usuario", conexion_sql);
+                    inhabilitar_usuario.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter username = new SqlParameter("@username", SqlDbType.Char);
+                    username.Direction = ParameterDirection.Input;
+                    inhabilitar_usuario.Parameters.Add(username);
+
+                    username.Value = Usuario.Text;
+
+                    inhabilitar_usuario.ExecuteNonQuery();
                 }
-                else
-                {
-                    SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());                
-                }
+    
+                
             }
 
             conexion_sql.Close();
@@ -94,6 +104,13 @@ namespace FrbaOfertas
         {
             Singleton_Usuario sesion = Singleton_Usuario.getInstance();
             sesion.cargar_usuario(username);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form cambiarContraseña = new AbmUsuarios.CambioContraseña();
+            cambiarContraseña.Show();
+            this.Visible = false;
         }
 
 

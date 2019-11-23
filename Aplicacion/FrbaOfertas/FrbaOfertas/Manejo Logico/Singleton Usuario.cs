@@ -44,14 +44,14 @@ namespace FrbaOfertas.Manejo_Logico
             
             conexion_sql.Open();
             //------------------------------------------------------------Ojo si tira error hacer trim del username
-            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion, R.Estado FROM ROLES_POR_USUARIO RPU join FUNCIONES_POR_ROL FPR  on RPU.Rol_Id = FPR.Rol_Id JOIN Funciones F on FPR.Funcion_Id = F.Funcion_Id JOIN ROLES R on R.Rol_Id = RPU.Rol_Id where username = '" + username.Trim() + "'";
+            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion  FROM ROLES_POR_USUARIO RPU JOIN FUNCIONES_POR_ROL FPR on RPU.Rol_Id = FPR.Rol_Id JOIN FUNCIONES F on F.Funcion_Id = FPR.Funcion_Id where RPU.Username = '" + username + "'";
  
             SqlCommand cmd = new SqlCommand(consulta_roles, conexion_sql);
             SqlDataReader reader = cmd.ExecuteReader();
  
             while (reader.Read())
             {
-                if(reader[2].ToString() != "Deshabilitado")
+                if(reader[2].ToString() != "")
                 {
                     if (!Roles.Any(x => x == reader[0].ToString().Trim()))
                     {

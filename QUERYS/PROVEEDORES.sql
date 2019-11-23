@@ -1,9 +1,11 @@
 
 -----------------BAJA_LOGICA_PROVEEDOR-------------------------
-CREATE PROCEDURE baja_logica_proveedor(@CUIT varchar(255))
+CREATE PROCEDURE baja_logica_proveedor(@CUIT varchar(255),@username varchar(255))
 AS BEGIN
-	if((select Estado from PROVEEDORES where CUIT = @CUIT) = 'Habilitado')
+
+	if exists (select * from ROLES_POR_USUARIO where Username = @username)
 		begin
+			delete from ROLES_POR_USUARIO where Username = @username
 			update PROVEEDORES
 			set Estado = 'Inhabilitado' where CUIT = @CUIT
 		end
@@ -14,20 +16,29 @@ AS BEGIN
 
 END
 
+drop procedure baja_logica_proveedor
 
 -----------------HABILITAR_PROVEEDOR-----------------------------
-CREATE PROCEDURE habilitar_proveedor(@CUIT varchar(255))
+CREATE PROCEDURE habilitar_proveedor(@CUIT varchar(255), @Username varchar(255))
 AS BEGIN
-	if((select Estado from PROVEEDORES where cuit = @CUIT) = 'Inhabilitado')
+	if  ((select estado from ROLES where Estado = 'Proveedor') = 'Inahabilitado')
+			throw 50005,'Rol Inhabilitado',1
+else
+	begin
+	if not exists(select 1 from ROLES_POR_USUARIO where Username = @username)
 		begin
+			insert into ROLES_POR_USUARIO(Rol_Id,Username)
+			values('Proveedor',@Username)
 			update PROVEEDORES
 			set Estado = 'Habilitado' where CUIT = @CUIT
 		end
 	else
-		begin
-			throw 50003, 'El Proveedor ya esta Habilitado',1
-		END
+			throw 50009,'El proveedor ya esta habilitado',1
+	end
 END
+
+
+drop procedure habilitar_proveedor
 --------------------actualizar_proveedor---------------------------
 Create Procedure actualizar_proveedor(@username varchar(255),@razonSocial varchar(255), @rubro varchar(255), @CUIT varchar(255), @telefono numeric(18,0),
 @mail varchar(255),@contacto varchar(255), @direccion varchar(255), @CP int, @Loc varchar(255), @Npiso int, @depto varchar(255))
@@ -60,3 +71,5 @@ AS BEGIN
 	rubro_descripcion = @rubro
 	where Proveedor_Id = @id_proveedor
 END
+
+-------------------

@@ -4,17 +4,13 @@ drop procedure Eliminar_Cliente
 drop procedure habilitar_cliente
 drop procedure actualizar_cliente
 
-CREATE PROCEDURE baja_logica_cliente(@DNI_CLIENTE numeric(18,0))
+CREATE PROCEDURE baja_logica_cliente(@DNI_CLIENTE numeric(18,0),@username varchar(255))
 AS BEGIN
-	
-	DECLARE @username varchar(255) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
-
-	if exists (select Estado from CLIENTES where dni = @DNI_CLIENTE and Estado = 'Habilitado')
-		begin
+	if Exists(select 1 from ROLES_POR_USUARIO where Username = @username)
+		begin			
+			delete from ROLES_POR_USUARIO where Username = @username
 			update CLIENTES
 			set Estado = 'Inhabilitado' where DNI = @DNI_CLIENTE
-
-			DELETE FROM ROLES_POR_USUARIO WHERE Username = @username
 		end
 	else
 		begin
@@ -22,13 +18,12 @@ AS BEGIN
 		end
 END
 
+
 ---------HABILITAR_CLIENTE----------------------------
-CREATE PROCEDURE habilitar_cliente(@DNI_CLIENTE numeric(18,0))
+CREATE PROCEDURE habilitar_cliente(@DNI_CLIENTE numeric(18,0),@username varchar(255))
 AS BEGIN
 
-	DECLARE @username varchar(255) = (select username from CLIENTES where DNI = @DNI_CLIENTE)
-
-	if((select Estado from CLIENTES where dni = @DNI_CLIENTE) = 'Inhabilitado')
+	if not exists(select 1 from ROLES_POR_USUARIO where Username = @username)
 		begin
 			update CLIENTES
 			set Estado = 'Habilitado' where DNI = @DNI_CLIENTE
@@ -40,6 +35,7 @@ AS BEGIN
 			throw 50003, 'El cliente ya esta Habilitado',1
 		end
 END
+
 
 -----------------------------ACTUALIZAR_CLIENTE------------------------------------------------------  
 

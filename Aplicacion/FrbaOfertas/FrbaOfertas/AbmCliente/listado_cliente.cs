@@ -130,7 +130,7 @@ namespace FrbaOfertas.AbmCliente
                     SqlCommand command = new SqlCommand("baja_logica_cliente", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Float).Value = Int32.Parse(row.Cells[6].Value.ToString());
-
+                    command.Parameters.AddWithValue("@username", SqlDbType.Float).Value = row.Cells[3].Value.ToString();
                     conexion_sql.Open();
                     command.ExecuteNonQuery();
                     conexion_sql.Close();

@@ -14,10 +14,14 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class listado_proveedores : Form
     {
+
+     
+
         public listado_proveedores()
         {
             InitializeComponent();
             MaximizeBox = false;
+ 
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
@@ -112,6 +116,7 @@ namespace FrbaOfertas.AbmProveedor
                     SqlCommand command = new SqlCommand("baja_logica_proveedor", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = row.Cells[7].Value.ToString();
+                    command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = row.Cells[4].Value.ToString();
 
                     conexion_sql.Open();
                     command.ExecuteNonQuery();

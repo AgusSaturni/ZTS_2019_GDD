@@ -13,6 +13,8 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class Modificaciones_Proveedores : Form
     {
+        
+
         public Modificaciones_Proveedores()
         {
             InitializeComponent();
@@ -29,7 +31,8 @@ namespace FrbaOfertas.AbmProveedor
             {
                 SqlCommand command = new SqlCommand("habilitar_proveedor", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@cuit", SqlDbType.Int).Value = (txt_CUIT.Text);
+                command.Parameters.AddWithValue("@CUIT", SqlDbType.Int).Value = (txt_CUIT.Text);
+                command.Parameters.AddWithValue("@Username", SqlDbType.Int).Value = txt_username.Text;
 
                 conexion_sql.Open();
                 command.ExecuteNonQuery();
