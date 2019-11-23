@@ -16,6 +16,8 @@ namespace FrbaOfertas.AbmUsuarios
         public CambioContraseña()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -71,6 +73,11 @@ namespace FrbaOfertas.AbmUsuarios
            
             conn.Close();
             
+
+        }
+
+        private void CambioContraseña_Load(object sender, EventArgs e)
+        {
 
         }
     }

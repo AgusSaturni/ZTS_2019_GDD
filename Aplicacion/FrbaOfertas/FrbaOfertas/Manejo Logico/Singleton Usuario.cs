@@ -51,7 +51,7 @@ namespace FrbaOfertas.Manejo_Logico
  
             while (reader.Read())
             {
-                if(reader[2].ToString() != "")
+                if(reader[0].ToString() != "")
                 {
                     if (!Roles.Any(x => x == reader[0].ToString().Trim()))
                     {
@@ -64,6 +64,18 @@ namespace FrbaOfertas.Manejo_Logico
             conexion_sql.Close();
 
             this.username = username;
+        }
+
+        public bool verificar_rol_administrador()
+        {
+            if (Roles.Any(x => x == "Administrador"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<String> get_permisos() { return this.Permisos; }

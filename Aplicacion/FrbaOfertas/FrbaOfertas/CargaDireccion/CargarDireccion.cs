@@ -69,6 +69,7 @@ namespace FrbaOfertas.CargaDireccion
             {
                 case "Cliente":
 
+                    //----------------------DATOS PARA REGISTRO----------------------------
                     SqlCommand command = new SqlCommand("registrar_usuario_cliente",conn);
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -153,9 +154,9 @@ namespace FrbaOfertas.CargaDireccion
                     nroPiso.Value = NroPiso.Text;
                     dpto.Value = Departamento.Text;
 
+        
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Hecho");
-                    conn.Close();
+                    MessageBox.Show("Registro de Cliente Finalizado");
 
                 break;
 
@@ -181,7 +182,6 @@ namespace FrbaOfertas.CargaDireccion
                     razon_social1.Direction = ParameterDirection.Input;
                     command1.Parameters.Add(razon_social1);
 
-
                     SqlParameter mail_Proveedor = new SqlParameter("@Mail", SqlDbType.Char);
                     mail_Proveedor.Direction = ParameterDirection.Input;
                     command1.Parameters.Add(mail_Proveedor);
@@ -201,7 +201,6 @@ namespace FrbaOfertas.CargaDireccion
                     SqlParameter contacto1 = new SqlParameter("@Nombre_contacto", SqlDbType.Char);
                     contacto1.Direction = ParameterDirection.Input;
                     command1.Parameters.Add(contacto1);
-
                     
                     SqlParameter direccion1 = new SqlParameter("@Direccion", SqlDbType.Char);
                     direccion1.Direction = ParameterDirection.Input;
@@ -245,14 +244,28 @@ namespace FrbaOfertas.CargaDireccion
 
 
                     command1.ExecuteNonQuery();
-                    MessageBox.Show("Hecho");
-                    conn.Close();
+                    MessageBox.Show("Registro de Proveedor Finalizado");
+                    
                     this.Visible = false;
                    
 
                 break;
-            }    
+            }
+
+            this.insertar_rol(rol, usuario, conn);
+            conn.Close();
+
     }
+
+        private void insertar_rol(string rol, string username, SqlConnection conexion) 
+        {
+            SqlCommand command = new SqlCommand("insertar_rol_por_usuario", conexion);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = rol;
+            command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
+           
+        }
 
         private void Direccion_TextChanged(object sender, EventArgs e)
         {

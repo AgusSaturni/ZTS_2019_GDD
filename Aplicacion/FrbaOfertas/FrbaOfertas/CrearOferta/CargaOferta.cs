@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.Manejo_Logico;
 
 namespace FrbaOfertas.CrearOferta
 {
@@ -15,7 +16,7 @@ namespace FrbaOfertas.CrearOferta
     {
         string username;
 
-        public string CrearPassword(int longitud)
+        public string crear_codigo(int longitud)
         {
             string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -30,6 +31,8 @@ namespace FrbaOfertas.CrearOferta
         public CargaOferta()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         public CargaOferta(string username_recibido)
@@ -42,6 +45,19 @@ namespace FrbaOfertas.CrearOferta
         {
 
         }
+
+        private bool verificar_parametros()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -88,7 +104,8 @@ namespace FrbaOfertas.CrearOferta
 
             SqlParameter proveedor_ref = new SqlParameter("@proveedor_referenciado", SqlDbType.Char);
             proveedor_ref.Direction = ParameterDirection.Input;
-            command.Parameters.Add(proveedor_ref );
+            command.Parameters.Add(proveedor_ref);
+
 
             descripcion.Value = Descripcion.Text;
             fecha_publi.Value = FechaPublicacion.Value;
@@ -96,17 +113,59 @@ namespace FrbaOfertas.CrearOferta
             precio_oferta.Value = PrecioOferta.Text;
             precio_lista.Value = PrecioLista.Text;
             cant_disponible.Value = Cantidad.Value;
-            codigo.Value = CrearPassword(50);
+            codigo.Value = crear_codigo(10);
             cant_max.Value = CantMax.Value;
-            proveedor_ref.Value = username;
+            proveedor_ref.Value = ProveedorUser.Text;
+            if (verificar_parametros())
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            try
+            {
+                command.ExecuteNonQuery();
+                MessageBox.Show("Hecho");
+            }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+            }
 
-            command.ExecuteNonQuery();
-            MessageBox.Show("Hecho");
             conn.Close();
         }
 
         private void label5_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CargaOferta_Load(object sender, EventArgs e)
+        {
+            Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+            if (sesion.verificar_rol_administrador())
+            {
+                ProveedorUser.ReadOnly = false;
+
+
+            }
+            else
+            {
+                ProveedorUser.ReadOnly = true;
+                ProveedorUser.Text = username;
+            }
+        }
+
+        private void bt_volver_Click(object sender, EventArgs e)
+        {
+            Form menu = new Interfaces.menu_principal();
+            menu.Show();
+            this.Hide();
 
         }
     }

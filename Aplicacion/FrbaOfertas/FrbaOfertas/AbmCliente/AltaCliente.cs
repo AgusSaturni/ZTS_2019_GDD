@@ -90,7 +90,7 @@ namespace FrbaOfertas.AbmCliente
             {
                try
                 {
-                conexion_sql.Open();
+                    conexion_sql.Open();
                     verificacion_cliente.ExecuteNonQuery();
                     this.Visible = false;
                     CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(username, password, rol, nombre, apellido, DNI, telefono, fechaDeNacimiento, mail, null, null, null, null);

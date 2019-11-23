@@ -36,7 +36,6 @@ AS BEGIN
 		end
 END
 
-
 -----------------------------ACTUALIZAR_CLIENTE------------------------------------------------------  
 
 Create Procedure actualizar_cliente(@username varchar(255),@nombre varchar(255), @apellido varchar(255), @DNI numeric(18,0), @telefono numeric(18,0),

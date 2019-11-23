@@ -123,21 +123,23 @@ END
 -------------------Verificacion existencia usuario------------------
 CREATE PROCEDURE verificar_existencia_de_usuario(@username varchar(255))
 as begin
-if exists(select * from USUARIOS where Username = RTRIM(@username))
+if exists(select 1 from USUARIOS where Username = RTRIM(@username))
 	begin
 		throw 50001,'Error, nombre de usuario ya existente. Elija otro.',1
 	end
 end
 
+
 -----------------Verificacion existencia cliente gemelo--------------
 CREATE PROCEDURE verificar_existencia_cliente_gemelo(@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime)
 as begin
-	if exists(select * from CLIENTES where nombre=@nombre and Apellido = @apellido and DNI=@DNI and Telefono = @telefono and Mail=@mail and Fecha_Nacimiento =@fecha_nacimiento)
+	if exists(select 1 from CLIENTES where nombre=@nombre and Apellido = @apellido and DNI=@DNI and Telefono = @telefono and Mail=@mail and Fecha_Nacimiento =@fecha_nacimiento)
 		OR EXISTS (select * from CLIENTES where DNI = @DNI)
 		begin
-			throw 50004,'Error cliente gemelo',1
+			throw 50004,'Error, el cliente ya existe',1
 		end
 end
+
 
 -------------VERIFICACION_LOGUEO--------------------
 
@@ -145,13 +147,42 @@ CREATE PROCEDURE verificar_usuario(@username varchar(255),@password varchar(255)
 AS BEGIN
 DECLARE @contraseña_encriptada char(255);
 set @contraseña_encriptada = HASHBYTES('SHA2_256',(rtrim(@password)))
-if ((select Estado from USUARIOS where Username = @username) = 'Inhabilitado')
+if exists(select 1 from USUARIOS where Username = @username and Estado = 'Inhabilitado')
 		THROW 50007, 'Usuario Inhabilitado',1
 if not exists(select 1 from USUARIOS where Username = @username and Password = @contraseña_encriptada)
 		THROW 50006, 'Usuario y/o Contraseña Invalidos ', 1
 
 END
 
+drop procedure verificar_usuario
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--NO SE USAN
 -------------VERIFICACION_ROL_Administrador--------
 CREATE PROCEDURE verificar_rol_administrador(@username varchar(255))
 as begin
