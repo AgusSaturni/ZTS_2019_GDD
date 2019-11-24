@@ -156,6 +156,7 @@ END
 
 drop procedure verificar_usuario
 
+select * from ROLES
 
 
 

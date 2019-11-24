@@ -43,6 +43,16 @@ AS BEGIN
 		insert into ROLES_POR_USUARIO values (@Rol_Id, @username)
 END
 
-drop procedure habilitar_rol
+CREATE PROCEDURE eliminar_funciones_por_rol(@Rol_Id varchar(255))
+AS BEGIN
+	DELETE FROM FUNCIONES_POR_ROL WHERE Rol_Id = @Rol_Id
+END
 
-select * from roles
+
+
+
+select * from FUNCIONES_POR_ROL
+select * from FUNCIONES
+
+
+select Funcion_Id, Descripcion from FUNCIONES

@@ -20,4 +20,3 @@ declare @proveedor_id varchar(19) = (select proveedor_id from PROVEEDORES where 
 			end
 	
 END
-
