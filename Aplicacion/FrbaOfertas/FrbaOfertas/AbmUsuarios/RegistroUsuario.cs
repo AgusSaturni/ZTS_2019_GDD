@@ -134,8 +134,13 @@ namespace FrbaOfertas
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
-          //  Form inicio_sension = new Interfaces.InicioDeSesion();
-          //  inicio_sension.Show();
+            Form inicio_sension = new InicioDeSesion();
+            inicio_sension.Show();
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
    

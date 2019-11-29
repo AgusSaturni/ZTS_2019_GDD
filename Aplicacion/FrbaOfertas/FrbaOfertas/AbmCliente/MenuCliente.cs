@@ -27,6 +27,7 @@ namespace FrbaOfertas.AbmCliente
         public MenuCliente(string username_Recibido)
         {
             InitializeComponent();
+            MaximizeBox = false;
             usuario.Text = username_Recibido;
             this.username = username_Recibido;
           
@@ -47,6 +48,11 @@ namespace FrbaOfertas.AbmCliente
             this.Visible = false;
             Form cargaCredito = new FrbaOfertas.CragaCredito.CargaDeCredito(username);
             cargaCredito.Show();
+        }
+
+        private void MenuCliente_Load(object sender, EventArgs e)
+        {
+
         }
 
         

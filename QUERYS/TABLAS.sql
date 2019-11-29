@@ -150,7 +150,6 @@ on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
 
-
 ---------------TARJETA------------
 
 CREATE TABLE TARJETAS
@@ -276,9 +275,7 @@ CREATE TABLE FUNCIONES_POR_ROL
 
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID5')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID7')
-
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Proveedor','FuncionID8')
-
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID6')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID8')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID4')
@@ -288,8 +285,7 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','Funci
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID3')
 
 
-select * from USUARIOS where Username = 'ADMIN_ALL'
-select * from ROLES_POR_USUARIO WHERE Username = 'ADMIN_ALL'
+
 
 ---COMPRAS----------------------
 CREATE TABLE COMPRAS
@@ -329,10 +325,6 @@ join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra
 where gd.Oferta_Fecha_Compra is not null)
 
 
-
 drop table CUPONES
 
-select  oferta_id,compra_id,fecha_consumo, (select COUNT(*) from ) from cupones
-where fecha_consumo = '2020-12-13 00:00:00.000'
-group by oferta_id,compra_id,fecha_consumo
 

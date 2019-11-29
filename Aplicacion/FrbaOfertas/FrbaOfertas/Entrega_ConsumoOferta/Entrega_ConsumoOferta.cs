@@ -15,9 +15,15 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
         public Entrega_ConsumoOferta()
         {
             InitializeComponent();
+            MaximizeBox = false;
         }
 
         private void Entrega_ConsumoOferta_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eliminar_oferta_btn_Click(object sender, EventArgs e)
         {
 
         }

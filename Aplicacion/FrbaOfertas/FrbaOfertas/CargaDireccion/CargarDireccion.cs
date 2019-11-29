@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.Manejo_Logico;
 
 namespace FrbaOfertas.CargaDireccion
 {
@@ -138,6 +139,14 @@ namespace FrbaOfertas.CargaDireccion
                     dpto.Direction = ParameterDirection.Input;
                     command.Parameters.Add(dpto);
 
+                    if (verificar_parametros())
+                    {
+                        MessageBox.Show("Faltan completar campos");
+                        return;
+                    }
+
+
+
                     username1.Value = usuario;
                     password1.Value = password;
                     rol1.Value = rol;   
@@ -154,7 +163,12 @@ namespace FrbaOfertas.CargaDireccion
                     nroPiso.Value = NroPiso.Text;
                     dpto.Value = Departamento.Text;
 
-        
+                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x))) 
+                    {
+                        MessageBox.Show("Datos erroneos.");
+                        return;
+                    }
+
                     command.ExecuteNonQuery();
                     MessageBox.Show("Registro de Cliente Finalizado");
 
@@ -226,6 +240,12 @@ namespace FrbaOfertas.CargaDireccion
                     dpto1.Direction = ParameterDirection.Input;
                     command1.Parameters.Add(dpto1);
 
+                    if (verificar_parametros())
+                    {
+                        MessageBox.Show("Faltan completar campos");
+                        return;
+                    }
+
                     username3.Value = usuario;
                     password3.Value = password;
                     rol2.Value = rol;
@@ -242,6 +262,11 @@ namespace FrbaOfertas.CargaDireccion
                     nroPiso1.Value = NroPiso.Text;
                     dpto1.Value = Departamento.Text;
 
+                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x)))
+                    {
+                        MessageBox.Show("Datos erroneos.");
+                        return;
+                    }
 
                     command1.ExecuteNonQuery();
                     MessageBox.Show("Registro de Proveedor Finalizado");
@@ -267,6 +292,19 @@ namespace FrbaOfertas.CargaDireccion
            
         }
 
+        private bool verificar_parametros()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         private void Direccion_TextChanged(object sender, EventArgs e)
         {
 
@@ -280,6 +318,22 @@ namespace FrbaOfertas.CargaDireccion
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void bt_volver_Click(object sender, EventArgs e)
+        {
+            if (rol == "Cliente")
+            {
+                this.Hide();
+                Form alta_cliente = new AbmCliente.AltaCliente();
+                alta_cliente.Show();
+            }
+            if (rol == "Proveedor")
+            {
+                this.Hide();
+                Form alta_proveedor = new AbmProveedor.AltaProveedor();
+                alta_proveedor.Show();
+            }
         } 
     }
 }

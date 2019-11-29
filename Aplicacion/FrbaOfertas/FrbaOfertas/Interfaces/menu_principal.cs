@@ -79,6 +79,9 @@ namespace FrbaOfertas.Interfaces
                     case "Listado Estadistico":
                         break;
                     case "Comprar Oferta":
+                        Form oferta = new ComprarOferta.Ofertas(username);
+                        oferta.Show();
+                        this.Hide();
                         break;
                     case "Cargar Credito":
                         Form credito = new CragaCredito.CargaDeCredito(username);

@@ -50,10 +50,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(18, 42);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 24);
+            this.label1.Size = new System.Drawing.Size(58, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Direccion";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -62,10 +61,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(18, 89);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(12, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 24);
+            this.label2.Size = new System.Drawing.Size(84, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Codigo Postal";
             // 
@@ -73,10 +71,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(18, 138);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(12, 90);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 24);
+            this.label3.Size = new System.Drawing.Size(60, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "Localidad";
             // 
@@ -84,10 +81,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(18, 186);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(12, 121);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 24);
+            this.label4.Size = new System.Drawing.Size(47, 17);
             this.label4.TabIndex = 3;
             this.label4.Text = "Ciudad";
             // 
@@ -95,10 +91,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 244);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(12, 159);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(82, 24);
+            this.label5.Size = new System.Drawing.Size(56, 17);
             this.label5.TabIndex = 4;
             this.label5.Text = " Nro Piso";
             // 
@@ -106,68 +101,60 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(18, 295);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(12, 192);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(123, 24);
+            this.label6.Size = new System.Drawing.Size(85, 17);
             this.label6.TabIndex = 5;
             this.label6.Text = " Departamento";
             // 
             // Direccion
             // 
-            this.Direccion.Location = new System.Drawing.Point(172, 42);
-            this.Direccion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Direccion.Location = new System.Drawing.Point(115, 27);
             this.Direccion.Name = "Direccion";
-            this.Direccion.Size = new System.Drawing.Size(295, 30);
+            this.Direccion.Size = new System.Drawing.Size(198, 23);
             this.Direccion.TabIndex = 6;
             this.Direccion.TextChanged += new System.EventHandler(this.Direccion_TextChanged);
             // 
             // CodigoPostal
             // 
-            this.CodigoPostal.Location = new System.Drawing.Point(172, 88);
-            this.CodigoPostal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.CodigoPostal.Location = new System.Drawing.Point(115, 57);
             this.CodigoPostal.Name = "CodigoPostal";
-            this.CodigoPostal.Size = new System.Drawing.Size(295, 30);
+            this.CodigoPostal.Size = new System.Drawing.Size(198, 23);
             this.CodigoPostal.TabIndex = 7;
             // 
             // Localidad
             // 
-            this.Localidad.Location = new System.Drawing.Point(172, 137);
-            this.Localidad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Localidad.Location = new System.Drawing.Point(115, 89);
             this.Localidad.Name = "Localidad";
-            this.Localidad.Size = new System.Drawing.Size(295, 30);
+            this.Localidad.Size = new System.Drawing.Size(198, 23);
             this.Localidad.TabIndex = 8;
             // 
             // Ciudad
             // 
-            this.Ciudad.Location = new System.Drawing.Point(172, 186);
-            this.Ciudad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Ciudad.Location = new System.Drawing.Point(115, 121);
             this.Ciudad.Name = "Ciudad";
-            this.Ciudad.Size = new System.Drawing.Size(295, 30);
+            this.Ciudad.Size = new System.Drawing.Size(198, 23);
             this.Ciudad.TabIndex = 9;
             // 
             // NroPiso
             // 
-            this.NroPiso.Location = new System.Drawing.Point(172, 238);
-            this.NroPiso.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.NroPiso.Location = new System.Drawing.Point(115, 155);
             this.NroPiso.Name = "NroPiso";
-            this.NroPiso.Size = new System.Drawing.Size(295, 30);
+            this.NroPiso.Size = new System.Drawing.Size(198, 23);
             this.NroPiso.TabIndex = 10;
             // 
             // Departamento
             // 
-            this.Departamento.Location = new System.Drawing.Point(172, 295);
-            this.Departamento.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Departamento.Location = new System.Drawing.Point(115, 192);
             this.Departamento.Name = "Departamento";
-            this.Departamento.Size = new System.Drawing.Size(295, 30);
+            this.Departamento.Size = new System.Drawing.Size(198, 23);
             this.Departamento.TabIndex = 11;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(243, 358);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Location = new System.Drawing.Point(162, 233);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(224, 35);
+            this.button1.Size = new System.Drawing.Size(149, 23);
             this.button1.TabIndex = 12;
             this.button1.Text = "Finalizar";
             this.button1.UseVisualStyleBackColor = true;
@@ -190,9 +177,11 @@
             this.groupBox1.Controls.Add(this.CodigoPostal);
             this.groupBox1.Controls.Add(this.Direccion);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(490, 417);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(327, 271);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Ubicacion";
@@ -200,20 +189,21 @@
             // 
             // bt_volver
             // 
-            this.bt_volver.Location = new System.Drawing.Point(12, 358);
+            this.bt_volver.Location = new System.Drawing.Point(8, 233);
+            this.bt_volver.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_volver.Name = "bt_volver";
-            this.bt_volver.Size = new System.Drawing.Size(224, 35);
+            this.bt_volver.Size = new System.Drawing.Size(149, 23);
             this.bt_volver.TabIndex = 13;
             this.bt_volver.Text = "Volver";
             this.bt_volver.UseVisualStyleBackColor = true;
+            this.bt_volver.Click += new System.EventHandler(this.bt_volver_Click);
             // 
             // CargarDireccion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 448);
+            this.ClientSize = new System.Drawing.Size(343, 291);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CargarDireccion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cargar Direccion";

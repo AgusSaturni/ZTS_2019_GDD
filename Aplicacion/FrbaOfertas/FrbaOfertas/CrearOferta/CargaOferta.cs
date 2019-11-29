@@ -168,6 +168,16 @@ namespace FrbaOfertas.CrearOferta
             this.Hide();
 
         }
+
+        private void CargaOferta_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

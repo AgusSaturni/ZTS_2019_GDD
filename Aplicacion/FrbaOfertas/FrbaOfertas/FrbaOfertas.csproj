@@ -109,17 +109,17 @@
     <Compile Include="CargaDireccion\CargarDireccion.Designer.cs">
       <DependentUpon>CargarDireccion.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ComprarOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="CargaCredito\CargaDeCredito.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CargaCredito\CargaDeCredito.Designer.cs">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComprarOferta\Ofertas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOferta\Ofertas.Designer.cs">
+      <DependentUpon>Ofertas.cs</DependentUpon>
     </Compile>
     <Compile Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.cs">
       <SubType>Form</SubType>
@@ -230,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CargaDireccion\CargarDireccion.resx">
       <DependentUpon>CargarDireccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOferta\Ofertas.resx">
+      <DependentUpon>Ofertas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\CargaOferta.resx">
       <DependentUpon>CargaOferta.cs</DependentUpon>

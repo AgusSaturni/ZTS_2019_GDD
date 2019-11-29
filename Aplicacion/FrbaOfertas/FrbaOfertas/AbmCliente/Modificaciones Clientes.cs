@@ -186,6 +186,11 @@ namespace FrbaOfertas.AbmCliente
             return false;
         }
 
+        private void frm_clie_bajas_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 

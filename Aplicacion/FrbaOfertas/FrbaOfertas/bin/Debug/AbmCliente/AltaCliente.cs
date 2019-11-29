@@ -86,6 +86,13 @@ namespace FrbaOfertas.AbmCliente
             verificacion_cliente.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = Mail.Text;
             verificacion_cliente.Parameters.AddWithValue("@fecha_nacimiento", SqlDbType.Date).Value = FechaNacimiento.Value;
 
+            if (Nombre.Text.Any(x => char.IsNumber(x)) || Apellido.Text.Any(x => char.IsNumber(x)) || Dni.Text.Any(x => !char.IsNumber(x)) || Telefono.Text.Any(x => !char.IsNumber(x)) || Dni.Text.Length != 8)
+            {
+                MessageBox.Show("Datos erroneos.");
+                return;
+            }
+
+
             if (nombre != "" && apellido != "" && DNI != "" && telefono != "" && mail != "")
             {
                try
@@ -173,6 +180,11 @@ namespace FrbaOfertas.AbmCliente
             this.Hide();
             Form registro = new RegistroUsuario();
             registro.Show();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

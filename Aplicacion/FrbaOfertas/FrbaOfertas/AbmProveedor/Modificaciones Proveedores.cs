@@ -141,5 +141,10 @@ namespace FrbaOfertas.AbmProveedor
         {
 
         }
+
+        private void contenedor_estado_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

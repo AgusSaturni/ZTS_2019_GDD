@@ -60,7 +60,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(54, 167);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 16);
+            this.label3.Size = new System.Drawing.Size(58, 16);
             this.label3.TabIndex = 11;
             this.label3.Text = "Cliente";
             // 
@@ -70,7 +70,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(54, 90);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(139, 16);
+            this.label2.Size = new System.Drawing.Size(142, 16);
             this.label2.TabIndex = 10;
             this.label2.Text = "Fecha de consumo";
             // 
@@ -80,7 +80,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(54, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 16);
+            this.label1.Size = new System.Drawing.Size(130, 16);
             this.label1.TabIndex = 9;
             this.label1.Text = "Código de cupón";
             // 
@@ -113,6 +113,7 @@
             this.eliminar_oferta_btn.TabIndex = 7;
             this.eliminar_oferta_btn.Text = "Eliminar oferta";
             this.eliminar_oferta_btn.UseVisualStyleBackColor = true;
+            this.eliminar_oferta_btn.Click += new System.EventHandler(this.eliminar_oferta_btn_Click);
             // 
             // Entrega_ConsumoOferta
             // 
@@ -122,6 +123,7 @@
             this.Controls.Add(this.eliminar_oferta_btn);
             this.Controls.Add(this.detalles_gpb);
             this.Name = "Entrega_ConsumoOferta";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Entrega_ConsumoOferta";
             this.Load += new System.EventHandler(this.Entrega_ConsumoOferta_Load);
             this.detalles_gpb.ResumeLayout(false);

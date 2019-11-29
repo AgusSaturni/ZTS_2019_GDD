@@ -140,7 +140,17 @@ as begin
 		end
 end
 
+--------------------Verificacion existencia preveedor existente--------------------------------------NUEVO PROCEDUREEEEEEEEEEEEEEEEEEEEE
 
+CREATE PROCEDURE verificar_existencia_proveedor_existente(@cuit varchar(255),@razon_social varchar(255))
+as begin
+	if exists(select 1 from PROVEEDORES where CUIT = @cuit)  OR exists(select 1 from PROVEEDORES where Razon_Social = @razon_social)
+		begin
+			throw 50004,'Error, el proveedor ya existe',1
+		end
+end
+
+select * from PROVEEDORES
 -------------VERIFICACION_LOGUEO--------------------
 
 CREATE PROCEDURE verificar_usuario(@username varchar(255),@password varchar(255))

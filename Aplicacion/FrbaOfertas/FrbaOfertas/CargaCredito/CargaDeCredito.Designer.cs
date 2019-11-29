@@ -154,7 +154,9 @@
             this.ClientSize = new System.Drawing.Size(436, 328);
             this.Controls.Add(this.groupBox1);
             this.Name = "CargaDeCredito";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Carga de Credito";
+            this.Load += new System.EventHandler(this.CargaDeCredito_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
