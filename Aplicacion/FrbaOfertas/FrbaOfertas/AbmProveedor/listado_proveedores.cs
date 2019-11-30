@@ -171,6 +171,13 @@ namespace FrbaOfertas.AbmProveedor
 
         }
 
+        private void bt_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form menu = new MenuAdmin.ABMProveedores();
+            menu.Show();
+        }
+
         }
     }
 

@@ -150,7 +150,6 @@ as begin
 		end
 end
 
-select * from PROVEEDORES
 -------------VERIFICACION_LOGUEO--------------------
 
 CREATE PROCEDURE verificar_usuario(@username varchar(255),@password varchar(255))

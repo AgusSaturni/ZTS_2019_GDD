@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaOfertas.Manejo_Logico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,9 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class Modificaciones_Proveedores : Form
     {
-        
+        conexionBD conexion = conexionBD.getConexion();
+        CommonQueries commonQueries_instance = CommonQueries.getInstance();
+        SqlConnection conexion_sql;
 
         public Modificaciones_Proveedores()
         {
@@ -22,30 +25,44 @@ namespace FrbaOfertas.AbmProveedor
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
+        private void Modificaciones_Proveedores_Load(object sender, EventArgs e)
+        {
+            conexion_sql = new SqlConnection(conexion.get_cadena());
+        }
+
         private void bt_habilitar_Click(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-            try
+            conexion_sql.Open();
+            try 
             {
-                SqlCommand command = new SqlCommand("habilitar_proveedor", conexion_sql);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@CUIT", SqlDbType.Int).Value = (txt_CUIT.Text);
-                command.Parameters.AddWithValue("@Username", SqlDbType.Int).Value = txt_username.Text;
+                commonQueries_instance.vereificar_estado_rol("Proveedor", conexion_sql);
 
-                conexion_sql.Open();
-                command.ExecuteNonQuery();
-                conexion_sql.Close();
+                try
+                {
+                    SqlCommand command = new SqlCommand("habilitar_proveedor", conexion_sql);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CUIT", SqlDbType.Int).Value = (txt_CUIT.Text);
+                    command.Parameters.AddWithValue("@Username", SqlDbType.Int).Value = txt_username.Text;
 
-                MessageBox.Show("Proveedor Habilitado");
+                    command.ExecuteNonQuery();
 
+
+                    MessageBox.Show("Proveedor Habilitado");
+
+                }
+                catch (SqlException exepcion)
+                {
+                    SqlError errores = exepcion.Errors[0];
+                    MessageBox.Show(errores.Message.ToString());
+                }
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString());
             }
+            conexion_sql.Close();
 
             this.Hide();
         }
@@ -75,10 +92,6 @@ namespace FrbaOfertas.AbmProveedor
 
         private void bt_guardar_Click(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
-
             if (txt_RazonSoc.ReadOnly == true)
             {
                 MessageBox.Show("Modifique algun parametro");
@@ -90,6 +103,7 @@ namespace FrbaOfertas.AbmProveedor
                 return;
             }
 
+            conexion_sql.Open();
             try
             {
                 SqlCommand command = new SqlCommand("actualizar_proveedor", conexion_sql);
@@ -109,9 +123,9 @@ namespace FrbaOfertas.AbmProveedor
                 command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
                 command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
 
-                conexion_sql.Open();
+
                 command.ExecuteNonQuery();
-                conexion_sql.Close();
+
 
                 MessageBox.Show("Proveedor Modificado");
 
@@ -121,6 +135,7 @@ namespace FrbaOfertas.AbmProveedor
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString());
             }
+            conexion_sql.Close();
 
             this.Hide();
         }
@@ -146,5 +161,6 @@ namespace FrbaOfertas.AbmProveedor
         {
 
         }
+
     }
 }

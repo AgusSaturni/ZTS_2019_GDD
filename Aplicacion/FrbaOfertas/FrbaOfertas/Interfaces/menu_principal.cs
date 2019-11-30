@@ -15,6 +15,7 @@ namespace FrbaOfertas.Interfaces
     {
         private string username;
         private string[] vec_funciones;
+        Singleton_Usuario sesion = Singleton_Usuario.getInstance();
 
         public menu_principal()
         {
@@ -31,7 +32,7 @@ namespace FrbaOfertas.Interfaces
 
         private void menu_principal_Load(object sender, EventArgs e)
         {
-            Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+
             this.cargar_comboBox(sesion);
             this.cargar_bienvenida(sesion);
         }
@@ -120,7 +121,6 @@ namespace FrbaOfertas.Interfaces
 
         private void bt_cerrar_Click(object sender, EventArgs e)
         {
-            Singleton_Usuario sesion = Singleton_Usuario.getInstance();
             sesion.cerrar_sesion();
             this.Hide();
             Form inicio_sesion = new InicioDeSesion();

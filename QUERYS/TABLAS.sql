@@ -244,25 +244,20 @@ insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','ADMIN_A
 CREATE TABLE FUNCIONES
 (Indice INT IDENTITY(1,1) NOT NULL,
   Funcion_Id AS 'FuncionID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Descripcion varchar(255),
-  Bit_de_Restriccion smallint not null
+  Descripcion varchar(255)
   PRIMARY KEY(Funcion_Id)
 )
---BIT 0 Puede ser usada por cualquier usuario
---BIT 1 Puede ser usada por clientes solamente
---BIT 2 Puede ser usada por Proveedores solamente	
---BIT 3 Puede ser usada por Administradores solamente
 
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('ABM Roles',3)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('ABM Clientes',0)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('ABM Proveedores',0)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Listado Estadistico',0)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Comprar Oferta',1)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Registrar Usuarios',0)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Cargar Credito',1)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Confeccion y Publicacion de Ofertas',2)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Entrega/Consumo de Oferta',1)
-insert into FUNCIONES (Descripcion,Bit_de_Restriccion) values ('Facturar a Proveedor',3)
+insert into FUNCIONES (Descripcion) values ('ABM Roles')
+insert into FUNCIONES (Descripcion) values ('ABM Clientes')
+insert into FUNCIONES (Descripcion) values ('ABM Proveedores')
+insert into FUNCIONES (Descripcion) values ('Listado Estadistico')
+insert into FUNCIONES (Descripcion) values ('Comprar Oferta')
+insert into FUNCIONES (Descripcion) values ('Registrar Usuarios')
+insert into FUNCIONES (Descripcion) values ('Cargar Credito')
+insert into FUNCIONES (Descripcion) values ('Confeccion y Publicacion de Ofertas')
+insert into FUNCIONES (Descripcion) values ('Entrega/Consumo de Oferta')
+insert into FUNCIONES (Descripcion) values ('Facturar a Proveedor')
 
 
 ---Funcione Por Rol------------
@@ -283,7 +278,6 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','Funci
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID1')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID2')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID3')
-
 
 
 

@@ -28,29 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bt_cancelar = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Narrow", 20F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.label2.Location = new System.Drawing.Point(33, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(189, 31);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Menu Proveedor";
             // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.button3.Location = new System.Drawing.Point(67, 82);
+            this.button3.Location = new System.Drawing.Point(16, 85);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(155, 42);
+            this.button3.Size = new System.Drawing.Size(489, 48);
             this.button3.TabIndex = 16;
             this.button3.Text = "Baja o Modificación";
             this.button3.UseVisualStyleBackColor = true;
@@ -59,53 +50,59 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(67, 164);
+            this.button1.Location = new System.Drawing.Point(16, 27);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 39);
+            this.button1.Size = new System.Drawing.Size(489, 48);
             this.button1.TabIndex = 15;
             this.button1.Text = "Alta";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // rectangleShape2
+            // groupBox1
             // 
-            this.rectangleShape2.Location = new System.Drawing.Point(18, 32);
-            this.rectangleShape2.Name = "rectangleShape2";
-            this.rectangleShape2.Size = new System.Drawing.Size(255, 204);
+            this.groupBox1.Controls.Add(this.bt_cancelar);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(534, 217);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
             // 
-            // shapeContainer1
+            // bt_cancelar
             // 
-            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.rectangleShape2});
-            this.shapeContainer1.Size = new System.Drawing.Size(302, 264);
-            this.shapeContainer1.TabIndex = 18;
-            this.shapeContainer1.TabStop = false;
+            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.bt_cancelar.Location = new System.Drawing.Point(16, 143);
+            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.bt_cancelar.Name = "bt_cancelar";
+            this.bt_cancelar.Size = new System.Drawing.Size(489, 48);
+            this.bt_cancelar.TabIndex = 17;
+            this.bt_cancelar.Text = "Cancelar";
+            this.bt_cancelar.UseVisualStyleBackColor = true;
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
             // 
             // ABMProveedores
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(302, 264);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.shapeContainer1);
+            this.ClientSize = new System.Drawing.Size(563, 242);
+            this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ABMProveedores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMProveedores";
+            this.Load += new System.EventHandler(this.ABMProveedores_Load);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button1;
-        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button bt_cancelar;
     }
 }

@@ -16,8 +16,8 @@ namespace FrbaOfertas.AbmCliente
         private string username;
         private string password;
         private string rol;
-
-      
+        SqlConnection conexion_sql;
+        conexionBD conexion = conexionBD.getConexion();
 
         public AltaCliente()
         {
@@ -37,7 +37,7 @@ namespace FrbaOfertas.AbmCliente
     
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            conexion_sql = new SqlConnection(conexion.get_cadena());
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -57,27 +57,8 @@ namespace FrbaOfertas.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
             SqlCommand verificacion_cliente = new SqlCommand("verificar_existencia_cliente_gemelo", conexion_sql);
             verificacion_cliente.CommandType = CommandType.StoredProcedure;
-
-
-            string nombre;
-            string apellido;
-            string DNI;
-            string telefono;
-            object fechaDeNacimiento;
-            string mail;
-
-
-            nombre = Nombre.Text;
-            apellido = Apellido.Text;
-            DNI = Dni.Text;
-            telefono = Telefono.Text;
-            fechaDeNacimiento = FechaNacimiento.Value;
-            mail = Mail.Text;
 
             verificacion_cliente.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = Nombre.Text;
             verificacion_cliente.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = Apellido.Text;
@@ -93,27 +74,42 @@ namespace FrbaOfertas.AbmCliente
             }
 
 
-            if (nombre != "" && apellido != "" && DNI != "" && telefono != "" && mail != "")
+            if (this.verificar_parametros())
             {
-               try
+                MessageBox.Show("Todos los Campos son Obligatorios");
+            }
+            else 
+            {
+                try
                 {
                     conexion_sql.Open();
                     verificacion_cliente.ExecuteNonQuery();
                     this.Visible = false;
-                    CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(username, password, rol, nombre, apellido, DNI, telefono, fechaDeNacimiento, mail, null, null, null, null);
+                    CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null);
                     direccion.Show();
                     conexion_sql.Close();
 
-              }
-                catch {
+                }
+                catch
+                {
                     MessageBox.Show("El cliente que intenta crear, ya esta registrado en el sistema");
                 }
             }
-            else {
-                MessageBox.Show("Faltan completar campos");
-            }
             
         }
+
+        private bool verificar_parametros()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         private void Mail_TextChanged(object sender, EventArgs e)
         {
@@ -178,8 +174,8 @@ namespace FrbaOfertas.AbmCliente
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form registro = new RegistroUsuario();
-            registro.Show();
+            Form alta = new RegistroUsuario("Cliente");
+            alta.Show();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

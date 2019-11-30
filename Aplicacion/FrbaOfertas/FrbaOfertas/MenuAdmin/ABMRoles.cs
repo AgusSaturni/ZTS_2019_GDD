@@ -32,5 +32,12 @@ namespace FrbaOfertas.MenuAdmin
             Form modificaciones = new AbmRol.Modificacion_Roles();
             modificaciones.Show();
         }
+
+        private void bt_alta_rol_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form alta_rol = new AbmRol.alta_rol();
+            alta_rol.Show();
+        }
     }
 }

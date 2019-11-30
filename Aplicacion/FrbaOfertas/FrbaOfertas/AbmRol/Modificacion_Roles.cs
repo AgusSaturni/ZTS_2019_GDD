@@ -18,6 +18,7 @@ namespace FrbaOfertas.AbmRol
 
         private ArrayList Id_Funciones = new ArrayList();
         private Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         private SqlConnection conn; 
         
 
@@ -55,19 +56,15 @@ namespace FrbaOfertas.AbmRol
 
         private void cargar_comboBox()
         {
-            
-            String query = "SELECT * FROM ROLES";
-            SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
-
-            SqlDataReader reader = cmd.ExecuteReader();
-
+            SqlDataReader reader = commonQueries_instance.get_all_roles(conn);
+          
             while (reader.Read())
             {
                 comboBox_roles.Items.Add(reader[0].ToString());
             }
+            
             conn.Close();
-
         }
 
         private void cargar_funciones_totales_disponibles() 
@@ -91,52 +88,16 @@ namespace FrbaOfertas.AbmRol
 
         private void cargar_funciones_totales_sistema()
         {
-            
-
-            //CARGA DE SEGUNDA LISTA
-
-            String query = "select Descripcion, Bit_de_Restriccion from Funciones";
-            SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
 
-            SqlDataReader reader2 = cmd.ExecuteReader();
+            SqlDataReader reader2 = commonQueries_instance.get_all_funciones(conn);
 
             while (reader2.Read())
             {
                 if (!list_rol.Items.Contains(reader2[0].ToString())) 
                 {
-                    switch (reader2[1].ToString()) 
-                    { 
-                        case "0": //Funcion disponible para Todos
-                            list_totales.Items.Add(reader2[0].ToString());
-                            break;
-                        case "1": //Funcion disponible solo para clientes
-                            if (comboBox_roles.SelectedItem.ToString() == "Cliente")
-                            {
-                                list_totales.Items.Add(reader2[0].ToString());    
-                            }
-                            break;
-                        case "2": //Funcion disponible solo para proveedores
-                            if (comboBox_roles.SelectedItem.ToString() == "Proveedor")
-                            {
-                                list_totales.Items.Add(reader2[0].ToString());
-                            } 
-                            break;
-                        case "3": //Funcion disponible solo para Administradores
-                            if (comboBox_roles.SelectedItem.ToString() == "Administrador")
-                            {
-                                list_totales.Items.Add(reader2[0].ToString());
-                            }
-                            break;
-                        default:
-                            MessageBox.Show(reader2[1].ToString());
-                            break;
-                    }   
-                    
-                    
+                    list_totales.Items.Add(reader2[0].ToString());   
                 }
-
-
             }
 
             conn.Close();
@@ -154,8 +115,6 @@ namespace FrbaOfertas.AbmRol
                 this.cargar_estado(comboBox_roles.SelectedItem.ToString());
             }
             else { MessageBox.Show("Seleccione un Rol"); }
-            
-            
         }
 
         private void bt_izq_a_der_Click(object sender, EventArgs e)
@@ -171,7 +130,6 @@ namespace FrbaOfertas.AbmRol
                 else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado"); }
             }
             else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol");  }
-
         }
 
         private void bt_der_a_izq_Click(object sender, EventArgs e)
@@ -191,40 +149,41 @@ namespace FrbaOfertas.AbmRol
 
         private void bt_finalizar_Click(object sender, EventArgs e)
         {
-            
+            //Cierro y abro la conexion 2 veces porque no se puede utilizar 2 DataReaders en 1 conexion sola
             conn.Open();
             this.remover_funciones_viejas(comboBox_roles.SelectedItem.ToString(),conn);
             this.carga_logica_funciones_nuevas(conn);
             conn.Close();
 
-
-            for (int i = 0; i < Id_Funciones.Count; i++) 
+            conn.Open();
+                
+            try 
             {
-                conn.Open();
-
-                SqlCommand command = new SqlCommand("INSERT INTO FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values (@ROL, @Funcion_Id)", conn);
-                command.Parameters.AddWithValue("@ROL", comboBox_roles.SelectedItem.ToString());
-                command.Parameters.AddWithValue("@Funcion_Id", Id_Funciones[i].ToString());
-
-                command.ExecuteNonQuery();
-
-                conn.Close();
+                for (int i = 0; i < Id_Funciones.Count; i++) 
+                {
+                 commonQueries_instance.insert_funciones_por_rol(comboBox_roles.SelectedItem.ToString(), Id_Funciones[i].ToString(),conn);
+                }
             }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+            }
+
+            conn.Close();
 
             Id_Funciones.Clear();
 
             MessageBox.Show("Rol Modificado");
-            
-
         }
 
         private void remover_funciones_viejas(string Rol, SqlConnection conexion) 
         {
-            SqlCommand command1 = new SqlCommand("eliminar_funciones_por_rol", conexion);
-            command1.CommandType = CommandType.StoredProcedure;
-            command1.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = Rol;
+            SqlCommand cmd = new SqlCommand("eliminar_funciones_por_rol", conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = Rol;
 
-            command1.ExecuteNonQuery();       
+            cmd.ExecuteNonQuery();       
         }
 
         private void carga_logica_funciones_nuevas(SqlConnection conexion) 
@@ -274,7 +233,6 @@ namespace FrbaOfertas.AbmRol
                     MessageBox.Show(errores.Message.ToString());
                 }
                 conn.Close();
-
 
             } 
 

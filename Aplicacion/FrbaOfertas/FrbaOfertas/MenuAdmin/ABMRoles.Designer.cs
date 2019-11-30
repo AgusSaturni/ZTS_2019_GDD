@@ -76,6 +76,7 @@
             this.bt_alta_rol.TabIndex = 0;
             this.bt_alta_rol.Text = "Alta Rol";
             this.bt_alta_rol.UseVisualStyleBackColor = true;
+            this.bt_alta_rol.Click += new System.EventHandler(this.bt_alta_rol_Click);
             // 
             // ABMRoles
             // 

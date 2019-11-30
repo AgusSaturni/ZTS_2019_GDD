@@ -15,7 +15,7 @@ namespace FrbaOfertas
     public partial class RegistroUsuario : Form
     {
         
-        object rol;
+        object rol = "";
 
         public RegistroUsuario()
         {
@@ -24,20 +24,12 @@ namespace FrbaOfertas
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public RegistroUsuario(object rol_recibido)
+        public RegistroUsuario(object rol_recibido) //Se utiliza para difierenciar cuando se viene de ABM cliente, ABM proveedor, o Login
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             rol = rol_recibido;
-            if (rol.ToString() == "Proveedor")
-            {
-                Rol.SelectedIndex = 1;
-                Rol.Enabled = false;
-            }
-            if (rol.ToString() == "Cliente")
-            {
-                Rol.SelectedIndex = 0;
-                Rol.Enabled = false;
-            }
         }
 
         private  void label1_Click(object sender, EventArgs e)
@@ -68,8 +60,16 @@ namespace FrbaOfertas
 
         private void RegistroUsuario_Load(object sender, EventArgs e)
         {
-
-
+            if (rol.ToString() == "Proveedor")
+            {
+                ComboBox_Rol.SelectedIndex = 1;
+                ComboBox_Rol.Enabled = false;
+            }
+            if (rol.ToString() == "Cliente")
+            {
+                ComboBox_Rol.SelectedIndex = 0;
+                ComboBox_Rol.Enabled = false;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -78,16 +78,15 @@ namespace FrbaOfertas
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-             SqlCommand verificacion_usuario = new SqlCommand("verificar_existencia_de_usuario", conexion_sql);
-             verificacion_usuario.CommandType = CommandType.StoredProcedure;
+            SqlCommand verificacion_usuario = new SqlCommand("verificar_existencia_de_usuario", conexion_sql);
+            verificacion_usuario.CommandType = CommandType.StoredProcedure;
 
             verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
 
-            int indice =  Rol.SelectedIndex;
+            int indice =  ComboBox_Rol.SelectedIndex;
             string usuario;
             string password;
             
-
             usuario = Usuario.Text;        
             password = Password.Text;
 
@@ -99,20 +98,16 @@ namespace FrbaOfertas
 
                 if (indice != -1 && usuario != "" && password != "")
                 {
-
-                    rol = Rol.Items[indice];
-
-
-                    switch (rol.ToString())
+                    switch (ComboBox_Rol.SelectedItem.ToString())
                     {
                         case "Cliente":
-                            Form registroCliente = new AbmCliente.AltaCliente(usuario, password, rol.ToString());
-                            this.Visible = false;
+                            Form registroCliente = new AbmCliente.AltaCliente(usuario, password, ComboBox_Rol.SelectedItem.ToString());
+                            this.Hide();
                             registroCliente.Show();
                             break;
                         case "Proveedor":
-                            Form registroProveedor = new AbmProveedor.AltaProveedor(usuario, password, rol.ToString());
-                            this.Visible = false;
+                            Form registroProveedor = new AbmProveedor.AltaProveedor(usuario, password, ComboBox_Rol.SelectedItem.ToString());
+                            this.Hide();
                             registroProveedor.Show();
                             break;
                     }
@@ -125,7 +120,7 @@ namespace FrbaOfertas
             }
             catch(Exception)
             {
-                MessageBox.Show("Nombre de Usuario ya existente. Pruebe otro.");
+                MessageBox.Show("Nombre de Usuario ya existente.");
             }
 
             
@@ -133,10 +128,25 @@ namespace FrbaOfertas
 
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form inicio_sension = new InicioDeSesion();
-            inicio_sension.Show();
-
+            switch (rol.ToString())
+            {
+                case "Cliente":
+                    Form menu_cliente = new MenuAdmin.ABMClientes();
+                    menu_cliente.Show();
+                    this.Hide();
+                    break;
+                case "Proveedor":
+                    Form menu_proveedor = new MenuAdmin.ABMProveedores();
+                    menu_proveedor.Show();
+                    this.Hide();
+                    break;
+                default:
+                    Form inicio_sesion = new InicioDeSesion();
+                    inicio_sesion.Show();
+                    this.Hide();
+                    break;
+            }
+            
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

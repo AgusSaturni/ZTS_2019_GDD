@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Password = new System.Windows.Forms.TextBox();
             this.Usuario = new System.Windows.Forms.TextBox();
-            this.Rol = new System.Windows.Forms.ComboBox();
+            this.ComboBox_Rol = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.label2.Location = new System.Drawing.Point(16, 114);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 17);
+            this.label2.Size = new System.Drawing.Size(172, 24);
             this.label2.TabIndex = 9;
             this.label2.Text = "Ingrese Contraseña *";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -60,7 +60,7 @@
             this.label1.Location = new System.Drawing.Point(16, 26);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 17);
+            this.label1.Size = new System.Drawing.Size(233, 24);
             this.label1.TabIndex = 8;
             this.label1.Text = "Ingrese Nombre de Usuario *";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -71,7 +71,7 @@
             this.Password.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Password.Name = "Password";
             this.Password.PasswordChar = '•';
-            this.Password.Size = new System.Drawing.Size(208, 23);
+            this.Password.Size = new System.Drawing.Size(208, 30);
             this.Password.TabIndex = 7;
             this.Password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
@@ -80,23 +80,23 @@
             this.Usuario.Location = new System.Drawing.Point(136, 68);
             this.Usuario.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Usuario.Name = "Usuario";
-            this.Usuario.Size = new System.Drawing.Size(208, 23);
+            this.Usuario.Size = new System.Drawing.Size(208, 30);
             this.Usuario.TabIndex = 6;
             this.Usuario.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // Rol
+            // ComboBox_Rol
             // 
-            this.Rol.FormattingEnabled = true;
-            this.Rol.Items.AddRange(new object[] {
+            this.ComboBox_Rol.FormattingEnabled = true;
+            this.ComboBox_Rol.Items.AddRange(new object[] {
             "Cliente",
             "Proveedor"});
-            this.Rol.Location = new System.Drawing.Point(136, 245);
-            this.Rol.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.Rol.Name = "Rol";
-            this.Rol.Size = new System.Drawing.Size(208, 24);
-            this.Rol.TabIndex = 10;
-            this.Rol.Text = "Seleccione";
-            this.Rol.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.ComboBox_Rol.Location = new System.Drawing.Point(136, 245);
+            this.ComboBox_Rol.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.ComboBox_Rol.Name = "ComboBox_Rol";
+            this.ComboBox_Rol.Size = new System.Drawing.Size(208, 32);
+            this.ComboBox_Rol.TabIndex = 10;
+            this.ComboBox_Rol.Text = "Seleccione";
+            this.ComboBox_Rol.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -105,7 +105,7 @@
             this.label3.Location = new System.Drawing.Point(16, 204);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 17);
+            this.label3.Size = new System.Drawing.Size(161, 24);
             this.label3.TabIndex = 11;
             this.label3.Text = "Seleccione un Rol *";
             // 
@@ -128,7 +128,7 @@
             this.label4.Location = new System.Drawing.Point(16, 294);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(112, 17);
+            this.label4.Size = new System.Drawing.Size(159, 24);
             this.label4.TabIndex = 13;
             this.label4.Text = "(*) son Obligatorios";
             // 
@@ -140,7 +140,7 @@
             this.groupBox1.Controls.Add(this.Usuario);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.Rol);
+            this.groupBox1.Controls.Add(this.ComboBox_Rol);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.Password);
             this.groupBox1.Location = new System.Drawing.Point(12, 1);
@@ -163,7 +163,7 @@
             // 
             // RegistroUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(383, 427);
             this.Controls.Add(this.groupBox1);
@@ -185,7 +185,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox Password;
         private System.Windows.Forms.TextBox Usuario;
-        private System.Windows.Forms.ComboBox Rol;
+        private System.Windows.Forms.ComboBox ComboBox_Rol;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;

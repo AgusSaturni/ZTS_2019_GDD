@@ -40,7 +40,34 @@ AS BEGIN
 	--No verifico existencia ya que este procedure se utiliza para cunado creas un usuario.
 	--Por lo tanto, ya previamente se verifica si el usuario no existe.
 	if exists(select 1 from ROLES where Rol_Id = @Rol_Id and Estado = 'Habilitado')
-		insert into ROLES_POR_USUARIO values (@Rol_Id, @username)
+		insert into ROLES_POR_USUARIO (Rol_Id, Username) values (@Rol_Id, @username)
+END
+
+
+CREATE PROCEDURE insertar_funciones_por_rol(@Rol_Id varchar(255), @funcionID varchar(17))
+AS BEGIN
+	if not exists(select 1 from FUNCIONES_POR_ROL where Rol_Id = @Rol_Id and Funcion_Id = @funcionID)
+		begin
+			insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values (@Rol_Id, @funcionID)
+		end
+	else
+		begin
+			throw 80002, 'La funcion ya se encuentra asignada al rol',1
+		end
+
+END
+
+CREATE PROCEDURE insertar_rol(@Rol_Id varchar(255))
+AS BEGIN
+	if not exists(select 1 from ROLES where Rol_Id = @Rol_Id)
+		begin
+			insert into ROLES (Rol_Id) values (@Rol_Id)
+		end
+	else
+		begin
+			throw 80003, 'El rol ya existe',1
+		end
+
 END
 
 CREATE PROCEDURE eliminar_funciones_por_rol(@Rol_Id varchar(255))
@@ -48,11 +75,8 @@ AS BEGIN
 	DELETE FROM FUNCIONES_POR_ROL WHERE Rol_Id = @Rol_Id
 END
 
-
-
-
-select * from FUNCIONES_POR_ROL
-select * from FUNCIONES
-
-
-select Funcion_Id, Descripcion from FUNCIONES
+CREATE PROCEDURE verificar_estado_rol(@Rol_Id varchar(255))
+AS BEGIN
+	IF NOT EXISTS (SELECT 1 FROM ROLES WHERE Rol_Id = @Rol_Id and Estado = 'Habilitado')
+		throw 80004, 'El Rol se Encuentra Inhabilitado. No se pueden ejecutar Altas.',1
+END

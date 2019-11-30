@@ -8,11 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaOfertas.Manejo_Logico;
 namespace FrbaOfertas.AbmCliente
 {
     public partial class frm_clie_bajas : Form
     {
         public bool boleano = false;
+        conexionBD conexion = conexionBD.getConexion();
+        CommonQueries commonQueries_instance = CommonQueries.getInstance();
+        SqlConnection conexion_sql;
+
         public frm_clie_bajas()
         {
             InitializeComponent();
@@ -20,10 +25,11 @@ namespace FrbaOfertas.AbmCliente
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        private void frm_clie_bajas_Load(object sender, EventArgs e)
+        private void frm_clie_bajas_Load_1(object sender, EventArgs e)
         {
-
+            conexion_sql = new SqlConnection(conexion.get_cadena());
         }
+
 
         private void contenedor_info_cliente_Enter(object sender, EventArgs e)
         {
@@ -39,21 +45,29 @@ namespace FrbaOfertas.AbmCliente
 
         private void bt_habilitar_Click(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
-            try
+            conexion_sql.Open();
+            try 
             {
-                SqlCommand command = new SqlCommand("habilitar_cliente", conexion_sql);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
-                command.Parameters.AddWithValue("@username", SqlDbType.Int).Value = txt_username.Text;
+                commonQueries_instance.vereificar_estado_rol("Cliente", conexion_sql);
 
-                conexion_sql.Open();
-                command.ExecuteNonQuery();
-                conexion_sql.Close();
+                try
+                {
+                    SqlCommand command = new SqlCommand("habilitar_cliente", conexion_sql);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
+                    command.Parameters.AddWithValue("@username", SqlDbType.Int).Value = txt_username.Text;
 
-                MessageBox.Show("Cliente Habilitado");
+
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Cliente Habilitado");
+
+                }
+                catch (SqlException exepcion)
+                {
+                    SqlError errores = exepcion.Errors[0];
+                    MessageBox.Show(errores.Message.ToString());
+                }
 
             }
             catch (SqlException exepcion)
@@ -61,8 +75,8 @@ namespace FrbaOfertas.AbmCliente
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString());
             }
+            conexion_sql.Close();
 
-            this.Hide();
         }
 
         //este es guardar, no me deja borrarlo
@@ -132,9 +146,7 @@ namespace FrbaOfertas.AbmCliente
                 return;
             };
 
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
+            conexion_sql.Open();
             try
             {
                 SqlCommand command = new SqlCommand("actualizar_cliente", conexion_sql);
@@ -153,9 +165,9 @@ namespace FrbaOfertas.AbmCliente
                 command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
                 command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
 
-                conexion_sql.Open();
+
                 command.ExecuteNonQuery();
-                conexion_sql.Close();
+
                 
                 MessageBox.Show("Cliente Modificado");
 
@@ -165,6 +177,7 @@ namespace FrbaOfertas.AbmCliente
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString());
             }
+            conexion_sql.Close();
 
             this.Hide();
         }
@@ -186,10 +199,6 @@ namespace FrbaOfertas.AbmCliente
             return false;
         }
 
-        private void frm_clie_bajas_Load_1(object sender, EventArgs e)
-        {
-
-        }
 
 
 

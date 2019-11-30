@@ -44,6 +44,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txt_Rubro = new System.Windows.Forms.TextBox();
+            this.bt_cancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_proveedores)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +62,7 @@
             this.contenedor_proveedores.Name = "contenedor_proveedores";
             this.contenedor_proveedores.ReadOnly = true;
             this.contenedor_proveedores.RowTemplate.Height = 28;
-            this.contenedor_proveedores.Size = new System.Drawing.Size(1311, 428);
+            this.contenedor_proveedores.Size = new System.Drawing.Size(1166, 428);
             this.contenedor_proveedores.TabIndex = 10;
             this.contenedor_proveedores.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.contenedor_clientes_CellContentClick);
             // 
@@ -108,9 +109,9 @@
             // bt_buscar
             // 
             this.bt_buscar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_buscar.Location = new System.Drawing.Point(828, 51);
+            this.bt_buscar.Location = new System.Drawing.Point(828, 34);
             this.bt_buscar.Name = "bt_buscar";
-            this.bt_buscar.Size = new System.Drawing.Size(450, 43);
+            this.bt_buscar.Size = new System.Drawing.Size(323, 43);
             this.bt_buscar.TabIndex = 4;
             this.bt_buscar.Text = "Buscar";
             this.bt_buscar.UseVisualStyleBackColor = true;
@@ -119,9 +120,9 @@
             // bt_limpiar
             // 
             this.bt_limpiar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_limpiar.Location = new System.Drawing.Point(828, 111);
+            this.bt_limpiar.Location = new System.Drawing.Point(828, 83);
             this.bt_limpiar.Name = "bt_limpiar";
-            this.bt_limpiar.Size = new System.Drawing.Size(450, 43);
+            this.bt_limpiar.Size = new System.Drawing.Size(323, 43);
             this.bt_limpiar.TabIndex = 5;
             this.bt_limpiar.Text = "Limpiar";
             this.bt_limpiar.UseVisualStyleBackColor = true;
@@ -160,6 +161,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.bt_cancelar);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txt_Rubro);
             this.groupBox1.Controls.Add(this.label4);
@@ -172,7 +174,7 @@
             this.groupBox1.Controls.Add(this.txt_RazonS);
             this.groupBox1.Location = new System.Drawing.Point(16, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1311, 209);
+            this.groupBox1.Size = new System.Drawing.Size(1166, 209);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
@@ -194,11 +196,22 @@
             this.txt_Rubro.Size = new System.Drawing.Size(632, 26);
             this.txt_Rubro.TabIndex = 9;
             // 
+            // bt_cancelar
+            // 
+            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.bt_cancelar.Location = new System.Drawing.Point(828, 132);
+            this.bt_cancelar.Name = "bt_cancelar";
+            this.bt_cancelar.Size = new System.Drawing.Size(323, 43);
+            this.bt_cancelar.TabIndex = 11;
+            this.bt_cancelar.Text = "Cancelar";
+            this.bt_cancelar.UseVisualStyleBackColor = true;
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
+            // 
             // listado_proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1351, 660);
+            this.ClientSize = new System.Drawing.Size(1199, 660);
             this.Controls.Add(this.contenedor_proveedores);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -228,6 +241,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_Rubro;
+        private System.Windows.Forms.Button bt_cancelar;
 
     }
 }

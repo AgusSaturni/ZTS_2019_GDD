@@ -111,8 +111,8 @@ namespace FrbaOfertas.AbmProveedor
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form registro_usuario = new RegistroUsuario();
-            registro_usuario.Show();
+            Form alta = new RegistroUsuario("Proveedor");
+            alta.Show();
 
         }
     }

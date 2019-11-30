@@ -15,6 +15,9 @@ namespace FrbaOfertas.AbmCliente
 {
     public partial class frm_listado_clientes : Form
     {
+        conexionBD conexion = conexionBD.getConexion();
+        SqlConnection conexion_sql;
+
         public frm_listado_clientes()
         {
             InitializeComponent();
@@ -22,10 +25,9 @@ namespace FrbaOfertas.AbmCliente
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        private void Listado_Load(object sender, EventArgs e)
+        private void frm_listado_clientes_Load(object sender, EventArgs e)
         {
-
-
+            conexion_sql = new SqlConnection(conexion.get_cadena());
         }
 
         private void bt_buscar_Click(object sender, EventArgs e)
@@ -36,20 +38,16 @@ namespace FrbaOfertas.AbmCliente
             if (query == "") { MessageBox.Show("Ingrese Parametros"); }
             else
             {
-                conexionBD conexion = conexionBD.getConexion();
-               
-                SqlConnection conn = new SqlConnection(conexion.get_cadena());
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conexion_sql);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-
-                conn.Open();
+                conexion_sql.Open();
 
                 DataTable tabla_clientes = new DataTable();
 
                 adapter.Fill(tabla_clientes);
 
                 contenedor_clientes.DataSource = tabla_clientes;
-                conn.Close();
+                conexion_sql.Close();
             }
 
         }
@@ -120,10 +118,9 @@ namespace FrbaOfertas.AbmCliente
             }
             if (contenedor_clientes.CurrentCell.ColumnIndex == 0)
             {
-                conexionBD conexion = conexionBD.getConexion();
-                SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-             try
+                conexion_sql.Open();
+                try
                 {
                     var row = contenedor_clientes.CurrentRow;
 
@@ -131,30 +128,28 @@ namespace FrbaOfertas.AbmCliente
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Float).Value = Int32.Parse(row.Cells[6].Value.ToString());
                     command.Parameters.AddWithValue("@username", SqlDbType.Float).Value = row.Cells[3].Value.ToString();
-                    conexion_sql.Open();
+
                     command.ExecuteNonQuery();
-                    conexion_sql.Close();
+
         
                     MessageBox.Show("Cliente Inhabilitado");
                     //Hacer un refresh
 
                 }
-             catch (SqlException exepcion)
-               {
-                   SqlError errores = exepcion.Errors[0];
-                   MessageBox.Show(errores.Message.ToString());
-               }
+                catch (SqlException exepcion)
+                {
+                    SqlError errores = exepcion.Errors[0];
+                    MessageBox.Show(errores.Message.ToString());
+                }
+                conexion_sql.Close();
             }
+
 
             if (contenedor_clientes.CurrentCell.ColumnIndex == 1)
             {
                 var row = contenedor_clientes.CurrentRow;
 
                 frm_clie_bajas formulario_bajas = new frm_clie_bajas();
-
-                //Cliente_Id username, nombre, apellido, DNI, telefono, mail, 
-                //Fecha_Nacimiento, DineroDisponible, estado,
-                // Direccion, Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto
 
                 formulario_bajas.txt_id.Text = row.Cells[2].Value.ToString();
                 formulario_bajas.txt_username.Text = row.Cells[3].Value.ToString();
@@ -174,11 +169,6 @@ namespace FrbaOfertas.AbmCliente
                 formulario_bajas.txt_piso.Text = row.Cells[16].Value.ToString();
                 formulario_bajas.txt_depto.Text = row.Cells[17].Value.ToString();
 
-
-
-
-
-
                 formulario_bajas.Show();
             }
         }
@@ -188,9 +178,13 @@ namespace FrbaOfertas.AbmCliente
 
         }
 
-        private void frm_listado_clientes_Load(object sender, EventArgs e)
-        {
 
+
+        private void bt_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form menu = new MenuAdmin.ABMClientes();
+            menu.Show();
         }
     }
 }
