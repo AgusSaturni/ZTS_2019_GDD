@@ -108,7 +108,6 @@ C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GD
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.AltaProveedor.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.listado_proveedores.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.Modificaciones_Proveedores.resources
-C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Form1.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.CargaDeCredito.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CargaDireccion.CargarDireccion.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CrearOferta.CargaOferta.resources
@@ -139,3 +138,8 @@ C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacio
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.Ofertas.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.Ofertas.resources
 C:\Users\Aldo Zeppa\Desktop\UTN\3er año\Gestion de datos\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.alta_rol.resources
+C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.alta_rol.resources
+C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Modificacion_Roles.resources
+C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmUsuarios.CambioContraseña.resources
+C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.Ofertas.resources
+C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuAdmin.ABMRoles.resources

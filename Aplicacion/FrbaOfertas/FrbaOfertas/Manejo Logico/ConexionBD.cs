@@ -9,7 +9,7 @@ namespace FrbaOfertas
     class conexionBD
     {
         private static conexionBD instance = null;
-        string cadena_conexion = @"Data Source=DESKTOP-8FI0R6N\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=agustin2424";
+        string cadena_conexion = @"Data Source=DESKTOP-L4TIUP8\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
 
         private conexionBD() { }
 

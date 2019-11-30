@@ -71,3 +71,77 @@ end
 
 drop procedure obtener_codigo
 
+
+------------------CONSUMO_OFERTA auxiliares------------------
+CREATE PROCEDURE oferta_existente (@ofertaId varchar(255))
+AS BEGIN
+IF not exists (SELECT * FROM OFERTAS WHERE Oferta_Id = @ofertaId)
+	BEGIN
+		THROW 90001,'La oferta ingresada no es correcta.',1
+	END
+END
+
+CREATE PROCEDURE cupon_existente (@cuponId varchar(255))
+AS BEGIN
+IF not exists (SELECT * FROM CUPONES WHERE Cupon_Id = @cuponId)
+	BEGIN
+		THROW 90001,'El cupon ingresado no es correcto.',1
+	END
+END
+
+CREATE PROCEDURE oferta_disponible (@cuponId varchar(255), @ofertaFecha datetime) --La fecha de vencimiento todavia esta disponible
+AS BEGIN
+	DECLARE @ofertaId VARCHAR(255)
+	SET @ofertaId = (SELECT oferta_Id FROM CUPONES WHERE Cupon_Id = @cuponId)
+	IF not exists (SELECT * FROM OFERTAS
+	WHERE @ofertaFecha between Fecha_publicacion and Fecha_Vencimiento)
+		BEGIN
+			THROW 90002,'La oferta no esta disponible en esta fecha.',1
+		END
+END
+
+CREATE PROCEDURE verificar_proveedor (@cuponId varchar(255), @proveedor varchar(255))
+AS BEGIN
+	DECLARE @proveedorId VARCHAR(255)
+	SET @proveedorId = (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor)
+	IF not exists (SELECT * FROM CUPONES c
+					JOIN OFERTAS o ON o.Oferta_Id = c.Oferta_Id
+					WHERE @cuponId = c.Cupon_Id
+					AND @proveedorId = o.Proveedor_referenciado)
+	BEGIN
+		THROW 90003,'El proveedor no es el indicado.',1
+	END
+END
+
+CREATE PROCEDURE cupon_cliente (@cuponId varchar(255), @cliente varchar(255))
+AS BEGIN
+	IF not exists (select 1 from CUPONES cup
+					JOIN COMPRAS com ON com.Compra_Id = cup.Compra_Id
+					WHERE @cuponId = cup.Cupon_Id
+					AND @cliente = com.Cliente_Id)
+
+	--IF (select COUNT(*) from CUPONES cup
+	--				JOIN COMPRAS com ON com.Compra_Id = cup.Compra_Id
+	--				WHERE @cuponId = cup.Cupon_Id
+	--				AND @cliente = com.Cliente_Id)>0
+
+	BEGIN
+		THROW 90003,'El cupon no le pertenece al cliente.',1
+	END
+END
+drop procedure cupon_cliente
+
+CREATE PROCEDURE cupon_utilizado(@cuponId varchar(255))
+AS BEGIN
+--IF exists (SELECT * from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)
+IF (SELECT count(*) from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)>0
+	BEGIN
+		THROW 90003,'El cupon ya fue utilizado.',1
+	END
+END
+
+CREATE PROCEDURE utilizar_cupon(@cuponId varchar(255), @fecha datetime)
+AS BEGIN
+	UPDATE CUPONES SET Fecha_Consumo = @fecha
+	WHERE Cupon_Id = @cuponId
+END

@@ -271,6 +271,7 @@ CREATE TABLE FUNCIONES_POR_ROL
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID5')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID7')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Proveedor','FuncionID8')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Proveedor','FuncionID9')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID6')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID8')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID4')
@@ -318,7 +319,5 @@ insert into CUPONES (Oferta_Id,Compra_Id,Fecha_Consumo)
 join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra
 where gd.Oferta_Fecha_Compra is not null)
 
-
-drop table CUPONES
 
 

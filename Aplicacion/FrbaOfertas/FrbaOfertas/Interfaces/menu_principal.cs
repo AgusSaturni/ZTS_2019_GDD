@@ -95,7 +95,10 @@ namespace FrbaOfertas.Interfaces
                         break;
                     case "Comprar Ofertas":
                         break;
-                    case "Entrega/Consumo de Ofertas":
+                    case "Entrega/Consumo de Oferta":
+                        this.Hide();
+                        Form entrega_ConsumoOferta = new Entrega_ConsumoOferta.Entrega_ConsumoOferta(username);
+                        entrega_ConsumoOferta.Show();
                         break;
                     case "Facturar a Proveedor":
                         break;
