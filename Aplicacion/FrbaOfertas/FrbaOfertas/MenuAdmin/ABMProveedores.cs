@@ -42,7 +42,7 @@ namespace FrbaOfertas.MenuAdmin
 
 
                 this.Hide();
-                Form alta = new RegistroUsuario("Proveedor");
+                Form alta = new RegistroUsuario("Proveedor", this);
                 alta.Show();
 
             }

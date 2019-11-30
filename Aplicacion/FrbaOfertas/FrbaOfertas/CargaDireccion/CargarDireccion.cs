@@ -27,6 +27,7 @@ namespace FrbaOfertas.CargaDireccion
         private string rubro;
         private string cuit;
         private string contacto;
+        private Form formulario_anterior;
 
         public CargarDireccion()
         {
@@ -35,7 +36,7 @@ namespace FrbaOfertas.CargaDireccion
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail,string rs,string cuit,string rubro, string contacto)
+        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail, string rs, string cuit, string rubro, string contacto, Form form_ant)
         {
             InitializeComponent();
             this.usuario = usuario;
@@ -51,6 +52,7 @@ namespace FrbaOfertas.CargaDireccion
             this.cuit = cuit;
             this.rubro = rubro;
             this.contacto = contacto;
+            formulario_anterior = form_ant;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -60,7 +62,7 @@ namespace FrbaOfertas.CargaDireccion
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
@@ -70,197 +72,12 @@ namespace FrbaOfertas.CargaDireccion
             {
                 case "Cliente":
 
-                    //----------------------DATOS PARA REGISTRO----------------------------
-                    SqlCommand command = new SqlCommand("registrar_usuario_cliente",conn);
-                    command.CommandType = CommandType.StoredProcedure;
-
-
-                    SqlParameter username1 = new SqlParameter("@Username", SqlDbType.Char);
-                    username1.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(username1);
-
-
-                    SqlParameter password1 = new SqlParameter("@Password", SqlDbType.Char);
-                    password1.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(password1);
-
-                    SqlParameter rol1 = new SqlParameter("@Rol", SqlDbType.Char);
-                    rol1.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(rol1);
-     
-
-                    SqlParameter nombre_cliente = new SqlParameter("@nombre", SqlDbType.Char);
-                    nombre_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(nombre_cliente);
-
-
-                    SqlParameter apellido_cliente = new SqlParameter("@apellido", SqlDbType.Char);
-                    apellido_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(apellido_cliente);
-
-                    SqlParameter DNI_cliente = new SqlParameter("@DNI", SqlDbType.Float);
-                    DNI_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(DNI_cliente);
-
-                    SqlParameter telefono_cliente = new SqlParameter("@Telefono", SqlDbType.Float);
-                    telefono_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(telefono_cliente);
-
-                    SqlParameter mail_cliente = new SqlParameter("@Mail", SqlDbType.Char);
-                    mail_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(mail_cliente);
-
-                    SqlParameter fechaNacimiento_cliente = new SqlParameter("@Fecha_nacimiento", SqlDbType.Date);
-                    fechaNacimiento_cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(fechaNacimiento_cliente);
-
-
-                    SqlParameter direccion = new SqlParameter("@Direccion", SqlDbType.Char);
-                    direccion.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(direccion);
-
-                    SqlParameter codPostal = new SqlParameter("@codigo_Postal", SqlDbType.Float);
-                    codPostal.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(codPostal);
-
-                    SqlParameter localidad = new SqlParameter("@Localidad", SqlDbType.Char);
-                    localidad.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(localidad);
-
-                    SqlParameter ciudad = new SqlParameter("@ciudad", SqlDbType.Char);
-                    direccion.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(ciudad);
-
-                    SqlParameter nroPiso = new SqlParameter("@nro_Piso", SqlDbType.Int);
-                    nroPiso.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(nroPiso);
-
-                    SqlParameter dpto = new SqlParameter("@Depto", SqlDbType.Char);
-                    dpto.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(dpto);
-
                     if (verificar_parametros())
                     {
                         MessageBox.Show("Faltan completar campos");
                         return;
                     }
 
-
-
-                    username1.Value = usuario;
-                    password1.Value = password;
-                    rol1.Value = rol;   
-                    nombre_cliente.Value = nombre;
-                    apellido_cliente.Value = apellido;
-                    DNI_cliente.Value = DNI;
-                    telefono_cliente.Value = telefono;
-                    fechaNacimiento_cliente.Value = fechaDeNacimiento;
-                    mail_cliente.Value = mail;
-                    direccion.Value = Direccion.Text;
-                    codPostal.Value = CodigoPostal.Text;
-                    localidad.Value = Localidad.Text;
-                    ciudad.Value = Ciudad.Text;
-                    nroPiso.Value = NroPiso.Text;
-                    dpto.Value = Departamento.Text;
-
-                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x))) 
-                    {
-                        MessageBox.Show("Datos erroneos.");
-                        return;
-                    }
-
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Registro de Cliente Finalizado");
-
-                break;
-
-                case "Proveedor":
-                     SqlCommand command1 = new SqlCommand("registrar_usuario_proveedor",conn);
-                    command1.CommandType = CommandType.StoredProcedure;
-
-
-                    SqlParameter username3 = new SqlParameter("@Username", SqlDbType.Char);
-                    username3.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(username3);
-
-
-                    SqlParameter password3 = new SqlParameter("@Password", SqlDbType.Char);
-                    password3.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(password3);
-
-                    SqlParameter rol2 = new SqlParameter("@Rol", SqlDbType.Char);
-                    rol2.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(rol2);
-
-                    SqlParameter razon_social1 = new SqlParameter("@Razon_Social", SqlDbType.Char);
-                    razon_social1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(razon_social1);
-
-                    SqlParameter mail_Proveedor = new SqlParameter("@Mail", SqlDbType.Char);
-                    mail_Proveedor.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(mail_Proveedor);
-
-                    SqlParameter telefono_proveedor = new SqlParameter("@Telefono", SqlDbType.Float);
-                    telefono_proveedor.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(telefono_proveedor);
-
-                    SqlParameter cuit1 = new SqlParameter("@CUIT", SqlDbType.Char);
-                    cuit1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(cuit1);
-
-                    SqlParameter rubro1 = new SqlParameter("@Rubro", SqlDbType.Char);
-                    rubro1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(rubro1);
-
-                    SqlParameter contacto1 = new SqlParameter("@Nombre_contacto", SqlDbType.Char);
-                    contacto1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(contacto1);
-                    
-                    SqlParameter direccion1 = new SqlParameter("@Direccion", SqlDbType.Char);
-                    direccion1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(direccion1);
-
-                    SqlParameter codPostal1 = new SqlParameter("@codigo_Postal", SqlDbType.Float);
-                    codPostal1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(codPostal1);
-
-                    SqlParameter localidad1 = new SqlParameter("@Localidad", SqlDbType.Char);
-                    localidad1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(localidad1);
-
-                    SqlParameter ciudad1 = new SqlParameter("@Ciudad", SqlDbType.Char);
-                    ciudad1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(ciudad1);
-
-                    SqlParameter nroPiso1 = new SqlParameter("@Nro_Piso", SqlDbType.Int);
-                    nroPiso1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(nroPiso1);
-
-                    SqlParameter dpto1 = new SqlParameter("@Depto", SqlDbType.Char);
-                    dpto1.Direction = ParameterDirection.Input;
-                    command1.Parameters.Add(dpto1);
-
-                    if (verificar_parametros())
-                    {
-                        MessageBox.Show("Faltan completar campos");
-                        return;
-                    }
-
-                    username3.Value = usuario;
-                    password3.Value = password;
-                    rol2.Value = rol;
-                    razon_social1.Value = razonSocial;
-                    cuit1.Value = cuit;  
-                    telefono_proveedor.Value = telefono;
-                    rubro1.Value = rubro;
-                    mail_Proveedor.Value = mail; 
-                    contacto1.Value = contacto;
-                    direccion1.Value = Direccion.Text;
-                    codPostal1.Value = CodigoPostal.Text;
-                    localidad1.Value = Localidad.Text;
-                    ciudad1.Value = Ciudad.Text;
-                    nroPiso1.Value = NroPiso.Text;
-                    dpto1.Value = Departamento.Text;
 
                     if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x)))
                     {
@@ -268,28 +85,94 @@ namespace FrbaOfertas.CargaDireccion
                         return;
                     }
 
-                    command1.ExecuteNonQuery();
-                    MessageBox.Show("Registro de Proveedor Finalizado");
-                    
-                    this.Visible = false;
-                   
+                    //----------------------DATOS PARA REGISTRO----------------------------
+                    SqlCommand command = new SqlCommand("registrar_usuario_cliente", conn);
+                    command.CommandType = CommandType.StoredProcedure;
 
-                break;
+                    command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = usuario;
+                    command.Parameters.AddWithValue("@Password", SqlDbType.Char).Value = password;
+                    command.Parameters.AddWithValue("@Rol", SqlDbType.Char).Value = rol;
+                    command.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = nombre;
+                    command.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = apellido;
+                    command.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = DNI;
+                    command.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int32.Parse(telefono);
+                    command.Parameters.AddWithValue("@Mail", SqlDbType.Char).Value = mail;
+                    command.Parameters.AddWithValue("@Fecha_nacimiento", SqlDbType.Date).Value = fechaDeNacimiento;
+                    command.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
+                    command.Parameters.AddWithValue("@codigo_Postal", SqlDbType.Float).Value = Int32.Parse(CodigoPostal.Text);
+                    command.Parameters.AddWithValue("@Localidad", SqlDbType.Char).Value = Localidad.Text;
+                    command.Parameters.AddWithValue("@ciudad", SqlDbType.Char).Value = Ciudad.Text;
+                    command.Parameters.AddWithValue("@nro_piso", SqlDbType.Int).Value = Int32.Parse(NroPiso.Text);
+                    command.Parameters.AddWithValue("@Depto", SqlDbType.Char).Value = Departamento.Text;
+
+
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Registro de Cliente Finalizado");
+
+                    break;
+
+                case "Proveedor":
+
+                    if (verificar_parametros())
+                    {
+                        MessageBox.Show("Faltan completar campos");
+                        return;
+                    }
+
+                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x)))
+                    {
+                        MessageBox.Show("Datos erroneos.");
+                        return;
+                    }
+
+                    SqlCommand command1 = new SqlCommand("registrar_usuario_proveedor", conn);
+                    command1.CommandType = CommandType.StoredProcedure;
+
+                    command1.Parameters.AddWithValue("@Username", SqlDbType.Char).Value = usuario;
+                    command1.Parameters.AddWithValue("@Password", SqlDbType.Char).Value = password;
+                    command1.Parameters.AddWithValue("@Rol", SqlDbType.Char).Value = rol;
+                    command1.Parameters.AddWithValue("@Razon_social", SqlDbType.Char).Value = razonSocial;
+                    command1.Parameters.AddWithValue("@Mail", SqlDbType.Char).Value = mail;
+                    command1.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int32.Parse(telefono);
+                    command1.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = cuit;
+                    command1.Parameters.AddWithValue("@Rubro", SqlDbType.Char).Value = rubro;
+                    command1.Parameters.AddWithValue("@Nombre_contacto", SqlDbType.Char).Value = contacto;
+                    command1.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
+                    command1.Parameters.AddWithValue("@codigo_Postal", SqlDbType.Float).Value = Int32.Parse(CodigoPostal.Text);
+                    command1.Parameters.AddWithValue("@Localidad", SqlDbType.Char).Value = Localidad.Text;
+                    command1.Parameters.AddWithValue("@Ciudad", SqlDbType.Char).Value = Ciudad.Text;
+                    command1.Parameters.AddWithValue("@Nro_Piso", SqlDbType.Int).Value = Int32.Parse(NroPiso.Text);
+                    command1.Parameters.AddWithValue("@Depto", SqlDbType.Char).Value = Departamento.Text;
+
+
+                    command1.ExecuteNonQuery();
+
+                    MessageBox.Show("Registro de Proveedor Finalizado");
+
+                    break;
             }
 
             this.insertar_rol(rol, usuario, conn);
             conn.Close();
 
-    }
+            this.volver_login();
+        }
 
-        private void insertar_rol(string rol, string username, SqlConnection conexion) 
+        private void volver_login()
+        {
+            Form inicio = new InicioDeSesion();
+            inicio.Show();
+            this.Hide();
+        }
+
+        private void insertar_rol(string rol, string username, SqlConnection conexion)
         {
             SqlCommand command = new SqlCommand("insertar_rol_por_usuario", conexion);
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = rol;
             command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
-           
+
         }
 
         private bool verificar_parametros()
@@ -322,18 +205,8 @@ namespace FrbaOfertas.CargaDireccion
 
         private void bt_volver_Click(object sender, EventArgs e)
         {
-            if (rol == "Cliente")
-            {
-                this.Hide();
-                Form alta_cliente = new AbmCliente.AltaCliente();
-                alta_cliente.Show();
-            }
-            if (rol == "Proveedor")
-            {
-                this.Hide();
-                Form alta_proveedor = new AbmProveedor.AltaProveedor();
-                alta_proveedor.Show();
-            }
-        } 
+            this.Close();
+            formulario_anterior.Show();
+        }
     }
 }

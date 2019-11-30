@@ -41,8 +41,7 @@ namespace FrbaOfertas.ComprarOferta
             {
                 conexionBD conexion = conexionBD.getConexion();
                 SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
-
+                
                try
                {
                     var row = contenedor_ofertas.CurrentRow;
@@ -112,20 +111,25 @@ namespace FrbaOfertas.ComprarOferta
                     conexion_sql.Open();
 
                                      try {
-                                              command2.ExecuteNonQuery();
-                                         }
+                                       command2.ExecuteNonQuery();
+                                    }
                                      catch (SqlException exepcion)
+                                     {
+                                        string message = "Desea comprar" + row.Cells[1].Value.ToString() + " ?";
+                                        string caption = "Validar compra";
+                                        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                                        DialogResult result;
+                                        result = MessageBox.Show(message, caption, buttons);
+                                        if (result == System.Windows.Forms.DialogResult.Yes)
                                         {
-                                                  SqlError codigo = exepcion.Errors[0];
-                                                  codigo_oferta.Value = codigo.Message.ToString();
-                                                  command.ExecuteNonQuery();
-                                                  MessageBox.Show("Compra realizada, su codigo es: " + codigo.Message.ToString());
-                                                    
-                                          }
-                   // command.ExecuteNonQuery();
-                  //  MessageBox.Show("Compra realizada, su codigo es: " + codigo_oferta.Value.ToString());
+                                            SqlError codigo = exepcion.Errors[0];
+                                            codigo_oferta.Value = codigo.Message.ToString();
+                                            command.ExecuteNonQuery();
+                                            MessageBox.Show("Compra realizada, su codigo es: " + codigo.Message.ToString());
+                                            limpiar_form();
+                                        }
+                                     }
                     conexion_sql.Close();
-
                }
                 catch (SqlException exepcion)
                 {
@@ -172,7 +176,7 @@ namespace FrbaOfertas.ComprarOferta
             string fecha = ConfigurationManager.AppSettings["fecha"].ToString();
 
 
-            sb.Append("SELECT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
+            sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
 
             ArrayList Query = new ArrayList();
 
@@ -200,14 +204,28 @@ namespace FrbaOfertas.ComprarOferta
 
         private void bt_limpiar_Click(object sender, EventArgs e)
         {
-            Descripcion.Text = "";
-            minimo.Text = "";
-            maximo.Text = "";
+            limpiar_form();
         }
+
+        private void limpiar_form() //Verificar alternativas
+        {
+            Form compraOferta = new ComprarOferta.Ofertas(username);
+            compraOferta.Show();
+            this.Close();
+        }
+
+
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_volver_Click(object sender, EventArgs e)
+        {
+            Form menu_principal = new Interfaces.menu_principal(username);
+            menu_principal.Show();
+            this.Close();
         }
 
 

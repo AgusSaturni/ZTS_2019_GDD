@@ -16,13 +16,14 @@ namespace FrbaOfertas.AbmProveedor
         private string usuario;
         private string password;
         private string rol;
+        private Form formulario_anterior;
 
         public AltaProveedor()
         {
             InitializeComponent();
         }
 
-        public AltaProveedor(string usuario, string password, string rol)
+        public AltaProveedor(string usuario, string password, string rol, Form form)
         {
             // TODO: Complete member initialization
             InitializeComponent();
@@ -30,6 +31,8 @@ namespace FrbaOfertas.AbmProveedor
             this.usuario = usuario;
             this.password = password;
             this.rol = rol;
+            formulario_anterior = form;
+
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -51,19 +54,16 @@ namespace FrbaOfertas.AbmProveedor
             string mail = Mail.Text;
             string contacto = Contacto.Text;
 
-            if ( Telefono.Text.Any(x => !char.IsNumber(x)) || Rubro.Text.Any(x => char.IsNumber(x)) || cuit.Length < 13 || Contacto.Text.Any(x => char.IsNumber(x)))
-            {
-                MessageBox.Show("Datos erroneos.");
-                return;
-            }
+            if (this.verificar_tipo_datos()) { return; }
 
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
             if (razonSocial != "" && telefono != "" && cuit != "" && rubro != "" && mail != "")
             {
-                try {
-                  
+                try
+                {
+
 
                     SqlCommand command = new SqlCommand("verificar_existencia_proveedor_existente", conn);
                     command.CommandType = CommandType.StoredProcedure;
@@ -84,20 +84,20 @@ namespace FrbaOfertas.AbmProveedor
                     razon_social.Value = razonSocial;
 
                     command.ExecuteNonQuery();
-                    
+
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
                     MessageBox.Show(errores.Message.ToString());
                     return;
-                   
+
                 }
 
                 conn.Close();
 
-                this.Visible = false;
-                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password,rol, null, null, null, telefono, null, mail,razonSocial,cuit,rubro,contacto);
+                this.Hide();
+                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password, rol, null, null, null, telefono, null, mail, razonSocial, cuit, rubro, contacto, this);
                 direccion.Show();
             }
             else
@@ -108,11 +108,40 @@ namespace FrbaOfertas.AbmProveedor
 
         }
 
+        private bool verificar_tipo_datos()
+        {
+            if (RS.Text.Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Razon Social Invalida. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (Rubro.Text.Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Rubro Invalido. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (CUIT.Text.Trim().Length != 13) //VERIFICAR QUE TENGA 2 GUIONES
+            {
+                MessageBox.Show("Cuit Invalido. Cadena Numerica de 13 caracteres unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (Telefono.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("Telefono Invalido. Cadena Numerica unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (Contacto.Text.Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Contacto Invalido. No se permite ingresar Numeros. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            return false;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form alta = new RegistroUsuario("Proveedor");
-            alta.Show();
+            formulario_anterior.Show();
 
         }
     }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_volver = new System.Windows.Forms.Button();
             this.maximo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_volver);
             this.groupBox1.Controls.Add(this.maximo);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -64,6 +66,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // btn_volver
+            // 
+            this.btn_volver.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.btn_volver.Location = new System.Drawing.Point(497, 84);
+            this.btn_volver.Name = "btn_volver";
+            this.btn_volver.Size = new System.Drawing.Size(267, 30);
+            this.btn_volver.TabIndex = 11;
+            this.btn_volver.Text = "Volver";
+            this.btn_volver.UseVisualStyleBackColor = true;
+            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // maximo
             // 
@@ -119,18 +132,19 @@
             // bt_limpiar
             // 
             this.bt_limpiar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_limpiar.Location = new System.Drawing.Point(495, 71);
+            this.bt_limpiar.Location = new System.Drawing.Point(497, 50);
             this.bt_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_limpiar.Name = "bt_limpiar";
             this.bt_limpiar.Size = new System.Drawing.Size(267, 28);
             this.bt_limpiar.TabIndex = 5;
             this.bt_limpiar.Text = "Limpiar";
             this.bt_limpiar.UseVisualStyleBackColor = true;
+            this.bt_limpiar.Click += new System.EventHandler(this.bt_limpiar_Click);
             // 
             // bt_buscar
             // 
             this.bt_buscar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_buscar.Location = new System.Drawing.Point(495, 37);
+            this.bt_buscar.Location = new System.Drawing.Point(497, 16);
             this.bt_buscar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_buscar.Name = "bt_buscar";
             this.bt_buscar.Size = new System.Drawing.Size(267, 28);
@@ -157,6 +171,7 @@
             // 
             // contenedor_ofertas
             // 
+            this.contenedor_ofertas.AllowUserToAddRows = false;
             this.contenedor_ofertas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_ofertas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
@@ -202,5 +217,6 @@
         private System.Windows.Forms.TextBox Descripcion;
         private System.Windows.Forms.DataGridView contenedor_ofertas;
         private System.Windows.Forms.DataGridViewButtonColumn Column1;
+        private System.Windows.Forms.Button btn_volver;
     }
 }

@@ -25,6 +25,7 @@ CREATE TABLE USUARIOS
 )
 --Usuario ADMIN GENERAL
 insert into USUARIOS (username,Password) values ('ADMIN_ALL',HASHBYTES('SHA2_256','frba1234'))
+insert into USUARIOS (username,Password) values ('.',HASHBYTES('SHA2_256','.'))
 
 ---Direccion---------------------------
 CREATE TABLE DIRECCION
@@ -239,6 +240,7 @@ CREATE TABLE ROLES_POR_USUARIO
 insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Cliente',username from CLIENTES)
 insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Proveedor',username from PROVEEDORES)
 insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','ADMIN_ALL')
+insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','.')
 
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES

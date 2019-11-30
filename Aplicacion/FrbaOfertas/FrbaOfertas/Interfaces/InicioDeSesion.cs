@@ -32,7 +32,7 @@ namespace FrbaOfertas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form registroUsuario = new RegistroUsuario();
+            Form registroUsuario = new RegistroUsuario("", this);
             registroUsuario.Show();
             this.Hide();
         }
@@ -52,7 +52,7 @@ namespace FrbaOfertas
 
             conexion_sql.Open();
 
-            try 
+            try
             {
                 verificacion_usuario.ExecuteNonQuery();
                 //Ahora, cargamos el usuario y sus permisos. Al ser un singleton, se crea una sola vez, y
@@ -62,10 +62,10 @@ namespace FrbaOfertas
 
                 Form menu_principal = new Interfaces.menu_principal(Usuario.Text);
                 menu_principal.Show();
-       
+
                 this.Visible = false;
 
-                
+
             }
             catch (SqlException exepcion)
             {
@@ -88,8 +88,8 @@ namespace FrbaOfertas
 
                     inhabilitar_usuario.ExecuteNonQuery();
                 }
-    
-                
+
+
             }
 
             conexion_sql.Close();
@@ -100,7 +100,7 @@ namespace FrbaOfertas
 
         }
 
-        private void crear_sesion(string username) 
+        private void crear_sesion(string username)
         {
             Singleton_Usuario sesion = Singleton_Usuario.getInstance();
             sesion.cargar_usuario(username);
@@ -123,4 +123,3 @@ namespace FrbaOfertas
 
 
 }
-

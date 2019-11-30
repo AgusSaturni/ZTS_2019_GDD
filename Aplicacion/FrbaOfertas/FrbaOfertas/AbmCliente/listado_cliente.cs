@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace FrbaOfertas.AbmCliente
 {

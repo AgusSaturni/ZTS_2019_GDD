@@ -12,13 +12,13 @@ using System.Windows.Forms;
 
 namespace FrbaOfertas.MenuAdmin
 {
-   
+
     public partial class ABMClientes : Form
     {
         SqlConnection conexion_sql;
         conexionBD conexion = conexionBD.getConexion();
         CommonQueries commonQueries_instance = CommonQueries.getInstance();
-        
+
         public ABMClientes()
         {
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace FrbaOfertas.MenuAdmin
 
 
                 this.Hide();
-                Form alta = new RegistroUsuario("Cliente");
+                Form alta = new RegistroUsuario("Cliente", this);
                 alta.Show();
 
             }

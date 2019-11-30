@@ -16,6 +16,8 @@ namespace FrbaOfertas.AbmCliente
         private string username;
         private string password;
         private string rol;
+        private Form formulario_anterior;
+
         SqlConnection conexion_sql;
         conexionBD conexion = conexionBD.getConexion();
 
@@ -26,15 +28,16 @@ namespace FrbaOfertas.AbmCliente
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public AltaCliente(string username, string password, string rol)
+        public AltaCliente(string username, string password, string rol, Form formulario)
         {
             InitializeComponent();
             this.username = username;
-            this.password = password;   
+            this.password = password;
             this.rol = rol;
+            this.formulario_anterior = formulario;
         }
 
-    
+
         private void Form1_Load(object sender, EventArgs e)
         {
             conexion_sql = new SqlConnection(conexion.get_cadena());
@@ -45,57 +48,68 @@ namespace FrbaOfertas.AbmCliente
 
         }
 
-        private void rectangleShape1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlCommand verificacion_cliente = new SqlCommand("verificar_existencia_cliente_gemelo", conexion_sql);
-            verificacion_cliente.CommandType = CommandType.StoredProcedure;
-
-            verificacion_cliente.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = Nombre.Text;
-            verificacion_cliente.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = Apellido.Text;
-            verificacion_cliente.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = Dni.Text;
-            verificacion_cliente.Parameters.AddWithValue("@telefono", SqlDbType.Float).Value = Telefono.Text;
-            verificacion_cliente.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = Mail.Text;
-            verificacion_cliente.Parameters.AddWithValue("@fecha_nacimiento", SqlDbType.Date).Value = FechaNacimiento.Value;
-
-            if (Nombre.Text.Any(x => char.IsNumber(x)) || Apellido.Text.Any(x => char.IsNumber(x)) || Dni.Text.Any(x => !char.IsNumber(x)) || Telefono.Text.Any(x => !char.IsNumber(x)) || Dni.Text.Length != 8)
-            {
-                MessageBox.Show("Datos erroneos.");
-                return;
-            }
-
 
             if (this.verificar_parametros())
             {
-                MessageBox.Show("Todos los Campos son Obligatorios");
+                MessageBox.Show("Todos los Campos son Obligatorios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else 
+
+            if (this.verificar_tipo_datos()) { return; }
+            else
             {
+                conexion_sql.Open();
+                SqlCommand verificacion_cliente = new SqlCommand("verificar_existencia_cliente_gemelo", conexion_sql);
+                verificacion_cliente.CommandType = CommandType.StoredProcedure;
+
+                verificacion_cliente.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = Nombre.Text;
+                verificacion_cliente.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = Apellido.Text;
+                verificacion_cliente.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = Dni.Text;
+                verificacion_cliente.Parameters.AddWithValue("@telefono", SqlDbType.Float).Value = Telefono.Text;
+                verificacion_cliente.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = Mail.Text;
+                verificacion_cliente.Parameters.AddWithValue("@fecha_nacimiento", SqlDbType.Date).Value = FechaNacimiento.Value;
+
                 try
                 {
-                    conexion_sql.Open();
-                    verificacion_cliente.ExecuteNonQuery();
-                    this.Visible = false;
-                    CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null);
-                    direccion.Show();
-                    conexion_sql.Close();
 
+                    verificacion_cliente.ExecuteNonQuery();
+
+
+                    this.Hide();
+                    Form direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null, this);
+                    direccion.Show();
                 }
                 catch
                 {
                     MessageBox.Show("El cliente que intenta crear, ya esta registrado en el sistema");
                 }
+                conexion_sql.Close();
             }
-            
+
+        }
+
+        private bool verificar_tipo_datos()
+        {
+            if (Nombre.Text.Any(x => char.IsNumber(x)) || Apellido.Text.Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Nombre y/o Apellido Invalido. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (Dni.Text.Any(x => !char.IsNumber(x)) || Dni.Text.Length != 8)
+            {
+                MessageBox.Show("DNI Invalido. Cadena Numerica de 8 caracteres unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (Telefono.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("Telefono Invalido. Cadena Numerica unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
+
         }
 
         private bool verificar_parametros()
@@ -173,9 +187,9 @@ namespace FrbaOfertas.AbmCliente
 
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form alta = new RegistroUsuario("Cliente");
-            alta.Show();
+            this.Close();
+            formulario_anterior.Show();
+
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
