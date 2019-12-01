@@ -152,45 +152,43 @@ where gd.Oferta_Codigo is not null )
 
 
 ---------------TARJETA------------
-
 CREATE TABLE TARJETAS
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Tarjeta_Id AS 'TarjetaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Cliente_Id varchar(17),
   Numero_Tarjeta numeric(20),
   Codigo_Seguridad numeric(3),
   tipo_Tarjeta varchar(255)
   PRIMARY KEY(Tarjeta_Id)
-  FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id)
 )
 
-
-
-INSERT INTO TARJETAS (Cliente_Id,tipo_Tarjeta)
-(select DISTINCT Cliente_Id,Tipo_Pago_Desc from gd_esquema.Maestra gd join CLIENTES c on gd.Cli_Nombre = c.Nombre
+INSERT INTO TARJETAS (tipo_Tarjeta)
+(select DISTINCT Tipo_Pago_Desc from gd_esquema.Maestra gd
 where Tipo_Pago_Desc is not null)
 
 ---CUENTA----------------
+
 CREATE TABLE CARGAS
 (
 	Indice INT IDENTITY(1,1) NOT NULL,
 	Carga_Id AS 'CargaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+	Cliente_Id varchar(17),
 	Tarjeta_Id varchar(17),
 	Fecha datetime not null,
 	Monto numeric(10,0) not null,
-	Tipo_Pago varchar(255) not null
-	PRIMARY KEY(Carga_Id)
+	PRIMARY KEY(Carga_Id),
+	FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id),
 	FOREIGN KEY(Tarjeta_Id) REFERENCES TARJETAS(Tarjeta_Id)
 )
 
-
-INSERT INTO CARGAS (Tarjeta_Id,Fecha,Monto,Tipo_Pago)
-(select  distinct t.tarjeta_id ,Carga_fecha, Carga_Credito, Tipo_Pago_Desc from gd_esquema.Maestra gd 
-join clientes c on gd.Cli_Nombre = c.nombre
-join TARJETAS t on c.Cliente_Id = t.cliente_id
-where Carga_Fecha is not null)
-
-
+INSERT INTO CARGAS (Cliente_Id,Fecha,Monto,Tarjeta_Id)
+(SELECT C.Cliente_Id,
+gd.Carga_Fecha,
+gd.Carga_Credito,
+T.Tarjeta_Id
+from gd_esquema.Maestra gd
+JOIN CLIENTES C on gd.Cli_Dni = C.DNI 
+JOIN TARJETAS T on T.tipo_Tarjeta = gd.Tipo_Pago_Desc
+where gd.Carga_Fecha is not null and gd.Carga_Credito is not null and gd.Tipo_Pago_Desc is not null)
 
 ---FACTURAS---------------------
 CREATE TABLE FACTURAS

@@ -15,16 +15,13 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
 {
     public partial class Entrega_ConsumoOferta : Form
     {
-        private string username;
+        private string username = (Singleton_Usuario.getInstance()).get_username();
+
         public Entrega_ConsumoOferta()
         {
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             InitializeComponent();
-        }
-
-        public Entrega_ConsumoOferta(string usuario)
-        {
-            InitializeComponent();
-            this.username = usuario;
             fecha_consumo_dtp.Value = DateTime.Now;
         }
 
@@ -196,7 +193,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
 
         private void atras_btn_Click(object sender, EventArgs e)
         {
-            Form menu_principal = new Interfaces.menu_principal(username);
+            Form menu_principal = new Interfaces.menu_principal();
             menu_principal.Show();
             this.Close();
         }

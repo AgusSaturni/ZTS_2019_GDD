@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaOfertas.Manejo_Logico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -14,18 +15,49 @@ namespace FrbaOfertas.CragaCredito
 {
     public partial class CargaDeCredito : Form
     {
-         string username;
+        conexionBD conexion_class = conexionBD.getConexion();
+        Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+        SqlConnection conexion_sql;
+        private int saldo;
+
 
         public CargaDeCredito()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public CargaDeCredito(string username_recibido)
+        private void CargaDeCredito_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
-            MaximizeBox = false;
-            this.username = username_recibido;
+            conexion_sql = new SqlConnection(conexion_class.get_cadena());
+            this.cargar_combobox();
+            this.cargar_saldoactual();
+
+        }
+
+        private void cargar_combobox() 
+        {
+            combobox_tipopago.Items.Add("Credito");
+            combobox_tipopago.Items.Add("Debito");
+        }
+
+        private void cargar_saldoactual() 
+        {
+            string query = "SELECT DineroDisponible FROM Clientes where username = '" + sesion.get_username() + "'";
+            SqlCommand cmd = new SqlCommand(query, conexion_sql);
+
+            conexion_sql.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                txt_saldo.Text = "$" + (reader[0].ToString());
+                this.saldo = Int32.Parse(reader[0].ToString());
+            }
+
+            conexion_sql.Close();
         }
 
     
@@ -44,9 +76,7 @@ namespace FrbaOfertas.CragaCredito
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            Form menuCliente = new AbmCliente.MenuCliente();
-            menuCliente.Show();
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -54,85 +84,75 @@ namespace FrbaOfertas.CragaCredito
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void bt_cargar_Click(object sender, EventArgs e)
         {
-            string cadenaConex = @"Data Source=LAPTOP-3SMJF7AG\SQLSERVER2012;Initial Catalog=GD2C2019;Persist Security Info=True;User ID=gdCupon2019;Password=gd2019";
-            SqlConnection conn = new SqlConnection(cadenaConex);
-            
+
+          string Fecha = GetEntradaConfig("fecha");
+
+          if (this.verificar_parametros()) { return; }
+
+          conexion_sql.Open();
           try
-           {
-                conn.Open();
-                string nroTarjeta = NroTarjeta.Text;
-                string codSegu = CodSegu.Text;
-                string monto = Monto.Text;
-                int indice =TipoPago.SelectedIndex;
-                string fecha = GetEntradaConfig("fecha");
-                
-                    if (indice != -1 && monto != "" && nroTarjeta != "" && codSegu != "")
-                          {
-                           if((nroTarjeta.Length == 16) && (codSegu.Length == 3))
-                           {
+          {
+              SqlCommand persistir_carga = new SqlCommand("persistir_carga", conexion_sql);
+              persistir_carga.CommandType = CommandType.StoredProcedure;
 
-                            object TipoDePago = TipoPago.Items[indice];
-                            if (Monto.Text.Any(x => !char.IsNumber(x)))
-                            {
-                               MessageBox.Show("Monto erroneo.");
-                                return;
-                            }
-                            SqlCommand command = new SqlCommand("cargar_saldo", conn);
-                            command.CommandType = CommandType.StoredProcedure;
+              persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = sesion.get_username();
+              persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
+              persistir_carga.Parameters.AddWithValue("@cod_segu", SqlDbType.Float).Value = Int32.Parse(txt_cod_segu.Text);
+              persistir_carga.Parameters.AddWithValue("@tipo_tarj", SqlDbType.Char).Value = combobox_tipopago.SelectedItem.ToString();
+              persistir_carga.Parameters.AddWithValue("@monto", SqlDbType.Float).Value = Int32.Parse(txt_monto.Text);
+              persistir_carga.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = Fecha;
 
-                            SqlParameter username1 = new SqlParameter("@username", SqlDbType.Char);
-                            username1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(username1);
+              persistir_carga.ExecuteNonQuery();
 
-                            SqlParameter tarjetaNro = new SqlParameter("@tarjeta_nro", SqlDbType.Float);
-                            tarjetaNro.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(tarjetaNro);
-
-                            SqlParameter codsegu1 = new SqlParameter("@cod_segu", SqlDbType.Float);
-                            codsegu1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(codsegu1);
-
-                            SqlParameter tipo_pago1 = new SqlParameter("@tipo_pago", SqlDbType.Char);
-                            tipo_pago1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(tipo_pago1);
-
-                            SqlParameter monto1 = new SqlParameter("@monto", SqlDbType.Int);
-                            monto1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(monto1);
-
-                            SqlParameter fecha1 = new SqlParameter("@fecha", SqlDbType.Char);
-                            username1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(fecha1);
-
-                            username1.Value = username;
-                            tarjetaNro.Value = nroTarjeta;
-                            codsegu1.Value = codSegu;
-                            tipo_pago1.Value = TipoDePago.ToString();
-                            monto1.Value = monto;
-                            fecha1.Value = fecha;
-
-                           
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Carga realizada con éxito");
-
-                           }else
-                           {
-                               MessageBox.Show("Datos de la tarjeta Invalidos");
-                             }
-                    }
-                    else {
-                    MessageBox.Show("Faltan completar campos.");
-                }
-                    
+              MessageBox.Show("Carga Realizada con Exito", "Carga de Saldo" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
+              txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
           }
           catch (SqlException exepcion)
           {
               SqlError errores = exepcion.Errors[0];
               MessageBox.Show(errores.Message.ToString());
           }
-          conn.Close();
+          conexion_sql.Close();
+        
+        
+        }
+
+        private bool verificar_parametros() 
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+            int index = combobox_tipopago.SelectedIndex;
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (index == -1) 
+            {
+                MessageBox.Show("Seleccione el tipo de Tarjeta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_num_tarjeta.Text.Length != 16 || txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)) )
+            {
+                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 20 digitos numericos" ,"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_cod_segu.Text.Length != 3 || txt_cod_segu.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("El Codigo de seguridad debe ser unicamente de 3 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_monto.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("El monto debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
+            
+        
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -140,9 +160,13 @@ namespace FrbaOfertas.CragaCredito
 
         }
 
-        private void CargaDeCredito_Load(object sender, EventArgs e)
+        private void bt_cancelar_Click(object sender, EventArgs e)
         {
-
+            this.Close();
+            Form menu_principal = new Interfaces.menu_principal();
+            menu_principal.Show();
         }
+
+
     }
 }

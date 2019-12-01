@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Entrega_ConsumoOferta));
             this.detalles_gpb = new System.Windows.Forms.GroupBox();
+            this.lbl_detalles = new System.Windows.Forms.Label();
             this.fecha_consumo_dtp = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,7 +39,6 @@
             this.codigo_cupon_txt = new System.Windows.Forms.TextBox();
             this.eliminar_oferta_btn = new System.Windows.Forms.Button();
             this.atras_btn = new System.Windows.Forms.Button();
-            this.lbl_detalles = new System.Windows.Forms.Label();
             this.detalles_gpb.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,17 @@
             this.detalles_gpb.TabIndex = 6;
             this.detalles_gpb.TabStop = false;
             this.detalles_gpb.Text = "Detalles";
+            // 
+            // lbl_detalles
+            // 
+            this.lbl_detalles.AutoSize = true;
+            this.lbl_detalles.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_detalles.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lbl_detalles.Location = new System.Drawing.Point(7, 3);
+            this.lbl_detalles.Name = "lbl_detalles";
+            this.lbl_detalles.Size = new System.Drawing.Size(163, 44);
+            this.lbl_detalles.TabIndex = 14;
+            this.lbl_detalles.Text = "Detalles";
             // 
             // fecha_consumo_dtp
             // 
@@ -135,17 +147,6 @@
             this.atras_btn.UseVisualStyleBackColor = true;
             this.atras_btn.Click += new System.EventHandler(this.atras_btn_Click);
             // 
-            // lbl_detalles
-            // 
-            this.lbl_detalles.AutoSize = true;
-            this.lbl_detalles.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_detalles.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lbl_detalles.Location = new System.Drawing.Point(7, 3);
-            this.lbl_detalles.Name = "lbl_detalles";
-            this.lbl_detalles.Size = new System.Drawing.Size(163, 44);
-            this.lbl_detalles.TabIndex = 14;
-            this.lbl_detalles.Text = "Detalles";
-            // 
             // Entrega_ConsumoOferta
             // 
             this.AcceptButton = this.eliminar_oferta_btn;
@@ -157,6 +158,7 @@
             this.Controls.Add(this.atras_btn);
             this.Controls.Add(this.eliminar_oferta_btn);
             this.Controls.Add(this.detalles_gpb);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Entrega_ConsumoOferta";

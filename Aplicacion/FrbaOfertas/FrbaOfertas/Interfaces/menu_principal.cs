@@ -13,8 +13,6 @@ namespace FrbaOfertas.Interfaces
 {
     public partial class menu_principal : Form
     {
-        private string username;
-        private string[] vec_funciones;
         Singleton_Usuario sesion = Singleton_Usuario.getInstance();
 
         public menu_principal()
@@ -22,12 +20,6 @@ namespace FrbaOfertas.Interfaces
             InitializeComponent();
             MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-        }
-
-        public menu_principal(string usuario)
-        {
-            InitializeComponent();
-            this.username = usuario;
         }
 
         private void menu_principal_Load(object sender, EventArgs e)
@@ -80,27 +72,28 @@ namespace FrbaOfertas.Interfaces
                     case "Listado Estadistico":
                         break;
                     case "Comprar Oferta":
-                        Form oferta = new ComprarOferta.Ofertas(username);
+                        Form oferta = new ComprarOferta.Ofertas();
                         oferta.Show();
                         this.Hide();
                         break;
                     case "Cargar Credito":
-                        Form credito = new CragaCredito.CargaDeCredito(username);
+                        Form credito = new CragaCredito.CargaDeCredito();
                         credito.Show();
                         break;
                     case "Confeccion y Publicacion de Ofertas":
                         this.Hide();
-                        Form carga_oferta = new CrearOferta.CargaOferta(username);
+                        Form carga_oferta = new CrearOferta.CargaOferta();
                         carga_oferta.Show();
-                        break;
-                    case "Comprar Ofertas":
                         break;
                     case "Entrega/Consumo de Oferta":
                         this.Hide();
-                        Form entrega_ConsumoOferta = new Entrega_ConsumoOferta.Entrega_ConsumoOferta(username);
+                        Form entrega_ConsumoOferta = new Entrega_ConsumoOferta.Entrega_ConsumoOferta();
                         entrega_ConsumoOferta.Show();
                         break;
                     case "Facturar a Proveedor":
+                        this.Hide();
+                        Form facturarProveedor = new Facturar.FacturarProveedor();
+                        facturarProveedor.Show();
                         break;
                     case "Registrar Usuarios":
                         Form registro = new RegistroUsuario();

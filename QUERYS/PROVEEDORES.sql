@@ -72,4 +72,35 @@ AS BEGIN
 	where Proveedor_Id = @id_proveedor
 END
 
--------------------
+----------------------FACTURAR PROVEEDOR-------------------------
+CREATE PROCEDURE proveedor_existente(@proveedor VARCHAR(255))
+AS BEGIN
+	If NOT EXISTS (SELECT * FROM PROVEEDORES WHERE username = @proveedor)
+	BEGIN
+		THROW 90003,'El proveedor no esta registrado.',1
+	END
+END
+
+CREATE FUNCTION pedir_proveedorID(@proveedor_username VARCHAR(255))
+	RETURNS VARCHAR(255)
+AS BEGIN
+	RETURN (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor_username)
+END
+
+select dbo.pedir_proveedorID('a')
+
+SELECT * FROM FACTURAS WHERE Proveedor_Id = 'ProveedorID3' AND Fecha BETWEEN '2015-01-31' AND '2022-01-31'
+select * from ofertas
+
+SELECT c.Oferta_Id,  FROM COMPRAS c JOIN OFERTAS o ON c.Oferta_Id = o.Oferta_Id --mostrar la cantidad que se compro de cada oferta por factura
+WHERE o.Proveedor_referenciado = 'ProveedorID3'
+
+
+SELECT * FROM CUPONES 
+
+
+select username from PROVEEDORES where Proveedor_Id = 'ProveedorID3'
+
+select * from COMPRAS
+select * from OFERTAS
+select * from PROVEEDORES

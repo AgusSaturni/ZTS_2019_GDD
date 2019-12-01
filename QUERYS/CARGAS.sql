@@ -1,40 +1,39 @@
 -------------CARGAR_SALDO---------------------
-CREATE PROCEDURE cargar_saldo(@username varchar(50),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_pago varchar(20),@monto numeric(10,0),
+CREATE PROCEDURE persistir_carga(@username varchar(255),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_tarj varchar(20),@monto numeric(10,0),
 							  @fecha varchar(10))
 AS BEGIN
+	--Solo puede existir una tarjeta con igual numero y codigo de seguridad
+	IF EXISTS(SELECT 1 FROM TARJETAS WHERE (Numero_Tarjeta = @tarjeta_nro and Codigo_Seguridad != @cod_segu) OR (Numero_Tarjeta = @tarjeta_nro and tipo_Tarjeta != @tipo_tarj) )
+	BEGIN
+		throw 50006, 'Los datos ingresados no coinciden con la Tarjeta registrada',1
+	END
 
-declare @fecha_convertida datetime
-declare @cliente_ident varchar(17)
+	IF NOT EXISTS(SELECT 1 FROM TARJETAS WHERE Numero_Tarjeta = @tarjeta_nro)
+	BEGIN
+		INSERT INTO TARJETAS (Numero_Tarjeta, Codigo_Seguridad, tipo_Tarjeta) values (@tarjeta_nro, @cod_segu, @tipo_tarj)
+	END
 
-set @cliente_ident = (select cliente_id from CLIENTES where Username = @username)
 
-set @fecha_convertida = cast(@fecha as datetime)
+	declare @Tarjeta_ID varchar(17) = (select Tarjeta_Id from TARJETAS where numero_tarjeta = @tarjeta_nro and codigo_seguridad = @cod_segu)
+	declare @Cliente_ID varchar(17) = (select Cliente_Id from CLIENTES where username = @username)
+	declare @fecha_convertida datetime = (cast(@fecha as datetime))
 
-if ((select Cliente_Id from TARJETAS where Numero_Tarjeta = @tarjeta_nro) != @cliente_ident)
-	begin
-	throw 50006, 'Error tarjeta ya registrada',1
-	end
 
-if not exists(select Numero_Tarjeta from TARJETAS t where Numero_Tarjeta = @tarjeta_nro and Cliente_Id = @cliente_ident)
-  begin
-	if(@tipo_pago = 'Crédito')
-		begin
-			insert into TARJETAS(Cliente_Id,Numero_Tarjeta,Codigo_Seguridad,tipo_tarjeta)
-			(select cliente_id,@tarjeta_nro,@cod_segu,'Credito' from CLIENTES where username = @username)
-		end
-	else
-		begin
-			insert into TARJETAS(Cliente_Id,Numero_Tarjeta,Codigo_Seguridad,tipo_tarjeta)
-			(select cliente_id,@tarjeta_nro,@cod_segu,'Debito' from CLIENTES where username = @username)
-		end
-	end
-	
-	insert into CARGAS(Tarjeta_Id,Fecha,Monto,Tipo_Pago)
-	(SELECT tarjeta_id,@fecha,@monto,@tipo_pago from TARJETAS where numero_tarjeta = @tarjeta_nro)
-
-	update CLIENTES
-	set DineroDisponible += @monto where username = @username
+	INSERT INTO CARGAS (Cliente_Id, Tarjeta_Id, Fecha, Monto) values (@Cliente_ID, @Tarjeta_ID, @fecha_convertida, @monto)
 
 END
 
-drop procedure cargar_saldo
+
+CREATE TRIGGER ACTUALIZACION_MONTO_CLIENTE ON CARGAS AFTER INSERT
+AS
+BEGIN	
+
+	DECLARE @Cliente_ID varchar(17) = (SELECT Cliente_Id from inserted);
+	DECLARE @Monto numeric(10,0) = (SELECT Monto from inserted);
+
+	UPDATE CLIENTES
+		SET DineroDisponible += @Monto
+		where Cliente_Id = @Cliente_ID
+
+END
+GO

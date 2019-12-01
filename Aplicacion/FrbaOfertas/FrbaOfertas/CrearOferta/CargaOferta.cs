@@ -14,7 +14,7 @@ namespace FrbaOfertas.CrearOferta
 {
     public partial class CargaOferta : Form
     {
-        string username;
+        private string username = (Singleton_Usuario.getInstance()).get_username();
 
         public string crear_codigo(int longitud)
         {
@@ -30,15 +30,9 @@ namespace FrbaOfertas.CrearOferta
 
         public CargaOferta()
         {
-            InitializeComponent();
             MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-        }
-
-        public CargaOferta(string username_recibido)
-        {
             InitializeComponent();
-            username = username_recibido;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

@@ -10,24 +10,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using FrbaOfertas.Manejo_Logico;
+
 
 
 namespace FrbaOfertas.ComprarOferta
 {
     public partial class Ofertas : Form
     {
-        private string username;
+        private string username = (Singleton_Usuario.getInstance()).get_username();
 
         public Ofertas()
         {
-            InitializeComponent();
-        }
-
-        public Ofertas(string username)
-        {
-            InitializeComponent();
             MaximizeBox = false;
-            this.username = username;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            InitializeComponent();
         }
 
         private void contenedor_ofertas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -209,7 +206,7 @@ namespace FrbaOfertas.ComprarOferta
 
         private void limpiar_form() //Verificar alternativas
         {
-            Form compraOferta = new ComprarOferta.Ofertas(username);
+            Form compraOferta = new ComprarOferta.Ofertas();
             compraOferta.Show();
             this.Close();
         }
@@ -223,7 +220,7 @@ namespace FrbaOfertas.ComprarOferta
 
         private void btn_volver_Click(object sender, EventArgs e)
         {
-            Form menu_principal = new Interfaces.menu_principal(username);
+            Form menu_principal = new Interfaces.menu_principal();
             menu_principal.Show();
             this.Close();
         }

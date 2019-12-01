@@ -39,8 +39,6 @@ namespace FrbaOfertas
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
@@ -60,7 +58,7 @@ namespace FrbaOfertas
                 this.crear_sesion(Usuario.Text.ToString());
 
 
-                Form menu_principal = new Interfaces.menu_principal(Usuario.Text);
+                Form menu_principal = new Interfaces.menu_principal();
                 menu_principal.Show();
 
                 this.Visible = false;
@@ -103,7 +101,10 @@ namespace FrbaOfertas
         private void crear_sesion(string username)
         {
             Singleton_Usuario sesion = Singleton_Usuario.getInstance();
-            sesion.cargar_usuario(username);
+            sesion.set_username(username);
+            sesion.cargar_usuario();
+
+
         }
 
         private void button3_Click(object sender, EventArgs e)

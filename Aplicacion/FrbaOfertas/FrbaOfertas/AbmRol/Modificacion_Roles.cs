@@ -19,8 +19,9 @@ namespace FrbaOfertas.AbmRol
         private ArrayList Id_Funciones = new ArrayList();
         private Singleton_Usuario sesion = Singleton_Usuario.getInstance();
         private CommonQueries commonQueries_instance = CommonQueries.getInstance();
-        private SqlConnection conn; 
-        
+        private SqlConnection conn;
+        private conexionBD conexion = conexionBD.getConexion();
+
 
         public Modificacion_Roles()
         {
@@ -31,15 +32,14 @@ namespace FrbaOfertas.AbmRol
 
         private void Modificacion_Roles_Load(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
             conn = new SqlConnection(conexion.get_cadena());
-            
+
             this.cargar_comboBox();
         }
 
-        private void cargar_estado(String item_seleccionado) 
+        private void cargar_estado(String item_seleccionado)
         {
-    
+
             string query = "SELECT Estado FROM ROLES where Rol_Id = '" + item_seleccionado + "'";
             SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
@@ -51,27 +51,27 @@ namespace FrbaOfertas.AbmRol
                 txt_estado.Text = (reader[0].ToString());
             }
             conn.Close();
-            
+
         }
 
         private void cargar_comboBox()
         {
             conn.Open();
             SqlDataReader reader = commonQueries_instance.get_all_roles(conn);
-          
+
             while (reader.Read())
             {
                 comboBox_roles.Items.Add(reader[0].ToString());
             }
-            
+
             conn.Close();
         }
 
-        private void cargar_funciones_totales_disponibles() 
+        private void cargar_funciones_totales_disponibles()
         {
-           //CARGA DE PRIMERA LISTA
+            //CARGA DE PRIMERA LISTA
 
-            String query = "select Descripcion from FUNCIONES_POR_ROL FPR join FUNCIONES F on FPR.Funcion_Id = F.Funcion_Id where Rol_Id = '" + comboBox_roles.SelectedItem.ToString() + "'"; 
+            String query = "select Descripcion from FUNCIONES_POR_ROL FPR join FUNCIONES F on FPR.Funcion_Id = F.Funcion_Id where Rol_Id = '" + comboBox_roles.SelectedItem.ToString() + "'";
             SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
 
@@ -83,7 +83,7 @@ namespace FrbaOfertas.AbmRol
             }
 
             conn.Close();
-         
+
         }
 
         private void cargar_funciones_totales_sistema()
@@ -94,9 +94,9 @@ namespace FrbaOfertas.AbmRol
 
             while (reader2.Read())
             {
-                if (!list_rol.Items.Contains(reader2[0].ToString())) 
+                if (!list_rol.Items.Contains(reader2[0].ToString()))
                 {
-                    list_totales.Items.Add(reader2[0].ToString());   
+                    list_totales.Items.Add(reader2[0].ToString());
                 }
             }
 
@@ -129,7 +129,7 @@ namespace FrbaOfertas.AbmRol
                 }
                 else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado"); }
             }
-            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol");  }
+            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol"); }
         }
 
         private void bt_der_a_izq_Click(object sender, EventArgs e)
@@ -151,17 +151,17 @@ namespace FrbaOfertas.AbmRol
         {
             //Cierro y abro la conexion 2 veces porque no se puede utilizar 2 DataReaders en 1 conexion sola
             conn.Open();
-            this.remover_funciones_viejas(comboBox_roles.SelectedItem.ToString(),conn);
+            this.remover_funciones_viejas(comboBox_roles.SelectedItem.ToString(), conn);
             this.carga_logica_funciones_nuevas(conn);
             conn.Close();
 
             conn.Open();
-                
-            try 
+
+            try
             {
-                for (int i = 0; i < Id_Funciones.Count; i++) 
+                for (int i = 0; i < Id_Funciones.Count; i++)
                 {
-                 commonQueries_instance.insert_funciones_por_rol(comboBox_roles.SelectedItem.ToString(), Id_Funciones[i].ToString(),conn);
+                    commonQueries_instance.insert_funciones_por_rol(comboBox_roles.SelectedItem.ToString(), Id_Funciones[i].ToString(), conn);
                 }
             }
             catch (SqlException exepcion)
@@ -175,18 +175,32 @@ namespace FrbaOfertas.AbmRol
             Id_Funciones.Clear();
 
             MessageBox.Show("Rol Modificado");
+
+            //Actualizo sesion para que se me carguen los nuevos permisos en caso de haber modificado el ROL de administrador
+            this.actualizar_sesion();
         }
 
-        private void remover_funciones_viejas(string Rol, SqlConnection conexion) 
+        private void actualizar_sesion()
+        {
+            string username = sesion.get_username();
+            sesion.cerrar_sesion();
+
+            Singleton_Usuario sesion_nueva = Singleton_Usuario.getInstance();
+
+            sesion_nueva.set_username(username);
+            sesion_nueva.cargar_usuario();
+        }
+
+        private void remover_funciones_viejas(string Rol, SqlConnection conexion)
         {
             SqlCommand cmd = new SqlCommand("eliminar_funciones_por_rol", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = Rol;
 
-            cmd.ExecuteNonQuery();       
+            cmd.ExecuteNonQuery();
         }
 
-        private void carga_logica_funciones_nuevas(SqlConnection conexion) 
+        private void carga_logica_funciones_nuevas(SqlConnection conexion)
         {
             String query = "select Funcion_Id, Descripcion from Funciones";
             SqlCommand cmd = new SqlCommand(query, conexion);
@@ -195,10 +209,10 @@ namespace FrbaOfertas.AbmRol
 
             while (reader.Read())
             {
-                if (list_rol.Items.Contains(reader[1].ToString())) 
+                if (list_rol.Items.Contains(reader[1].ToString()))
                 {
-                    Id_Funciones.Add(reader[0].ToString());                
-                }   
+                    Id_Funciones.Add(reader[0].ToString());
+                }
 
             }
         }
@@ -206,7 +220,7 @@ namespace FrbaOfertas.AbmRol
 
         private void bt_deshabilitar_rol_Click(object sender, EventArgs e)
         {
-            if (txt_estado.Text == "") 
+            if (txt_estado.Text == "")
             {
                 MessageBox.Show("Seleccione un Rol");
                 return;
@@ -215,7 +229,7 @@ namespace FrbaOfertas.AbmRol
             DialogResult result = MessageBox.Show("Seguro que desea dar de baja al Rol seleccionado?", "WARNING", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                
+
                 SqlCommand command = new SqlCommand("deshabilitar_rol", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = comboBox_roles.SelectedItem.ToString();
@@ -234,7 +248,7 @@ namespace FrbaOfertas.AbmRol
                 }
                 conn.Close();
 
-            } 
+            }
 
         }
 
