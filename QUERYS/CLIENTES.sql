@@ -1,6 +1,5 @@
 --------BAJA_LOGICA_CLIENTE-------------------------
 drop procedure baja_logica_cliente
-drop procedure Eliminar_Cliente
 drop procedure habilitar_cliente
 drop procedure actualizar_cliente
 
@@ -63,3 +62,9 @@ AS BEGIN
 	where username = @username
 
 END
+----------Verificar si no es cliente
+CREATE PROCEDURE verificar_si_no_es_cliente(@username varchar(255))
+AS begin
+if exists (select Rol_Id from ROLES_POR_USUARIO where Username = @username and Rol_Id = 'Administrador')
+	throw 50005,'No es Cliente',1
+end

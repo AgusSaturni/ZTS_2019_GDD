@@ -192,6 +192,7 @@
             this.label8.Size = new System.Drawing.Size(98, 16);
             this.label8.TabIndex = 39;
             this.label8.Text = "Proveedor(*)";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // ProveedorUser
             // 
@@ -199,6 +200,7 @@
             this.ProveedorUser.Name = "ProveedorUser";
             this.ProveedorUser.Size = new System.Drawing.Size(121, 20);
             this.ProveedorUser.TabIndex = 40;
+            this.ProveedorUser.TextChanged += new System.EventHandler(this.ProveedorUser_TextChanged);
             // 
             // bt_volver
             // 

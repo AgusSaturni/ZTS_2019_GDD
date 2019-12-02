@@ -194,6 +194,7 @@ from gd_esquema.Maestra gd join proveedores p
 on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
+
 ---CUENTA----------------
 drop table CARGAS
 CREATE TABLE CARGAS
@@ -274,6 +275,7 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','Funci
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID1')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID2')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID3')
+insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID7')
 
 
 
@@ -307,16 +309,15 @@ CREATE TABLE CUPONES
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
-insert into CUPONES (Codigo_oferta,Compra_Id,Fecha_Consumo)
-(select distinct c.codigo_oferta, c.compra_Id, gd.oferta_entregado_fecha FROM COMPRAS c
-JOIN gd_esquema.Maestra gd ON  gd.Oferta_Fecha_Compra = c.Fecha_compra AND c.Cliente_Id = gd.Cli_Dest_Dni
-where gd.Oferta_Entregado_Fecha is not null AND gd.Oferta_Fecha_Compra IS NOT NULL)
+insert into CUPONES(codigo_oferta,Compra_Id)
+(select Codigo_oferta,compra_id from COMPRAS)
 
 
-insert into CUPONES (Codigo_oferta,Compra_Id,Fecha_Consumo)
-(select distinct c.Codigo_oferta,c.compra_id, Oferta_Entregado_Fecha from gd_esquema.Maestra gd
-join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra 
-join OFERTAS o ON o.Oferta_Id  = c.Oferta_Id
-where gd.Oferta_Entregado_Fecha is not null AND gd.Oferta_Fecha_Compra IS NOT NULL)
-
+update CUPONES 
+set cupones.Fecha_Consumo = gd_esquema.Maestra.Oferta_Entregado_Fecha
+from
+CUPONES  c join COMPRAS cr on c.Compra_Id=cr.Compra_Id
+join CLIENTES cli on cr.Cliente_Id=cli.Cliente_Id
+join gd_esquema.Maestra  on cli.DNI = gd_esquema.Maestra.Cli_Dni and c.codigo_oferta =gd_esquema.Maestra.Oferta_Codigo
+where Oferta_Entregado_Fecha is not null
 

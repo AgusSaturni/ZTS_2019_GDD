@@ -112,7 +112,7 @@ namespace FrbaOfertas.ComprarOferta
                                     }
                                      catch (SqlException exepcion)
                                      {
-                                        string message = "Desea comprar" + row.Cells[1].Value.ToString() + " ?";
+                                        string message = "Desea comprar " + row.Cells[1].Value.ToString() + " ?";
                                         string caption = "Validar compra";
                                         MessageBoxButtons buttons = MessageBoxButtons.YesNo;
                                         DialogResult result;
@@ -145,6 +145,7 @@ namespace FrbaOfertas.ComprarOferta
         private void bt_buscar_Click(object sender, EventArgs e)
         {
             string query = crear_query_oferta(Descripcion.Text, minimo.Text, maximo.Text);
+     
             if (query == "") { MessageBox.Show("Ingrese Parametros"); }
             else
             {
@@ -196,7 +197,9 @@ namespace FrbaOfertas.ComprarOferta
                 sb.Append(query_final);
 
                 return sb.ToString();
+                
             }
+            
         }
 
         private void bt_limpiar_Click(object sender, EventArgs e)

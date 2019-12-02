@@ -165,10 +165,42 @@ namespace FrbaOfertas.CrearOferta
 
         private void CargaOferta_Load_1(object sender, EventArgs e)
         {
+            SqlConnection conn;
+            conexionBD conexion = conexionBD.getConexion();
+            conn = new SqlConnection(conexion.get_cadena());
 
+            conn.Open();
+
+            SqlCommand verificacion_proveedor = new SqlCommand("verificar_si_no_es_proveedor", conn);
+            verificacion_proveedor.CommandType = CommandType.StoredProcedure;
+
+            verificacion_proveedor.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
+
+            try
+            {
+                verificacion_proveedor.ExecuteNonQuery();
+                ProveedorUser.Text = username;
+                ProveedorUser.ReadOnly = true;
+            }
+            catch
+            {
+               
+
+            }
+            conn.Close();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProveedorUser_TextChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void label8_Click(object sender, EventArgs e)
         {
 
         }

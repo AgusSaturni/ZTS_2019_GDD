@@ -1,3 +1,6 @@
+DROP PROCEDURE persistir_carga
+drop trigger ACTUALIZACION_MONTO_CLIENTE
+
 -------------CARGAR_SALDO---------------------
 CREATE PROCEDURE persistir_carga(@username varchar(255),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_tarj varchar(20),@monto numeric(10,0),
 							  @fecha varchar(10))
@@ -37,3 +40,4 @@ BEGIN
 
 END
 GO
+

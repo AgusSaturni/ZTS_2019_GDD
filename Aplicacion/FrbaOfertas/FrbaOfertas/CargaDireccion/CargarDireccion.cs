@@ -74,16 +74,42 @@ namespace FrbaOfertas.CargaDireccion
 
                     if (verificar_parametros())
                     {
-                        MessageBox.Show("Faltan completar campos");
+                        MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-
-                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x)))
+                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)))
                     {
-                        MessageBox.Show("Datos erroneos.");
+                     MessageBox.Show("Codigo Postal Erroneo. No se permite ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
+                    }
+
+                    if (CodigoPostal.Text.Length != 4)
+                    {
+                        MessageBox.Show("Codigo Postal Erroneo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
+                    if (Localidad.Text.Any(x => char.IsNumber(x)))
+                    {
+                        MessageBox.Show("Localidad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                    if (Ciudad.Text.Any(x => char.IsNumber(x)))
+                    {
+                        MessageBox.Show("Ciudad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    if ( NroPiso.Text.Any(x => !char.IsNumber(x)))
+                    {
+                        MessageBox.Show("Número de piso erroneo. No se permiten ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                   
 
                     //----------------------DATOS PARA REGISTRO----------------------------
                     SqlCommand command = new SqlCommand("registrar_usuario_cliente", conn);
@@ -95,7 +121,7 @@ namespace FrbaOfertas.CargaDireccion
                     command.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = nombre;
                     command.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = apellido;
                     command.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = DNI;
-                    command.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int32.Parse(telefono);
+                    command.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int64.Parse(telefono);
                     command.Parameters.AddWithValue("@Mail", SqlDbType.Char).Value = mail;
                     command.Parameters.AddWithValue("@Fecha_nacimiento", SqlDbType.Date).Value = fechaDeNacimiento;
                     command.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
@@ -133,7 +159,7 @@ namespace FrbaOfertas.CargaDireccion
                     command1.Parameters.AddWithValue("@Rol", SqlDbType.Char).Value = rol;
                     command1.Parameters.AddWithValue("@Razon_social", SqlDbType.Char).Value = razonSocial;
                     command1.Parameters.AddWithValue("@Mail", SqlDbType.Char).Value = mail;
-                    command1.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int32.Parse(telefono);
+                    command1.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int64.Parse(telefono);
                     command1.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = cuit;
                     command1.Parameters.AddWithValue("@Rubro", SqlDbType.Char).Value = rubro;
                     command1.Parameters.AddWithValue("@Nombre_contacto", SqlDbType.Char).Value = contacto;

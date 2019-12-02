@@ -120,9 +120,13 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Rubro Invalido. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (CUIT.Text.Trim().Length != 13) //VERIFICAR QUE TENGA 2 GUIONES
+            if (CUIT.Text.Trim().Length != 13 ) //VERIFICAR QUE TENGA 2 GUIONES
             {
-                MessageBox.Show("Cuit Invalido. Cadena Numerica de 13 caracteres unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Cuit Invalido. El CUIT debe contener 13 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if ((CUIT.Text.Trim().Substring(2, 1) != "-" || CUIT.Text.Trim().Substring(11, 1) != "-")) {
+                MessageBox.Show("Cuit Invalido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (Telefono.Text.Any(x => !char.IsNumber(x)))

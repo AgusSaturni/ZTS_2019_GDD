@@ -1,4 +1,11 @@
 
+/*
+drop procedure baja_logica_proveedor
+drop procedure habilitar_proveedor
+drop procedure actualizar_proveedor
+drop procedure proveedor_existente
+*/
+
 -----------------BAJA_LOGICA_PROVEEDOR-------------------------
 CREATE PROCEDURE baja_logica_proveedor(@CUIT varchar(255),@username varchar(255))
 AS BEGIN
@@ -15,8 +22,6 @@ AS BEGIN
 		end
 
 END
-
-drop procedure baja_logica_proveedor
 
 -----------------HABILITAR_PROVEEDOR-----------------------------
 CREATE PROCEDURE habilitar_proveedor(@CUIT varchar(255), @Username varchar(255))
@@ -38,7 +43,7 @@ else
 END
 
 
-drop procedure habilitar_proveedor
+
 --------------------actualizar_proveedor---------------------------
 Create Procedure actualizar_proveedor(@username varchar(255),@razonSocial varchar(255), @rubro varchar(255), @CUIT varchar(255), @telefono numeric(18,0),
 @mail varchar(255),@contacto varchar(255), @direccion varchar(255), @CP int, @Loc varchar(255), @Npiso int, @depto varchar(255))
@@ -72,6 +77,7 @@ AS BEGIN
 	where Proveedor_Id = @id_proveedor
 END
 
+
 ----------------------FACTURAR PROVEEDOR-------------------------
 CREATE PROCEDURE proveedor_existente(@proveedor VARCHAR(255))
 AS BEGIN
@@ -81,26 +87,19 @@ AS BEGIN
 	END
 END
 
+
 CREATE FUNCTION pedir_proveedorID(@proveedor_username VARCHAR(255))
 	RETURNS VARCHAR(255)
 AS BEGIN
 	RETURN (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor_username)
 END
 
-select dbo.pedir_proveedorID('a')
-
-SELECT * FROM FACTURAS WHERE Proveedor_Id = 'ProveedorID3' AND Fecha BETWEEN '2015-01-31' AND '2022-01-31'
-select * from ofertas
-
-SELECT c.Oferta_Id,  FROM COMPRAS c JOIN OFERTAS o ON c.Oferta_Id = o.Oferta_Id --mostrar la cantidad que se compro de cada oferta por factura
-WHERE o.Proveedor_referenciado = 'ProveedorID3'
 
 
-SELECT * FROM CUPONES 
+--------------------VERIFICAR Si NO ES PROVEEDOR---------------------
+CREATE PROCEDURE verificar_si_no_es_proveedor(@username varchar(255))
+AS begin
+if exists (select Rol_Id from ROLES_POR_USUARIO where Username = @username and Rol_Id = 'Administrador')
+	throw 50005,'No es proveedor',1
+end
 
-
-select username from PROVEEDORES where Proveedor_Id = 'ProveedorID3'
-
-select * from COMPRAS
-select * from OFERTAS
-select * from PROVEEDORES

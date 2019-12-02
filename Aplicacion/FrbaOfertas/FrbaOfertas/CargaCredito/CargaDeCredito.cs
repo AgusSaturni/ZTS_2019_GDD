@@ -15,11 +15,13 @@ namespace FrbaOfertas.CragaCredito
 {
     public partial class CargaDeCredito : Form
     {
+
+        private string username = (Singleton_Usuario.getInstance()).get_username();
         conexionBD conexion_class = conexionBD.getConexion();
         Singleton_Usuario sesion = Singleton_Usuario.getInstance();
         SqlConnection conexion_sql;
         private int saldo;
-
+        string rol;
 
         public CargaDeCredito()
         {
@@ -30,9 +32,34 @@ namespace FrbaOfertas.CragaCredito
 
         private void CargaDeCredito_Load(object sender, EventArgs e)
         {
+            SqlConnection conn;
+            conexionBD conexion = conexionBD.getConexion();
+            conn = new SqlConnection(conexion.get_cadena());
+
+            conn.Open();
+
+            SqlCommand verificacion_proveedor = new SqlCommand("verificar_si_no_es_cliente", conn);
+            verificacion_proveedor.CommandType = CommandType.StoredProcedure;
+
+            verificacion_proveedor.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
+
+            try
+            {
+                verificacion_proveedor.ExecuteNonQuery();
+                Usuario.Text = username;
+                Usuario.ReadOnly = true;
+            }
+            catch
+            {
+                txt_saldo.Text = "No Disponible";
+                rol = "Admin";
+            }
+            conn.Close();
+
             conexion_sql = new SqlConnection(conexion_class.get_cadena());
             this.cargar_combobox();
             this.cargar_saldoactual();
+   
 
         }
 
@@ -52,9 +79,9 @@ namespace FrbaOfertas.CragaCredito
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
-            {
-                txt_saldo.Text = "$" + (reader[0].ToString());
-                this.saldo = Int32.Parse(reader[0].ToString());
+            {      
+                    txt_saldo.Text = "$" + (reader[0].ToString());
+                    this.saldo = Int32.Parse(reader[0].ToString());
             }
 
             conexion_sql.Close();
@@ -165,6 +192,11 @@ namespace FrbaOfertas.CragaCredito
             this.Close();
             Form menu_principal = new Interfaces.menu_principal();
             menu_principal.Show();
+        }
+
+        private void txt_saldo_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
 

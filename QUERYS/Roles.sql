@@ -1,3 +1,15 @@
+
+/*
+drop procedure deshabilitar_rol
+drop procedure habilitar_rol
+drop procedure insertar_rol_por_usuario
+drop procedure eliminar_funciones_por_rol
+drop procedure insertar_funciones_por_rol
+drop procedure insertar_rol
+drop procedure verificar_estado_rol
+*/
+
+-----------------------------------------
 CREATE PROCEDURE deshabilitar_rol(@Rol_Id varchar(255))
 AS BEGIN
 	if exists(select 1 from ROLES where Rol_Id = @Rol_Id and Estado = 'Habilitado')
@@ -57,6 +69,7 @@ AS BEGIN
 
 END
 
+
 CREATE PROCEDURE insertar_rol(@Rol_Id varchar(255))
 AS BEGIN
 	if not exists(select 1 from ROLES where Rol_Id = @Rol_Id)
@@ -80,3 +93,4 @@ AS BEGIN
 	IF NOT EXISTS (SELECT 1 FROM ROLES WHERE Rol_Id = @Rol_Id and Estado = 'Habilitado')
 		throw 80004, 'El Rol se Encuentra Inhabilitado. No se pueden ejecutar Altas.',1
 END
+

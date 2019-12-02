@@ -1,9 +1,17 @@
---HACER ESTO PRIMERO--
-drop procedure registrar_Domicilio
-drop procedure registrar_usuario
+/*
+drop procedure baja_usuario
+drop procedure habilitacion_usuario
+drop procedure inhabilitacion_usuario
+drop procedure verificar_password
+drop procedure verificar_usuario
+drop procedure baja_usuario
+drop procedure habilitacion_usuario
+drop procedure inhabilitacion_usuario
+drop procedure modificar_password
 drop procedure registrar_usuario_cliente
 drop procedure registrar_usuario_proveedor
 drop procedure verificar_usuario
+*/
 
 
 ------REGISTRO_USUARIO_Cliente------------
@@ -95,7 +103,6 @@ END
 
 
 
-
 -------------BAJA_LOGICA_USUARIO--------------------------
 CREATE PROCEDURE baja_usuario(@username varchar(255))
 AS BEGIN
@@ -103,7 +110,9 @@ update USUARIOS
 set Estado = 'Deshabilitado' where username = @username
 END
 
-
+drop procedure baja_usuario
+drop procedure habilitacion_usuario
+drop procedure inhabilitacion_usuario
 
 ------------HABILITACION_USUARIO---------------------------
 CREATE PROCEDURE habilitacion_usuario(@username varchar(255))
@@ -152,24 +161,21 @@ end
 
 -------------VERIFICACION_LOGUEO--------------------
 
-CREATE PROCEDURE verificar_usuario(@username varchar(255),@password varchar(255))
+CREATE PROCEDURE verificar_usuario(@username varchar(255))
+AS BEGIN
+if not exists(select 1 from USUARIOS where Username = @username)
+		THROW 50006, 'El Usuario que desea ingresar no esta registrado en el sistema. ', 1
+END
+
+CREATE PROCEDURE verificar_password(@username varchar(255),@password varchar(255))
 AS BEGIN
 DECLARE @contraseña_encriptada char(255);
 set @contraseña_encriptada = HASHBYTES('SHA2_256',(rtrim(@password)))
-if exists(select 1 from USUARIOS where Username = @username and Estado = 'Inhabilitado')
-		THROW 50007, 'Usuario Inhabilitado',1
+if exists(select 1 from USUARIOS where Username = @username and Password = @contraseña_encriptada and Estado = 'Inhabilitado')
+		THROW 50007, 'El Usuario con el que intenta ingresar al sistema esta Inhabilitado',1
 if not exists(select 1 from USUARIOS where Username = @username and Password = @contraseña_encriptada)
-		THROW 50006, 'Usuario y/o Contraseña Invalidos ', 1
-
+		THROW 50006, 'La contraseña ingresada es incorrecta. Pruebe de nuevo. ', 1
 END
-
-drop procedure verificar_usuario
-
-select * from ROLES
-
-
-
-
 
 
 

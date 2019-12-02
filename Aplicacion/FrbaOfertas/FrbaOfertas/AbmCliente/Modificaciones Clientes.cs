@@ -156,7 +156,7 @@ namespace FrbaOfertas.AbmCliente
                 command.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = (txt_nombre.Text);
                 command.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = (txt_apellido.Text);
                 command.Parameters.AddWithValue("@DNI", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
-                command.Parameters.AddWithValue("@telefono", SqlDbType.Int).Value = Int32.Parse(txt_telefono.Text);
+                command.Parameters.AddWithValue("@telefono", SqlDbType.Int).Value = Int64.Parse(txt_telefono.Text);
                 command.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = (txt_email.Text);
                 command.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = (txt_fecha.Text);
                 command.Parameters.AddWithValue("@direccion", SqlDbType.Char).Value = (txt_direccion.Text);
