@@ -4,28 +4,24 @@ select * from gd_esquema.Maestra
 
 --FORMA DE BORRAR TODO DE UNA
 /*
-drop table FUNCIONES_POR_ROL
-drop table FUNCIONES
-drop table ROLES_POR_USUARIO
-drop table ROLES
-drop table CLIENTES
-drop table RUBROS
-drop table PROVEEDORES
-drop table DIRECCION
-drop table USUARIOS
+DROP TABLE CARGAS
+DROP TABLE CUPONES
+DROP TABLE COMPRAS
+DROP TABLE FACTURAS
+DROP TABLE FUNCIONES_POR_ROL
+DROP TABLE FUNCIONES
+DROP TABLE OFERTAS
+DROP TABLE ROLES_POR_USUARIO
+DROP TABLE ROLES
+DROP TABLE RUBROS
+DROP TABLE PROVEEDORES
+DROP TABLE TARJETAS
+DROP TABLE CLIENTES
+DROP TABLE DIRECCION
+DROP TABLE USUARIOS
 */
-
+select distinct Proveedor_Id, rubro_descripcion from RUBROS
 ----CREACION DE TABLAS-------------
- ---USUARIOS--------------------
-CREATE TABLE USUARIOS
-( Username varchar(255) not null,
-  Password	varchar(255) not null,
-  Estado varchar(255) default 'Habilitado'
-  PRIMARY KEY(Username)
-)
---Usuario ADMIN GENERAL
-insert into USUARIOS (username,Password) values ('ADMIN_ALL',HASHBYTES('SHA2_256','frba1234'))
-insert into USUARIOS (username,Password) values ('.',HASHBYTES('SHA2_256','.'))
 
 ---Direccion---------------------------
 CREATE TABLE DIRECCION
@@ -42,9 +38,19 @@ CREATE TABLE DIRECCION
 insert into direccion(Direccion,Ciudad)
 SELECT DISTINCT Cli_Direccion,Cli_Ciudad FROM gd_esquema.Maestra
 
-
 insert into direccion(Direccion,Ciudad)
 SELECT DISTINCT Provee_Dom,Provee_Ciudad FROM gd_esquema.Maestra where Provee_Ciudad is not null
+
+ ---USUARIOS--------------------
+CREATE TABLE USUARIOS
+( Username varchar(255) not null,
+  Password	varchar(255) not null,
+  Estado varchar(255) default 'Habilitado'
+  PRIMARY KEY(Username)
+)
+--Usuario ADMIN GENERAL
+insert into USUARIOS (username,Password) values ('ADMIN_ALL',HASHBYTES('SHA2_256','frba1234'))
+insert into USUARIOS (username,Password) values ('.',HASHBYTES('SHA2_256','.'))
 
 ----CLIENTE----------------
 CREATE TABLE CLIENTES
@@ -73,10 +79,6 @@ Cli_Telefono,Cli_Mail,Cli_Fecha_Nac from gd_esquema.Maestra )
 insert into USUARIOS (Username, Password) 
 (select  Nombre + (SUBSTRING(convert(varchar(15),DNI),1,3)), HASHBYTES('SHA2_256',(cast(dni as varchar))) from CLIENTES)
 
---No borrar x las dudas!!
---insert into USUARIOS (Username, Password) 
---(select  ltrim(rtrim(Nombre)) + ltrim(rtrim(SUBSTRING(convert(varchar(15),DNI),1,3))), HASHBYTES('SHA2_256',ltrim(rtrim(cast(dni as char)))) from CLIENTES)
-
 update CLIENTES 
 set username = B.username from CLIENTES as A,USUARIOS as B where B.Username = Nombre + (SUBSTRING(convert(varchar(15),DNI),1,3))
 
@@ -93,7 +95,7 @@ CREATE TABLE PROVEEDORES
 	CUIT varchar(255) unique not null,	
 	Mail varchar(255),
 	Nombre_contacto varchar(255),
-	Estado varchar(255) default 'Habilitado'
+	Estado varchar(255) default 'Habilitado',
 	PRIMARY KEY(Proveedor_Id),
 	FOREIGN KEY(Direccion) REFERENCES Direccion(id_direccion)
 )
@@ -103,53 +105,11 @@ INSERT INTO PROVEEDORES
 (select distinct Provee_RS,(SELECT Id_direccion from DIRECCION where Direccion = Provee_Dom),Provee_Telefono,Provee_CUIT from gd_esquema.Maestra
 where provee_Rs is not null)
 
-
 insert into USUARIOS (Username, Password) 
 (select 'pr' + ltrim(rtrim(cast(Indice as char))) + (SUBSTRING(cast(CUIT as varchar),1,4)),HASHBYTES('SHA2_256',(CUIT)) from PROVEEDORES)
 
 update PROVEEDORES 
 set username = B.username from PROVEEDORES as A,USUARIOS as B where B.Username =  (select 'pr' + ltrim(rtrim(cast(Indice as char))) + (SUBSTRING(cast(CUIT as varchar),1,4)) )
-
-
------------RUBROS------------------
-CREATE TABLE RUBROS
-(	Indice INT IDENTITY(1,1) NOT NULL,
-	Rubro_Id AS 'RubroID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	Proveedor_Id varchar(19),
-	rubro_descripcion varchar(255)
-	PRIMARY KEY(Rubro_Id),
-	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
-)
-
-INSERT INTO RUBROS (Proveedor_Id,rubro_descripcion)
-(SELECT DISTINCT Proveedor_Id,Provee_Rubro from gd_esquema.Maestra f join proveedores p on f.Provee_RS=p.Razon_Social)
-
-
-
----OFERTA---------------
-CREATE TABLE OFERTAS
-(	Indice INT IDENTITY(1,1) NOT NULL,
-	Oferta_Id AS 'OfertaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	Precio_oferta numeric (18,2) not null,
-	Precio_lista numeric(18,2) not null,
-	Fecha_publicacion datetime not null,
-	Fecha_Vencimiento datetime not null,
-	Descripcion varchar(255),
-	Cantidad_disponible numeric(18,0),
-	cantidad_maxima_por_usuario int,
-	Codigo varchar(255) not null,
-	Proveedor_referenciado varchar(19)
-	PRIMARY KEY(Oferta_Id),
-	FOREIGN KEY(Proveedor_referenciado) REFERENCES PROVEEDORES (Proveedor_Id)
-)
-
-
-INSERT INTO OFERTAS
-(Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,cantidad_maxima_por_usuario,codigo)
-(select distinct p.Proveedor_id, Oferta_Precio, Oferta_Precio_Ficticio,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Descripcion,Oferta_Cantidad,Oferta_Cantidad,Oferta_Codigo from gd_esquema.Maestra gd join proveedores p
-on gd.Provee_rs = p.razon_social
-where gd.Oferta_Codigo is not null )
-
 
 ---------------TARJETA------------
 CREATE TABLE TARJETAS
@@ -165,48 +125,18 @@ INSERT INTO TARJETAS (tipo_Tarjeta)
 (select DISTINCT Tipo_Pago_Desc from gd_esquema.Maestra gd
 where Tipo_Pago_Desc is not null)
 
----CUENTA----------------
-
-CREATE TABLE CARGAS
-(
-	Indice INT IDENTITY(1,1) NOT NULL,
-	Carga_Id AS 'CargaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	Cliente_Id varchar(17),
-	Tarjeta_Id varchar(17),
-	Fecha datetime not null,
-	Monto numeric(10,0) not null,
-	PRIMARY KEY(Carga_Id),
-	FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id),
-	FOREIGN KEY(Tarjeta_Id) REFERENCES TARJETAS(Tarjeta_Id)
+-----------RUBROS------------------
+CREATE TABLE RUBROS
+(	Indice INT IDENTITY(1,1) NOT NULL,
+	Rubro_Id AS 'RubroID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+	Proveedor_Id varchar(19),
+	rubro_descripcion varchar(255)
+	PRIMARY KEY(Rubro_Id),
+	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
 )
 
-INSERT INTO CARGAS (Cliente_Id,Fecha,Monto,Tarjeta_Id)
-(SELECT C.Cliente_Id,
-gd.Carga_Fecha,
-gd.Carga_Credito,
-T.Tarjeta_Id
-from gd_esquema.Maestra gd
-JOIN CLIENTES C on gd.Cli_Dni = C.DNI 
-JOIN TARJETAS T on T.tipo_Tarjeta = gd.Tipo_Pago_Desc
-where gd.Carga_Fecha is not null and gd.Carga_Credito is not null and gd.Tipo_Pago_Desc is not null)
-
----FACTURAS---------------------
-CREATE TABLE FACTURAS
-( Indice INT IDENTITY(1,1) NOT NULL,
-  Factura_Id AS 'FacturaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Proveedor_Id varchar(19) not null,
-  Fecha datetime not null,
-  Numero bigint not null
-  PRIMARY KEY(Factura_Id)
-  FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
-)
-
-
-INSERT INTO FACTURAS
-(Proveedor_Id,FECHA,Numero)
-(select p.proveedor_id,Factura_Fecha,Factura_Nro  from gd_esquema.Maestra gd join Proveedores p
-on gd.Provee_RS = p.razon_social
- where Factura_Nro is not null)
+INSERT INTO RUBROS (Proveedor_Id,rubro_descripcion)
+(SELECT DISTINCT Proveedor_Id,Provee_Rubro from gd_esquema.Maestra f join proveedores p on f.Provee_RS=p.Razon_Social)
 
 
 --ROLES--
@@ -240,6 +170,71 @@ insert into ROLES_POR_USUARIO (Rol_Id, Username) (select 'Proveedor',username fr
 insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','ADMIN_ALL')
 insert into ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','.')
 
+---OFERTA---------------
+CREATE TABLE OFERTAS
+(	
+	Codigo_Oferta varchar(255) not null,
+	Precio_oferta numeric (18,2) not null,
+	Precio_lista numeric(18,2) not null,
+	Fecha_publicacion datetime not null,
+	Fecha_Vencimiento datetime not null,
+	Descripcion varchar(255) not null,
+	Cantidad_disponible numeric(18,0) not null,
+	cantidad_maxima_por_usuario int not null,
+	Proveedor_referenciado varchar(19) not null
+	PRIMARY KEY(Codigo_Oferta),
+	FOREIGN KEY(Proveedor_referenciado) REFERENCES PROVEEDORES (Proveedor_Id)
+)
+
+
+INSERT INTO OFERTAS
+(Codigo_Oferta,Proveedor_referenciado,Precio_oferta,Precio_Lista,fecha_publicacion,fecha_vencimiento,descripcion,cantidad_disponible,cantidad_maxima_por_usuario)
+(select distinct Oferta_Codigo, p.Proveedor_id, Oferta_Precio, Oferta_Precio_Ficticio,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Descripcion,Oferta_Cantidad,Oferta_Cantidad 
+from gd_esquema.Maestra gd join proveedores p
+on gd.Provee_rs = p.razon_social
+where gd.Oferta_Codigo is not null )
+
+---CUENTA----------------
+drop table CARGAS
+CREATE TABLE CARGAS
+(
+	Indice INT IDENTITY(1,1) NOT NULL,
+	Carga_Id AS 'CargaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
+	Cliente_Id varchar(17),
+	Tarjeta_Id varchar(17),
+	Fecha datetime not null,
+	Monto numeric(10,0) not null,
+	PRIMARY KEY(Carga_Id),
+	FOREIGN KEY(Cliente_Id) references CLIENTES(Cliente_Id),
+	FOREIGN KEY(Tarjeta_Id) REFERENCES TARJETAS(Tarjeta_Id)
+)
+
+INSERT INTO CARGAS (Cliente_Id,Fecha,Monto,Tarjeta_Id)
+(SELECT C.Cliente_Id,
+gd.Carga_Fecha,
+gd.Carga_Credito,
+T.Tarjeta_Id
+from gd_esquema.Maestra gd
+JOIN CLIENTES C on gd.Cli_Dni = C.DNI 
+JOIN TARJETAS T on T.tipo_Tarjeta = gd.Tipo_Pago_Desc
+where gd.Carga_Fecha is not null and gd.Carga_Credito is not null and gd.Tipo_Pago_Desc is not null)
+
+---FACTURAS---------------------
+CREATE TABLE FACTURAS
+( 
+	Numero bigint not null,
+	Proveedor_Id varchar(19) not null,
+	Fecha datetime not null
+	PRIMARY KEY(Numero)
+	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
+)
+
+INSERT INTO FACTURAS
+(Proveedor_Id,FECHA, Numero)
+(select distinct  p.proveedor_id,Factura_Fecha, Factura_Nro  from gd_esquema.Maestra gd join Proveedores p
+on gd.Provee_RS = p.razon_social
+where Factura_Nro is not null)
+ 
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES
 (Indice INT IDENTITY(1,1) NOT NULL,
@@ -286,18 +281,17 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','Funci
 CREATE TABLE COMPRAS
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Compra_Id AS 'CompraID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Oferta_Id varchar(16),
+  Codigo_oferta varchar(255),
   Cliente_Id varchar(17),
   Fecha_compra datetime not null,
+  Cantidad SMALLINT,
   PRIMARY KEY(Compra_Id),
   FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id),
-  FOREIGN KEY(Oferta_Id) REFERENCES OFERTAS(Oferta_Id)
+  FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
-
-
-insert into compras(oferta_id,cliente_id,fecha_Compra)
-(select distinct o.oferta_id,cliente_id,oferta_Fecha_compra from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.codigo
+insert into compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
+(select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join CLIENTES c on gd.Cli_Dni = c.DNI)
 
 
@@ -305,19 +299,24 @@ join CLIENTES c on gd.Cli_Dni = c.DNI)
 CREATE TABLE CUPONES
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Cupon_Id AS 'CuponID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-  Oferta_Id varchar(16),
+  Codigo_oferta varchar(255),
   Compra_Id varchar(16),
   Fecha_Consumo datetime,
   PRIMARY KEY(Cupon_Id),
   FOREIGN KEY(Compra_Id) REFERENCES COMPRAS(Compra_Id),
-  FOREIGN KEY(Oferta_Id) REFERENCES OFERTAS(Oferta_Id)
+  FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
+insert into CUPONES (Codigo_oferta,Compra_Id,Fecha_Consumo)
+(select distinct c.codigo_oferta, c.compra_Id, gd.oferta_entregado_fecha FROM COMPRAS c
+JOIN gd_esquema.Maestra gd ON  gd.Oferta_Fecha_Compra = c.Fecha_compra AND c.Cliente_Id = gd.Cli_Dest_Dni
+where gd.Oferta_Entregado_Fecha is not null AND gd.Oferta_Fecha_Compra IS NOT NULL)
 
-insert into CUPONES (Oferta_Id,Compra_Id,Fecha_Consumo)
-(select distinct c.oferta_id,compra_id, Oferta_Entregado_Fecha from gd_esquema.Maestra gd
-join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra
-where gd.Oferta_Fecha_Compra is not null)
 
+insert into CUPONES (Codigo_oferta,Compra_Id,Fecha_Consumo)
+(select distinct c.Codigo_oferta,c.compra_id, Oferta_Entregado_Fecha from gd_esquema.Maestra gd
+join COMPRAS  c on Fecha_compra = gd.Oferta_Fecha_Compra 
+join OFERTAS o ON o.Oferta_Id  = c.Oferta_Id
+where gd.Oferta_Entregado_Fecha is not null AND gd.Oferta_Fecha_Compra IS NOT NULL)
 
 
