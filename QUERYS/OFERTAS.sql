@@ -55,6 +55,8 @@ else
 		Update OFERTAS
 		set Cantidad_disponible = (Cantidad_disponible - 1)
 		where Codigo_Oferta = @codigoOferta
+
+		
 	end
 
 END

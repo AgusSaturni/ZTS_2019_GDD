@@ -21,7 +21,7 @@ namespace FrbaOfertas.CragaCredito
         Singleton_Usuario sesion = Singleton_Usuario.getInstance();
         SqlConnection conexion_sql;
         private int saldo;
-        string rol;
+        
 
         public CargaDeCredito()
         {
@@ -32,33 +32,20 @@ namespace FrbaOfertas.CragaCredito
 
         private void CargaDeCredito_Load(object sender, EventArgs e)
         {
-            SqlConnection conn;
-            conexionBD conexion = conexionBD.getConexion();
-            conn = new SqlConnection(conexion.get_cadena());
-
-            conn.Open();
-
-            SqlCommand verificacion_proveedor = new SqlCommand("verificar_si_no_es_cliente", conn);
-            verificacion_proveedor.CommandType = CommandType.StoredProcedure;
-
-            verificacion_proveedor.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
-
-            try
+            if (!sesion.verificar_rol_administrador())
             {
-                verificacion_proveedor.ExecuteNonQuery();
                 Usuario.Text = username;
                 Usuario.ReadOnly = true;
+                this.cargar_saldoactual();
             }
-            catch
+            else
             {
                 txt_saldo.Text = "No Disponible";
-                rol = "Admin";
             }
-            conn.Close();
 
             conexion_sql = new SqlConnection(conexion_class.get_cadena());
             this.cargar_combobox();
-            this.cargar_saldoactual();
+           
    
 
         }
@@ -79,7 +66,7 @@ namespace FrbaOfertas.CragaCredito
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
-            {      
+            {            
                     txt_saldo.Text = "$" + (reader[0].ToString());
                     this.saldo = Int32.Parse(reader[0].ToString());
             }
@@ -134,7 +121,10 @@ namespace FrbaOfertas.CragaCredito
               persistir_carga.ExecuteNonQuery();
 
               MessageBox.Show("Carga Realizada con Exito", "Carga de Saldo" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
-              txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
+              if (!sesion.verificar_rol_administrador())
+              {
+                  txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
+              }
           }
           catch (SqlException exepcion)
           {

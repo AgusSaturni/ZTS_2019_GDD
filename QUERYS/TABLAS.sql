@@ -225,17 +225,20 @@ CREATE TABLE FACTURAS
 ( 
 	Numero bigint not null,
 	Proveedor_Id varchar(19) not null,
-	Fecha datetime not null
-	PRIMARY KEY(Numero)
+	Fecha datetime not null,
+	ImporteTotal numeric(20,2),
+	PRIMARY KEY(Numero),
 	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
 )
 
 INSERT INTO FACTURAS
-(Proveedor_Id,FECHA, Numero)
-(select distinct  p.proveedor_id,Factura_Fecha, Factura_Nro  from gd_esquema.Maestra gd join Proveedores p
+(Proveedor_Id,FECHA, Numero,ImporteTotal)
+(select  p.proveedor_id,Factura_Fecha, Factura_Nro,sum(Oferta_Precio) from gd_esquema.Maestra gd join Proveedores p
 on gd.Provee_RS = p.razon_social
-where Factura_Nro is not null)
- 
+where Factura_Nro is not null
+group by Factura_Fecha,Factura_Nro,p.Proveedor_Id)
+
+
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES
 (Indice INT IDENTITY(1,1) NOT NULL,
@@ -287,7 +290,9 @@ CREATE TABLE COMPRAS
   Cliente_Id varchar(17),
   Fecha_compra datetime not null,
   Cantidad SMALLINT,
+  Factura_Id bigint,
   PRIMARY KEY(Compra_Id),
+  FOREIGN KEY(Factura_Id) REFERENCES FACTURAS(Numero),
   FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id),
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
@@ -296,12 +301,15 @@ insert into compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
 (select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join CLIENTES c on gd.Cli_Dni = c.DNI)
 
+select * from compras
+
 
 ---CUPONES----------------------
 CREATE TABLE CUPONES
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Cupon_Id AS 'CuponID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
   Codigo_oferta varchar(255),
+  Codigo_cupon varchar(255),
   Compra_Id varchar(16),
   Fecha_Consumo datetime,
   PRIMARY KEY(Cupon_Id),
@@ -321,3 +329,6 @@ join CLIENTES cli on cr.Cliente_Id=cli.Cliente_Id
 join gd_esquema.Maestra  on cli.DNI = gd_esquema.Maestra.Cli_Dni and c.codigo_oferta =gd_esquema.Maestra.Oferta_Codigo
 where Oferta_Entregado_Fecha is not null
 
+update CUPONES
+set codigo_cupon= (select newId())
+where Fecha_Consumo is not null
