@@ -122,6 +122,12 @@
     <Compile Include="CargaCredito\CargaDeCredito.Designer.cs">
       <DependentUpon>CargaDeCredito.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOferta\CantidadAComprar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOferta\CantidadAComprar.Designer.cs">
+      <DependentUpon>CantidadAComprar.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComprarOferta\Ofertas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CargaDireccion\CargarDireccion.resx">
       <DependentUpon>CargarDireccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOferta\CantidadAComprar.resx">
+      <DependentUpon>CantidadAComprar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOferta\Ofertas.resx">
       <DependentUpon>Ofertas.cs</DependentUpon>

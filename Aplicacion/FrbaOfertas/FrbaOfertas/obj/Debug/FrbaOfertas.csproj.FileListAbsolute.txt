@@ -144,3 +144,4 @@ C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GD
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Facturar.FacturarProveedor.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.alta_rol.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Facturar.FacturarProveedor.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.CantidadAComprar.resources

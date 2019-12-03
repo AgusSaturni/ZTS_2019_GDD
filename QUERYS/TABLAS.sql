@@ -297,6 +297,9 @@ CREATE TABLE COMPRAS
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
+--RECORDAR QUE HAY UN TRIGGER EN INSERTS DE ESTA TABLA!!!--
+--drop trigger trigger_compras--
+
 insert into compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
 (select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join CLIENTES c on gd.Cli_Dni = c.DNI)
@@ -332,3 +335,5 @@ where Oferta_Entregado_Fecha is not null
 update CUPONES
 set codigo_cupon= (select newId())
 where Fecha_Consumo is not null
+
+

@@ -18,7 +18,7 @@ namespace FrbaOfertas.ComprarOferta
 {
     public partial class Ofertas : Form
     {
-        private string username = (Singleton_Usuario.getInstance()).get_username();
+      
 
         public Ofertas()
         {
@@ -36,103 +36,117 @@ namespace FrbaOfertas.ComprarOferta
             }
             if (contenedor_ofertas.CurrentCell.ColumnIndex == 0)
             {
-                conexionBD conexion = conexionBD.getConexion();
-                SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
+                var row = contenedor_ofertas.CurrentRow;
+
+                string descripcion_semilla = row.Cells[1].Value.ToString();
+                string proveedor_semilla = row.Cells[7].Value.ToString();
+                float precio_lista_semilla = float.Parse(row.Cells[3].Value.ToString());
+                float precio_oferta_semilla = float.Parse(row.Cells[2].Value.ToString());
+                float precio_oferta = float.Parse(row.Cells[2].Value.ToString());
+                float precio_lista = float.Parse(row.Cells[3].Value.ToString());       
+                int cantidadDispo = Int32.Parse(row.Cells[5].Value.ToString());
+                int cantMaxUser = Int32.Parse(row.Cells[6].Value.ToString());
+
+                Form comprar = new ComprarOferta.CantidadAComprar(descripcion_semilla,proveedor_semilla,precio_lista_semilla,precio_oferta_semilla,precio_oferta,precio_lista,cantidadDispo,cantMaxUser);
+                comprar.Show();
+
+                /* conexionBD conexion = conexionBD.getConexion();
+                 SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
                 
-               try
-               {
-                    var row = contenedor_ofertas.CurrentRow;
-
-                    SqlCommand command = new SqlCommand("comprar_oferta", conexion_sql);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlCommand command2 = new SqlCommand("obtener_codigo", conexion_sql);
-                    command2.CommandType = CommandType.StoredProcedure;
-
-
-                    SqlParameter codigo_oferta = new SqlParameter("@codigoOferta", SqlDbType.Char);
-                    codigo_oferta.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(codigo_oferta);
-
-                    SqlParameter precio_lista = new SqlParameter("@precioLista", SqlDbType.Float);
-                    precio_lista.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(precio_lista);
-
-                    SqlParameter precio_oferta = new SqlParameter("@precio_oferta", SqlDbType.Float);
-                    precio_oferta.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(precio_oferta);
-
-                    SqlParameter cliente = new SqlParameter("@clienteUsuario", SqlDbType.Char);
-                    cliente.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(cliente);
-
-                    SqlParameter cantidadDispo = new SqlParameter("@cantidadDisponible", SqlDbType.Int);
-                    cantidadDispo.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(cantidadDispo);
-
-
-                    SqlParameter cantMaxUser = new SqlParameter("@cantidadMaxUsuario", SqlDbType.Int);
-                    cantMaxUser.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(cantMaxUser);
-
-                    SqlParameter proveedor_semilla = new SqlParameter("@proveedor_id", SqlDbType.Char);
-                    proveedor_semilla.Direction = ParameterDirection.Input;
-                    command2.Parameters.Add(proveedor_semilla);
-
-                    SqlParameter descripcion_semilla = new SqlParameter("@descripcion", SqlDbType.Char);
-                    descripcion_semilla.Direction = ParameterDirection.Input;
-                    command2.Parameters.Add(descripcion_semilla);
-
-
-                    SqlParameter precio_oferta_semilla = new SqlParameter("@precio_oferta", SqlDbType.Char);
-                    precio_oferta_semilla.Direction = ParameterDirection.Input;
-                    command2.Parameters.Add(precio_oferta_semilla);
-
-
-                    SqlParameter precio_lista_semilla = new SqlParameter("@precio_lista", SqlDbType.Char);
-                    precio_lista_semilla.Direction = ParameterDirection.Input;
-                    command2.Parameters.Add(precio_lista_semilla);
-
-
-                    descripcion_semilla.Value = row.Cells[1].Value.ToString();
-                    proveedor_semilla.Value = row.Cells[7].Value.ToString();
-                    precio_lista_semilla.Value = float.Parse(row.Cells[3].Value.ToString());
-                    precio_oferta_semilla.Value = precio_oferta.Value = float.Parse(row.Cells[2].Value.ToString());
-                    precio_lista.Value = float.Parse(row.Cells[3].Value.ToString());  
-                    precio_oferta.Value = float.Parse(row.Cells[2].Value.ToString());
-                    cliente.Value = username;
-                    cantidadDispo.Value = Int32.Parse(row.Cells[5].Value.ToString());
-                    cantMaxUser.Value = Int32.Parse(row.Cells[6].Value.ToString());
-
-
-                    conexion_sql.Open();
-
-                                     try {
-                                       command2.ExecuteNonQuery();
-                                    }
-                                     catch (SqlException exepcion)
-                                     {
-                                        string message = "Desea comprar " + row.Cells[1].Value.ToString() + " ?";
-                                        string caption = "Validar compra";
-                                        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                                        DialogResult result;
-                                        result = MessageBox.Show(message, caption, buttons);
-                                        if (result == System.Windows.Forms.DialogResult.Yes)
-                                        {
-                                            SqlError codigo = exepcion.Errors[0];
-                                            codigo_oferta.Value = codigo.Message.ToString();
-                                            command.ExecuteNonQuery();
-                                            MessageBox.Show("Compra realizada, su codigo es: " + codigo.Message.ToString());
-                                            limpiar_form();
-                                        }
-                                     }
-                    conexion_sql.Close();
-               }
-                catch (SqlException exepcion)
+                try
                 {
-                    SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
-               }
+                     var row = contenedor_ofertas.CurrentRow;
+
+                     SqlCommand command = new SqlCommand("comprar_oferta", conexion_sql);
+                     command.CommandType = CommandType.StoredProcedure;
+
+                     SqlCommand command2 = new SqlCommand("obtener_codigo", conexion_sql);
+                     command2.CommandType = CommandType.StoredProcedure;
+
+
+                     SqlParameter codigo_oferta = new SqlParameter("@codigoOferta", SqlDbType.Char);
+                     codigo_oferta.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(codigo_oferta);
+
+                     SqlParameter precio_lista = new SqlParameter("@precioLista", SqlDbType.Float);
+                     precio_lista.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(precio_lista);
+
+                     SqlParameter precio_oferta = new SqlParameter("@precio_oferta", SqlDbType.Float);
+                     precio_oferta.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(precio_oferta);
+
+                     SqlParameter cliente = new SqlParameter("@clienteUsuario", SqlDbType.Char);
+                     cliente.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(cliente);
+
+                     SqlParameter cantidadDispo = new SqlParameter("@cantidadDisponible", SqlDbType.Int);
+                     cantidadDispo.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(cantidadDispo);
+
+
+                     SqlParameter cantMaxUser = new SqlParameter("@cantidadMaxUsuario", SqlDbType.Int);
+                     cantMaxUser.Direction = ParameterDirection.Input;
+                     command.Parameters.Add(cantMaxUser);
+
+                     SqlParameter proveedor_semilla = new SqlParameter("@proveedor_id", SqlDbType.Char);
+                     proveedor_semilla.Direction = ParameterDirection.Input;
+                     command2.Parameters.Add(proveedor_semilla);
+
+                     SqlParameter descripcion_semilla = new SqlParameter("@descripcion", SqlDbType.Char);
+                     descripcion_semilla.Direction = ParameterDirection.Input;
+                     command2.Parameters.Add(descripcion_semilla);
+
+
+                     SqlParameter precio_oferta_semilla = new SqlParameter("@precio_oferta", SqlDbType.Char);
+                     precio_oferta_semilla.Direction = ParameterDirection.Input;
+                     command2.Parameters.Add(precio_oferta_semilla);
+
+
+                     SqlParameter precio_lista_semilla = new SqlParameter("@precio_lista", SqlDbType.Char);
+                     precio_lista_semilla.Direction = ParameterDirection.Input;
+                     command2.Parameters.Add(precio_lista_semilla);
+
+
+                     descripcion_semilla.Value = row.Cells[1].Value.ToString();
+                     proveedor_semilla.Value = row.Cells[7].Value.ToString();
+                     precio_lista_semilla.Value = float.Parse(row.Cells[3].Value.ToString());
+                     precio_oferta_semilla.Value = precio_oferta.Value = float.Parse(row.Cells[2].Value.ToString());
+                     precio_lista.Value = float.Parse(row.Cells[3].Value.ToString());  
+                     precio_oferta.Value = float.Parse(row.Cells[2].Value.ToString());
+                     cliente.Value = username;
+                     cantidadDispo.Value = Int32.Parse(row.Cells[5].Value.ToString());
+                     cantMaxUser.Value = Int32.Parse(row.Cells[6].Value.ToString());
+
+
+                     conexion_sql.Open();
+
+                                      try {
+                                        command2.ExecuteNonQuery();
+                                     }
+                                      catch (SqlException exepcion)
+                                      {
+                                         string message = "Desea comprar " + row.Cells[1].Value.ToString() + " ?";
+                                         string caption = "Validar compra";
+                                         MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                                         DialogResult result;
+                                         result = MessageBox.Show(message, caption, buttons);
+                                         if (result == System.Windows.Forms.DialogResult.Yes)
+                                         {
+                                             SqlError codigo = exepcion.Errors[0];
+                                             codigo_oferta.Value = codigo.Message.ToString();
+                                             command.ExecuteNonQuery();
+                                             MessageBox.Show("Compra realizada, su codigo es: " + codigo.Message.ToString());
+                                             limpiar_form();
+                                         }
+                                      }
+                     conexion_sql.Close();
+                }
+                 catch (SqlException exepcion)
+                 {
+                     SqlError errores = exepcion.Errors[0];
+                     MessageBox.Show(errores.Message.ToString());
+                }*/
             }
 
         }

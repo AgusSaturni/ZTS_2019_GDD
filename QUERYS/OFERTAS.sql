@@ -1,10 +1,10 @@
 CREATE PROCEDURE confeccion_oferta(@descripcion varchar(255),@fecha_publicacion datetime,
-								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidad_maxima_por_usuario int,
+								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidadCompra int,@cantidad_maxima_por_usuario int,
 								   @codigo varchar(50),@proveedor_referenciado varchar(50))
 AS BEGIN
 
 declare @proveedor_id varchar(50) = (select Proveedor_Id from PROVEEDORES where username = @proveedor_referenciado)
-
+	
 		if not exists(select 1 from PROVEEDORES where username = @proveedor_referenciado)
 			throw 50002,'No existe ese proveedor',1
 		IF(@fecha_publicacion >= sysdatetime() and @fecha_vencimiento >= SYSDATETIME())
@@ -23,44 +23,69 @@ END
 
 drop procedure confeccion_oferta
 
+select * from compras order by 1 desc
+
+update OFERTAS
+set cantidad_maxima_por_usuario = 10
+where Descripcion = 'ISLAS BAHAMAS'
 
 ------------------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE comprar_oferta (@codigoOferta varchar(50),@precioLista varchar(20),@precio_oferta varchar(20),
-								  @clienteUsuario varchar(50),@cantidadDisponible varchar(20), @cantidadMaxUsuario varchar(20))
+CREATE PROCEDURE comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
+								  @clienteUsuario varchar(50),@cantidadDisponible int,@cantidadCompra int, @cantidadMaxUsuario int)
 AS BEGIN
-
-
 DECLARE @cliente_id varchar(20)= (select cliente_id from CLIENTES where username = @clienteUsuario)
+if(@cantidadCompra = 0)
+			throw 50004,'Debe seleccionar la cantidad de Ofertas que desea comprar.',1
+IF(@cantidadCompra > @cantidadDisponible)
+	throw 50001,'La cantidad de ofertas que desea adquirir es mayor a la Disponible.',1
 
-IF((Select Cantidad_disponible from OFERTAS where Codigo_Oferta = @codigoOferta) < 1)
-	throw 50004,'No hay oferta disponible',1
-IF((select DineroDisponible from CLIENTES where Cliente_Id = @cliente_id) < cast(@precio_oferta as numeric(12,2)))
-		throw 50001,'Dinero Insuficiente para realizar esta compra.',1
-IF((select count(*) from compras where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) = cast(@cantidadMaxUsuario as int))
-	throw 50002,'Cantidad Maxima de compras de esta oferta alcanzada',1
-else
-	begin
-		insert into COMPRAS(Cliente_Id,Fecha_compra,Codigo_oferta)
-		values(@cliente_id,SYSDATETIME(),@codigoOferta)
+	insert into COMPRAS(Cliente_Id,Codigo_oferta,Fecha_compra,Cantidad)
+	values(@cliente_id,@codigoOferta,SYSDATETIME(),@cantidadCompra)
 
-		declare @compra_id varchar(20) = (select top 1 Compra_Id from COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta order by 1 desc)
-
-		insert into CUPONES(Compra_Id,Codigo_oferta)
-		values(@compra_id,@codigoOferta)
-		
-		update CLIENTES
-		set DineroDisponible = DineroDisponible - cast(@precio_oferta as numeric(12,2))
-		where Cliente_Id = @cliente_id
-
-		Update OFERTAS
-		set Cantidad_disponible = (Cantidad_disponible - 1)
-		where Codigo_Oferta = @codigoOferta
-
-		
-	end
 
 END
 
+drop procedure comprar_oferta
+
+
+-----------------------------TRIGGER PARA COMPRAS------------------------
+CREATE TRIGGER trigger_compras
+ON COMPRAS
+INSTEAD OF insert
+as begin
+declare @cliente_id varchar(20) = (select cliente_id from INSERTED)
+declare @codigoOferta varchar(50) = (select codigo_Oferta from INSERTED)
+declare @cantidadCompra int = (select Cantidad from inserted)
+
+IF(select count(*) from COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) <
+	(select cantidad_maxima_por_usuario from OFERTAS where Codigo_Oferta = @codigoOferta)
+begin
+	begin transaction
+		insert into COMPRAS(Cliente_Id,Codigo_oferta,Fecha_compra,Cantidad)
+		values(@cliente_id,@codigoOferta,SYSDATETIME(),@cantidadCompra)
+
+		declare @compra_id varchar(20) = (select top 1 compra_id from compras order by 1 desc)
+
+		insert into CUPONES(Codigo_cupon,Codigo_oferta,Compra_Id)
+		values(newid(),@codigoOferta,@compra_id)
+
+		update OFERTAS
+		set Cantidad_disponible = Cantidad_disponible - @cantidadCompra
+		where Codigo_Oferta = @codigoOferta
+
+		update CLIENTES
+		set DineroDisponible = DineroDisponible - (select precio_oferta from OFERTAS where Codigo_Oferta = @codigoOferta)
+		where Cliente_Id = @cliente_id
+	commit transaction
+	end
+	else
+		throw 50002,'Usted alcanzó la cantidad máxima de compras posibles de esta Oferta.',1
+		
+end
+
+
+
+drop trigger trigger_compras
 
 
 
@@ -69,7 +94,7 @@ CREATE PROCEDURE obtener_codigo (@proveedor_id varchar(20),@descripcion varchar(
 as begin
 declare @codigo varchar(50) = (select top 1 Codigo_Oferta from OFERTAS where Proveedor_referenciado = @proveedor_id and Descripcion =@descripcion and Cantidad_disponible > 0
 and Precio_lista=@precio_lista and Precio_oferta =@precio_oferta)
-if exists(select 1 from OFERTAS where Codigo_Oferta= @codigo)
+if exists(select 1 from OFERTAS where Codigo_Oferta= @codigo order by Cantidad_disponible desc)
 throw 50001,@codigo,1
 end
 
@@ -148,7 +173,6 @@ IF (SELECT count(*) from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS 
 		THROW 90003,'El cupon ya fue utilizado.',1
 	END
 END
-
 
 
 CREATE PROCEDURE utilizar_cupon(@cuponId varchar(255), @fecha datetime)
