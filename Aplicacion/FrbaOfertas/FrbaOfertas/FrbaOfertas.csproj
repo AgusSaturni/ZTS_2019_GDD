@@ -146,6 +146,12 @@
     <Compile Include="Entrega_ConsumoOferta\ListadoCupones.Designer.cs">
       <DependentUpon>ListadoCupones.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadistico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manejo Logico\CommonQueries.cs" />
     <Compile Include="Manejo Logico\ConexionBD.cs" />
     <Compile Include="CrearOferta\CargaOferta.cs">
@@ -182,12 +188,6 @@
     </Compile>
     <Compile Include="Interfaces\menu_principal.Designer.cs">
       <DependentUpon>menu_principal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Manejo Logico\helperControls.cs" />
     <Compile Include="Manejo Logico\Singleton Usuario.cs" />
@@ -277,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\menu_principal.resx">
       <DependentUpon>menu_principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuABM.resx">
       <DependentUpon>MenuABM.cs</DependentUpon>

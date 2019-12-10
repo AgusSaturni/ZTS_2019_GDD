@@ -70,6 +70,9 @@ namespace FrbaOfertas.Interfaces
                         formulario2.Show();
                         break;
                     case "Listado Estadistico":
+                         Form listado = new ListadoEstadistico.ListadoEstadistico();
+                        this.Hide();
+                        listado.Show();
                         break;
                     case "Comprar Oferta":
                         Form oferta = new ComprarOferta.Ofertas();

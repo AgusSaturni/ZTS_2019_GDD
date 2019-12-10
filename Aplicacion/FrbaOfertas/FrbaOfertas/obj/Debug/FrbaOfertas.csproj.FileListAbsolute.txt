@@ -180,3 +180,6 @@ C:\Users\agust\Desktop\UTN\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\D
 C:\Users\agust\Desktop\UTN\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Properties.Resources.resources
 C:\Users\agust\Desktop\UTN\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.Cache
 C:\Users\agust\Desktop\UTN\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.CantidadAComprar.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.CantidadAComprar.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Entrega_ConsumoOferta.ListadoCupones.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ListadoEstadistico.ListadoEstadistico.resources
