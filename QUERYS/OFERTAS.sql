@@ -1,33 +1,35 @@
 CREATE PROCEDURE confeccion_oferta(@descripcion varchar(255),@fecha_publicacion datetime,
-								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidadCompra int,@cantidad_maxima_por_usuario int,
-								   @codigo varchar(50),@proveedor_referenciado varchar(50))
+								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidad_maxima_por_usuario int,
+								   @codigo varchar(50),@proveedor_referenciado varchar(255))
 AS BEGIN
 
-declare @proveedor_id varchar(50) = (select Proveedor_Id from PROVEEDORES where username = @proveedor_referenciado)
-	
-		if not exists(select 1 from PROVEEDORES where username = @proveedor_referenciado)
-			throw 50002,'No existe ese proveedor',1
-		IF(@fecha_publicacion >= sysdatetime() and @fecha_vencimiento >= SYSDATETIME())
-			begin
-				insert into OFERTAS(precio_oferta,precio_lista,fecha_publicacion,fecha_vencimiento,Descripcion,
-									cantidad_disponible,cantidad_maxima_por_usuario,Codigo_Oferta,proveedor_referenciado)
-				values(@precio_oferta,@precio_lista,@fecha_publicacion,@fecha_vencimiento,@descripcion,@cantidad_disponible,@cantidad_maxima_por_usuario
-						,@codigo,@proveedor_id)
-			end
-		ELSE
-			begin
-				throw 50005,'Fecha invalida', 1
-			end
-	
+	IF EXISTS(SELECT 1 FROM PROVEEDORES WHERE username = @proveedor_referenciado)
+	BEGIN
+		
+		DECLARE @ID VARCHAR(50) = (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor_referenciado)
+		
+		insert into OFERTAS(precio_oferta,precio_lista,fecha_publicacion,fecha_vencimiento,Descripcion,
+						cantidad_disponible,cantidad_maxima_por_usuario,Codigo_Oferta,proveedor_referenciado)
+		values(
+		@precio_oferta,
+		@precio_lista,
+		convert(datetime,@fecha_publicacion,121),
+		convert(datetime,@fecha_vencimiento,121),
+		@descripcion,
+		@cantidad_disponible,
+		@cantidad_maxima_por_usuario,
+		@codigo,
+		@ID)
+	END
+	ELSE
+	BEGIN
+		throw 100000,'El proveedor ingresado no existe', 1
+	END
+
+
 END
 
 drop procedure confeccion_oferta
-
-select * from compras order by 1 desc
-
-update OFERTAS
-set cantidad_maxima_por_usuario = 10
-where Descripcion = 'ISLAS BAHAMAS'
 
 ------------------------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
@@ -94,59 +96,75 @@ CREATE PROCEDURE obtener_codigo (@proveedor_id varchar(20),@descripcion varchar(
 as begin
 declare @codigo varchar(50) = (select top 1 Codigo_Oferta from OFERTAS where Proveedor_referenciado = @proveedor_id and Descripcion =@descripcion and Cantidad_disponible > 0
 and Precio_lista=@precio_lista and Precio_oferta =@precio_oferta)
-if exists(select 1 from OFERTAS where Codigo_Oferta= @codigo order by Cantidad_disponible desc)
+if exists(select 1 from OFERTAS where Codigo_Oferta= @codigo)
 throw 50001,@codigo,1
 end
 
+drop procedure obtener_codigo
 
 
 ------------------CONSUMO_OFERTA auxiliares------------------
 CREATE PROCEDURE oferta_existente (@ofertaCodigo varchar(255))
 AS BEGIN
-IF not exists (SELECT * FROM OFERTAS WHERE Codigo_Oferta = @ofertaCodigo)
+IF not exists (SELECT 1 FROM OFERTAS WHERE Codigo_Oferta = @ofertaCodigo)
 	BEGIN
 		THROW 90001,'La oferta ingresada no es correcta.',1
 	END
 END
 
-
-
-CREATE PROCEDURE cupon_existente (@cuponId varchar(255))
-AS BEGIN
-IF not exists (SELECT * FROM CUPONES WHERE Cupon_Id = @cuponId)
-	BEGIN
-		THROW 90001,'El cupon ingresado no es correcto.',1
-	END
-END
-
+drop procedure oferta_existente
 
 CREATE PROCEDURE oferta_disponible (@cuponId varchar(255), @ofertaFecha datetime) --La fecha de vencimiento todavia esta disponible
 AS BEGIN
 	DECLARE @ofertaCodigo VARCHAR(255)
 	SET @ofertaCodigo = (SELECT Codigo_oferta FROM CUPONES WHERE Cupon_Id = @cuponId)
-	IF not exists (SELECT * FROM OFERTAS
-	WHERE @ofertaFecha between Fecha_publicacion and Fecha_Vencimiento)
+	IF not exists (SELECT 1 FROM OFERTAS
+	WHERE convert(datetime,@ofertaFecha,121) between Fecha_publicacion and Fecha_Vencimiento and Codigo_Oferta = @ofertaCodigo)
 		BEGIN
-			THROW 90002,'La oferta no esta disponible en esta fecha.',1
+			THROW 90002,'La oferta se ha Vencido. No se puede canjear el cupon.',1
 		END
 END
 
+drop procedure oferta_disponible
 
 CREATE PROCEDURE verificar_proveedor (@cuponId varchar(255), @proveedor varchar(255))
 AS BEGIN
 	DECLARE @proveedorId VARCHAR(255)
 	SET @proveedorId = (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor)
-	IF not exists (SELECT * FROM CUPONES c 
+	IF not exists (SELECT 1 FROM CUPONES c 
 					JOIN OFERTAS o ON o.Codigo_Oferta = c.Codigo_oferta
 					WHERE @cuponId = c.Cupon_Id
 					AND @proveedorId = o.Proveedor_referenciado)
 	BEGIN
-		THROW 90003,'El proveedor no es el indicado.',1
+		THROW 90003,'Este cupon no le pertenece.',1
+	END
+END
+
+drop procedure verificar_proveedor
+
+CREATE PROCEDURE utilizar_cupon(@cuponId varchar(255), @fecha datetime)
+AS BEGIN
+	UPDATE CUPONES SET Fecha_Consumo = @fecha
+	WHERE Cupon_Id = @cuponId
+END
+
+
+drop procedure utilizar_cupon
+
+CREATE PROCEDURE cupon_utilizado(@cuponId varchar(255))
+AS BEGIN
+IF (SELECT count(1) from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)>0
+	BEGIN
+		THROW 90003,'El cupon ya fue utilizado.',1
 	END
 END
 
 
+drop procedure cupon_utilizado
+-------------------------------------------------
+-------------------------------------------------
 
+--NO LAS USO MAS
 CREATE PROCEDURE cupon_cliente (@cuponId varchar(255), @cliente varchar(255))
 AS BEGIN
 	IF not exists (select 1 from CUPONES cup
@@ -165,18 +183,15 @@ AS BEGIN
 END
 
 
-CREATE PROCEDURE cupon_utilizado(@cuponId varchar(255))
+drop procedure cupon_cliente
+
+CREATE PROCEDURE cupon_existente (@cuponId varchar(255))
 AS BEGIN
---IF exists (SELECT * from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)
-IF (SELECT count(*) from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)>0
+IF not exists (SELECT 1 FROM CUPONES WHERE Cupon_Id = @cuponId)
 	BEGIN
-		THROW 90003,'El cupon ya fue utilizado.',1
+		THROW 90001,'El cupon ingresado no es correcto.',1
 	END
 END
 
 
-CREATE PROCEDURE utilizar_cupon(@cuponId varchar(255), @fecha datetime)
-AS BEGIN
-	UPDATE CUPONES SET Fecha_Consumo = @fecha
-	WHERE Cupon_Id = @cuponId
-END
+drop procedure cupon_existente

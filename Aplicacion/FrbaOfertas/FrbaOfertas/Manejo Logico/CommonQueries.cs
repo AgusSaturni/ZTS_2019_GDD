@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -57,6 +58,37 @@ namespace FrbaOfertas.Manejo_Logico
             cmd.Parameters.AddWithValue("@Rol_Id", Rol);
 
             cmd.ExecuteNonQuery();
+        }
+
+        //Dado que los procedures pueden tener algunos valores nulos, asigno solo los que se ingresaron
+        public void filtrar_nulos(SqlCommand procedure, string codigo_postal, string localidad, string piso, string depto)
+        {
+            if (!string.IsNullOrEmpty(codigo_postal.Trim()))
+            {
+                procedure.Parameters.AddWithValue("@CP", SqlDbType.Int).Value = Int32.Parse(codigo_postal);
+            }
+            if (!string.IsNullOrEmpty(localidad.Trim()))
+            {
+                procedure.Parameters.AddWithValue("@Loc", SqlDbType.Char).Value = (localidad);
+            }
+            if (!string.IsNullOrEmpty(piso.Trim()))
+            {
+                procedure.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(piso);
+            }
+            if (!string.IsNullOrEmpty(depto.Trim()))
+            {
+                procedure.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (depto);
+            }
+
+        }
+
+        public SqlDataReader select_rubros_disponibles(SqlConnection conexion_actual) 
+        {
+            String query = "select rubro_descripcion from RUBROS";
+            SqlCommand cmd = new SqlCommand(query, conexion_actual);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            return reader;
         }
     
     }

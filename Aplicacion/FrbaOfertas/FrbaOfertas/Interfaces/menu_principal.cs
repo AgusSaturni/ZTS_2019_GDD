@@ -87,7 +87,7 @@ namespace FrbaOfertas.Interfaces
                         break;
                     case "Entrega/Consumo de Oferta":
                         this.Hide();
-                        Form entrega_ConsumoOferta = new Entrega_ConsumoOferta.Entrega_ConsumoOferta();
+                        Form entrega_ConsumoOferta = new Entrega_ConsumoOferta.ListadoCupones();
                         entrega_ConsumoOferta.Show();
                         break;
                     case "Facturar a Proveedor":

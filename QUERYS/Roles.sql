@@ -53,6 +53,8 @@ AS BEGIN
 	--Por lo tanto, ya previamente se verifica si el usuario no existe.
 	if exists(select 1 from ROLES where Rol_Id = @Rol_Id and Estado = 'Habilitado')
 		insert into ROLES_POR_USUARIO (Rol_Id, Username) values (@Rol_Id, @username)
+	else
+		throw 90000, 'Rol Inhabilitado', 1
 END
 
 

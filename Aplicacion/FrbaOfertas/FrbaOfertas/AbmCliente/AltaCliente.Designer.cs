@@ -42,9 +42,9 @@
             this.FechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.Mail = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.bt_cancelar = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -209,6 +209,18 @@
             this.groupBox1.Text = "Datos Personales";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(324, 268);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(177, 21);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "(*) son Obligatorios";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label6);
@@ -229,18 +241,6 @@
             this.bt_cancelar.Text = "Volver";
             this.bt_cancelar.UseVisualStyleBackColor = true;
             this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(324, 268);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(177, 21);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "(*) son Obligatorios";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // AltaCliente
             // 

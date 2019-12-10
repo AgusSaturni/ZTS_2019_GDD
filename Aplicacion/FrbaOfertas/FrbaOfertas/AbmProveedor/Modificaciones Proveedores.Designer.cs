@@ -58,7 +58,6 @@
             this.txt_telefono = new System.Windows.Forms.TextBox();
             this.txt_id = new System.Windows.Forms.TextBox();
             this.txt_RazonSoc = new System.Windows.Forms.TextBox();
-            this.txt_Rubro = new System.Windows.Forms.TextBox();
             this.txt_CUIT = new System.Windows.Forms.TextBox();
             this.lbl_DNI = new System.Windows.Forms.Label();
             this.lbl_id = new System.Windows.Forms.Label();
@@ -66,6 +65,7 @@
             this.lbl_apellido = new System.Windows.Forms.Label();
             this.lbl_nombre = new System.Windows.Forms.Label();
             this.lbl_telefono = new System.Windows.Forms.Label();
+            this.cb_rubros = new System.Windows.Forms.ComboBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -291,6 +291,7 @@
             // 
             // contenedor_info_cliente
             // 
+            this.contenedor_info_cliente.Controls.Add(this.cb_rubros);
             this.contenedor_info_cliente.Controls.Add(this.label7);
             this.contenedor_info_cliente.Controls.Add(this.txt_Contacto);
             this.contenedor_info_cliente.Controls.Add(this.txt_username);
@@ -299,7 +300,6 @@
             this.contenedor_info_cliente.Controls.Add(this.txt_telefono);
             this.contenedor_info_cliente.Controls.Add(this.txt_id);
             this.contenedor_info_cliente.Controls.Add(this.txt_RazonSoc);
-            this.contenedor_info_cliente.Controls.Add(this.txt_Rubro);
             this.contenedor_info_cliente.Controls.Add(this.txt_CUIT);
             this.contenedor_info_cliente.Controls.Add(this.lbl_DNI);
             this.contenedor_info_cliente.Controls.Add(this.lbl_id);
@@ -382,14 +382,6 @@
             this.txt_RazonSoc.Size = new System.Drawing.Size(194, 26);
             this.txt_RazonSoc.TabIndex = 17;
             // 
-            // txt_Rubro
-            // 
-            this.txt_Rubro.Location = new System.Drawing.Point(243, 189);
-            this.txt_Rubro.Name = "txt_Rubro";
-            this.txt_Rubro.ReadOnly = true;
-            this.txt_Rubro.Size = new System.Drawing.Size(194, 26);
-            this.txt_Rubro.TabIndex = 16;
-            // 
             // txt_CUIT
             // 
             this.txt_CUIT.Location = new System.Drawing.Point(243, 245);
@@ -458,6 +450,16 @@
             this.lbl_telefono.TabIndex = 5;
             this.lbl_telefono.Text = "Telefono";
             // 
+            // cb_rubros
+            // 
+            this.cb_rubros.AllowDrop = true;
+            this.cb_rubros.Enabled = false;
+            this.cb_rubros.FormattingEnabled = true;
+            this.cb_rubros.Location = new System.Drawing.Point(243, 191);
+            this.cb_rubros.Name = "cb_rubros";
+            this.cb_rubros.Size = new System.Drawing.Size(194, 28);
+            this.cb_rubros.TabIndex = 26;
+            // 
             // Modificaciones_Proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -517,7 +519,6 @@
         public System.Windows.Forms.TextBox txt_telefono;
         public System.Windows.Forms.TextBox txt_id;
         public System.Windows.Forms.TextBox txt_RazonSoc;
-        public System.Windows.Forms.TextBox txt_Rubro;
         public System.Windows.Forms.TextBox txt_CUIT;
         private System.Windows.Forms.Label lbl_DNI;
         private System.Windows.Forms.Label lbl_id;
@@ -525,5 +526,6 @@
         private System.Windows.Forms.Label lbl_apellido;
         private System.Windows.Forms.Label lbl_nombre;
         private System.Windows.Forms.Label lbl_telefono;
+        public System.Windows.Forms.ComboBox cb_rubros;
     }
 }

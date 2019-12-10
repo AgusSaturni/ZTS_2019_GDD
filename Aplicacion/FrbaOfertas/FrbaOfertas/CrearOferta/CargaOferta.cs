@@ -9,13 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaOfertas.Manejo_Logico;
+using System.Configuration;
 
 namespace FrbaOfertas.CrearOferta
 {
     public partial class CargaOferta : Form
     {
-        private string username = (Singleton_Usuario.getInstance()).get_username();
-
+        Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+        conexionBD conexion = conexionBD.getConexion();
+        SqlConnection conn;
+        private DateTime Fecha_Config = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
+        private bool bit_admin = false;
+        
         public string crear_codigo(int longitud)
         {
             string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -35,12 +40,32 @@ namespace FrbaOfertas.CrearOferta
             InitializeComponent();
         }
 
+        private void CargaOferta_Load(object sender, EventArgs e)
+        {
+            conn = new SqlConnection(conexion.get_cadena());
+
+            if (sesion.verificar_rol_administrador())
+            {
+                ProveedorUser.ReadOnly = false;
+                bit_admin = true;
+            }
+            else
+            {
+                ProveedorUser.ReadOnly = true;
+                ProveedorUser.Text = sesion.get_username();
+            }
+
+            FechaPublicacion.Value = Fecha_Config;
+            FechaVencimiento.Value = Fecha_Config;
+
+        }
+
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
         }
 
-        private bool verificar_parametros()
+        private bool verificar_txts_vacios()
         {
             List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
 
@@ -53,157 +78,110 @@ namespace FrbaOfertas.CrearOferta
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void bt_volver_Click(object sender, EventArgs e)
         {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conn = new SqlConnection(conexion.get_cadena());
+            Form menu = new Interfaces.menu_principal();
+            menu.Show();
+            this.Close();
+
+        }
+
+        private bool verificar_datos() 
+        {
+            if (PrecioLista.Text.Any(x => !char.IsNumber(x)) || PrecioOferta.Text.Any(x => !char.IsNumber(x))) 
+            {
+                MessageBox.Show("Precio de lista y/o oferta Invalido", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            if (Int32.Parse(PrecioLista.Text) < Int32.Parse(PrecioOferta.Text)) 
+            {
+                MessageBox.Show("El precio de oferta debe ser menor al de lista", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            if (Cantidad.Value.ToString() == "0" || CantMax.Value.ToString() == "0") 
+            {
+                MessageBox.Show("Ingrese cantidad disponible y mamximo por usuario distinto de 0", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            if (FechaPublicacion.Value < Fecha_Config || FechaVencimiento.Value < Fecha_Config) 
+            {
+                MessageBox.Show("Las fechas deben ser mayores o iguales a la actual.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        private void bt_publicar_Click(object sender, EventArgs e)
+        {
+            if (this.verificar_txts_vacios())
+            {
+                MessageBox.Show("Todos los campos son obligatorios", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            //verificar fecha, precio de oferta rebajado al de lista
+
+            if (this.verificar_datos()) { return; }
 
             conn.Open();
 
             SqlCommand command = new SqlCommand("confeccion_oferta", conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            SqlParameter descripcion = new SqlParameter("@descripcion", SqlDbType.Char);
-            descripcion.Direction = ParameterDirection.Input;
-            command.Parameters.Add(descripcion);
+            command.Parameters.AddWithValue("@descripcion", SqlDbType.Char).Value = Descripcion.Text;
+            command.Parameters.AddWithValue("@fecha_publicacion", SqlDbType.Date).Value = FechaPublicacion.Value;
+            command.Parameters.AddWithValue("@fecha_vencimiento", SqlDbType.Date).Value = FechaVencimiento.Value;
+            command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value = Int32.Parse(PrecioOferta.Text);
+            command.Parameters.AddWithValue("@precio_lista", SqlDbType.Float).Value = Int32.Parse(PrecioLista.Text);
+            command.Parameters.AddWithValue("@cantidad_disponible", SqlDbType.Float).Value = Int32.Parse(Cantidad.Value.ToString());
+            command.Parameters.AddWithValue("@cantidad_maxima_por_usuario", SqlDbType.Float).Value = Int32.Parse(CantMax.Value.ToString());
+            command.Parameters.AddWithValue("@codigo", SqlDbType.Char).Value = this.crear_codigo(10);
 
-            SqlParameter fecha_publi = new SqlParameter("@fecha_publicacion", SqlDbType.Date);
-            fecha_publi.Direction = ParameterDirection.Input;
-            command.Parameters.Add(fecha_publi);
-
-            SqlParameter fecha_venc = new SqlParameter("@fecha_vencimiento", SqlDbType.Date);
-            fecha_venc.Direction = ParameterDirection.Input;
-            command.Parameters.Add(fecha_venc);
-
-            SqlParameter precio_oferta = new SqlParameter("@precio_oferta", SqlDbType.Float);
-            precio_oferta.Direction = ParameterDirection.Input;
-            command.Parameters.Add(precio_oferta);
-
-            SqlParameter precio_lista = new SqlParameter("@precio_lista", SqlDbType.Float);
-            precio_lista.Direction = ParameterDirection.Input;
-            command.Parameters.Add(precio_lista);
-
-            SqlParameter cant_disponible = new SqlParameter("@cantidad_disponible", SqlDbType.Float);
-            cant_disponible.Direction = ParameterDirection.Input;
-            command.Parameters.Add(cant_disponible);
-
-            SqlParameter cant_max = new SqlParameter("@cantidad_maxima_por_usuario", SqlDbType.Int);
-            cant_max.Direction = ParameterDirection.Input;
-            command.Parameters.Add(cant_max);
-
-
-            SqlParameter codigo = new SqlParameter("@codigo", SqlDbType.Char);
-            codigo.Direction = ParameterDirection.Input;
-            command.Parameters.Add(codigo);
-
-            SqlParameter proveedor_ref = new SqlParameter("@proveedor_referenciado", SqlDbType.Char);
-            proveedor_ref.Direction = ParameterDirection.Input;
-            command.Parameters.Add(proveedor_ref);
-
-
-            descripcion.Value = Descripcion.Text;
-            fecha_publi.Value = FechaPublicacion.Value;
-            fecha_venc.Value = FechaVencimiento.Value;
-            precio_oferta.Value = PrecioOferta.Text;
-            precio_lista.Value = PrecioLista.Text;
-            cant_disponible.Value = Cantidad.Value;
-            codigo.Value = crear_codigo(10);
-            cant_max.Value = CantMax.Value;
-            proveedor_ref.Value = ProveedorUser.Text;
-            if (verificar_parametros())
+            if (this.bit_admin)
             {
-                MessageBox.Show("Faltan completar campos");
-                return;
+                command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = ProveedorUser.Text;
             }
+            else 
+            {
+                command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = sesion.get_username();
+            }
+
+
             try
             {
                 command.ExecuteNonQuery();
-                MessageBox.Show("Hecho");
+                MessageBox.Show("Oferta Publicada", "Publicacion de Ofertas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.limpiar_datos();
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             conn.Close();
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void limpiar_datos()
         {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CargaOferta_Load(object sender, EventArgs e)
-        {
-            Singleton_Usuario sesion = Singleton_Usuario.getInstance();
-            if (sesion.verificar_rol_administrador())
+            FechaPublicacion.Value = Fecha_Config;
+            FechaVencimiento.Value = Fecha_Config;
+            Descripcion.Text = "";
+            PrecioLista.Text = "";
+            PrecioOferta.Text = "";
+            Cantidad.Value = 0;
+            CantMax.Value = 0;
+            if (this.bit_admin) 
             {
-                ProveedorUser.ReadOnly = false;
-
-
-            }
-            else
-            {
-                ProveedorUser.ReadOnly = true;
-                ProveedorUser.Text = username;
+                ProveedorUser.Text = "";
             }
         }
 
-        private void bt_volver_Click(object sender, EventArgs e)
-        {
-            Form menu = new Interfaces.menu_principal();
-            menu.Show();
-            this.Hide();
+        
 
-        }
 
-        private void CargaOferta_Load_1(object sender, EventArgs e)
-        {
-            SqlConnection conn;
-            conexionBD conexion = conexionBD.getConexion();
-            conn = new SqlConnection(conexion.get_cadena());
 
-            conn.Open();
-
-            SqlCommand verificacion_proveedor = new SqlCommand("verificar_si_no_es_proveedor", conn);
-            verificacion_proveedor.CommandType = CommandType.StoredProcedure;
-
-            verificacion_proveedor.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
-
-            try
-            {
-                verificacion_proveedor.ExecuteNonQuery();
-                ProveedorUser.Text = username;
-                ProveedorUser.ReadOnly = true;
-            }
-            catch
-            {
-               
-
-            }
-            conn.Close();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ProveedorUser_TextChanged(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 
 

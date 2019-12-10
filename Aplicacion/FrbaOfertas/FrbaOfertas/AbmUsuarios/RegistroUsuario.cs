@@ -17,6 +17,7 @@ namespace FrbaOfertas
 
         object rol = "";
         Form formulario_anterior;
+        private int bit_Accion;
 
         public RegistroUsuario()
         {
@@ -25,13 +26,14 @@ namespace FrbaOfertas
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public RegistroUsuario(object rol_recibido, Form formulario_ant) //Se utiliza para difierenciar cuando se viene de ABM cliente, ABM proveedor, o Login
+        public RegistroUsuario(object rol_recibido, Form formulario_ant, int bit) //Se utiliza para difierenciar cuando se viene de ABM cliente, ABM proveedor, o Login
         {
             InitializeComponent();
             MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             rol = rol_recibido;
             formulario_anterior = formulario_ant;
+            this.bit_Accion = bit;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -100,12 +102,12 @@ namespace FrbaOfertas
                 switch (ComboBox_Rol.SelectedItem.ToString())
                 {
                     case "Cliente":
-                        Form registroCliente = new AbmCliente.AltaCliente(Usuario.Text, Password.Text, ComboBox_Rol.SelectedItem.ToString(), this);
+                        Form registroCliente = new AbmCliente.AltaCliente(Usuario.Text, Password.Text, ComboBox_Rol.SelectedItem.ToString(), this,bit_Accion);
                         this.Hide();
                         registroCliente.Show();
                         break;
                     case "Proveedor":
-                        Form registroProveedor = new AbmProveedor.AltaProveedor(Usuario.Text, Password.Text, ComboBox_Rol.SelectedItem.ToString(), this);
+                        Form registroProveedor = new AbmProveedor.AltaProveedor(Usuario.Text, Password.Text, ComboBox_Rol.SelectedItem.ToString(), this,bit_Accion);
                         this.Hide();
                         registroProveedor.Show();
                         break;

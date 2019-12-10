@@ -16,6 +16,7 @@ namespace FrbaOfertas.AbmCliente
         private string username;
         private string password;
         private string rol;
+        private int bit_accion;
         private Form formulario_anterior;
 
         SqlConnection conexion_sql;
@@ -28,13 +29,14 @@ namespace FrbaOfertas.AbmCliente
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public AltaCliente(string username, string password, string rol, Form formulario)
+        public AltaCliente(string username, string password, string rol, Form formulario, int bit)
         {
             InitializeComponent();
             this.username = username;
             this.password = password;
             this.rol = rol;
             this.formulario_anterior = formulario;
+            this.bit_accion = bit;
         }
 
 
@@ -76,16 +78,29 @@ namespace FrbaOfertas.AbmCliente
 
                     verificacion_cliente.ExecuteNonQuery();
 
-
-                    this.Hide();
-                    Form direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null, this);
-                    direccion.Show();
+                    this.determinar_accion();
                 }
                 catch
                 {
                     MessageBox.Show("El cliente que intenta crear, ya esta registrado en el sistema");
                 }
                 conexion_sql.Close();
+            }
+
+        }
+
+        private void determinar_accion() 
+        {
+            this.Hide();
+            if (bit_accion == 0)  //mando un 0 devuelta, significa que vengo de registro de usuario
+            {
+                Form direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null, this, 0);
+                direccion.Show();
+            }
+            else 
+            {                   //MANDO UN 1, significa que vengo de alta de cliente
+                Form direccion = new CargaDireccion.CargarDireccion(username, password, rol, Nombre.Text, Apellido.Text, Dni.Text, Telefono.Text, FechaNacimiento.Value, Mail.Text, null, null, null, null, this, 1);
+                direccion.Show();
             }
 
         }

@@ -15,8 +15,10 @@ drop procedure verificar_usuario
 
 
 ------REGISTRO_USUARIO_Cliente------------
-CREATE PROCEDURE registrar_usuario_cliente(@Username varchar(255), @Password varchar(255),@Rol varchar(255),@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime,@Direccion varchar(255),@codigo_Postal numeric(4,0),@Localidad varchar(255)
-									  ,@ciudad varchar(255),@nro_piso int,@Depto varchar(255))
+CREATE PROCEDURE registrar_usuario_cliente(@Username varchar(255), @Password varchar(255),@Rol varchar(255),
+										@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),
+										@mail varchar(255),@fecha_nacimiento datetime,@Direccion varchar(255),@ciudad varchar(255),
+										@CP numeric(4,0) = null ,@Loc varchar(255) = null ,@NPiso int = null ,@depto varchar(255) = null)
 AS BEGIN
 	begin try
 		begin transaction
@@ -27,29 +29,46 @@ AS BEGIN
 			insert into ROLES_POR_USUARIO(Rol_Id,Username)
 			values(@Rol,@username)
 
-			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
-			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
+			IF NOT EXISTS(SELECT 1 FROM DIRECCION WHERE Direccion = @Direccion and Ciudad = @Ciudad AND
+			((@CP IS NULL AND Codigo_Postal IS NULL ) OR Codigo_Postal = @CP) and 
+			((@Loc IS NULL AND Localidad IS NULL ) OR Localidad = @Loc) and
+			((@NPISO IS NULL AND Numero_Piso IS NULL )OR Numero_Piso = @NPiso) and 
+			((@depto IS NULL AND Depto IS NULL )OR Depto = @Depto)
+			)
+			begin
+					insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
+					values(@Direccion,@CP,@Loc,@ciudad,@NPiso,@depto)
+			end
 
-			
 			DECLARE @direcc_id int
-			set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+			set @direcc_id = (select id_direccion from DIRECCION 
+			where Direccion = @Direccion and Ciudad = @ciudad and
+			((@CP IS NULL AND Codigo_Postal IS NULL ) OR Codigo_Postal = @CP) and 
+			((@Loc IS NULL AND Localidad IS NULL ) OR Localidad = @Loc) and
+			((@NPISO IS NULL AND Numero_Piso IS NULL )OR Numero_Piso = @NPiso) and 
+			((@depto IS NULL AND Depto IS NULL )OR Depto = @Depto)
+			)
 
-
-			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento)
-			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento)	  
+			insert into CLIENTES(Username,Nombre,Apellido,DNI,Direccion,Telefono,Mail,Fecha_Nacimiento,DineroDisponible)
+			values(@username, @nombre,@apellido,@DNI,@direcc_id,@telefono,@mail,@fecha_nacimiento,200)	  
 	
-		commit transaction
+			commit transaction
 	end try
 	begin catch
 			rollback transaction
 	end catch
 END
+
+drop procedure registrar_usuario_cliente
 
 --------------------------------------------------------------
 
-CREATE PROCEDURE registrar_usuario_proveedor(@Username varchar(255), @Password varchar(255),@Rol varchar(255),@Razon_social varchar(255),@Mail varchar(255),
-											@Telefono numeric(18,0),@CUIT varchar(255),@Rubro varchar(255),@Nombre_contacto varchar(255),@Direccion varchar(255),@codigo_Postal numeric(4,0),@Localidad varchar(255)
-									  ,@Ciudad varchar(255),@Nro_piso int,@Depto varchar(255))									
+CREATE PROCEDURE registrar_usuario_proveedor(@Username varchar(255), @Password varchar(255),@Rol varchar(255),
+											@Razon_social varchar(255),@Mail varchar(255),
+											@Telefono numeric(18,0),@CUIT varchar(255),@Rubro varchar(255),
+											@Nombre_contacto varchar(255) = NULL,@Direccion varchar(255),
+											@Ciudad varchar(255),@CP numeric(4,0) = NULL ,@Loc varchar(255) = NULL,
+											@NPiso int = NULL,@depto varchar(255) = NULL)									
 AS BEGIN
 	begin try
 		begin transaction
@@ -60,28 +79,45 @@ AS BEGIN
 			insert into ROLES_POR_USUARIO(Rol_Id,Username)
 			values(@Rol,@username)
 
-			insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
-			values(@Direccion,@codigo_Postal,@localidad,@ciudad,@nro_piso,@depto)
-		
+			IF NOT EXISTS(SELECT 1 FROM DIRECCION WHERE Direccion = @Direccion and Ciudad = @Ciudad AND
+			((@CP IS NULL AND Codigo_Postal IS NULL ) OR Codigo_Postal = @CP) and 
+			((@Loc IS NULL AND Localidad IS NULL ) OR Localidad = @Loc) and
+			((@NPISO IS NULL AND Numero_Piso IS NULL )OR Numero_Piso = @NPiso) and 
+			((@depto IS NULL AND Depto IS NULL )OR Depto = @Depto)
+			)
+			begin
+					insert into DIRECCION(Direccion,Codigo_Postal,Localidad,Ciudad,Numero_Piso,Depto)
+					values(@Direccion,@CP,@Loc,@ciudad,@NPiso,@depto)
+			end
 
 			DECLARE @direcc_id int
-			set @direcc_id = (select distinct id_direccion from DIRECCION where Direccion = @Direccion)
+			set @direcc_id = (select id_direccion from DIRECCION
+			where Direccion = @Direccion and  Ciudad = @ciudad and
+			((@CP IS NULL AND Codigo_Postal IS NULL ) OR Codigo_Postal = @CP) and 
+			((@Loc IS NULL AND Localidad IS NULL ) OR Localidad = @Loc) and
+			((@NPISO IS NULL AND Numero_Piso IS NULL )OR Numero_Piso = @NPiso) and 
+			((@depto IS NULL AND Depto IS NULL )OR Depto = @Depto)
+			)
 
-		
-			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto)
-			values(@razon_social,@username,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto)
+			IF NOT EXISTS(SELECT 1 FROM RUBROS WHERE rubro_descripcion = @Rubro)
+			BEGIN
+				insert into RUBROS(Rubro_descripcion) values (@Rubro)
+			END
 
-			insert into RUBROS(Proveedor_Id,Rubro_descripcion)
-			(select proveedor_id,@rubro from PROVEEDORES where Razon_Social = @razon_social)
-		
-		commit transaction
+			declare @rubro_id varchar(15)
+			set @rubro_id = (select Rubro_Id from RUBROS where rubro_descripcion = @Rubro)
+
+			insert into PROVEEDORES(Razon_Social,username,mail,Telefono,Direccion,CUIT,Nombre_contacto,Rubro_Id)
+			values(@razon_social,@username,@mail,@telefono,@direcc_id,@cuit,@nombre_contacto,@rubro_id)
+
+			commit transaction
 	end try
 	begin catch
 			rollback transaction
 	end catch
-
 END
 
+drop procedure registrar_usuario_proveedor
 
 -------------MODIFICACION_PASSWORD--------HAY QUE RETOCAR----------------
 
@@ -143,21 +179,24 @@ end
 CREATE PROCEDURE verificar_existencia_cliente_gemelo(@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime)
 as begin
 	if exists(select 1 from CLIENTES where nombre=@nombre and Apellido = @apellido and DNI=@DNI and Telefono = @telefono and Mail=@mail and Fecha_Nacimiento =@fecha_nacimiento)
-		OR EXISTS (select * from CLIENTES where DNI = @DNI)
+		OR EXISTS (select 1 from CLIENTES where DNI = @DNI)
 		begin
 			throw 50004,'Error, el cliente ya existe',1
 		end
 end
 
+drop procedure verificar_existencia_cliente_gemelo
+
 --------------------Verificacion existencia preveedor existente--------------------------------------NUEVO PROCEDUREEEEEEEEEEEEEEEEEEEEE
 
-CREATE PROCEDURE verificar_existencia_proveedor_existente(@cuit varchar(255),@razon_social varchar(255))
+CREATE PROCEDURE verificar_existencia_proveedor_gemelo(@cuit varchar(255),@razon_social varchar(255))
 as begin
 	if exists(select 1 from PROVEEDORES where CUIT = @cuit)  OR exists(select 1 from PROVEEDORES where Razon_Social = @razon_social)
 		begin
 			throw 50004,'Error, el proveedor ya existe',1
 		end
 end
+
 
 -------------VERIFICACION_LOGUEO--------------------
 

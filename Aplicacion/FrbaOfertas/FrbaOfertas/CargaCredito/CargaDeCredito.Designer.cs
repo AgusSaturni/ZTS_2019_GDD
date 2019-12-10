@@ -191,7 +191,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 25);
+            this.label5.Location = new System.Drawing.Point(18, 29);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 22);
             this.label5.TabIndex = 18;
@@ -199,7 +199,7 @@
             // 
             // Usuario
             // 
-            this.Usuario.Location = new System.Drawing.Point(228, 25);
+            this.Usuario.Location = new System.Drawing.Point(228, 29);
             this.Usuario.Name = "Usuario";
             this.Usuario.Size = new System.Drawing.Size(178, 20);
             this.Usuario.TabIndex = 19;
@@ -208,7 +208,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(751, 254);
+            this.ClientSize = new System.Drawing.Size(745, 255);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.bt_cancelar);
             this.Controls.Add(this.bt_cargar);

@@ -32,7 +32,7 @@ namespace FrbaOfertas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form registroUsuario = new RegistroUsuario("", this);
+            Form registroUsuario = new RegistroUsuario("", this,0);
             registroUsuario.Show();
             this.Hide();
         }
@@ -44,12 +44,10 @@ namespace FrbaOfertas
 
             SqlCommand verificacion_usuario = new SqlCommand("verificar_usuario", conexion_sql);
             verificacion_usuario.CommandType = CommandType.StoredProcedure;
+            verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
 
             SqlCommand verificacion_password = new SqlCommand("verificar_password", conexion_sql);
             verificacion_password.CommandType = CommandType.StoredProcedure;
-
-            verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
-
             verificacion_password.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
             verificacion_password.Parameters.AddWithValue("@password", SqlDbType.Char).Value = Password.Text;
 
@@ -57,47 +55,42 @@ namespace FrbaOfertas
 
             try
             {
-                verificacion_usuario.ExecuteNonQuery();
-                       
+                verificacion_usuario.ExecuteNonQuery();                       
                 //verifico contraseña, si le error resto una chance
-                              try {
-                                  verificacion_password.ExecuteNonQuery();
+                try 
+                {
+                    verificacion_password.ExecuteNonQuery();
                               
-                              }
-                              catch (SqlException exepcion)
-                              {
+                }
+                catch (SqlException exepcion)
+                {
 
-                                  SqlError errores = exepcion.Errors[0];
-                                  MessageBox.Show(errores.Message.ToString());
+                    SqlError errores = exepcion.Errors[0];
+                    MessageBox.Show(errores.Message.ToString());
 
-                                  contador++;
-                                  if (contador == 3)
-                                  {
-                                      contador = 0;
-                                      SqlCommand inhabilitar_usuario = new SqlCommand("inhabilitacion_usuario", conexion_sql);
-                                      inhabilitar_usuario.CommandType = CommandType.StoredProcedure;
+                    contador++;
+                    if (contador == 3)
+                    {
+                        contador = 0;
+                        SqlCommand inhabilitar_usuario = new SqlCommand("inhabilitacion_usuario", conexion_sql);
+                        inhabilitar_usuario.CommandType = CommandType.StoredProcedure;
 
-                                      SqlParameter username = new SqlParameter("@username", SqlDbType.Char);
-                                      username.Direction = ParameterDirection.Input;
-                                      inhabilitar_usuario.Parameters.Add(username);
+                        SqlParameter username = new SqlParameter("@username", SqlDbType.Char);
+                        username.Direction = ParameterDirection.Input;
+                        inhabilitar_usuario.Parameters.Add(username);
 
-                                      username.Value = Usuario.Text;
+                        username.Value = Usuario.Text;
 
-                                      inhabilitar_usuario.ExecuteNonQuery();
-                                  }
-
-                                  return;
-                              }
-
-
-
+                        inhabilitar_usuario.ExecuteNonQuery();
+                    }
+                    return;
+                }
 
                 contador = 0;
 
                 //Ahora, cargamos el usuario y sus permisos. Al ser un singleton, se crea una sola vez, y
                 // cuando cerramo sesion lo dejamos nulo. Patron en donde solo existe 1 objeto posible.
                 this.crear_sesion(Usuario.Text.ToString());
-               
 
                 Form menu_principal = new Interfaces.menu_principal();
                 menu_principal.Show();

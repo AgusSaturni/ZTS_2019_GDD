@@ -14,8 +14,8 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class listado_proveedores : Form
     {
-
-     
+        private conexionBD conexion = conexionBD.getConexion();
+        private SqlConnection conn;
 
         public listado_proveedores()
         {
@@ -25,29 +25,23 @@ namespace FrbaOfertas.AbmProveedor
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
+        private void listado_proveedores_Load(object sender, EventArgs e)
+        {
+            conn = new SqlConnection(conexion.get_cadena());
+        }
+
         private void bt_buscar_Click(object sender, EventArgs e)
         {
-
             string query = crear_query_listadoC(txt_RazonS.Text,txt_CUIT.Text, txt_email.Text,txt_Rubro.Text);
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
 
-            if (query == "") { MessageBox.Show("Ingrese Parametros"); }
-            else
-            {
-                conexionBD conexion = conexionBD.getConexion();
+            conn.Open();
 
-                SqlConnection conn = new SqlConnection(conexion.get_cadena());
+            DataTable tabla_clientes = new DataTable();
+            adapter.Fill(tabla_clientes);
+            contenedor_proveedores.DataSource = tabla_clientes;
 
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-
-                conn.Open();
-
-                DataTable tabla_clientes = new DataTable();
-
-                adapter.Fill(tabla_clientes);
-
-                contenedor_proveedores.DataSource = tabla_clientes;
-                conn.Close();
-            }
+            conn.Close();
 
         }
 
@@ -55,7 +49,7 @@ namespace FrbaOfertas.AbmProveedor
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select p.proveedor_id,Razon_Social,username,d.Direccion,Telefono,CUIT,Mail,Nombre_contacto, r.rubro_descripcion,Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto, estado from PROVEEDORES p join DIRECCION d on p.Direccion = d.Id_Direccion join rubros r on p.Proveedor_Id = r.Proveedor_Id where ");
+            sb.Append("select p.proveedor_id,Razon_Social,username,d.Direccion,Telefono,CUIT,Mail,Nombre_contacto, r.rubro_descripcion,Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto, estado from PROVEEDORES p join DIRECCION d on p.Direccion = d.Id_Direccion join rubros r on p.rubro_id = r.Rubro_Id where ");
 
             ArrayList Query = new ArrayList();
 
@@ -77,16 +71,15 @@ namespace FrbaOfertas.AbmProveedor
                 Query.Add("Rubro_Descripcion LIKE '%" + Rubro + "%'");
             }
 
-            if (Query.Count == 0) { return ""; }
-            else
-            {
-                string[] vector_query = Query.ToArray(typeof(string)) as string[];
-                string query_final = string.Join(" AND ", vector_query);
+            Query.Add("1=1"); //Para que en caso de no ingresar ningun parametro, nos muestre todos los proveedores registrados
 
-                sb.Append(query_final);
+            string[] vector_query = Query.ToArray(typeof(string)) as string[];
+            string query_final = string.Join(" AND ", vector_query);
 
-                return sb.ToString();
-            }
+            sb.Append(query_final);
+
+            return sb.ToString();
+
         }
 
         private void bt_limpiar_Click(object sender, EventArgs e)
@@ -101,29 +94,25 @@ namespace FrbaOfertas.AbmProveedor
         {
             if (contenedor_proveedores.Rows.Count == 0)
             {
-                MessageBox.Show("Aplique algun filtro.");
+                MessageBox.Show("Aplique algun filtro.", "Listado de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (contenedor_proveedores.CurrentCell.ColumnIndex == 0)
             {
-                conexionBD conexion = conexionBD.getConexion();
-                SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-
                 try
                 {
                     var row = contenedor_proveedores.CurrentRow;
 
-                    SqlCommand command = new SqlCommand("baja_logica_proveedor", conexion_sql);
+                    SqlCommand command = new SqlCommand("baja_logica_proveedor", conn);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = row.Cells[7].Value.ToString();
                     command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = row.Cells[4].Value.ToString();
 
-                    conexion_sql.Open();
+                    conn.Open();
                     command.ExecuteNonQuery();
-                    conexion_sql.Close();
 
-                    MessageBox.Show("Proveedor Inhabilitado");
-                    //Hacer un refresh
+
+                    MessageBox.Show("Proveedor Inhabilitado","Listado de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
                 catch (SqlException exepcion)
@@ -131,38 +120,37 @@ namespace FrbaOfertas.AbmProveedor
                     SqlError errores = exepcion.Errors[0];
                     MessageBox.Show(errores.Message.ToString());
                 }
+                conn.Close();
+
+                bt_buscar.PerformClick(); //REFRESH
+
             }
 
-                if (contenedor_proveedores.CurrentCell.ColumnIndex == 1)
-                {
-                    var row = contenedor_proveedores.CurrentRow;
+            if (contenedor_proveedores.CurrentCell.ColumnIndex == 1)
+            {
+                var row = contenedor_proveedores.CurrentRow;
+                Modificaciones_Proveedores formulario_bajas = new AbmProveedor.Modificaciones_Proveedores(row.Cells[10].Value.ToString());
+
+                formulario_bajas.txt_id.Text = row.Cells[2].Value.ToString();
+                formulario_bajas.txt_username.Text = row.Cells[4].Value.ToString();
+                formulario_bajas.txt_RazonSoc.Text = row.Cells[3].Value.ToString();            
+                formulario_bajas.txt_CUIT.Text = row.Cells[7].Value.ToString();
+                formulario_bajas.txt_telefono.Text = row.Cells[6].Value.ToString();
+                formulario_bajas.txt_email.Text = row.Cells[8].Value.ToString();
+                formulario_bajas.txt_Contacto.Text = row.Cells[9].Value.ToString();
+
+                formulario_bajas.txt_direccion.Text = row.Cells[5].Value.ToString();
+                formulario_bajas.txt_codigopostal.Text = row.Cells[11].Value.ToString();
+                formulario_bajas.txt_localidad.Text = row.Cells[12].Value.ToString();
+                formulario_bajas.txt_ciudad.Text = row.Cells[13].Value.ToString();
+                formulario_bajas.txt_piso.Text = row.Cells[14].Value.ToString();
+                formulario_bajas.txt_depto.Text = row.Cells[15].Value.ToString();
+                formulario_bajas.txt_estado.Text = row.Cells[16].Value.ToString();
 
 
-                    Modificaciones_Proveedores formulario_bajas = new AbmProveedor.Modificaciones_Proveedores();
-
-
-
-                    formulario_bajas.txt_id.Text = row.Cells[2].Value.ToString();
-                    formulario_bajas.txt_username.Text = row.Cells[4].Value.ToString();
-                    formulario_bajas.txt_RazonSoc.Text = row.Cells[3].Value.ToString();            
-                    formulario_bajas.txt_CUIT.Text = row.Cells[7].Value.ToString();
-                    formulario_bajas.txt_telefono.Text = row.Cells[6].Value.ToString();
-                    formulario_bajas.txt_email.Text = row.Cells[8].Value.ToString();
-                    formulario_bajas.txt_Contacto.Text = row.Cells[9].Value.ToString();
-                    formulario_bajas.txt_Rubro.Text = row.Cells[10].Value.ToString();
-
-                    formulario_bajas.txt_direccion.Text = row.Cells[5].Value.ToString();
-                    formulario_bajas.txt_codigopostal.Text = row.Cells[11].Value.ToString();
-                    formulario_bajas.txt_localidad.Text = row.Cells[12].Value.ToString();
-                    formulario_bajas.txt_ciudad.Text = row.Cells[13].Value.ToString();
-                    formulario_bajas.txt_piso.Text = row.Cells[14].Value.ToString();
-                    formulario_bajas.txt_depto.Text = row.Cells[15].Value.ToString();
-                    formulario_bajas.txt_estado.Text = row.Cells[16].Value.ToString();
-
-
-
-                    formulario_bajas.Show();
-                }
+                formulario_bajas.Show();
+                this.Close();
+            }
               
             }
 
@@ -178,6 +166,7 @@ namespace FrbaOfertas.AbmProveedor
             menu.Show();
         }
 
-        }
+
     }
+}
 

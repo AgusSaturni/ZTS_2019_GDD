@@ -42,9 +42,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bt_cancelar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txt_Rubro = new System.Windows.Forms.TextBox();
-            this.bt_cancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_proveedores)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -179,6 +179,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
             // 
+            // bt_cancelar
+            // 
+            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.bt_cancelar.Location = new System.Drawing.Point(828, 132);
+            this.bt_cancelar.Name = "bt_cancelar";
+            this.bt_cancelar.Size = new System.Drawing.Size(323, 43);
+            this.bt_cancelar.TabIndex = 11;
+            this.bt_cancelar.Text = "Cancelar";
+            this.bt_cancelar.UseVisualStyleBackColor = true;
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -196,17 +207,6 @@
             this.txt_Rubro.Size = new System.Drawing.Size(632, 26);
             this.txt_Rubro.TabIndex = 9;
             // 
-            // bt_cancelar
-            // 
-            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_cancelar.Location = new System.Drawing.Point(828, 132);
-            this.bt_cancelar.Name = "bt_cancelar";
-            this.bt_cancelar.Size = new System.Drawing.Size(323, 43);
-            this.bt_cancelar.TabIndex = 11;
-            this.bt_cancelar.Text = "Cancelar";
-            this.bt_cancelar.UseVisualStyleBackColor = true;
-            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
-            // 
             // listado_proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -218,6 +218,7 @@
             this.Name = "listado_proveedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "listado_proveedores";
+            this.Load += new System.EventHandler(this.listado_proveedores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_proveedores)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

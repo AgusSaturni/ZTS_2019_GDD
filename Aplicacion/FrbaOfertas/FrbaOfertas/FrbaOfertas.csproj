@@ -140,6 +140,12 @@
     <Compile Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.Designer.cs">
       <DependentUpon>Entrega_ConsumoOferta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entrega_ConsumoOferta\ListadoCupones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entrega_ConsumoOferta\ListadoCupones.Designer.cs">
+      <DependentUpon>ListadoCupones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manejo Logico\CommonQueries.cs" />
     <Compile Include="Manejo Logico\ConexionBD.cs" />
     <Compile Include="CrearOferta\CargaOferta.cs">
@@ -256,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Entrega_ConsumoOferta\Entrega_ConsumoOferta.resx">
       <DependentUpon>Entrega_ConsumoOferta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entrega_ConsumoOferta\ListadoCupones.resx">
+      <DependentUpon>ListadoCupones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FacturarProveedor\FacturarProveedor.resx">
       <DependentUpon>FacturarProveedor.cs</DependentUpon>

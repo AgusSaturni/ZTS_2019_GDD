@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contenedor_clientes = new System.Windows.Forms.DataGridView();
             this.dgv_eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgv_modificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bt_cancelar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.txt_DNI = new System.Windows.Forms.TextBox();
             this.txt_apellido = new System.Windows.Forms.TextBox();
             this.txt_nombre = new System.Windows.Forms.TextBox();
-            this.bt_cancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_clientes)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -67,9 +67,9 @@
             // 
             // dgv_eliminar
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_eliminar.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_eliminar.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_eliminar.HeaderText = "Eliminar";
             this.dgv_eliminar.Name = "dgv_eliminar";
             this.dgv_eliminar.ReadOnly = true;
@@ -77,8 +77,8 @@
             // 
             // dgv_modificar
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomLeft;
-            this.dgv_modificar.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomLeft;
+            this.dgv_modificar.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_modificar.HeaderText = "Modificar";
             this.dgv_modificar.Name = "dgv_modificar";
             this.dgv_modificar.ReadOnly = true;
@@ -104,6 +104,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // bt_cancelar
+            // 
+            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.bt_cancelar.Location = new System.Drawing.Point(742, 138);
+            this.bt_cancelar.Name = "bt_cancelar";
+            this.bt_cancelar.Size = new System.Drawing.Size(400, 43);
+            this.bt_cancelar.TabIndex = 9;
+            this.bt_cancelar.Text = "Cancelar";
+            this.bt_cancelar.UseVisualStyleBackColor = true;
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
             // 
             // label4
             // 
@@ -154,6 +165,7 @@
             this.bt_limpiar.TabIndex = 5;
             this.bt_limpiar.Text = "Limpiar";
             this.bt_limpiar.UseVisualStyleBackColor = true;
+            this.bt_limpiar.Click += new System.EventHandler(this.bt_limpiar_Click);
             // 
             // bt_buscar
             // 
@@ -193,17 +205,6 @@
             this.txt_nombre.Name = "txt_nombre";
             this.txt_nombre.Size = new System.Drawing.Size(578, 26);
             this.txt_nombre.TabIndex = 0;
-            // 
-            // bt_cancelar
-            // 
-            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_cancelar.Location = new System.Drawing.Point(742, 138);
-            this.bt_cancelar.Name = "bt_cancelar";
-            this.bt_cancelar.Size = new System.Drawing.Size(400, 43);
-            this.bt_cancelar.TabIndex = 9;
-            this.bt_cancelar.Text = "Cancelar";
-            this.bt_cancelar.UseVisualStyleBackColor = true;
-            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
             // 
             // frm_listado_clientes
             // 

@@ -68,7 +68,7 @@ CREATE TABLE CLIENTES
   Estado varchar(255) default 'Habilitado'
   PRIMARY KEY(CLIENTE_Id),
   FOREIGN KEY(Direccion) REFERENCES Direccion(Id_Direccion),
-  FOREIGN KEY(username) REFERENCES Usuarios(username)
+  FOREIGN KEY(username) REFERENCES Usuarios(username),
 )
 
 INSERT INTO CLIENTES (Nombre, Apellido,DNI,direccion,Telefono,Mail,Fecha_Nacimiento)
@@ -90,6 +90,7 @@ CREATE TABLE PROVEEDORES
 	Proveedor_Id AS 'ProveedorID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
 	Razon_Social varchar(255) unique not null,
 	username varchar(255) default null,
+	Rubro_Id varchar(15) not null,
 	Direccion int,
 	Telefono numeric(18,0),
 	CUIT varchar(255) unique not null,	
@@ -97,12 +98,17 @@ CREATE TABLE PROVEEDORES
 	Nombre_contacto varchar(255),
 	Estado varchar(255) default 'Habilitado',
 	PRIMARY KEY(Proveedor_Id),
-	FOREIGN KEY(Direccion) REFERENCES Direccion(id_direccion)
+	FOREIGN KEY(Direccion) REFERENCES Direccion(id_direccion),
+	FOREIGN KEY(Rubro_Id) REFERENCES RUBROS(Rubro_Id)
 )
 
 INSERT INTO PROVEEDORES
-(Razon_Social,Direccion,Telefono,CUIT)
-(select distinct Provee_RS,(SELECT Id_direccion from DIRECCION where Direccion = Provee_Dom),Provee_Telefono,Provee_CUIT from gd_esquema.Maestra
+(Razon_Social,Direccion,Telefono,CUIT, Rubro_Id)
+(select distinct Provee_RS,(SELECT Id_direccion from DIRECCION where Direccion = Provee_Dom),
+Provee_Telefono,
+Provee_CUIT,
+(select Rubro_Id from RUBROS where rubro_descripcion = Provee_Rubro)
+from gd_esquema.Maestra
 where provee_Rs is not null)
 
 insert into USUARIOS (Username, Password) 
@@ -110,6 +116,11 @@ insert into USUARIOS (Username, Password)
 
 update PROVEEDORES 
 set username = B.username from PROVEEDORES as A,USUARIOS as B where B.Username =  (select 'pr' + ltrim(rtrim(cast(Indice as char))) + (SUBSTRING(cast(CUIT as varchar),1,4)) )
+
+Update PROVEEDORES
+set Mail = (username + '@gmail.com')
+
+
 
 ---------------TARJETA------------
 CREATE TABLE TARJETAS
@@ -129,14 +140,12 @@ where Tipo_Pago_Desc is not null)
 CREATE TABLE RUBROS
 (	Indice INT IDENTITY(1,1) NOT NULL,
 	Rubro_Id AS 'RubroID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
-	Proveedor_Id varchar(19),
 	rubro_descripcion varchar(255)
 	PRIMARY KEY(Rubro_Id),
-	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
 )
 
-INSERT INTO RUBROS (Proveedor_Id,rubro_descripcion)
-(SELECT DISTINCT Proveedor_Id,Provee_Rubro from gd_esquema.Maestra f join proveedores p on f.Provee_RS=p.Razon_Social)
+INSERT INTO RUBROS (rubro_descripcion)
+(SELECT DISTINCT Provee_Rubro from gd_esquema.Maestra where Provee_Rubro is not null)
 
 
 --ROLES--
@@ -196,7 +205,7 @@ where gd.Oferta_Codigo is not null )
 
 
 ---CUENTA----------------
-drop table CARGAS
+
 CREATE TABLE CARGAS
 (
 	Indice INT IDENTITY(1,1) NOT NULL,
@@ -231,14 +240,16 @@ CREATE TABLE FACTURAS
 	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
 )
 
+drop table FACTURAS
+
+
 INSERT INTO FACTURAS
 (Proveedor_Id,FECHA, Numero,ImporteTotal)
 (select  p.proveedor_id,Factura_Fecha, Factura_Nro,sum(Oferta_Precio) from gd_esquema.Maestra gd join Proveedores p
 on gd.Provee_RS = p.razon_social
 where Factura_Nro is not null
 group by Factura_Fecha,Factura_Nro,p.Proveedor_Id)
-
-
+ 
 ---FUNCIONES------------------
 CREATE TABLE FUNCIONES
 (Indice INT IDENTITY(1,1) NOT NULL,
@@ -267,6 +278,8 @@ CREATE TABLE FUNCIONES_POR_ROL
  FOREIGN KEY(Funcion_Id) REFERENCES FUNCIONES(Funcion_Id)
 )
 
+
+--CAMBIAR A DINAMICAMENTE
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID5')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Cliente','FuncionID7')
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Proveedor','FuncionID8')
@@ -290,21 +303,14 @@ CREATE TABLE COMPRAS
   Cliente_Id varchar(17),
   Fecha_compra datetime not null,
   Cantidad SMALLINT,
-  Factura_Id bigint,
   PRIMARY KEY(Compra_Id),
-  FOREIGN KEY(Factura_Id) REFERENCES FACTURAS(Numero),
   FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id),
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
---RECORDAR QUE HAY UN TRIGGER EN INSERTS DE ESTA TABLA!!!--
---drop trigger trigger_compras--
-
 insert into compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
 (select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join CLIENTES c on gd.Cli_Dni = c.DNI)
-
-select * from compras
 
 
 ---CUPONES----------------------
@@ -320,20 +326,25 @@ CREATE TABLE CUPONES
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
 
+--select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo
+--from CUPONES C 
+--JOIN COMPRAS COMP on COMP.Compra_Id = C.Compra_Id
+--JOIN CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id
+--JOIN OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta
+--JOIN PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado
+
 insert into CUPONES(codigo_oferta,Compra_Id)
 (select Codigo_oferta,compra_id from COMPRAS)
-
 
 update CUPONES 
 set cupones.Fecha_Consumo = gd_esquema.Maestra.Oferta_Entregado_Fecha
 from
 CUPONES  c join COMPRAS cr on c.Compra_Id=cr.Compra_Id
 join CLIENTES cli on cr.Cliente_Id=cli.Cliente_Id
-join gd_esquema.Maestra  on cli.DNI = gd_esquema.Maestra.Cli_Dni and c.codigo_oferta =gd_esquema.Maestra.Oferta_Codigo
+join gd_esquema.Maestra  on cli.DNI = gd_esquema.Maestra.Cli_Dni and c.codigo_oferta = gd_esquema.Maestra.Oferta_Codigo
 where Oferta_Entregado_Fecha is not null
 
 update CUPONES
 set codigo_cupon= (select newId())
-where Fecha_Consumo is not null
 
 

@@ -16,14 +16,16 @@ namespace FrbaOfertas.AbmProveedor
         private string usuario;
         private string password;
         private string rol;
+        private int bit_accion;
         private Form formulario_anterior;
 
         public AltaProveedor()
         {
             InitializeComponent();
+            MaximizeBox = false;
         }
 
-        public AltaProveedor(string usuario, string password, string rol, Form form)
+        public AltaProveedor(string usuario, string password, string rol, Form form, int bit)
         {
             // TODO: Complete member initialization
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace FrbaOfertas.AbmProveedor
             this.password = password;
             this.rol = rol;
             formulario_anterior = form;
-
+            this.bit_accion = bit;
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -47,69 +49,63 @@ namespace FrbaOfertas.AbmProveedor
 
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            string razonSocial = RS.Text;
-            string telefono = Telefono.Text;
-            string cuit = CUIT.Text;
-            string rubro = Rubro.Text;
-            string mail = Mail.Text;
-            string contacto = Contacto.Text;
 
             if (this.verificar_tipo_datos()) { return; }
 
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
-            if (razonSocial != "" && telefono != "" && cuit != "" && rubro != "" && mail != "")
+
+            conn.Open();
+            try
             {
-                try
-                {
+                SqlCommand verificacion_proveedor = new SqlCommand("verificar_existencia_proveedor_gemelo", conn);
+                verificacion_proveedor.CommandType = CommandType.StoredProcedure;
 
+                verificacion_proveedor.Parameters.AddWithValue("@cuit", SqlDbType.Char).Value = CUIT.Text;
+                verificacion_proveedor.Parameters.AddWithValue("@razon_social", SqlDbType.Char).Value = RS.Text;
 
-                    SqlCommand command = new SqlCommand("verificar_existencia_proveedor_existente", conn);
-                    command.CommandType = CommandType.StoredProcedure;
+                verificacion_proveedor.ExecuteNonQuery();
 
-                    conn.Open();
+            }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+                return;
 
+            }
 
-                    SqlParameter cuit_verif = new SqlParameter("@cuit", SqlDbType.Char);
-                    cuit_verif.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(cuit_verif);
+            conn.Close();
 
+            this.determinar_accion();
+            
 
-                    SqlParameter razon_social = new SqlParameter("@razon_social", SqlDbType.Char);
-                    razon_social.Direction = ParameterDirection.Input;
-                    command.Parameters.Add(razon_social);
+        }
 
-                    cuit_verif.Value = cuit;
-                    razon_social.Value = razonSocial;
-
-                    command.ExecuteNonQuery();
-
-                }
-                catch (SqlException exepcion)
-                {
-                    SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
-                    return;
-
-                }
-
-                conn.Close();
-
+        private void determinar_accion()
+        {
+            if (bit_accion == 0) //vengo de registro de usuario
+            {
                 this.Hide();
-                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password, rol, null, null, null, telefono, null, mail, razonSocial, cuit, rubro, contacto, this);
+                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password, rol, null, null, null, Telefono.Text, null, Mail.Text, RS.Text, CUIT.Text, Rubro.Text, Contacto.Text, this, 0);
                 direccion.Show();
             }
-            else
+            else  //Vengo de alta de proveedor
             {
-                MessageBox.Show("Faltan completar campos");
+                this.Hide();
+                CargaDireccion.CargarDireccion direccion = new CargaDireccion.CargarDireccion(usuario, password, rol, null, null, null, Telefono.Text, null, Mail.Text, RS.Text, CUIT.Text, Rubro.Text, Contacto.Text, this, 2);
+                direccion.Show();
             }
-
-
         }
 
         private bool verificar_tipo_datos()
         {
+            if (this.verificar_txts_vacios()) 
+            {
+                MessageBox.Show("Todos los campos son obligatorios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
             if (RS.Text.Any(x => char.IsNumber(x)))
             {
                 MessageBox.Show("Razon Social Invalida. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -126,7 +122,7 @@ namespace FrbaOfertas.AbmProveedor
                 return true;
             }
             if ((CUIT.Text.Trim().Substring(2, 1) != "-" || CUIT.Text.Trim().Substring(11, 1) != "-")) {
-                MessageBox.Show("Cuit Invalido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Cuit Invalido. Ejemplo de un cuit valido: 30-12104111-4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (Telefono.Text.Any(x => !char.IsNumber(x)))
@@ -142,9 +138,22 @@ namespace FrbaOfertas.AbmProveedor
             return false;
         }
 
+        private bool verificar_txts_vacios()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             formulario_anterior.Show();
 
         }

@@ -60,27 +60,25 @@ namespace FrbaOfertas.AbmCliente
 
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Cliente Habilitado");
+                    MessageBox.Show("Cliente Habilitado", "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    txt_estado.Text = "Habilitado";
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexion_sql.Close();
 
         }
-
-        //este es guardar, no me deja borrarlo
-        private void bt_deshabilitar_Click(object sender, EventArgs e){}
 
         private void bt_cancelar_Click(object sender, EventArgs e)
         {
@@ -93,9 +91,8 @@ namespace FrbaOfertas.AbmCliente
             txt_dni.ReadOnly = false;
             txt_apellido.ReadOnly = false;
             txt_email.ReadOnly = false;
-            txt_fecha.ReadOnly = false;
+            date_fecha_nacimiento.Enabled = true;
             txt_telefono.ReadOnly = false;
-            txt_nombre.ReadOnly = false;
 
             txt_direccion.ReadOnly = false;
             txt_ciudad.ReadOnly = false;
@@ -111,40 +108,86 @@ namespace FrbaOfertas.AbmCliente
 
         }
 
-        private void bt_modificar_Click_1(object sender, EventArgs e)
+        private bool verificar_parametros() 
         {
-            txt_nombre.ReadOnly = false;
-            txt_dni.ReadOnly = false;
-            txt_apellido.ReadOnly = false;
-            txt_email.ReadOnly = false;
-            txt_fecha.ReadOnly = false;
-            txt_telefono.ReadOnly = false;
-            txt_nombre.ReadOnly = false;
+            if (txt_nombre.Text.Trim().Any(x => char.IsNumber(x)) || txt_apellido.Text.Any(x => char.IsNumber(x))) 
+            {
+                MessageBox.Show("Nombre y/o apellido Invalido. Solo se permiten letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_dni.Text.Trim().Any(x => !char.IsNumber(x)) || txt_dni.Text.Length != 8) 
+            {
+                MessageBox.Show("DNI Invalido. Solo se permiten 8 caracteres numericos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_telefono.Text.Trim().Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("Telefono Invalido. Cadena Numerica unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (!string.IsNullOrEmpty(txt_codigopostal.Text.Trim()))
+            {
+                if (txt_codigopostal.Text.Any(x => !char.IsNumber(x)) || txt_codigopostal.Text.Length != 4)
+                {
+                    MessageBox.Show("Codigo Postal Invalido. Cadena de 4 numeros unicamenta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
 
-            txt_direccion.ReadOnly = false;
-            txt_ciudad.ReadOnly = false;
-            txt_codigopostal.ReadOnly = false;
-            txt_depto.ReadOnly = false;
-            txt_piso.ReadOnly = false;
-            txt_codigopostal.ReadOnly = false;
-            txt_localidad.ReadOnly = false;
+            if (!string.IsNullOrEmpty(txt_localidad.Text.Trim()))
+            {
+                if (txt_localidad.Text.Any(x => char.IsNumber(x)))
+                {
+                    MessageBox.Show("Localidad Invalida. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
 
+            if (txt_ciudad.Text.Trim().Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Ciudad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!string.IsNullOrEmpty(txt_piso.Text.Trim()))
+            {
+                if (txt_piso.Text.Any(x => !char.IsNumber(x)))
+                {
+                    MessageBox.Show("Número de piso erroneo. No se permiten ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(txt_depto.Text.Trim()))
+            {
+                if (txt_depto.Text.Any(x => char.IsNumber(x)))
+                {
+                    MessageBox.Show("Departamento erroneo. Solo se permiten ingresar Letras (Departamento A, B C, etc)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+
+        
+            return false;
         }
 
         private void bt_guardar_Click(object sender, EventArgs e)
         {
             if (txt_nombre.ReadOnly == true) 
             {
-                MessageBox.Show("Primero Inicie alguna Modificacion");
+                MessageBox.Show("Primero Inicie alguna Modificacion","Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-
-            if (this.verificar_parametros())
+            if (this.verificar_txts_vacios())
             {
-                MessageBox.Show("Complete Todos los Campos");
+                MessageBox.Show("Todos los campos son obligatorios menos la localidad, el codigo postal, el numero de piso y el departamento", "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
-            };
+            }
+
+            if (this.verificar_parametros()) { return; }
+            
+
 
             conexion_sql.Open();
             try
@@ -158,40 +201,41 @@ namespace FrbaOfertas.AbmCliente
                 command.Parameters.AddWithValue("@DNI", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
                 command.Parameters.AddWithValue("@telefono", SqlDbType.Int).Value = Int64.Parse(txt_telefono.Text);
                 command.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = (txt_email.Text);
-                command.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = (txt_fecha.Text);
-                command.Parameters.AddWithValue("@direccion", SqlDbType.Char).Value = (txt_direccion.Text);
-                command.Parameters.AddWithValue("@CP", SqlDbType.Int).Value = Int32.Parse(txt_codigopostal.Text);
-                command.Parameters.AddWithValue("@Loc", SqlDbType.Char).Value = (txt_localidad.Text);
-                command.Parameters.AddWithValue("@Npiso", SqlDbType.Int).Value = Int32.Parse(txt_piso.Text);
-                command.Parameters.AddWithValue("@depto", SqlDbType.Char).Value = (txt_depto.Text);
+                command.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = (date_fecha_nacimiento.Value);
 
+                command.Parameters.AddWithValue("@direccion", SqlDbType.Char).Value = (txt_direccion.Text);
+                command.Parameters.AddWithValue("@ciudad", SqlDbType.Char).Value = (txt_ciudad.Text);
+
+                commonQueries_instance.filtrar_nulos(command, txt_codigopostal.Text, txt_localidad.Text, txt_piso.Text, txt_depto.Text);
 
                 command.ExecuteNonQuery();
 
                 
-                MessageBox.Show("Cliente Modificado");
-
+                MessageBox.Show("Cliente Modificado", "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Modificacion de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexion_sql.Close();
 
-            this.Hide();
         }
 
         private void bt_cancelar_Click_1(object sender, EventArgs e)
         {
-            this.Visible = false;
+            this.Close();
+            Form listado = new frm_listado_clientes();
+            listado.Show();
         }
 
-        private bool verificar_parametros()
+        private bool verificar_txts_vacios()
         {
-            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+            List<TextBox> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).ToList();
+            List<TextBox> lista_filtrada = lista_textBoxs.Where(txt => txt != txt_localidad && txt != txt_piso && txt != txt_depto && txt != txt_codigopostal).ToList();
+            List<String> lista_convertida = lista_filtrada.Select(x => x.Text).ToList();
 
-            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            if (lista_convertida.Any(cadena => cadena == String.Empty))
             {
                 return true;
             }
@@ -200,14 +244,6 @@ namespace FrbaOfertas.AbmCliente
         }
 
 
-
-
-
-        
      }
-
-
-
-    
 
 }

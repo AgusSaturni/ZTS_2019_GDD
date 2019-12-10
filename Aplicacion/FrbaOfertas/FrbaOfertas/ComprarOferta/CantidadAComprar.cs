@@ -55,75 +55,35 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
             
                  conexionBD conexion = conexionBD.getConexion();
                  SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
+
                 
-          
 
                      SqlCommand command = new SqlCommand("comprar_oferta", conexion_sql);
                      command.CommandType = CommandType.StoredProcedure;
 
                      SqlCommand command2 = new SqlCommand("obtener_codigo", conexion_sql);
                      command2.CommandType = CommandType.StoredProcedure;
-
+         
 
                      SqlParameter codigo_oferta = new SqlParameter("@codigoOferta", SqlDbType.Char);
                      codigo_oferta.Direction = ParameterDirection.Input;
                      command.Parameters.Add(codigo_oferta);
 
-                     SqlParameter precio_lista = new SqlParameter("@precioLista", SqlDbType.Float);
-                     precio_lista.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(precio_lista);
 
-                     SqlParameter precio_oferta = new SqlParameter("@precio_oferta", SqlDbType.Float);
-                     precio_oferta.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(precio_oferta);
+                     command.Parameters.AddWithValue("@precioLista", SqlDbType.Float).Value = (precio_lista2);
+                     command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value =(precio_oferta2);
+                     command.Parameters.AddWithValue("@clienteUsuario", SqlDbType.Char).Value = (username);
+                     command.Parameters.AddWithValue("@cantidadDisponible", SqlDbType.Int).Value =(cantidadDispo2);
+                     command.Parameters.AddWithValue("@cantidadCompra", SqlDbType.Int).Value = (Cantidad.Value);
+                     command.Parameters.AddWithValue("@cantidadMaxUsuario", SqlDbType.Int).Value = (cantMaxUser2);
 
-                     SqlParameter cliente = new SqlParameter("@clienteUsuario", SqlDbType.Char);
-                     cliente.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(cliente);
+                     command2.Parameters.AddWithValue("@proveedor_id", SqlDbType.Char).Value = (proveedor_semilla2);
+                     command2.Parameters.AddWithValue("@descripcion", SqlDbType.Char).Value = (descripcion_semilla2);
+                     command2.Parameters.AddWithValue("@precio_oferta", SqlDbType.Char).Value = (precio_oferta_semilla2);
+                     command2.Parameters.AddWithValue("@precio_lista", SqlDbType.Char).Value = (precio_lista_semilla2);
 
-                     SqlParameter cantidadDispo = new SqlParameter("@cantidadDisponible", SqlDbType.Int);
-                     cantidadDispo.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(cantidadDispo);
-
-                     SqlParameter cantidadCompra = new SqlParameter("@cantidadCompra", SqlDbType.Int);
-                     cantidadCompra.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(cantidadCompra);
-
-
-                     SqlParameter cantMaxUser = new SqlParameter("@cantidadMaxUsuario", SqlDbType.Int);
-                     cantMaxUser.Direction = ParameterDirection.Input;
-                     command.Parameters.Add(cantMaxUser);
-
-                     SqlParameter proveedor_semilla = new SqlParameter("@proveedor_id", SqlDbType.Char);
-                     proveedor_semilla.Direction = ParameterDirection.Input;
-                     command2.Parameters.Add(proveedor_semilla);
-
-                     SqlParameter descripcion_semilla = new SqlParameter("@descripcion", SqlDbType.Char);
-                     descripcion_semilla.Direction = ParameterDirection.Input;
-                     command2.Parameters.Add(descripcion_semilla);
-
-
-                     SqlParameter precio_oferta_semilla = new SqlParameter("@precio_oferta", SqlDbType.Char);
-                     precio_oferta_semilla.Direction = ParameterDirection.Input;
-                     command2.Parameters.Add(precio_oferta_semilla);
-
-
-                     SqlParameter precio_lista_semilla = new SqlParameter("@precio_lista", SqlDbType.Char);
-                     precio_lista_semilla.Direction = ParameterDirection.Input;
-                     command2.Parameters.Add(precio_lista_semilla);
-
-                     descripcion_semilla.Value = descripcion_semilla2;
-                     proveedor_semilla.Value = proveedor_semilla2;
-                     precio_lista_semilla.Value = precio_lista_semilla2;
-                     precio_oferta_semilla.Value =precio_oferta_semilla2 ;
-                     precio_oferta.Value = precio_oferta2;
-                     precio_lista.Value = precio_lista2;
-                     cantidadDispo.Value = cantidadDispo2;
-                     cantMaxUser.Value = cantMaxUser2;
-                     cantidadCompra.Value = Cantidad.Value;
-                     cliente.Value = username;
-                      conexion_sql.Open();
-
+                              conexion_sql.Open();
+    
                 try {
                 command2.ExecuteNonQuery();
                 MessageBox.Show("No hay stock de la oferta que desea comprar.");
@@ -146,7 +106,7 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                             while (reader.Read())
                             {       
                                    string codigoCupon = (reader[0].ToString());
-                                   MessageBox.Show(codigoCupon);
+                                   MessageBox.Show("Compra realizada con Éxito. Su código de cupón es: " + codigoCupon);
 
                             }
                         }
@@ -154,6 +114,7 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                         {
                             SqlError errores = excepcion1.Errors[0];
                             MessageBox.Show(errores.Message.ToString());
+                            return;
                         }
                         
                 }

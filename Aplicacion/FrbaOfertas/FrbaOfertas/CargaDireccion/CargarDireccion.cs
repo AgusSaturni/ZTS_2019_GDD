@@ -27,7 +27,9 @@ namespace FrbaOfertas.CargaDireccion
         private string rubro;
         private string cuit;
         private string contacto;
+        private int bit_accion;
         private Form formulario_anterior;
+        private CommonQueries common_queries_instance = CommonQueries.getInstance();
 
         public CargarDireccion()
         {
@@ -36,7 +38,7 @@ namespace FrbaOfertas.CargaDireccion
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
-        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail, string rs, string cuit, string rubro, string contacto, Form form_ant)
+        public CargarDireccion(string usuario, string password, string rol, string nombre, string apellido, string DNI, string telefono, object fechaDeNacimiento, string mail, string rs, string cuit, string rubro, string contacto, Form form_ant, int bit)
         {
             InitializeComponent();
             this.usuario = usuario;
@@ -52,6 +54,7 @@ namespace FrbaOfertas.CargaDireccion
             this.cuit = cuit;
             this.rubro = rubro;
             this.contacto = contacto;
+            this.bit_accion = bit;
             formulario_anterior = form_ant;
         }
 
@@ -72,45 +75,8 @@ namespace FrbaOfertas.CargaDireccion
             {
                 case "Cliente":
 
-                    if (verificar_parametros())
-                    {
-                        MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)))
-                    {
-                     MessageBox.Show("Codigo Postal Erroneo. No se permite ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                     return;
-                    }
-
-                    if (CodigoPostal.Text.Length != 4)
-                    {
-                        MessageBox.Show("Codigo Postal Erroneo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (Localidad.Text.Any(x => char.IsNumber(x)))
-                    {
-                        MessageBox.Show("Localidad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-
-                    if (Ciudad.Text.Any(x => char.IsNumber(x)))
-                    {
-                        MessageBox.Show("Ciudad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if ( NroPiso.Text.Any(x => !char.IsNumber(x)))
-                    {
-                        MessageBox.Show("Número de piso erroneo. No se permiten ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
+                    if (this.verificar_datos_direccion()) { return; }
                    
-
                     //----------------------DATOS PARA REGISTRO----------------------------
                     SqlCommand command = new SqlCommand("registrar_usuario_cliente", conn);
                     command.CommandType = CommandType.StoredProcedure;
@@ -124,32 +90,21 @@ namespace FrbaOfertas.CargaDireccion
                     command.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int64.Parse(telefono);
                     command.Parameters.AddWithValue("@Mail", SqlDbType.Char).Value = mail;
                     command.Parameters.AddWithValue("@Fecha_nacimiento", SqlDbType.Date).Value = fechaDeNacimiento;
+
                     command.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
-                    command.Parameters.AddWithValue("@codigo_Postal", SqlDbType.Float).Value = Int32.Parse(CodigoPostal.Text);
-                    command.Parameters.AddWithValue("@Localidad", SqlDbType.Char).Value = Localidad.Text;
                     command.Parameters.AddWithValue("@ciudad", SqlDbType.Char).Value = Ciudad.Text;
-                    command.Parameters.AddWithValue("@nro_piso", SqlDbType.Int).Value = Int32.Parse(NroPiso.Text);
-                    command.Parameters.AddWithValue("@Depto", SqlDbType.Char).Value = Departamento.Text;
+
+                    common_queries_instance.filtrar_nulos(command, CodigoPostal.Text, Localidad.Text, NroPiso.Text, Departamento.Text);
 
 
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Registro de Cliente Finalizado");
+                    MessageBox.Show("Registro de Cliente Finalizado", "Registro de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     break;
 
                 case "Proveedor":
 
-                    if (verificar_parametros())
-                    {
-                        MessageBox.Show("Faltan completar campos");
-                        return;
-                    }
-
-                    if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4 || Localidad.Text.Any(x => char.IsNumber(x)) || Ciudad.Text.Any(x => char.IsNumber(x)) || NroPiso.Text.Any(x => !char.IsNumber(x)))
-                    {
-                        MessageBox.Show("Datos erroneos.");
-                        return;
-                    }
+                    if (this.verificar_datos_direccion()) { return; }
 
                     SqlCommand command1 = new SqlCommand("registrar_usuario_proveedor", conn);
                     command1.CommandType = CommandType.StoredProcedure;
@@ -162,50 +117,113 @@ namespace FrbaOfertas.CargaDireccion
                     command1.Parameters.AddWithValue("@Telefono", SqlDbType.Float).Value = Int64.Parse(telefono);
                     command1.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = cuit;
                     command1.Parameters.AddWithValue("@Rubro", SqlDbType.Char).Value = rubro;
-                    command1.Parameters.AddWithValue("@Nombre_contacto", SqlDbType.Char).Value = contacto;
-                    command1.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
-                    command1.Parameters.AddWithValue("@codigo_Postal", SqlDbType.Float).Value = Int32.Parse(CodigoPostal.Text);
-                    command1.Parameters.AddWithValue("@Localidad", SqlDbType.Char).Value = Localidad.Text;
-                    command1.Parameters.AddWithValue("@Ciudad", SqlDbType.Char).Value = Ciudad.Text;
-                    command1.Parameters.AddWithValue("@Nro_Piso", SqlDbType.Int).Value = Int32.Parse(NroPiso.Text);
-                    command1.Parameters.AddWithValue("@Depto", SqlDbType.Char).Value = Departamento.Text;
 
+                    if (!string.IsNullOrEmpty(contacto.Trim()))
+                    {
+                        command1.Parameters.AddWithValue("@Nombre_contacto", SqlDbType.Char).Value = contacto;
+                    }
+
+                    command1.Parameters.AddWithValue("@Direccion", SqlDbType.Char).Value = Direccion.Text;
+                    command1.Parameters.AddWithValue("@Ciudad", SqlDbType.Char).Value = Ciudad.Text;
+
+                    common_queries_instance.filtrar_nulos(command1, CodigoPostal.Text, Localidad.Text, NroPiso.Text, Departamento.Text);
 
                     command1.ExecuteNonQuery();
 
-                    MessageBox.Show("Registro de Proveedor Finalizado");
+                    MessageBox.Show("Registro de Proveedor Finalizado", "Registro de Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     break;
             }
 
-            this.insertar_rol(rol, usuario, conn);
             conn.Close();
 
-            this.volver_login();
+            this.determinar_accion_final();
         }
 
-        private void volver_login()
+        private void determinar_accion_final() 
         {
-            Form inicio = new InicioDeSesion();
-            inicio.Show();
-            this.Hide();
+            switch (bit_accion) 
+            {
+                case 0:
+                    Form inicio = new InicioDeSesion();
+                    inicio.Show();
+                    this.Close();
+                    break;
+                case 1:
+                    Form menu_cliente = new MenuAdmin.ABMClientes();
+                    menu_cliente.Show();
+                    this.Close();
+                    break;
+                case 2:
+                    Form menu_proveedor = new MenuAdmin.ABMProveedores();
+                    menu_proveedor.Show();
+                    this.Close();
+                    break;
+            }
+        
         }
 
-        private void insertar_rol(string rol, string username, SqlConnection conexion)
+        private bool verificar_datos_direccion() 
         {
-            SqlCommand command = new SqlCommand("insertar_rol_por_usuario", conexion);
-            command.CommandType = CommandType.StoredProcedure;
+            if (verificar_txts_vacios())
+            {
+                MessageBox.Show("Los campos de direccion y ciudad son obligatorios.", "Carga de Direccion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return true;
+            }
 
-            command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = rol;
-            command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = username;
+            if (!string.IsNullOrEmpty(CodigoPostal.Text.Trim()))
+            {
+                if (CodigoPostal.Text.Any(x => !char.IsNumber(x)) || CodigoPostal.Text.Length != 4)
+                {
+                    MessageBox.Show("Codigo Postal Invalido. Cadena de 4 numeros unicamenta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+            
+            if (!string.IsNullOrEmpty(Localidad.Text.Trim())) 
+            {
+                if (Localidad.Text.Any(x => char.IsNumber(x)))
+                {
+                    MessageBox.Show("Localidad Invalida. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
 
+            if (Ciudad.Text.Any(x => char.IsNumber(x)))
+            {
+                MessageBox.Show("Ciudad Erronea. No se permiten ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            if (!string.IsNullOrEmpty(NroPiso.Text.Trim())) 
+            {
+                if (NroPiso.Text.Any(x => !char.IsNumber(x)))
+                {
+                    MessageBox.Show("Número de piso erroneo. No se permiten ingresar Letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(Departamento.Text.Trim()))
+            {
+                if (Departamento.Text.Any(x => char.IsNumber(x))) 
+                {
+                    MessageBox.Show("Departamento erroneo. Solo se permiten ingresar Letras (Departamento A, B C, etc)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+
+
+            return false;
         }
 
-        private bool verificar_parametros()
+        private bool verificar_txts_vacios()
         {
-            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+            List<TextBox> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).ToList();
+            List<TextBox> lista_filtrada = lista_textBoxs.Where(txt => txt != Localidad && txt != NroPiso && txt != Departamento && txt != CodigoPostal).ToList();
+            List<String> lista_convertida = lista_filtrada.Select(x => x.Text).ToList();
 
-            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            if (lista_convertida.Any(cadena => cadena == String.Empty))
             {
                 return true;
             }

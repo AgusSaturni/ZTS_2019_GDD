@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_visualizar = new System.Windows.Forms.Button();
             this.lbl_total_facturado = new System.Windows.Forms.Label();
             this.btn_volver = new System.Windows.Forms.Button();
             this.lbl_facturado = new System.Windows.Forms.Label();
@@ -40,12 +41,17 @@
             this.lbl_hasta = new System.Windows.Forms.Label();
             this.lbl_desde = new System.Windows.Forms.Label();
             this.lbl_proveedor = new System.Windows.Forms.Label();
+            this.cbo_visualizacion = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_facturas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cbo_visualizacion);
+            this.groupBox1.Controls.Add(this.btn_visualizar);
             this.groupBox1.Controls.Add(this.lbl_total_facturado);
             this.groupBox1.Controls.Add(this.btn_volver);
             this.groupBox1.Controls.Add(this.lbl_facturado);
@@ -59,15 +65,25 @@
             this.groupBox1.Controls.Add(this.lbl_proveedor);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(636, 410);
+            this.groupBox1.Size = new System.Drawing.Size(656, 474);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // btn_visualizar
+            // 
+            this.btn_visualizar.Location = new System.Drawing.Point(393, 32);
+            this.btn_visualizar.Name = "btn_visualizar";
+            this.btn_visualizar.Size = new System.Drawing.Size(199, 31);
+            this.btn_visualizar.TabIndex = 13;
+            this.btn_visualizar.Text = "Visualizar";
+            this.btn_visualizar.UseVisualStyleBackColor = true;
+            this.btn_visualizar.Click += new System.EventHandler(this.btn_visualizar_Click);
+            // 
             // lbl_total_facturado
             // 
             this.lbl_total_facturado.AutoSize = true;
-            this.lbl_total_facturado.Location = new System.Drawing.Point(390, 137);
+            this.lbl_total_facturado.Location = new System.Drawing.Point(415, 193);
             this.lbl_total_facturado.Name = "lbl_total_facturado";
             this.lbl_total_facturado.Size = new System.Drawing.Size(85, 13);
             this.lbl_total_facturado.TabIndex = 12;
@@ -75,7 +91,7 @@
             // 
             // btn_volver
             // 
-            this.btn_volver.Location = new System.Drawing.Point(393, 79);
+            this.btn_volver.Location = new System.Drawing.Point(393, 134);
             this.btn_volver.Name = "btn_volver";
             this.btn_volver.Size = new System.Drawing.Size(199, 30);
             this.btn_volver.TabIndex = 11;
@@ -86,16 +102,15 @@
             // lbl_facturado
             // 
             this.lbl_facturado.AutoSize = true;
-            this.lbl_facturado.Location = new System.Drawing.Point(518, 137);
+            this.lbl_facturado.Location = new System.Drawing.Point(543, 193);
             this.lbl_facturado.Name = "lbl_facturado";
-            this.lbl_facturado.Size = new System.Drawing.Size(55, 13);
+            this.lbl_facturado.Size = new System.Drawing.Size(13, 13);
             this.lbl_facturado.TabIndex = 10;
-            this.lbl_facturado.Text = "Facturado";
-            this.lbl_facturado.Visible = false;
+            this.lbl_facturado.Text = "0";
             // 
             // btn_facturar
             // 
-            this.btn_facturar.Location = new System.Drawing.Point(393, 32);
+            this.btn_facturar.Location = new System.Drawing.Point(393, 85);
             this.btn_facturar.Name = "btn_facturar";
             this.btn_facturar.Size = new System.Drawing.Size(199, 31);
             this.btn_facturar.TabIndex = 9;
@@ -105,11 +120,18 @@
             // 
             // dgv_facturas
             // 
+            this.dgv_facturas.AllowUserToAddRows = false;
+            this.dgv_facturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_facturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_facturas.Location = new System.Drawing.Point(6, 172);
+            this.dgv_facturas.Location = new System.Drawing.Point(29, 238);
+            this.dgv_facturas.MultiSelect = false;
             this.dgv_facturas.Name = "dgv_facturas";
+            this.dgv_facturas.ReadOnly = true;
+            this.dgv_facturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_facturas.Size = new System.Drawing.Size(607, 221);
             this.dgv_facturas.TabIndex = 8;
+            this.dgv_facturas.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_facturas_RowsAdded);
+            this.dgv_facturas.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgv_facturas_RowsRemoved);
             // 
             // dtp_hasta
             // 
@@ -159,11 +181,34 @@
             this.lbl_proveedor.TabIndex = 0;
             this.lbl_proveedor.Text = "Proveedor";
             // 
+            // cbo_visualizacion
+            // 
+            this.cbo_visualizacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_visualizacion.FormattingEnabled = true;
+            this.cbo_visualizacion.Items.AddRange(new object[] {
+            "No Facturado",
+            "Facturado",
+            "Ambos"});
+            this.cbo_visualizacion.Location = new System.Drawing.Point(132, 190);
+            this.cbo_visualizacion.Name = "cbo_visualizacion";
+            this.cbo_visualizacion.Size = new System.Drawing.Size(200, 21);
+            this.cbo_visualizacion.TabIndex = 14;
+            this.cbo_visualizacion.TextChanged += new System.EventHandler(this.cbo_visualizacion_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Visualizacion";
+            // 
             // FacturarProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 434);
+            this.ClientSize = new System.Drawing.Size(681, 495);
             this.Controls.Add(this.groupBox1);
             this.Name = "FacturarProveedor";
             this.Text = "Facturación a Proveedor";
@@ -188,5 +233,8 @@
         private System.Windows.Forms.Label lbl_hasta;
         private System.Windows.Forms.Label lbl_desde;
         private System.Windows.Forms.Label lbl_proveedor;
+        private System.Windows.Forms.Button btn_visualizar;
+        private System.Windows.Forms.ComboBox cbo_visualizacion;
+        private System.Windows.Forms.Label label1;
     }
 }

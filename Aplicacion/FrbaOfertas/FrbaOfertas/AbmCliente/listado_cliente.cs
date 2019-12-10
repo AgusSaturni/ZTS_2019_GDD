@@ -31,24 +31,18 @@ namespace FrbaOfertas.AbmCliente
 
         private void bt_buscar_Click(object sender, EventArgs e)
         {
-
             string query = crear_query_listadoC(txt_nombre.Text, txt_apellido.Text, txt_DNI.Text, txt_email.Text);
 
-            if (query == "") { MessageBox.Show("Ingrese Parametros"); }
-            else
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conexion_sql);
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conexion_sql);
 
-                conexion_sql.Open();
+            conexion_sql.Open();
 
-                DataTable tabla_clientes = new DataTable();
+            DataTable tabla_clientes = new DataTable();
 
-                adapter.Fill(tabla_clientes);
+            adapter.Fill(tabla_clientes);
 
-                contenedor_clientes.DataSource = tabla_clientes;
-                conexion_sql.Close();
-            }
-
+            contenedor_clientes.DataSource = tabla_clientes;
+            conexion_sql.Close();
         }
 
         private string crear_query_listadoC(String nombre, String Apellido, String DNI, String EMAIL)
@@ -77,16 +71,16 @@ namespace FrbaOfertas.AbmCliente
                 Query.Add("Mail LIKE '%" + EMAIL + "%'");
             }
 
-            if (Query.Count == 0) { return ""; }
-            else
-            {
-                string[] vector_query = Query.ToArray(typeof(string)) as string[];
-                string query_final = string.Join(" AND ", vector_query);
+            Query.Add("1=1"); //Esto es para que en caso de que no se aplique ningun filtro, se muestre la totalidad de los clientes
 
-                sb.Append(query_final);
 
-                return sb.ToString();
-            }
+            string[] vector_query = Query.ToArray(typeof(string)) as string[];
+            string query_final = string.Join(" AND ", vector_query);
+
+            sb.Append(query_final);
+
+            return sb.ToString();
+
         }
 
         private void bt_limpiar_Click(object sender, EventArgs e)
@@ -112,7 +106,7 @@ namespace FrbaOfertas.AbmCliente
         {
             if (contenedor_clientes.Rows.Count == 0) 
             {
-                MessageBox.Show("Aplique algun filtro.");
+                MessageBox.Show("Aplique algun filtro.", "Listado de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (contenedor_clientes.CurrentCell.ColumnIndex == 0)
@@ -130,17 +124,18 @@ namespace FrbaOfertas.AbmCliente
 
                     command.ExecuteNonQuery();
 
-        
-                    MessageBox.Show("Cliente Inhabilitado");
-                    //Hacer un refresh
+
+                    MessageBox.Show("Cliente Inhabilitado", "Listado de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Listado de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conexion_sql.Close();
+
+                bt_buscar.PerformClick();
             }
 
 
@@ -157,7 +152,7 @@ namespace FrbaOfertas.AbmCliente
                 formulario_bajas.txt_dni.Text = row.Cells[6].Value.ToString();
                 formulario_bajas.txt_telefono.Text = row.Cells[7].Value.ToString();
                 formulario_bajas.txt_email.Text = row.Cells[8].Value.ToString();
-                formulario_bajas.txt_fecha.Text = row.Cells[9].Value.ToString();
+                formulario_bajas.date_fecha_nacimiento.Value = Convert.ToDateTime(row.Cells[9].Value);
 
                 formulario_bajas.txt_estado.Text = row.Cells[11].Value.ToString();
 
@@ -169,6 +164,8 @@ namespace FrbaOfertas.AbmCliente
                 formulario_bajas.txt_depto.Text = row.Cells[17].Value.ToString();
 
                 formulario_bajas.Show();
+
+                this.Close();
             }
         }
 

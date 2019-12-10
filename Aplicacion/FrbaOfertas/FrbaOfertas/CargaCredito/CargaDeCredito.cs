@@ -18,10 +18,11 @@ namespace FrbaOfertas.CragaCredito
 
         private string username = (Singleton_Usuario.getInstance()).get_username();
         conexionBD conexion_class = conexionBD.getConexion();
-        Singleton_Usuario sesion = Singleton_Usuario.getInstance();
         SqlConnection conexion_sql;
+        Singleton_Usuario sesion = Singleton_Usuario.getInstance();
+
         private int saldo;
-        
+
 
         public CargaDeCredito()
         {
@@ -32,6 +33,8 @@ namespace FrbaOfertas.CragaCredito
 
         private void CargaDeCredito_Load(object sender, EventArgs e)
         {
+
+
             if (!sesion.verificar_rol_administrador())
             {
                 Usuario.Text = username;
@@ -43,21 +46,21 @@ namespace FrbaOfertas.CragaCredito
                 txt_saldo.Text = "No Disponible";
             }
 
-            conexion_sql = new SqlConnection(conexion_class.get_cadena());
+
             this.cargar_combobox();
-           
-   
+
 
         }
 
-        private void cargar_combobox() 
+        private void cargar_combobox()
         {
             combobox_tipopago.Items.Add("Credito");
             combobox_tipopago.Items.Add("Debito");
         }
 
-        private void cargar_saldoactual() 
+        private void cargar_saldoactual()
         {
+            conexion_sql = new SqlConnection(conexion_class.get_cadena());
             string query = "SELECT DineroDisponible FROM Clientes where username = '" + sesion.get_username() + "'";
             SqlCommand cmd = new SqlCommand(query, conexion_sql);
 
@@ -66,15 +69,15 @@ namespace FrbaOfertas.CragaCredito
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
-            {            
-                    txt_saldo.Text = "$" + (reader[0].ToString());
-                    this.saldo = Int32.Parse(reader[0].ToString());
+            {
+                txt_saldo.Text = "$" + (reader[0].ToString());
+                this.saldo = Int32.Parse(reader[0].ToString());
             }
 
             conexion_sql.Close();
         }
 
-    
+
         public static string GetEntradaConfig(string Key, string DefaultValue = "")
         {
             string s = ConfigurationManager.AppSettings[Key];
@@ -101,42 +104,42 @@ namespace FrbaOfertas.CragaCredito
         private void bt_cargar_Click(object sender, EventArgs e)
         {
 
-          string Fecha = GetEntradaConfig("fecha");
+            string Fecha = GetEntradaConfig("fecha");
 
-          if (this.verificar_parametros()) { return; }
+            if (this.verificar_parametros()) { return; }
 
-          conexion_sql.Open();
-          try
-          {
-              SqlCommand persistir_carga = new SqlCommand("persistir_carga", conexion_sql);
-              persistir_carga.CommandType = CommandType.StoredProcedure;
+            conexion_sql.Open();
+            try
+            {
+                SqlCommand persistir_carga = new SqlCommand("persistir_carga", conexion_sql);
+                persistir_carga.CommandType = CommandType.StoredProcedure;
 
-              persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = sesion.get_username();
-              persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
-              persistir_carga.Parameters.AddWithValue("@cod_segu", SqlDbType.Float).Value = Int32.Parse(txt_cod_segu.Text);
-              persistir_carga.Parameters.AddWithValue("@tipo_tarj", SqlDbType.Char).Value = combobox_tipopago.SelectedItem.ToString();
-              persistir_carga.Parameters.AddWithValue("@monto", SqlDbType.Float).Value = Int32.Parse(txt_monto.Text);
-              persistir_carga.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = Fecha;
+                persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = sesion.get_username();
+                persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
+                persistir_carga.Parameters.AddWithValue("@cod_segu", SqlDbType.Float).Value = Int32.Parse(txt_cod_segu.Text);
+                persistir_carga.Parameters.AddWithValue("@tipo_tarj", SqlDbType.Char).Value = combobox_tipopago.SelectedItem.ToString();
+                persistir_carga.Parameters.AddWithValue("@monto", SqlDbType.Float).Value = Int32.Parse(txt_monto.Text);
+                persistir_carga.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = Fecha;
 
-              persistir_carga.ExecuteNonQuery();
+                persistir_carga.ExecuteNonQuery();
 
-              MessageBox.Show("Carga Realizada con Exito", "Carga de Saldo" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
-              if (!sesion.verificar_rol_administrador())
-              {
-                  txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
-              }
-          }
-          catch (SqlException exepcion)
-          {
-              SqlError errores = exepcion.Errors[0];
-              MessageBox.Show(errores.Message.ToString());
-          }
-          conexion_sql.Close();
-        
-        
+                MessageBox.Show("Carga Realizada con Exito", "Carga de Saldo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!sesion.verificar_rol_administrador())
+                {
+                    txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
+                }
+            }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString());
+            }
+            conexion_sql.Close();
+
+
         }
 
-        private bool verificar_parametros() 
+        private bool verificar_parametros()
         {
             List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
             int index = combobox_tipopago.SelectedIndex;
@@ -146,14 +149,14 @@ namespace FrbaOfertas.CragaCredito
                 MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (index == -1) 
+            if (index == -1)
             {
                 MessageBox.Show("Seleccione el tipo de Tarjeta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (txt_num_tarjeta.Text.Length != 16 || txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)) )
+            if (txt_num_tarjeta.Text.Length != 16 || txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)))
             {
-                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 20 digitos numericos" ,"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 20 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (txt_cod_segu.Text.Length != 3 || txt_cod_segu.Text.Any(x => !char.IsNumber(x)))
@@ -168,8 +171,8 @@ namespace FrbaOfertas.CragaCredito
             }
 
             return false;
-            
-        
+
+
         }
 
         private void label2_Click(object sender, EventArgs e)

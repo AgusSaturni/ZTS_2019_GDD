@@ -52,10 +52,10 @@
             // Siguiente
             // 
             this.Siguiente.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.Siguiente.Location = new System.Drawing.Point(360, 535);
+            this.Siguiente.Location = new System.Drawing.Point(304, 503);
             this.Siguiente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Siguiente.Name = "Siguiente";
-            this.Siguiente.Size = new System.Drawing.Size(188, 52);
+            this.Siguiente.Size = new System.Drawing.Size(269, 52);
             this.Siguiente.TabIndex = 21;
             this.Siguiente.Text = "Siguiente";
             this.Siguiente.UseVisualStyleBackColor = true;
@@ -65,7 +65,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(24, 38);
+            this.label7.Location = new System.Drawing.Point(25, 36);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(227, 24);
@@ -75,10 +75,10 @@
             // 
             // Contacto
             // 
-            this.Contacto.Location = new System.Drawing.Point(312, 38);
+            this.Contacto.Location = new System.Drawing.Point(288, 36);
             this.Contacto.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Contacto.Name = "Contacto";
-            this.Contacto.Size = new System.Drawing.Size(164, 26);
+            this.Contacto.Size = new System.Drawing.Size(232, 30);
             this.Contacto.TabIndex = 33;
             // 
             // groupBox1
@@ -97,7 +97,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(16, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(531, 377);
+            this.groupBox1.Size = new System.Drawing.Size(558, 377);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la Empresa";
@@ -106,7 +106,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(52, 237);
+            this.label6.Location = new System.Drawing.Point(24, 222);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 24);
@@ -117,7 +117,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(8, 45);
+            this.label1.Location = new System.Drawing.Point(24, 45);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(154, 24);
@@ -128,7 +128,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(328, 343);
+            this.label8.Location = new System.Drawing.Point(343, 335);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(177, 21);
@@ -137,15 +137,15 @@
             // 
             // Rubro
             // 
-            this.Rubro.Location = new System.Drawing.Point(180, 237);
+            this.Rubro.Location = new System.Drawing.Point(205, 222);
             this.Rubro.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Rubro.Name = "Rubro";
-            this.Rubro.Size = new System.Drawing.Size(340, 30);
+            this.Rubro.Size = new System.Drawing.Size(336, 30);
             this.Rubro.TabIndex = 43;
             // 
             // RS
             // 
-            this.RS.Location = new System.Drawing.Point(184, 40);
+            this.RS.Location = new System.Drawing.Point(205, 45);
             this.RS.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RS.Name = "RS";
             this.RS.Size = new System.Drawing.Size(336, 30);
@@ -153,25 +153,25 @@
             // 
             // Mail
             // 
-            this.Mail.Location = new System.Drawing.Point(180, 298);
+            this.Mail.Location = new System.Drawing.Point(205, 279);
             this.Mail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Mail.Name = "Mail";
-            this.Mail.Size = new System.Drawing.Size(340, 30);
+            this.Mail.Size = new System.Drawing.Size(336, 30);
             this.Mail.TabIndex = 42;
             // 
             // CUIT
             // 
-            this.CUIT.Location = new System.Drawing.Point(182, 160);
+            this.CUIT.Location = new System.Drawing.Point(205, 165);
             this.CUIT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CUIT.Name = "CUIT";
-            this.CUIT.Size = new System.Drawing.Size(340, 30);
+            this.CUIT.Size = new System.Drawing.Size(336, 30);
             this.CUIT.TabIndex = 37;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(62, 309);
+            this.label5.Location = new System.Drawing.Point(24, 279);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 24);
@@ -182,7 +182,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(52, 171);
+            this.label3.Location = new System.Drawing.Point(24, 165);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(78, 24);
@@ -193,7 +193,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(24, 109);
+            this.label4.Location = new System.Drawing.Point(24, 105);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(114, 24);
@@ -202,7 +202,7 @@
             // 
             // Telefono
             // 
-            this.Telefono.Location = new System.Drawing.Point(184, 105);
+            this.Telefono.Location = new System.Drawing.Point(205, 105);
             this.Telefono.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(336, 30);
@@ -212,19 +212,21 @@
             // 
             this.groupBox2.Controls.Add(this.Contacto);
             this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(16, 400);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(522, 106);
+            this.groupBox2.Size = new System.Drawing.Size(558, 95);
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Datos Personales";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(45, 535);
+            this.button1.Location = new System.Drawing.Point(13, 503);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 52);
+            this.button1.Size = new System.Drawing.Size(255, 52);
             this.button1.TabIndex = 37;
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
@@ -234,7 +236,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 606);
+            this.ClientSize = new System.Drawing.Size(586, 570);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
