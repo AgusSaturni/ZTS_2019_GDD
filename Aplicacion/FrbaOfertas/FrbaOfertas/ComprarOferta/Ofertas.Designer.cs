@@ -30,32 +30,34 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_volver = new System.Windows.Forms.Button();
-            this.maximo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bt_limpiar = new System.Windows.Forms.Button();
             this.bt_buscar = new System.Windows.Forms.Button();
-            this.minimo = new System.Windows.Forms.TextBox();
             this.Descripcion = new System.Windows.Forms.TextBox();
             this.contenedor_ofertas = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.minimo = new System.Windows.Forms.NumericUpDown();
+            this.maximo = new System.Windows.Forms.NumericUpDown();
+            this.rango = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minimo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maximo)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btn_volver);
+            this.groupBox1.Controls.Add(this.rango);
             this.groupBox1.Controls.Add(this.maximo);
+            this.groupBox1.Controls.Add(this.minimo);
+            this.groupBox1.Controls.Add(this.btn_volver);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.bt_limpiar);
             this.groupBox1.Controls.Add(this.bt_buscar);
-            this.groupBox1.Controls.Add(this.minimo);
             this.groupBox1.Controls.Add(this.Descripcion);
             this.groupBox1.Location = new System.Drawing.Point(11, 11);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
@@ -78,19 +80,11 @@
             this.btn_volver.UseVisualStyleBackColor = true;
             this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
-            // maximo
-            // 
-            this.maximo.Location = new System.Drawing.Point(179, 94);
-            this.maximo.Margin = new System.Windows.Forms.Padding(2);
-            this.maximo.Name = "maximo";
-            this.maximo.Size = new System.Drawing.Size(89, 20);
-            this.maximo.TabIndex = 10;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(133, 97);
+            this.label4.Location = new System.Drawing.Point(217, 100);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 14);
@@ -101,23 +95,12 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(133, 63);
+            this.label3.Location = new System.Drawing.Point(17, 100);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 14);
             this.label3.TabIndex = 8;
             this.label3.Text = "Desde";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(17, 63);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 14);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Rango de Precio:";
             // 
             // label1
             // 
@@ -153,14 +136,6 @@
             this.bt_buscar.UseVisualStyleBackColor = true;
             this.bt_buscar.Click += new System.EventHandler(this.bt_buscar_Click);
             // 
-            // minimo
-            // 
-            this.minimo.Location = new System.Drawing.Point(179, 60);
-            this.minimo.Margin = new System.Windows.Forms.Padding(2);
-            this.minimo.Name = "minimo";
-            this.minimo.Size = new System.Drawing.Size(89, 20);
-            this.minimo.TabIndex = 1;
-            // 
             // Descripcion
             // 
             this.Descripcion.Location = new System.Drawing.Point(111, 22);
@@ -189,6 +164,34 @@
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
+            // minimo
+            // 
+            this.minimo.DecimalPlaces = 2;
+            this.minimo.Location = new System.Drawing.Point(64, 98);
+            this.minimo.Name = "minimo";
+            this.minimo.Size = new System.Drawing.Size(120, 20);
+            this.minimo.TabIndex = 12;
+            // 
+            // maximo
+            // 
+            this.maximo.DecimalPlaces = 2;
+            this.maximo.Location = new System.Drawing.Point(259, 98);
+            this.maximo.Name = "maximo";
+            this.maximo.Size = new System.Drawing.Size(120, 20);
+            this.maximo.TabIndex = 13;
+            // 
+            // rango
+            // 
+            this.rango.AutoSize = true;
+            this.rango.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.rango.Location = new System.Drawing.Point(20, 63);
+            this.rango.Name = "rango";
+            this.rango.Size = new System.Drawing.Size(122, 18);
+            this.rango.TabIndex = 14;
+            this.rango.Text = "Rango de Precios";
+            this.rango.UseVisualStyleBackColor = true;
+            this.rango.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Ofertas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,9 +202,12 @@
             this.Name = "Ofertas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ofertas";
+            this.Load += new System.EventHandler(this.Ofertas_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minimo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maximo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -209,17 +215,17 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox maximo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bt_limpiar;
         private System.Windows.Forms.Button bt_buscar;
-        private System.Windows.Forms.TextBox minimo;
         private System.Windows.Forms.TextBox Descripcion;
         private System.Windows.Forms.DataGridView contenedor_ofertas;
         private System.Windows.Forms.DataGridViewButtonColumn Column1;
         private System.Windows.Forms.Button btn_volver;
+        private System.Windows.Forms.NumericUpDown maximo;
+        private System.Windows.Forms.NumericUpDown minimo;
+        private System.Windows.Forms.CheckBox rango;
     }
 }

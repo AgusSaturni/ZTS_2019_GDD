@@ -351,3 +351,4 @@ where Oferta_Entregado_Fecha is not null
 
 update CUPONES
 set codigo_cupon= (select newId())
+

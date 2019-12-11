@@ -25,6 +25,11 @@ namespace FrbaOfertas.ComprarOferta
             MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             InitializeComponent();
+            minimo.ReadOnly = true;
+            minimo.Increment = 0;
+            maximo.ReadOnly = true;
+            maximo.Increment = 0; 
+            rango.Checked = false;
         }
 
         private void contenedor_ofertas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -61,18 +66,31 @@ namespace FrbaOfertas.ComprarOferta
 
         private void bt_buscar_Click(object sender, EventArgs e)
         {
-            string query = crear_query_oferta(Descripcion.Text, minimo.Text, maximo.Text);
+            string query="";
 
-            if (minimo.Text.Any(x => !char.IsNumber(x)) || maximo.Text.Any(x => !char.IsNumber(x)))
+            if (rango.Checked == false)
             {
-                MessageBox.Show("Valores de precios erroneos. Solo se permiten numeros ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                 query = crear_query_oferta(Descripcion.Text, 0, 0);
+
             }
+            else {
+                if (maximo.Value == 0)
+                {
+                    MessageBox.Show("Valor maximo erroneo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                     query = crear_query_oferta(Descripcion.Text, Convert.ToDecimal(minimo.Value), Convert.ToDecimal(maximo.Value));
+                }
+            }
+
+           
+           
                 
 
-            if (query == "") { MessageBox.Show("Ingrese Parametros"); }
-            else
-            {
+            
+          
                 conexionBD conexion = conexionBD.getConexion();
 
                 SqlConnection conn = new SqlConnection(conexion.get_cadena());
@@ -87,26 +105,28 @@ namespace FrbaOfertas.ComprarOferta
 
                 contenedor_ofertas.DataSource = tabla_clientes;
                 conn.Close();
-            }
+            
 
         }
 
-        private string crear_query_oferta(String descripcion, string minimo, string maximo)
+        private string crear_query_oferta(String descripcion, decimal minimo, decimal maximo)
         {
+            
+
             StringBuilder sb = new StringBuilder();
 
             string fecha = ConfigurationManager.AppSettings["fecha"].ToString();
-
-
+  
             sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
-
+           
             ArrayList Query = new ArrayList();
 
             if (descripcion != "")
             {
                 Query.Add("Descripcion LIKE '%" + descripcion + "%'");
             }
-            if (minimo != "" && maximo != "")
+     
+            if (maximo!= 0)
             {
                 string cadena = "precio_lista between " + minimo + "and " + maximo;
                 Query.Add(cadena);
@@ -150,6 +170,29 @@ namespace FrbaOfertas.ComprarOferta
             Form menu_principal = new Interfaces.menu_principal();
             menu_principal.Show();
             this.Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rango.Checked == false)
+            {
+                minimo.ReadOnly = true;
+                minimo.Increment = 0;
+                maximo.ReadOnly = true;
+                maximo.Increment = 0;    
+            }
+            else
+            {
+                minimo.ReadOnly = false;
+                minimo.Increment = 1;
+                maximo.ReadOnly = false;
+                maximo.Increment = 1; 
+            }
+        }
+
+        private void Ofertas_Load(object sender, EventArgs e)
+        {
+            
         }
 
 

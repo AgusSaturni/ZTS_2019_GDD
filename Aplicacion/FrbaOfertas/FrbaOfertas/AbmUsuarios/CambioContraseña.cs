@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.Manejo_Logico;
 
 namespace FrbaOfertas.AbmUsuarios
 {
@@ -25,6 +26,19 @@ namespace FrbaOfertas.AbmUsuarios
 
         }
 
+
+        private bool verificar_txts_vacios()
+        {
+            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+
+            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             this.Visible = false;
@@ -37,38 +51,37 @@ namespace FrbaOfertas.AbmUsuarios
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conn = new SqlConnection(conexion.get_cadena());
 
+
+            if (this.verificar_txts_vacios())
+            {
+                MessageBox.Show("Todos los campos son obligatorios", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             conn.Open();
 
             SqlCommand command = new SqlCommand("modificar_password", conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            SqlParameter username = new SqlParameter("@username", SqlDbType.Char);
-            username.Direction = ParameterDirection.Input;
-            command.Parameters.Add(username);
-
-
-            SqlParameter password_vieja = new SqlParameter("@vieja_password", SqlDbType.Char);
-            password_vieja.Direction = ParameterDirection.Input;
-            command.Parameters.Add(password_vieja);
-
-            SqlParameter password_nueva= new SqlParameter("@nueva_password", SqlDbType.Char);
-            password_nueva.Direction = ParameterDirection.Input;
-            command.Parameters.Add(password_nueva);
-
-            username.Value = Usuario.Text;
-            password_vieja.Value = passwordV.Text;
-            password_nueva.Value = passwordN.Text;
+            command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
+            command.Parameters.AddWithValue("@vieja_password", SqlDbType.Char).Value = passwordV.Text;
+            command.Parameters.AddWithValue("@nueva_password", SqlDbType.Char).Value = passwordN.Text; 
 
             try
             {
                 command.ExecuteNonQuery();
                 MessageBox.Show("Hecho");
                 this.Visible = false;
+                Form iniciar = new InicioDeSesion();
+                iniciar.Show();
+
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                passwordV.Text = "";
+                passwordN.Text = "";
             }
            
             conn.Close();

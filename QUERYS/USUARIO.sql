@@ -119,12 +119,14 @@ END
 
 drop procedure registrar_usuario_proveedor
 
--------------MODIFICACION_PASSWORD--------HAY QUE RETOCAR----------------
+-------------MODIFICACION_PASSWORD----------------------
 
 CREATE PROCEDURE modificar_password(@username varchar(255), @vieja_password varchar(255), @nueva_password varchar(255))
 AS BEGIN
 IF not exists (select 1 from USUARIOS where Username = @username)
 	throw 50002,'Usuario Inexistente',1
+IF(@vieja_password = @nueva_password)
+	throw 50003,'La contraseña nueva no puede ser igual a la actual, elija otra.',1
 IF((select password from USUARIOS where username = @username) = HASHBYTES('SHA2_256',@vieja_password) )
 		begin
 			update USUARIOS
@@ -136,7 +138,7 @@ ELSE
 	end
 END
 
-
+drop procedure modificar_password
 
 
 -------------BAJA_LOGICA_USUARIO--------------------------
