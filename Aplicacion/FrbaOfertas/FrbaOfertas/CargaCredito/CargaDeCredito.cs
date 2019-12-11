@@ -33,7 +33,7 @@ namespace FrbaOfertas.CragaCredito
 
         private void CargaDeCredito_Load(object sender, EventArgs e)
         {
-
+            conexion_sql = new SqlConnection(conexion_class.get_cadena());
 
             if (!sesion.verificar_rol_administrador())
             {
@@ -60,7 +60,7 @@ namespace FrbaOfertas.CragaCredito
 
         private void cargar_saldoactual()
         {
-            conexion_sql = new SqlConnection(conexion_class.get_cadena());
+
             string query = "SELECT DineroDisponible FROM Clientes where username = '" + sesion.get_username() + "'";
             SqlCommand cmd = new SqlCommand(query, conexion_sql);
 
@@ -114,7 +114,15 @@ namespace FrbaOfertas.CragaCredito
                 SqlCommand persistir_carga = new SqlCommand("persistir_carga", conexion_sql);
                 persistir_carga.CommandType = CommandType.StoredProcedure;
 
-                persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = sesion.get_username();
+                if (!sesion.verificar_rol_administrador())
+                {
+                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = sesion.get_username();
+                }
+                else
+                {
+                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
+                }
+
                 persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
                 persistir_carga.Parameters.AddWithValue("@cod_segu", SqlDbType.Float).Value = Int32.Parse(txt_cod_segu.Text);
                 persistir_carga.Parameters.AddWithValue("@tipo_tarj", SqlDbType.Char).Value = combobox_tipopago.SelectedItem.ToString();
@@ -132,7 +140,7 @@ namespace FrbaOfertas.CragaCredito
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexion_sql.Close();
 
@@ -164,9 +172,9 @@ namespace FrbaOfertas.CragaCredito
                 MessageBox.Show("El Codigo de seguridad debe ser unicamente de 3 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (txt_monto.Text.Any(x => !char.IsNumber(x)))
+            if (txt_monto.Text.Any(x => !char.IsNumber(x)) || Int32.Parse(txt_monto.Text) <= 0)
             {
-                MessageBox.Show("El monto debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El monto debe ser numerico y mayor a 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
 

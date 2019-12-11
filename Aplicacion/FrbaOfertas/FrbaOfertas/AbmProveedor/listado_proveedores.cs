@@ -21,7 +21,7 @@ namespace FrbaOfertas.AbmProveedor
         {
             InitializeComponent();
             MaximizeBox = false;
- 
+
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
@@ -32,7 +32,7 @@ namespace FrbaOfertas.AbmProveedor
 
         private void bt_buscar_Click(object sender, EventArgs e)
         {
-            string query = crear_query_listadoC(txt_RazonS.Text,txt_CUIT.Text, txt_email.Text,txt_Rubro.Text);
+            string query = crear_query_listadoC(txt_RazonS.Text, txt_CUIT.Text, txt_email.Text, txt_Rubro.Text);
             SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
 
             conn.Open();
@@ -45,7 +45,7 @@ namespace FrbaOfertas.AbmProveedor
 
         }
 
-        private string crear_query_listadoC(String RazonSocial, String CUIT, String EMAIL,String Rubro)
+        private string crear_query_listadoC(String RazonSocial, String CUIT, String EMAIL, String Rubro)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -57,7 +57,7 @@ namespace FrbaOfertas.AbmProveedor
             {
                 Query.Add("Razon_Social LIKE '%" + RazonSocial + "%'");
             }
-         
+
             if (CUIT != "")
             {
                 Query.Add("CUIT = '" + CUIT + "'");
@@ -112,13 +112,13 @@ namespace FrbaOfertas.AbmProveedor
                     command.ExecuteNonQuery();
 
 
-                    MessageBox.Show("Proveedor Inhabilitado","Listado de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Proveedor Inhabilitado", "Listado de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conn.Close();
 
@@ -133,7 +133,7 @@ namespace FrbaOfertas.AbmProveedor
 
                 formulario_bajas.txt_id.Text = row.Cells[2].Value.ToString();
                 formulario_bajas.txt_username.Text = row.Cells[4].Value.ToString();
-                formulario_bajas.txt_RazonSoc.Text = row.Cells[3].Value.ToString();            
+                formulario_bajas.txt_RazonSoc.Text = row.Cells[3].Value.ToString();
                 formulario_bajas.txt_CUIT.Text = row.Cells[7].Value.ToString();
                 formulario_bajas.txt_telefono.Text = row.Cells[6].Value.ToString();
                 formulario_bajas.txt_email.Text = row.Cells[8].Value.ToString();
@@ -151,8 +151,8 @@ namespace FrbaOfertas.AbmProveedor
                 formulario_bajas.Show();
                 this.Close();
             }
-              
-            }
+
+        }
 
         private void asd_Click(object sender, EventArgs e)
         {
@@ -169,4 +169,3 @@ namespace FrbaOfertas.AbmProveedor
 
     }
 }
-

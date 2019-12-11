@@ -33,26 +33,26 @@ namespace FrbaOfertas.AbmProveedor
             this.cargar_combobox_rubros(conexion_sql);
         }
 
-        private void cargar_combobox_rubros(SqlConnection conexion_sql) 
+        private void cargar_combobox_rubros(SqlConnection conexion_sql)
         {
-           conexion_sql.Open();
-           SqlDataReader reader = commonQueries_instance.select_rubros_disponibles(conexion_sql);
+            conexion_sql.Open();
+            SqlDataReader reader = commonQueries_instance.select_rubros_disponibles(conexion_sql);
 
-           while (reader.Read()) 
-           {
-               cb_rubros.Items.Add(reader[0]);
-           }
-           conexion_sql.Close();
+            while (reader.Read())
+            {
+                cb_rubros.Items.Add(reader[0]);
+            }
+            conexion_sql.Close();
 
-          int index_seleccionado = cb_rubros.Items.IndexOf(rubro_seleccionado);
-          cb_rubros.SelectedIndex = index_seleccionado;
+            int index_seleccionado = cb_rubros.Items.IndexOf(rubro_seleccionado);
+            cb_rubros.SelectedIndex = index_seleccionado;
         }
 
         private void bt_habilitar_Click(object sender, EventArgs e)
         {
 
             conexion_sql.Open();
-            try 
+            try
             {
                 commonQueries_instance.vereificar_estado_rol("Proveedor", conexion_sql);
 
@@ -67,12 +67,12 @@ namespace FrbaOfertas.AbmProveedor
 
 
                     MessageBox.Show("Proveedor Habilitado", "Modificacion de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    txt_estado.Text = "Habilitado";
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (SqlException exepcion)
@@ -89,7 +89,7 @@ namespace FrbaOfertas.AbmProveedor
             txt_RazonSoc.ReadOnly = false;
             txt_CUIT.ReadOnly = false;
             cb_rubros.Enabled = true;
-            txt_email.ReadOnly = false;      
+            txt_email.ReadOnly = false;
             txt_telefono.ReadOnly = false;
             txt_Contacto.ReadOnly = false;
 
@@ -115,9 +115,9 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Modifique algun parametro", "Modificacion de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (this.verificar_txts_vacios()) 
+            if (this.verificar_txts_vacios())
             {
-                MessageBox.Show("Todos los campos son obligatorios menos el nombre de contacto, la localidad, el piso, el codigo postal y el departamento","Modificacion de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Todos los campos son obligatorios menos el nombre de contacto, la localidad, el piso, el codigo postal y el departamento", "Modificacion de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (this.verificar_parametro()) { return; }
@@ -153,21 +153,21 @@ namespace FrbaOfertas.AbmProveedor
             {
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString(), "Modificacion de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
+
             }
             conexion_sql.Close();
 
 
         }
 
-        private bool verificar_parametro() 
+        private bool verificar_parametro()
         {
             if (txt_CUIT.Text.Trim().Substring(2, 1) != "-" || txt_CUIT.Text.Trim().Substring(11, 1) != "-")
             {
                 MessageBox.Show("Cuit Invalido. Ejemplo de un cuit valido: 30-12104111-4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-          
+
             if (cb_rubros.SelectedIndex == -1)
             {
                 MessageBox.Show("Seleccione un rubro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

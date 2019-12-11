@@ -79,7 +79,7 @@ namespace FrbaOfertas.AbmProveedor
             conn.Close();
 
             this.determinar_accion();
-            
+
 
         }
 
@@ -101,9 +101,9 @@ namespace FrbaOfertas.AbmProveedor
 
         private bool verificar_tipo_datos()
         {
-            if (this.verificar_txts_vacios()) 
+            if (this.verificar_txts_vacios())
             {
-                MessageBox.Show("Todos los campos son obligatorios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Todos los campos son obligatorios menos el nombre de contacto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (RS.Text.Any(x => char.IsNumber(x)))
@@ -116,12 +116,13 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Rubro Invalido. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (CUIT.Text.Trim().Length != 13 ) //VERIFICAR QUE TENGA 2 GUIONES
+            if (CUIT.Text.Trim().Length != 13) //VERIFICAR QUE TENGA 2 GUIONES
             {
                 MessageBox.Show("Cuit Invalido. El CUIT debe contener 13 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if ((CUIT.Text.Trim().Substring(2, 1) != "-" || CUIT.Text.Trim().Substring(11, 1) != "-")) {
+            if ((CUIT.Text.Trim().Substring(2, 1) != "-" || CUIT.Text.Trim().Substring(11, 1) != "-"))
+            {
                 MessageBox.Show("Cuit Invalido. Ejemplo de un cuit valido: 30-12104111-4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
@@ -130,19 +131,25 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Telefono Invalido. Cadena Numerica unicamente ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (Contacto.Text.Any(x => char.IsNumber(x)))
+            if (!string.IsNullOrEmpty(Contacto.Text.Trim()))
             {
-                MessageBox.Show("Contacto Invalido. No se permite ingresar Numeros. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
+                if (Contacto.Text.Any(x => char.IsNumber(x)))
+                {
+                    MessageBox.Show("Contacto Invalido. No se permite ingresar Numeros. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
             }
+
             return false;
         }
 
         private bool verificar_txts_vacios()
         {
-            List<String> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).Select(p => p.Text).ToList();
+            List<TextBox> lista_textBoxs = Manejo_Logico.helperControls.GetControls<TextBox>(this).ToList();
+            List<TextBox> lista_filtrada = lista_textBoxs.Where(txt => txt != Contacto).ToList();
+            List<String> lista_convertida = lista_filtrada.Select(x => x.Text).ToList();
 
-            if (lista_textBoxs.Any(cadena => cadena == String.Empty))
+            if (lista_convertida.Any(cadena => cadena == String.Empty))
             {
                 return true;
             }

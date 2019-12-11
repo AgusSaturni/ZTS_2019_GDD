@@ -52,11 +52,14 @@
             this.contenedor_cupones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_cupones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Entregar});
-            this.contenedor_cupones.Location = new System.Drawing.Point(12, 258);
+            this.contenedor_cupones.Location = new System.Drawing.Point(8, 168);
+            this.contenedor_cupones.Margin = new System.Windows.Forms.Padding(2);
+            this.contenedor_cupones.MultiSelect = false;
             this.contenedor_cupones.Name = "contenedor_cupones";
             this.contenedor_cupones.ReadOnly = true;
             this.contenedor_cupones.RowTemplate.Height = 28;
-            this.contenedor_cupones.Size = new System.Drawing.Size(808, 407);
+            this.contenedor_cupones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.contenedor_cupones.Size = new System.Drawing.Size(539, 265);
             this.contenedor_cupones.TabIndex = 0;
             this.contenedor_cupones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.contenedor_cupones_CellContentClick);
             // 
@@ -79,9 +82,11 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(808, 240);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(539, 156);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
@@ -89,9 +94,10 @@
             // checkBox_consumidos
             // 
             this.checkBox_consumidos.AutoSize = true;
-            this.checkBox_consumidos.Location = new System.Drawing.Point(29, 195);
+            this.checkBox_consumidos.Location = new System.Drawing.Point(19, 127);
+            this.checkBox_consumidos.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_consumidos.Name = "checkBox_consumidos";
-            this.checkBox_consumidos.Size = new System.Drawing.Size(254, 24);
+            this.checkBox_consumidos.Size = new System.Drawing.Size(172, 17);
             this.checkBox_consumidos.TabIndex = 2;
             this.checkBox_consumidos.Text = "Incluir Cupones ya consumidos";
             this.checkBox_consumidos.UseVisualStyleBackColor = true;
@@ -99,9 +105,10 @@
             // bt_cancelar
             // 
             this.bt_cancelar.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_cancelar.Location = new System.Drawing.Point(556, 145);
+            this.bt_cancelar.Location = new System.Drawing.Point(371, 94);
+            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_cancelar.Name = "bt_cancelar";
-            this.bt_cancelar.Size = new System.Drawing.Size(206, 38);
+            this.bt_cancelar.Size = new System.Drawing.Size(137, 25);
             this.bt_cancelar.TabIndex = 8;
             this.bt_cancelar.Text = "Cancelar";
             this.bt_cancelar.UseVisualStyleBackColor = true;
@@ -110,9 +117,10 @@
             // bt_limpiar
             // 
             this.bt_limpiar.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_limpiar.Location = new System.Drawing.Point(556, 92);
+            this.bt_limpiar.Location = new System.Drawing.Point(371, 60);
+            this.bt_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_limpiar.Name = "bt_limpiar";
-            this.bt_limpiar.Size = new System.Drawing.Size(206, 38);
+            this.bt_limpiar.Size = new System.Drawing.Size(137, 25);
             this.bt_limpiar.TabIndex = 7;
             this.bt_limpiar.Text = "Limpiar Filtros";
             this.bt_limpiar.UseVisualStyleBackColor = true;
@@ -121,9 +129,10 @@
             // bt_buscar
             // 
             this.bt_buscar.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_buscar.Location = new System.Drawing.Point(556, 36);
+            this.bt_buscar.Location = new System.Drawing.Point(371, 23);
+            this.bt_buscar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_buscar.Name = "bt_buscar";
-            this.bt_buscar.Size = new System.Drawing.Size(206, 38);
+            this.bt_buscar.Size = new System.Drawing.Size(137, 25);
             this.bt_buscar.TabIndex = 6;
             this.bt_buscar.Text = "Buscar";
             this.bt_buscar.UseVisualStyleBackColor = true;
@@ -131,32 +140,36 @@
             // 
             // txt_cliente
             // 
-            this.txt_cliente.Location = new System.Drawing.Point(273, 149);
+            this.txt_cliente.Location = new System.Drawing.Point(182, 97);
+            this.txt_cliente.Margin = new System.Windows.Forms.Padding(2);
             this.txt_cliente.Name = "txt_cliente";
-            this.txt_cliente.Size = new System.Drawing.Size(199, 26);
+            this.txt_cliente.Size = new System.Drawing.Size(134, 20);
             this.txt_cliente.TabIndex = 5;
             // 
             // txt_ofertaid
             // 
-            this.txt_ofertaid.Location = new System.Drawing.Point(273, 95);
+            this.txt_ofertaid.Location = new System.Drawing.Point(182, 62);
+            this.txt_ofertaid.Margin = new System.Windows.Forms.Padding(2);
             this.txt_ofertaid.Name = "txt_ofertaid";
-            this.txt_ofertaid.Size = new System.Drawing.Size(199, 26);
+            this.txt_ofertaid.Size = new System.Drawing.Size(134, 20);
             this.txt_ofertaid.TabIndex = 4;
             // 
             // txt_cuponid
             // 
-            this.txt_cuponid.Location = new System.Drawing.Point(273, 39);
+            this.txt_cuponid.Location = new System.Drawing.Point(182, 25);
+            this.txt_cuponid.Margin = new System.Windows.Forms.Padding(2);
             this.txt_cuponid.Name = "txt_cuponid";
-            this.txt_cuponid.Size = new System.Drawing.Size(199, 26);
+            this.txt_cuponid.Size = new System.Drawing.Size(134, 20);
             this.txt_cuponid.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(22, 145);
+            this.label3.Location = new System.Drawing.Point(15, 94);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(214, 29);
+            this.label3.Size = new System.Drawing.Size(144, 19);
             this.label3.TabIndex = 2;
             this.label3.Text = "Cliente Username";
             // 
@@ -164,9 +177,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(21, 92);
+            this.label2.Location = new System.Drawing.Point(14, 60);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(227, 29);
+            this.label2.Size = new System.Drawing.Size(150, 19);
             this.label2.TabIndex = 1;
             this.label2.Text = "ID Oferta Asociado";
             // 
@@ -174,19 +188,21 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 39);
+            this.label1.Location = new System.Drawing.Point(14, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 29);
+            this.label1.Size = new System.Drawing.Size(121, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "Codigo Cupon";
             // 
             // ListadoCupones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 677);
+            this.ClientSize = new System.Drawing.Size(555, 440);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.contenedor_cupones);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListadoCupones";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ListadoCupones";

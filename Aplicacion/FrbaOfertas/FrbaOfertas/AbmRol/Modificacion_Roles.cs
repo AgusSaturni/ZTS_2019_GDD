@@ -105,16 +105,7 @@ namespace FrbaOfertas.AbmRol
 
         private void bt_seleccionar_Click(object sender, EventArgs e)
         {
-            int indice = comboBox_roles.SelectedIndex;
-            if (indice != -1)
-            {
-                list_rol.Items.Clear();
-                list_totales.Items.Clear();
-                this.cargar_funciones_totales_disponibles();
-                this.cargar_funciones_totales_sistema();
-                this.cargar_estado(comboBox_roles.SelectedItem.ToString());
-            }
-            else { MessageBox.Show("Seleccione un Rol"); }
+
         }
 
         private void bt_izq_a_der_Click(object sender, EventArgs e)
@@ -127,9 +118,9 @@ namespace FrbaOfertas.AbmRol
                     list_rol.Items.Add(list_totales.SelectedItem);
                     list_totales.Items.Remove(list_totales.SelectedItem);
                 }
-                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado"); }
+                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
             }
-            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol"); }
+            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
 
         private void bt_der_a_izq_Click(object sender, EventArgs e)
@@ -142,9 +133,9 @@ namespace FrbaOfertas.AbmRol
                     list_totales.Items.Add(list_rol.SelectedItem);
                     list_rol.Items.Remove(list_rol.SelectedItem);
                 }
-                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado"); }
+                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol seleccionado", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
             }
-            else { MessageBox.Show("Seleccione una funcion asignada al rol para removerla"); }
+            else { MessageBox.Show("Seleccione una funcion asignada al rol para removerla", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
 
         private void bt_finalizar_Click(object sender, EventArgs e)
@@ -174,7 +165,7 @@ namespace FrbaOfertas.AbmRol
 
             Id_Funciones.Clear();
 
-            MessageBox.Show("Rol Modificado");
+            MessageBox.Show("Rol Modificado", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Actualizo sesion para que se me carguen los nuevos permisos en caso de haber modificado el ROL de administrador
             this.actualizar_sesion();
@@ -222,11 +213,11 @@ namespace FrbaOfertas.AbmRol
         {
             if (txt_estado.Text == "")
             {
-                MessageBox.Show("Seleccione un Rol");
+                MessageBox.Show("Seleccione un Rol", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Seguro que desea dar de baja al Rol seleccionado?", "WARNING", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Seguro que desea dar de baja al Rol seleccionado?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
 
@@ -238,13 +229,13 @@ namespace FrbaOfertas.AbmRol
                 try
                 {
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Rol Deshabilitado");
+                    MessageBox.Show("Rol Deshabilitado", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txt_estado.Text = "Deshabilitado";
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conn.Close();
 
@@ -256,11 +247,11 @@ namespace FrbaOfertas.AbmRol
         {
             if (txt_estado.Text == "")
             {
-                MessageBox.Show("Seleccione un Rol");
+                MessageBox.Show("Seleccione un Rol", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Seguro que desea dar de alta al Rol seleccionado?", "WARNING", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Seguro que desea dar de alta al Rol seleccionado?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
 
@@ -272,13 +263,13 @@ namespace FrbaOfertas.AbmRol
                 try
                 {
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Rol Habilitado");
+                    MessageBox.Show("Rol Habilitado", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txt_estado.Text = "Habilitado";
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 conn.Close();
 
@@ -292,6 +283,15 @@ namespace FrbaOfertas.AbmRol
             Form menu_roles = new MenuAdmin.ABMRoles();
             menu_roles.Show();
 
+        }
+
+        private void comboBox_roles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            list_rol.Items.Clear();
+            list_totales.Items.Clear();
+            this.cargar_funciones_totales_disponibles();
+            this.cargar_funciones_totales_sistema();
+            this.cargar_estado(comboBox_roles.SelectedItem.ToString());
         }
     }
 }

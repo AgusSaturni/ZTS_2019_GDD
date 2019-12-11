@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListadoEstadistico));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Hasta = new System.Windows.Forms.DateTimePicker();
             this.Desde = new System.Windows.Forms.DateTimePicker();
@@ -135,10 +136,13 @@
             // 
             this.contenedor_proveedores.AllowUserToAddRows = false;
             this.contenedor_proveedores.AllowUserToDeleteRows = false;
+            this.contenedor_proveedores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.contenedor_proveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_proveedores.Location = new System.Drawing.Point(4, 153);
             this.contenedor_proveedores.Name = "contenedor_proveedores";
             this.contenedor_proveedores.ReadOnly = true;
+            this.contenedor_proveedores.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.contenedor_proveedores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.contenedor_proveedores.Size = new System.Drawing.Size(607, 257);
             this.contenedor_proveedores.TabIndex = 44;
             // 
@@ -149,6 +153,7 @@
             this.ClientSize = new System.Drawing.Size(621, 416);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.contenedor_proveedores);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ListadoEstadistico";
             this.Text = "ListadoEstadistico";
             this.groupBox1.ResumeLayout(false);

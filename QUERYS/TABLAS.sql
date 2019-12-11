@@ -258,6 +258,9 @@ CREATE TABLE FUNCIONES
   PRIMARY KEY(Funcion_Id)
 )
 
+drop table FUNCIONES
+
+
 insert into FUNCIONES (Descripcion) values ('ABM Roles')
 insert into FUNCIONES (Descripcion) values ('ABM Clientes')
 insert into FUNCIONES (Descripcion) values ('ABM Proveedores')
@@ -294,6 +297,7 @@ insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','Funci
 insert into FUNCIONES_POR_ROL (Rol_Id, Funcion_Id) values('Administrador','FuncionID7')
 
 
+drop table FUNCIONES_POR_ROL
 
 ---COMPRAS----------------------
 CREATE TABLE COMPRAS
@@ -321,6 +325,7 @@ CREATE TABLE CUPONES
   Codigo_cupon varchar(255),
   Compra_Id varchar(16),
   Fecha_Consumo datetime,
+  Cantidad_disponible int,
   PRIMARY KEY(Cupon_Id),
   FOREIGN KEY(Compra_Id) REFERENCES COMPRAS(Compra_Id),
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
@@ -333,8 +338,8 @@ CREATE TABLE CUPONES
 --JOIN OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta
 --JOIN PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado
 
-insert into CUPONES(codigo_oferta,Compra_Id)
-(select Codigo_oferta,compra_id from COMPRAS)
+insert into CUPONES(codigo_oferta,Compra_Id, Cantidad_disponible)
+(select Codigo_oferta,compra_id, Cantidad from COMPRAS)
 
 update CUPONES 
 set cupones.Fecha_Consumo = gd_esquema.Maestra.Oferta_Entregado_Fecha
@@ -346,5 +351,3 @@ where Oferta_Entregado_Fecha is not null
 
 update CUPONES
 set codigo_cupon= (select newId())
-
-

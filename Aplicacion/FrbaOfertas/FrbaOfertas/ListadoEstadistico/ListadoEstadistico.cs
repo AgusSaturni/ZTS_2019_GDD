@@ -32,7 +32,7 @@ namespace FrbaOfertas.ListadoEstadistico
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select top 5 proveedor_id ,coalesce(dbo.suma_porcentajes_de_ofertas(proveedor_Id,'" + Convert.ToDateTime(Desde.Value).ToString("yyyy-MM-dd") + "','" + Convert.ToDateTime(Hasta.Value).ToString("yyyy-MM-dd") + "'),0)Porcentaje_de_Descuento,count(codigo_oferta) Cantidad_Ofertas_Publicadas from PROVEEDORES p join ofertas o on p.Proveedor_Id = o.Proveedor_referenciado where Fecha_publicacion between '" + Convert.ToDateTime(Desde.Value).ToString("yyyy-MM-dd") + "' and  '" + Convert.ToDateTime(Hasta.Value).ToString("yyyy-MM-dd") + "' group by p.proveedor_id order by 2 desc");
+            sb.Append("select top 5 proveedor_id ,coalesce(dbo.suma_porcentajes_de_ofertas(proveedor_Id,'" + Convert.ToDateTime(Desde.Value).ToString("yyyy-MM-dd") + "','" + Convert.ToDateTime(Hasta.Value).ToString("yyyy-MM-dd") + "'),0)Porcentaje_de_Descuento,count(o.codigo_oferta) AS 'Cantidad Ofertas Publicadas', SUM(Cantidad) AS 'Cantidad de Ofertas Vendidas' from PROVEEDORES p join ofertas o on p.Proveedor_Id = o.Proveedor_referenciado join COMPRAS c on o.codigo_oferta=c.codigo_oferta where Fecha_publicacion between '" + Convert.ToDateTime(Desde.Value).ToString("yyyy-MM-dd") + "' and  '" + Convert.ToDateTime(Hasta.Value).ToString("yyyy-MM-dd") + "' group by p.proveedor_id order by 2 desc");
 
 
             return sb.ToString();

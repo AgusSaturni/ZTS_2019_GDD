@@ -73,9 +73,9 @@ namespace FrbaOfertas.AbmRol
                     list_rol.Items.Add(list_totales.SelectedItem);
                     list_totales.Items.Remove(list_totales.SelectedItem);
                 }
-                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol"); }
+                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
             }
-            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol"); }
+            else { MessageBox.Show("Seleccione una funcion del sistema para agregar al rol", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
 
         private void bt_der_a_izq_Click(object sender, EventArgs e)
@@ -88,25 +88,25 @@ namespace FrbaOfertas.AbmRol
                     list_totales.Items.Add(list_rol.SelectedItem);
                     list_rol.Items.Remove(list_rol.SelectedItem);
                 }
-                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol"); }
+                else { MessageBox.Show("La funcion ya se encuentra asignada al Rol", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
-            else { MessageBox.Show("Seleccione una funcion asignada al rol para removerla"); }
+            else { MessageBox.Show("Seleccione una funcion asignada al rol para removerla", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void bt_finalizar_Click(object sender, EventArgs e)
         {
-            if (list_rol.Items.Count == 0) 
+            if (list_rol.Items.Count == 0)
             {
-                MessageBox.Show("Agregue al menos una funcion");
+                MessageBox.Show("Agregue al menos una funcion", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (txt_nombre_rol.Text == "") 
+            if (txt_nombre_rol.Text == "")
             {
-                MessageBox.Show("Introduzca el nombre del nuevo Rol");
+                MessageBox.Show("Introduzca el nombre del nuevo Rol", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            
-            
+
+
             conn.Open();
             //Esta no puede tirar error, por eso la saco del try
             this.carga_logica_funciones_nuevas(conn);
@@ -117,43 +117,43 @@ namespace FrbaOfertas.AbmRol
             {
                 //Primero inserto el rol nuevo, si tira error significa qu ya existe ese rol por lo que me sale al primer catch
                 this.insert_into_roles(txt_nombre_rol.Text.ToString(), conn);
-                
+
                 //Si paso esa parte, meto todas las funciones que seleccione
-                try 
+                try
                 {
                     for (int i = 0; i < Id_Funciones.Count; i++)
                     {
                         commonQueries_instance.insert_funciones_por_rol(txt_nombre_rol.Text.ToString(), Id_Funciones[i].ToString(), conn);
                     }
-                    
+
                 }
                 catch (SqlException exepcion)
                 {
                     SqlError errores = exepcion.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                MessageBox.Show("Creacion del Rol Finalizada");
-               
+                MessageBox.Show("Creacion del Rol Finalizada", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             conn.Close();
             Id_Funciones.Clear();
         }
 
-        public void insert_into_roles(string rol, SqlConnection conexion_actual) 
+        public void insert_into_roles(string rol, SqlConnection conexion_actual)
         {
             SqlCommand command = new SqlCommand("INSERTAR_ROL", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Rol_Id", txt_nombre_rol.Text.ToString());
 
             command.ExecuteNonQuery();
-      
+
         }
 
         private void bt_cancelar_Click(object sender, EventArgs e)
@@ -162,8 +162,8 @@ namespace FrbaOfertas.AbmRol
             Form menu = new MenuAdmin.ABMRoles();
             menu.Show();
         }
-    
-    
+
+
 
     }
 }

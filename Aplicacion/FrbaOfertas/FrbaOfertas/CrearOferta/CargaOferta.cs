@@ -20,7 +20,7 @@ namespace FrbaOfertas.CrearOferta
         SqlConnection conn;
         private DateTime Fecha_Config = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
         private bool bit_admin = false;
-        
+
         public string crear_codigo(int longitud)
         {
             string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -86,24 +86,19 @@ namespace FrbaOfertas.CrearOferta
 
         }
 
-        private bool verificar_datos() 
+        private bool verificar_datos()
         {
-            if (PrecioLista.Text.Any(x => !char.IsNumber(x)) || PrecioOferta.Text.Any(x => !char.IsNumber(x))) 
-            {
-                MessageBox.Show("Precio de lista y/o oferta Invalido", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
-            }
-            if (Int32.Parse(PrecioLista.Text) < Int32.Parse(PrecioOferta.Text)) 
+            if (Convert.ToDecimal(PrecioLista.Text) < Convert.ToDecimal(PrecioOferta.Text))
             {
                 MessageBox.Show("El precio de oferta debe ser menor al de lista", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
             }
-            if (Cantidad.Value.ToString() == "0" || CantMax.Value.ToString() == "0") 
+            if (Cantidad.Value.ToString() == "0" || CantMax.Value.ToString() == "0" || Convert.ToDecimal(Cantidad.Value.ToString()) < Convert.ToDecimal(CantMax.Value.ToString()))
             {
-                MessageBox.Show("Ingrese cantidad disponible y mamximo por usuario distinto de 0", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La cantidad disponible debe ser mayor a la cantidad maxima por usuario, y ambas distintas de 0.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
             }
-            if (FechaPublicacion.Value < Fecha_Config || FechaVencimiento.Value < Fecha_Config) 
+            if (FechaPublicacion.Value < Fecha_Config || FechaVencimiento.Value < Fecha_Config)
             {
                 MessageBox.Show("Las fechas deben ser mayores o iguales a la actual.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
@@ -132,8 +127,8 @@ namespace FrbaOfertas.CrearOferta
             command.Parameters.AddWithValue("@descripcion", SqlDbType.Char).Value = Descripcion.Text;
             command.Parameters.AddWithValue("@fecha_publicacion", SqlDbType.Date).Value = FechaPublicacion.Value;
             command.Parameters.AddWithValue("@fecha_vencimiento", SqlDbType.Date).Value = FechaVencimiento.Value;
-            command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value = Int32.Parse(PrecioOferta.Text);
-            command.Parameters.AddWithValue("@precio_lista", SqlDbType.Float).Value = Int32.Parse(PrecioLista.Text);
+            command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value = Convert.ToDecimal(PrecioOferta.Text);
+            command.Parameters.AddWithValue("@precio_lista", SqlDbType.Float).Value = Convert.ToDecimal(PrecioLista.Text);
             command.Parameters.AddWithValue("@cantidad_disponible", SqlDbType.Float).Value = Int32.Parse(Cantidad.Value.ToString());
             command.Parameters.AddWithValue("@cantidad_maxima_por_usuario", SqlDbType.Float).Value = Int32.Parse(CantMax.Value.ToString());
             command.Parameters.AddWithValue("@codigo", SqlDbType.Char).Value = this.crear_codigo(10);
@@ -142,7 +137,7 @@ namespace FrbaOfertas.CrearOferta
             {
                 command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = ProveedorUser.Text;
             }
-            else 
+            else
             {
                 command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = sesion.get_username();
             }
@@ -172,17 +167,36 @@ namespace FrbaOfertas.CrearOferta
             PrecioOferta.Text = "";
             Cantidad.Value = 0;
             CantMax.Value = 0;
-            if (this.bit_admin) 
+            if (this.bit_admin)
             {
                 ProveedorUser.Text = "";
             }
         }
 
-        
+        private void PrecioOferta_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
 
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
 
+        private void PrecioLista_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
 
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
     }
-
-
 }

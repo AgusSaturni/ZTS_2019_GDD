@@ -52,13 +52,17 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
                 this.contenedor_cupones.Columns[7].Visible = false;
             }
 
+            if (contenedor_cupones.Rows.Count == 0)
+            {
+                MessageBox.Show("No se encontraron cupones para los filtros aplicados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private string crear_query_listadoCupones()
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo, O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id from CUPONES C JOIN COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE ");
+            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo AS 'Fecha Consumo', O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id, C.Cantidad_disponible from CUPONES C JOIN COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE ");
 
             ArrayList Query = new ArrayList();
 
@@ -135,12 +139,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
                     Form consumo = new Entrega_ConsumoOferta(this, row.Cells[1].Value.ToString(), row.Cells[3].Value.ToString(), row.Cells[7].Value.ToString());
                     consumo.Show();
                 }
-
-            }
-        
-        }
-
-
-    
+            }        
+        }    
     }
 }

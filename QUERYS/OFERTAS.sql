@@ -2,24 +2,33 @@ CREATE PROCEDURE confeccion_oferta(@descripcion varchar(255),@fecha_publicacion 
 								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidad_maxima_por_usuario int,
 								   @codigo varchar(50),@proveedor_referenciado varchar(255))
 AS BEGIN
-
+	DECLARE @ID VARCHAR(50) = (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor_referenciado)
+		
 	IF EXISTS(SELECT 1 FROM PROVEEDORES WHERE username = @proveedor_referenciado)
 	BEGIN
 		
-		DECLARE @ID VARCHAR(50) = (SELECT Proveedor_Id FROM PROVEEDORES WHERE username = @proveedor_referenciado)
-		
-		insert into OFERTAS(precio_oferta,precio_lista,fecha_publicacion,fecha_vencimiento,Descripcion,
-						cantidad_disponible,cantidad_maxima_por_usuario,Codigo_Oferta,proveedor_referenciado)
-		values(
-		@precio_oferta,
-		@precio_lista,
-		convert(datetime,@fecha_publicacion,121),
-		convert(datetime,@fecha_vencimiento,121),
-		@descripcion,
-		@cantidad_disponible,
-		@cantidad_maxima_por_usuario,
-		@codigo,
-		@ID)
+		IF NOT EXISTS(SELECT 1 FROM OFERTAS WHERE Descripcion = @descripcion and Fecha_publicacion = convert(datetime,@fecha_publicacion,121)
+		and Fecha_Vencimiento = convert(datetime,@fecha_vencimiento,121) and Precio_lista = @precio_lista and Precio_oferta =@precio_oferta
+		and Proveedor_referenciado = @ID)
+		BEGIN
+			insert into OFERTAS(precio_oferta,precio_lista,fecha_publicacion,fecha_vencimiento,Descripcion,
+				cantidad_disponible,cantidad_maxima_por_usuario,Codigo_Oferta,proveedor_referenciado)
+			values(
+			@precio_oferta,
+			@precio_lista,
+			convert(datetime,@fecha_publicacion,121),
+			convert(datetime,@fecha_vencimiento,121),
+			@descripcion,
+			@cantidad_disponible,
+			@cantidad_maxima_por_usuario,
+			@codigo,
+			@ID)
+		END
+		ELSE
+		BEGIN
+			throw 100400,'La oferta ya se encuentra registrada en el sistema. Recuerde que solo puede haber ofertas iguales siempre y cuando sean de proveedores distintos. ', 1
+		END
+
 	END
 	ELSE
 	BEGIN
@@ -119,7 +128,8 @@ AS BEGIN
 	DECLARE @ofertaCodigo VARCHAR(255)
 	SET @ofertaCodigo = (SELECT Codigo_oferta FROM CUPONES WHERE Cupon_Id = @cuponId)
 	IF not exists (SELECT 1 FROM OFERTAS
-	WHERE convert(datetime,@ofertaFecha,121) between Fecha_publicacion and Fecha_Vencimiento and Codigo_Oferta = @ofertaCodigo)
+	--WHERE convert(datetime,@ofertaFecha,121) between Fecha_publicacion and Fecha_Vencimiento and Codigo_Oferta = @ofertaCodigo)
+	WHERE convert(datetime,@ofertaFecha,121) <= Fecha_Vencimiento and Codigo_Oferta = @ofertaCodigo)
 		BEGIN
 			THROW 90002,'La oferta se ha Vencido. No se puede canjear el cupon.',1
 		END
@@ -144,7 +154,7 @@ drop procedure verificar_proveedor
 
 CREATE PROCEDURE utilizar_cupon(@cuponId varchar(255), @fecha datetime)
 AS BEGIN
-	UPDATE CUPONES SET Fecha_Consumo = @fecha
+	UPDATE CUPONES SET Fecha_Consumo = @fecha, Cantidad_disponible -= 1
 	WHERE Cupon_Id = @cuponId
 END
 
@@ -153,7 +163,7 @@ drop procedure utilizar_cupon
 
 CREATE PROCEDURE cupon_utilizado(@cuponId varchar(255))
 AS BEGIN
-IF (SELECT count(1) from CUPONES where Cupon_Id = @cuponId AND Fecha_Consumo IS NOT NULL)>0
+IF (SELECT Cantidad_disponible from CUPONES where Cupon_Id = @cuponId)=0
 	BEGIN
 		THROW 90003,'El cupon ya fue utilizado.',1
 	END
