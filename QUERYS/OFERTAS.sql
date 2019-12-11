@@ -78,8 +78,8 @@ begin
 
 		declare @compra_id varchar(20) = (select top 1 compra_id from compras order by 1 desc)
 
-		insert into CUPONES(Codigo_cupon,Codigo_oferta,Compra_Id)
-		values(newid(),@codigoOferta,@compra_id)
+		insert into CUPONES(Codigo_cupon,Codigo_oferta,Compra_Id,Cantidad_disponible)
+		values(newid(),@codigoOferta,@compra_id,@cantidadCompra)
 
 		update OFERTAS
 		set Cantidad_disponible = Cantidad_disponible - @cantidadCompra

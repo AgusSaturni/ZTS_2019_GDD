@@ -61,10 +61,6 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                      SqlCommand command = new SqlCommand("comprar_oferta", conexion_sql);
                      command.CommandType = CommandType.StoredProcedure;
 
-                     SqlCommand command2 = new SqlCommand("obtener_codigo", conexion_sql);
-                     command2.CommandType = CommandType.StoredProcedure;
-         
-
                      SqlParameter codigo_oferta = new SqlParameter("@codigoOferta", SqlDbType.Char);
                      codigo_oferta.Direction = ParameterDirection.Input;
                      command.Parameters.Add(codigo_oferta);
@@ -77,23 +73,25 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                      command.Parameters.AddWithValue("@cantidadCompra", SqlDbType.Int).Value = (Cantidad.Value);
                      command.Parameters.AddWithValue("@cantidadMaxUsuario", SqlDbType.Int).Value = (cantMaxUser2);
 
-                     command2.Parameters.AddWithValue("@proveedor_id", SqlDbType.Char).Value = (proveedor_semilla2);
-                     command2.Parameters.AddWithValue("@descripcion", SqlDbType.Char).Value = (descripcion_semilla2);
-                     command2.Parameters.AddWithValue("@precio_oferta", SqlDbType.Char).Value = (precio_oferta_semilla2);
-                     command2.Parameters.AddWithValue("@precio_lista", SqlDbType.Char).Value = (precio_lista_semilla2);
+                    
+                       conexion_sql.Open();
+         
+            //consigo el codigo oferta por select
 
-                              conexion_sql.Open();
-    
-                try {
-                command2.ExecuteNonQuery();
-                MessageBox.Show("No hay stock de la oferta que desea comprar.");
-                }
-                catch (SqlException exepcion)
-                {          
-                        SqlError codigo = exepcion.Errors[0];
-                        codigo_oferta.Value = codigo.Message.ToString();
+                        string codigo = "select top 1 Codigo_Oferta from OFERTAS where Proveedor_referenciado = '"+proveedor_semilla2+"' and Descripcion ='"+descripcion_semilla2+"' and Cantidad_disponible > 0 and Precio_lista= "+precio_lista2+" and Precio_oferta ="+precio_oferta2;
+                        SqlCommand command2 = new SqlCommand(codigo, conexion_sql);
 
-                        try
+                        SqlDataReader reader_codigo = command2.ExecuteReader();
+                                      
+                        while (reader_codigo.Read())
+                        {
+                            codigo_oferta.Value = (reader_codigo[0].ToString());
+                            
+                        }
+                        
+                        reader_codigo.Close();
+                      
+                    try
                         {
                             command.ExecuteNonQuery();
 
@@ -116,12 +114,13 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                             MessageBox.Show(errores.Message.ToString());
                             return;
                         }
-                        
-                }
+                 
                          
           conexion_sql.Close();
           this.Hide();
         }            
+
+
    }
 }
 
