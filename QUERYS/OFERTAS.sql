@@ -32,6 +32,7 @@ END
 drop procedure confeccion_oferta
 
 ------------------------------------------------------------------------------------------------------------------------------
+
 CREATE PROCEDURE comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
 								  @clienteUsuario varchar(50),@cantidadDisponible int,@cantidadCompra int, @cantidadMaxUsuario int)
 AS BEGIN
@@ -59,8 +60,8 @@ declare @cliente_id varchar(20) = (select cliente_id from INSERTED)
 declare @codigoOferta varchar(50) = (select codigo_Oferta from INSERTED)
 declare @cantidadCompra int = (select Cantidad from inserted)
 
-IF(select count(*) from COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) <
-	(select cantidad_maxima_por_usuario from OFERTAS where Codigo_Oferta = @codigoOferta)
+IF(select SUM(Cantidad) from COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) <
+	(select cantidad_maxima_por_usuario from OFERTAS where Codigo_Oferta = @codigoOferta) OR (select SUM(Cantidad) from COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) is null
 begin
 	begin transaction
 		insert into COMPRAS(Cliente_Id,Codigo_oferta,Fecha_compra,Cantidad)
@@ -76,7 +77,7 @@ begin
 		where Codigo_Oferta = @codigoOferta
 
 		update CLIENTES
-		set DineroDisponible = DineroDisponible - (select precio_oferta from OFERTAS where Codigo_Oferta = @codigoOferta)
+		set DineroDisponible = DineroDisponible - (select precio_oferta from OFERTAS where Codigo_Oferta = @codigoOferta) * @cantidadCompra
 		where Cliente_Id = @cliente_id
 	commit transaction
 	end
@@ -84,7 +85,6 @@ begin
 		throw 50002,'Usted alcanzó la cantidad máxima de compras posibles de esta Oferta.',1
 		
 end
-
 
 
 drop trigger trigger_compras

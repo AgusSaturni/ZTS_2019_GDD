@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CantidadAComprar));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Cantidad = new System.Windows.Forms.NumericUpDown();
             this.bt_buscar = new System.Windows.Forms.Button();
+            this.Cantidad = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Cantidad)).BeginInit();
             this.SuspendLayout();
@@ -60,13 +60,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccione";
             // 
-            // Cantidad
-            // 
-            this.Cantidad.Location = new System.Drawing.Point(88, 28);
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.Size = new System.Drawing.Size(120, 20);
-            this.Cantidad.TabIndex = 36;
-            // 
             // bt_buscar
             // 
             this.bt_buscar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
@@ -78,6 +71,18 @@
             this.bt_buscar.Text = "Comprar";
             this.bt_buscar.UseVisualStyleBackColor = true;
             this.bt_buscar.Click += new System.EventHandler(this.bt_buscar_Click);
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.Location = new System.Drawing.Point(88, 28);
+            this.Cantidad.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.Size = new System.Drawing.Size(120, 20);
+            this.Cantidad.TabIndex = 36;
             // 
             // CantidadAComprar
             // 

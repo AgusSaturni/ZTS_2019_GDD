@@ -172,11 +172,13 @@
             // contenedor_ofertas
             // 
             this.contenedor_ofertas.AllowUserToAddRows = false;
+            this.contenedor_ofertas.AllowUserToDeleteRows = false;
             this.contenedor_ofertas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_ofertas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
             this.contenedor_ofertas.Location = new System.Drawing.Point(11, 147);
             this.contenedor_ofertas.Name = "contenedor_ofertas";
+            this.contenedor_ofertas.ReadOnly = true;
             this.contenedor_ofertas.Size = new System.Drawing.Size(786, 281);
             this.contenedor_ofertas.TabIndex = 11;
             this.contenedor_ofertas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.contenedor_ofertas_CellContentClick);
@@ -185,6 +187,7 @@
             // 
             this.Column1.HeaderText = "Comprar";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
             // Ofertas
             // 

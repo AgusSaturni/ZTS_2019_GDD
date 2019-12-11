@@ -133,9 +133,12 @@
             // 
             // contenedor_proveedores
             // 
+            this.contenedor_proveedores.AllowUserToAddRows = false;
+            this.contenedor_proveedores.AllowUserToDeleteRows = false;
             this.contenedor_proveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_proveedores.Location = new System.Drawing.Point(4, 153);
             this.contenedor_proveedores.Name = "contenedor_proveedores";
+            this.contenedor_proveedores.ReadOnly = true;
             this.contenedor_proveedores.Size = new System.Drawing.Size(607, 257);
             this.contenedor_proveedores.TabIndex = 44;
             // 
