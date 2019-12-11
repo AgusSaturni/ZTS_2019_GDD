@@ -1,14 +1,3 @@
------------------LISTADO ESTADISTICO----------------------
-CREATE PROCEDURE verificar_Semestre (@fecha1 datetime, @fecha2 datetime)
-AS BEGIN
-declare @fecha1MOD datetime = CONVERT(datetime,@fecha1, 121)
-declare @fecha2MOD datetime = CONVERT(datetime,@fecha2, 121)
-IF NOT((SUM(DATEDIFF(DAY,@fecha1MOD,@fecha2MOD) + 1)) between 181 and 184)
-	throw 50001,'Las fechas ingresadas no corresponden a un semestre',1
-END
-
-drop procedure verificar_Semestre
-
 -------------------Funcion para suma de porcentajes-----------------------------------------
 
 create function suma_porcentajes_de_ofertas(@proveedor varchar(20),@fecha1 datetime,@fecha2 datetime)
