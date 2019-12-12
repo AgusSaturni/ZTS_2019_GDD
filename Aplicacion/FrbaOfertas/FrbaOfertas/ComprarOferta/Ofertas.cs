@@ -18,8 +18,20 @@ namespace FrbaOfertas.ComprarOferta
 {
     public partial class Ofertas : Form
     {
-      
-
+        string sesion_username = "";
+        public Ofertas(string username)
+        {
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            InitializeComponent();
+            minimo.ReadOnly = true;
+            minimo.Increment = 0;
+            maximo.ReadOnly = true;
+            maximo.Increment = 0;
+            rango.Checked = false;
+            sesion_username = username;
+            this.contenedor_ofertas.Columns[9].Visible = false;
+        }
         public Ofertas()
         {
             MaximizeBox = false;
@@ -28,8 +40,9 @@ namespace FrbaOfertas.ComprarOferta
             minimo.ReadOnly = true;
             minimo.Increment = 0;
             maximo.ReadOnly = true;
-            maximo.Increment = 0; 
+            maximo.Increment = 0;
             rango.Checked = false;
+           // this.contenedor_ofertas.Columns[9].Visible = false;
         }
 
         private void contenedor_ofertas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -44,16 +57,27 @@ namespace FrbaOfertas.ComprarOferta
                 var row = contenedor_ofertas.CurrentRow;
 
                 string descripcion_semilla = row.Cells[1].Value.ToString();
-                string proveedor_semilla = row.Cells[7].Value.ToString();
+                string proveedor_semilla = row.Cells[8].Value.ToString();
                 float precio_lista_semilla = float.Parse(row.Cells[3].Value.ToString());
                 float precio_oferta_semilla = float.Parse(row.Cells[2].Value.ToString());
                 float precio_oferta = float.Parse(row.Cells[2].Value.ToString());
                 float precio_lista = float.Parse(row.Cells[3].Value.ToString());       
-                int cantidadDispo = Int32.Parse(row.Cells[5].Value.ToString());
-                int cantMaxUser = Int32.Parse(row.Cells[6].Value.ToString());
-
-                Form comprar = new ComprarOferta.CantidadAComprar(descripcion_semilla,proveedor_semilla,precio_lista_semilla,precio_oferta_semilla,precio_oferta,precio_lista,cantidadDispo,cantMaxUser);
-                comprar.Show();
+                int cantidadDispo = Int32.Parse(row.Cells[6].Value.ToString());
+                int cantMaxUser = Int32.Parse(row.Cells[7].Value.ToString());
+                DateTime fecha_publicacion = DateTime.Parse(row.Cells[4].Value.ToString());
+                DateTime fecha_vencimiento = DateTime.Parse(row.Cells[5].Value.ToString());
+                string codigo_oferta = row.Cells[9].Value.ToString();
+                
+                if (sesion_username == "")
+                {
+                    Form comprar = new ComprarOferta.CantidadAComprar(descripcion_semilla, proveedor_semilla, precio_lista_semilla, precio_oferta_semilla, precio_oferta, precio_lista, cantidadDispo, cantMaxUser, fecha_publicacion, fecha_vencimiento, codigo_oferta);
+                    comprar.Show();
+                }
+                else
+                {
+                    Form comprar = new ComprarOferta.CantidadAComprar(sesion_username, descripcion_semilla, proveedor_semilla, precio_lista_semilla, precio_oferta_semilla, precio_oferta, precio_lista, cantidadDispo, cantMaxUser, fecha_publicacion, fecha_vencimiento, codigo_oferta);
+                    comprar.Show();
+                }
 
             }
 
@@ -110,7 +134,7 @@ namespace FrbaOfertas.ComprarOferta
 
             string fecha = ConfigurationManager.AppSettings["fecha"].ToString();
   
-            sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ZTS_DB.ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
+            sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_publicacion, fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado, codigo_oferta from ZTS_DB.ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
            
             ArrayList Query = new ArrayList();
 

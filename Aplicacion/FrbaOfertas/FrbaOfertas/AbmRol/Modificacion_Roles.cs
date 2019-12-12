@@ -105,7 +105,16 @@ namespace FrbaOfertas.AbmRol
 
         private void bt_seleccionar_Click(object sender, EventArgs e)
         {
-
+            if (comboBox_roles.SelectedIndex != -1)
+            {
+                this.Close();
+                Form cambiar_nombre = new CambiarNombreRol(comboBox_roles.SelectedItem.ToString());
+                cambiar_nombre.Show();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un Rol", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void bt_izq_a_der_Click(object sender, EventArgs e)

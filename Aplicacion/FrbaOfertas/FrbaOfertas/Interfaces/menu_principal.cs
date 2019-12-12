@@ -31,7 +31,6 @@ namespace FrbaOfertas.Interfaces
 
         private void cargar_comboBox(Singleton_Usuario sesion) 
         {
-
             List<String> lista_permisos = sesion.get_permisos();
 
             for(int i=0; i < lista_permisos.Count(); i++)
@@ -75,8 +74,10 @@ namespace FrbaOfertas.Interfaces
                         listado.Show();
                         break;
                     case "Comprar Oferta":
-                        Form oferta = new ComprarOferta.Ofertas();
-                        oferta.Show();
+                        Form ComprarOferta;
+                        if (sesion.verificar_rol_administrador()) { ComprarOferta = new ComprarOferta.ElegirCliente(); }
+                        else { ComprarOferta = new ComprarOferta.Ofertas(); }
+                        ComprarOferta.Show();
                         this.Hide();
                         break;
                     case "Cargar Credito":

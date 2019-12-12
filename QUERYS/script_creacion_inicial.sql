@@ -1149,6 +1149,31 @@ AS BEGIN
 END
 GO
 
+IF OBJECT_ID('Actulizar_nombre_rol') IS NOT NULL
+	DROP PROCEDURE ZTS_DB.Actulizar_nombre_rol
+GO
+CREATE PROCEDURE ZTS_DB.Actulizar_nombre_rol (@nombre_rol_nuevo varchar(255),@nombre_rol_viejo varchar(255))
+AS BEGIN
+
+	ALTER TABLE ZTS_DB.ROLES NOCHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO NOCHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL NOCHECK CONSTRAINT ALL
+	
+	update ZTS_DB.ROLES set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	update ZTS_DB.ROLES_POR_USUARIO set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	update ZTS_DB.FUNCIONES_POR_ROL set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	ALTER TABLE ZTS_DB.ROLES CHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO CHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL CHECK CONSTRAINT ALL
+END
+GO
+
 -------------------------------------------------------------------------------
 ----OFERTAS--------------------------------------------------------------------
 -------------------------------------------------------------------------------
