@@ -42,11 +42,11 @@ namespace FrbaOfertas
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-            SqlCommand verificacion_usuario = new SqlCommand("verificar_usuario", conexion_sql);
+            SqlCommand verificacion_usuario = new SqlCommand("ZTS_DB.verificar_usuario", conexion_sql);
             verificacion_usuario.CommandType = CommandType.StoredProcedure;
             verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
 
-            SqlCommand verificacion_password = new SqlCommand("verificar_password", conexion_sql);
+            SqlCommand verificacion_password = new SqlCommand("ZTS_DB.verificar_password", conexion_sql);
             verificacion_password.CommandType = CommandType.StoredProcedure;
             verificacion_password.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
             verificacion_password.Parameters.AddWithValue("@password", SqlDbType.Char).Value = Password.Text;
@@ -72,7 +72,7 @@ namespace FrbaOfertas
                     if (contador == 3)
                     {
                         contador = 0;
-                        SqlCommand inhabilitar_usuario = new SqlCommand("inhabilitacion_usuario", conexion_sql);
+                        SqlCommand inhabilitar_usuario = new SqlCommand("ZTS_DB.inhabilitacion_usuario", conexion_sql);
                         inhabilitar_usuario.CommandType = CommandType.StoredProcedure;
 
                         SqlParameter username = new SqlParameter("@username", SqlDbType.Char);

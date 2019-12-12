@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rango = new System.Windows.Forms.CheckBox();
+            this.maximo = new System.Windows.Forms.NumericUpDown();
+            this.minimo = new System.Windows.Forms.NumericUpDown();
             this.btn_volver = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,13 +41,10 @@
             this.Descripcion = new System.Windows.Forms.TextBox();
             this.contenedor_ofertas = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.minimo = new System.Windows.Forms.NumericUpDown();
-            this.maximo = new System.Windows.Forms.NumericUpDown();
-            this.rango = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.minimo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maximo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minimo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -68,6 +68,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // rango
+            // 
+            this.rango.AutoSize = true;
+            this.rango.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.rango.Location = new System.Drawing.Point(20, 63);
+            this.rango.Name = "rango";
+            this.rango.Size = new System.Drawing.Size(122, 18);
+            this.rango.TabIndex = 14;
+            this.rango.Text = "Rango de Precios";
+            this.rango.UseVisualStyleBackColor = true;
+            this.rango.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // maximo
+            // 
+            this.maximo.Location = new System.Drawing.Point(259, 98);
+            this.maximo.Name = "maximo";
+            this.maximo.Size = new System.Drawing.Size(120, 20);
+            this.maximo.TabIndex = 13;
+            // 
+            // minimo
+            // 
+            this.minimo.Location = new System.Drawing.Point(64, 98);
+            this.minimo.Name = "minimo";
+            this.minimo.Size = new System.Drawing.Size(120, 20);
+            this.minimo.TabIndex = 12;
             // 
             // btn_volver
             // 
@@ -164,34 +190,6 @@
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
-            // minimo
-            // 
-            this.minimo.DecimalPlaces = 2;
-            this.minimo.Location = new System.Drawing.Point(64, 98);
-            this.minimo.Name = "minimo";
-            this.minimo.Size = new System.Drawing.Size(120, 20);
-            this.minimo.TabIndex = 12;
-            // 
-            // maximo
-            // 
-            this.maximo.DecimalPlaces = 2;
-            this.maximo.Location = new System.Drawing.Point(259, 98);
-            this.maximo.Name = "maximo";
-            this.maximo.Size = new System.Drawing.Size(120, 20);
-            this.maximo.TabIndex = 13;
-            // 
-            // rango
-            // 
-            this.rango.AutoSize = true;
-            this.rango.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.rango.Location = new System.Drawing.Point(20, 63);
-            this.rango.Name = "rango";
-            this.rango.Size = new System.Drawing.Size(122, 18);
-            this.rango.TabIndex = 14;
-            this.rango.Text = "Rango de Precios";
-            this.rango.UseVisualStyleBackColor = true;
-            this.rango.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // Ofertas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,9 +203,9 @@
             this.Load += new System.EventHandler(this.Ofertas_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.minimo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maximo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minimo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contenedor_ofertas)).EndInit();
             this.ResumeLayout(false);
 
         }

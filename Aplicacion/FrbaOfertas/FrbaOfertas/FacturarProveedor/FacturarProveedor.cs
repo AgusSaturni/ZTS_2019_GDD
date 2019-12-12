@@ -91,7 +91,7 @@ namespace FrbaOfertas.Facturar
 
         private Boolean proveedor_existente()
         {
-            SqlCommand proveedor_existente = new SqlCommand("proveedor_existente", conexion_sql);
+            SqlCommand proveedor_existente = new SqlCommand("ZTS_DB.proveedor_existente", conexion_sql);
             proveedor_existente.CommandType = CommandType.StoredProcedure;
             proveedor_existente.Parameters.AddWithValue("@proveedor", SqlDbType.Char).Value = txt_proveedor.Text;
 
@@ -135,7 +135,7 @@ namespace FrbaOfertas.Facturar
 
             conexion_sql.Open();
 
-            SqlCommand insertar_factura = new SqlCommand("insertar_factura", conexion_sql);
+            SqlCommand insertar_factura = new SqlCommand("ZTS_DB.insertar_factura", conexion_sql);
             insertar_factura.CommandType = CommandType.StoredProcedure;
             insertar_factura.Parameters.AddWithValue("@proveedor_id", SqlDbType.Char).Value = proveedor_id;
             insertar_factura.Parameters.AddWithValue("@fecha", SqlDbType.DateTime).Value = Fecha_Config;
@@ -158,7 +158,7 @@ namespace FrbaOfertas.Facturar
         {
             conexion_sql.Open();
 
-            string query = "UPDATE COMPRAS SET Factura_id = '" + factura_id + "' WHERE Compra_Id = '"+ compra_id +"'";
+            string query = "UPDATE ZTS_DB.COMPRAS SET Factura_id = '" + factura_id + "' WHERE Compra_Id = '" + compra_id + "'";
             SqlCommand actualizar_compra = new SqlCommand(query, conexion_sql);
 
             try
@@ -217,7 +217,7 @@ namespace FrbaOfertas.Facturar
             conexion_sql.Open();
 
             string proveedor_Id = "";
-            string query = "SELECT Proveedor_Id FROM PROVEEDORES WHERE username = '" + txt_proveedor.Text + "'";
+            string query = "SELECT Proveedor_Id FROM ZTS_DB.PROVEEDORES WHERE username = '" + txt_proveedor.Text + "'";
             SqlCommand get_proveedorID = new SqlCommand(query, conexion_sql);
 
             SqlDataReader readIn = get_proveedorID.ExecuteReader();
@@ -235,7 +235,7 @@ namespace FrbaOfertas.Facturar
             conexion_sql.Open();
 
             int numero_id = 0;
-            string query = "SELECT MAX(Numero) FROM FACTURAS";
+            string query = "SELECT MAX(Numero) FROM ZTS_DB.FACTURAS";
             SqlCommand get_facturaId_Max = new SqlCommand(query, conexion_sql);
 
             SqlDataReader readIn = get_facturaId_Max.ExecuteReader();

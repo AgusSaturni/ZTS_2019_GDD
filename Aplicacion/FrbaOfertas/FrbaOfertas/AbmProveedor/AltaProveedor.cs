@@ -59,7 +59,7 @@ namespace FrbaOfertas.AbmProveedor
             conn.Open();
             try
             {
-                SqlCommand verificacion_proveedor = new SqlCommand("verificar_existencia_proveedor_gemelo", conn);
+                SqlCommand verificacion_proveedor = new SqlCommand("ZTS_DB.verificar_existencia_proveedor_gemelo", conn);
                 verificacion_proveedor.CommandType = CommandType.StoredProcedure;
 
                 verificacion_proveedor.Parameters.AddWithValue("@cuit", SqlDbType.Char).Value = CUIT.Text;

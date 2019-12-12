@@ -25,7 +25,7 @@ namespace FrbaOfertas.Manejo_Logico
 
         public SqlDataReader get_all_roles(SqlConnection conexion_actual) 
         {
-            String query = "SELECT * FROM ROLES";
+            String query = "SELECT * FROM ZTS_DB.ROLES";
             SqlCommand cmd = new SqlCommand(query, conexion_actual);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -34,7 +34,7 @@ namespace FrbaOfertas.Manejo_Logico
 
         public SqlDataReader get_all_funciones(SqlConnection conexion_actual)
         {
-            String query = "select Descripcion from Funciones";
+            String query = "select Descripcion from ZTS_DB.Funciones";
             SqlCommand cmd = new SqlCommand(query, conexion_actual);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -43,7 +43,7 @@ namespace FrbaOfertas.Manejo_Logico
 
         public void insert_funciones_por_rol(string rol, string funcionId, SqlConnection conexion_actual) 
         {
-            SqlCommand cmd = new SqlCommand("insertar_funciones_por_rol", conexion_actual);
+            SqlCommand cmd = new SqlCommand("ZTS_DB.insertar_funciones_por_rol", conexion_actual);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Rol_Id", rol);
             cmd.Parameters.AddWithValue("@funcionID", funcionId);
@@ -53,7 +53,7 @@ namespace FrbaOfertas.Manejo_Logico
 
         public void vereificar_estado_rol(String Rol, SqlConnection conexion_actual) 
         {
-            SqlCommand cmd = new SqlCommand("verificar_estado_rol", conexion_actual);
+            SqlCommand cmd = new SqlCommand("ZTS_DB.verificar_estado_rol", conexion_actual);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Rol_Id", Rol);
 
@@ -84,7 +84,7 @@ namespace FrbaOfertas.Manejo_Logico
 
         public SqlDataReader select_rubros_disponibles(SqlConnection conexion_actual) 
         {
-            String query = "select rubro_descripcion from RUBROS";
+            String query = "select rubro_descripcion from ZTS_DB.RUBROS";
             SqlCommand cmd = new SqlCommand(query, conexion_actual);
             SqlDataReader reader = cmd.ExecuteReader();
 

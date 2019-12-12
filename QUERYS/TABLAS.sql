@@ -240,9 +240,6 @@ CREATE TABLE FACTURAS
 	FOREIGN KEY(Proveedor_Id) REFERENCES PROVEEDORES(Proveedor_Id)
 )
 
-drop table FACTURAS
-
-
 INSERT INTO FACTURAS
 (Proveedor_Id,FECHA, Numero,ImporteTotal)
 (select  p.proveedor_id,Factura_Fecha, Factura_Nro,sum(Oferta_Precio) from gd_esquema.Maestra gd join Proveedores p
@@ -307,7 +304,9 @@ CREATE TABLE COMPRAS
   Cliente_Id varchar(17),
   Fecha_compra datetime not null,
   Cantidad SMALLINT,
+  Factura_id bigint,
   PRIMARY KEY(Compra_Id),
+  FOREIGN KEY(Factura_id) REFERENCES FACTURAS(numero),
   FOREIGN KEY(Cliente_Id) REFERENCES CLIENTES(Cliente_Id),
   FOREIGN KEY(Codigo_oferta) REFERENCES OFERTAS(Codigo_oferta)
 )
@@ -316,6 +315,10 @@ insert into compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
 (select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join CLIENTES c on gd.Cli_Dni = c.DNI)
 
+update compras
+set Factura_Id = (select top 1  gd.Factura_Nro from gd_esquema.Maestra gd where Fecha_compra = gd.Oferta_Fecha_Compra and Codigo_oferta = gd.Oferta_Codigo order by 1 desc)
+
+delete from COMPRAS
 
 ---CUPONES----------------------
 CREATE TABLE CUPONES
@@ -351,4 +354,3 @@ where Oferta_Entregado_Fecha is not null
 
 update CUPONES
 set codigo_cupon= (select newId())
-

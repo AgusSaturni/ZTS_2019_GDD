@@ -49,7 +49,7 @@ namespace FrbaOfertas.AbmProveedor
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select p.proveedor_id,Razon_Social,username,d.Direccion,Telefono,CUIT,Mail,Nombre_contacto, r.rubro_descripcion,Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto, estado from PROVEEDORES p join DIRECCION d on p.Direccion = d.Id_Direccion join rubros r on p.rubro_id = r.Rubro_Id where ");
+            sb.Append("select p.proveedor_id,Razon_Social,username,d.Direccion,Telefono,CUIT,Mail,Nombre_contacto, r.rubro_descripcion,Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto, estado from ZTS_DB.PROVEEDORES p join ZTS_DB.DIRECCION d on p.Direccion = d.Id_Direccion join ZTS_DB.rubros r on p.rubro_id = r.Rubro_Id where ");
 
             ArrayList Query = new ArrayList();
 
@@ -103,7 +103,7 @@ namespace FrbaOfertas.AbmProveedor
                 {
                     var row = contenedor_proveedores.CurrentRow;
 
-                    SqlCommand command = new SqlCommand("baja_logica_proveedor", conn);
+                    SqlCommand command = new SqlCommand("ZTS_DB.baja_logica_proveedor", conn);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CUIT", SqlDbType.Char).Value = row.Cells[7].Value.ToString();
                     command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = row.Cells[4].Value.ToString();

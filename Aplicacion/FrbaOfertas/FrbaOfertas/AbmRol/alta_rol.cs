@@ -49,7 +49,7 @@ namespace FrbaOfertas.AbmRol
 
         private void carga_logica_funciones_nuevas(SqlConnection conexion)
         {
-            String query = "select Funcion_Id, Descripcion from Funciones";
+            String query = "select Funcion_Id, Descripcion from ZTS_DB.Funciones";
             SqlCommand cmd = new SqlCommand(query, conexion);
 
             SqlDataReader reader = cmd.ExecuteReader();
@@ -148,7 +148,7 @@ namespace FrbaOfertas.AbmRol
 
         public void insert_into_roles(string rol, SqlConnection conexion_actual)
         {
-            SqlCommand command = new SqlCommand("INSERTAR_ROL", conn);
+            SqlCommand command = new SqlCommand("ZTS_DB.INSERTAR_ROL", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Rol_Id", txt_nombre_rol.Text.ToString());
 

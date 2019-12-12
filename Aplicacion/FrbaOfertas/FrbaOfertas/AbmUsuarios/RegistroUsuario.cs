@@ -89,7 +89,7 @@ namespace FrbaOfertas
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-            SqlCommand verificacion_usuario = new SqlCommand("verificar_existencia_de_usuario", conexion_sql);
+            SqlCommand verificacion_usuario = new SqlCommand("ZTS_DB.verificar_existencia_de_usuario", conexion_sql);
             verificacion_usuario.CommandType = CommandType.StoredProcedure;
 
             verificacion_usuario.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;

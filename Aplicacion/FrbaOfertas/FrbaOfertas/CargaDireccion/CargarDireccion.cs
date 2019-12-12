@@ -78,7 +78,7 @@ namespace FrbaOfertas.CargaDireccion
                     if (this.verificar_datos_direccion()) { return; }
                    
                     //----------------------DATOS PARA REGISTRO----------------------------
-                    SqlCommand command = new SqlCommand("registrar_usuario_cliente", conn);
+                    SqlCommand command = new SqlCommand("ZTS_DB.registrar_usuario_cliente", conn);
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = usuario;
@@ -106,7 +106,7 @@ namespace FrbaOfertas.CargaDireccion
 
                     if (this.verificar_datos_direccion()) { return; }
 
-                    SqlCommand command1 = new SqlCommand("registrar_usuario_proveedor", conn);
+                    SqlCommand command1 = new SqlCommand("ZTS_DB.registrar_usuario_proveedor", conn);
                     command1.CommandType = CommandType.StoredProcedure;
 
                     command1.Parameters.AddWithValue("@Username", SqlDbType.Char).Value = usuario;

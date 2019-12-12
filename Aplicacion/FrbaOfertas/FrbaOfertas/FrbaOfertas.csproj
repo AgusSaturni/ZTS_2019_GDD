@@ -191,12 +191,6 @@
     </Compile>
     <Compile Include="Manejo Logico\helperControls.cs" />
     <Compile Include="Manejo Logico\Singleton Usuario.cs" />
-    <Compile Include="MenuABM.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MenuABM.Designer.cs">
-      <DependentUpon>MenuABM.cs</DependentUpon>
-    </Compile>
     <Compile Include="MenuAdmin\ABMClientes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,9 +274,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadistico.resx">
       <DependentUpon>ListadoEstadistico.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MenuABM.resx">
-      <DependentUpon>MenuABM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuAdmin\ABMClientes.resx">
       <DependentUpon>ABMClientes.cs</DependentUpon>

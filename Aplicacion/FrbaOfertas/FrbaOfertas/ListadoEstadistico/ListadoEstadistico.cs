@@ -37,7 +37,7 @@ namespace FrbaOfertas.ListadoEstadistico
 
             cargar_fechas();
 
-            sb.Append("select top 5 proveedor_id ,coalesce(dbo.suma_porcentajes_de_ofertas(proveedor_Id,'" + fecha_desde + "','" + fecha_hasta + "'),0)Porcentaje_de_Descuento,count(o.codigo_oferta) AS 'Cantidad Ofertas Publicadas', SUM(Cantidad) AS 'Cantidad de Ofertas Vendidas' from PROVEEDORES p join ofertas o on p.Proveedor_Id = o.Proveedor_referenciado join COMPRAS c on o.codigo_oferta=c.codigo_oferta where Fecha_publicacion between '" + fecha_desde + "' and  '" + fecha_hasta + "' group by p.proveedor_id order by 2 desc");
+            sb.Append("select top 5 proveedor_id ,coalesce(ZTS_DB.suma_porcentajes_de_ofertas(proveedor_Id,'" + fecha_desde + "','" + fecha_hasta + "'),0)Porcentaje_de_Descuento,count(o.codigo_oferta) AS 'Cantidad Ofertas Publicadas', SUM(Cantidad) AS 'Cantidad de Ofertas Vendidas' from ZTS_DB.PROVEEDORES p join ZTS_DB.ofertas o on p.Proveedor_Id = o.Proveedor_referenciado join ZTS_DB.COMPRAS c on o.codigo_oferta=c.codigo_oferta where Fecha_publicacion between '" + fecha_desde + "' and  '" + fecha_hasta + "' group by p.proveedor_id order by 2 desc");
             
             return sb.ToString();
         }
@@ -48,7 +48,7 @@ namespace FrbaOfertas.ListadoEstadistico
 
             cargar_fechas();
 
-            sb.Append("select top 5 Proveedor_referenciado,sum(Precio_oferta * cantidad)FacturacionTotal, count(Factura_Id)Cantidad_De_facturas from COMPRAS c join OFERTAS o on c.Codigo_oferta=o.Codigo_Oferta where Factura_Id is not null and Fecha_compra between '" + fecha_desde + "' and '" + fecha_hasta + "' group by Proveedor_referenciado order by 2 desc");
+            sb.Append("select top 5 Proveedor_referenciado,sum(Precio_oferta * cantidad)FacturacionTotal, count(Factura_Id)Cantidad_De_facturas from ZTS_DB.COMPRAS c join ZTS_DB.OFERTAS o on c.Codigo_oferta=o.Codigo_Oferta where Factura_Id is not null and Fecha_compra between '" + fecha_desde + "' and '" + fecha_hasta + "' group by Proveedor_referenciado order by 2 desc");
 
             return sb.ToString();
         }

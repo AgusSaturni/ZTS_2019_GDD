@@ -58,7 +58,7 @@ namespace FrbaOfertas.AbmProveedor
 
                 try
                 {
-                    SqlCommand command = new SqlCommand("habilitar_proveedor", conexion_sql);
+                    SqlCommand command = new SqlCommand("ZTS_DB.habilitar_proveedor", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CUIT", SqlDbType.Int).Value = (txt_CUIT.Text);
                     command.Parameters.AddWithValue("@Username", SqlDbType.Int).Value = txt_username.Text;
@@ -125,7 +125,7 @@ namespace FrbaOfertas.AbmProveedor
             conexion_sql.Open();
             try
             {
-                SqlCommand command = new SqlCommand("actualizar_proveedor", conexion_sql);
+                SqlCommand command = new SqlCommand("ZTS_DB.actualizar_proveedor", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = (txt_username.Text);

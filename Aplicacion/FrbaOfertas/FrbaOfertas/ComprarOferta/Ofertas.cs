@@ -81,15 +81,9 @@ namespace FrbaOfertas.ComprarOferta
                 }
                 else
                 {
-                     query = crear_query_oferta(Descripcion.Text, Convert.ToDecimal(minimo.Value), Convert.ToDecimal(maximo.Value));
+                    query = crear_query_oferta(Descripcion.Text, Convert.ToDecimal(minimo.Value), Convert.ToDecimal(maximo.Value));
                 }
             }
-
-           
-           
-                
-
-            
           
                 conexionBD conexion = conexionBD.getConexion();
 
@@ -104,9 +98,8 @@ namespace FrbaOfertas.ComprarOferta
                 adapter.Fill(tabla_clientes);
 
                 contenedor_ofertas.DataSource = tabla_clientes;
-                conn.Close();
-            
 
+                conn.Close();
         }
 
         private string crear_query_oferta(String descripcion, decimal minimo, decimal maximo)
@@ -117,33 +110,30 @@ namespace FrbaOfertas.ComprarOferta
 
             string fecha = ConfigurationManager.AppSettings["fecha"].ToString();
   
-            sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
+            sb.Append("SELECT DISTINCT Descripcion, precio_oferta,Precio_lista,fecha_vencimiento,Cantidad_disponible,cantidad_maxima_por_usuario,proveedor_referenciado from ZTS_DB.ofertas where fecha_vencimiento >= " + "'" + fecha + "'" + " AND " + "fecha_publicacion <= " + "'" + fecha + "'" + " AND Cantidad_disponible > 0 AND ");
            
             ArrayList Query = new ArrayList();
 
             if (descripcion != "")
             {
                 Query.Add("Descripcion LIKE '%" + descripcion + "%'");
-            }
-     
+            }     
             if (maximo!= 0)
             {
                 string cadena = "precio_lista between " + minimo + "and " + maximo;
                 Query.Add(cadena);
             }
-
-            if (Query.Count == 0) { return ""; }
             else
             {
-                string[] vector_query = Query.ToArray(typeof(string)) as string[];
-                string query_final = string.Join(" AND ", vector_query);
-
-                sb.Append(query_final);
-
-                return sb.ToString();
-                
+                Query.Add(" 1 = 1"); // ya que si no tengo ningun campo lleno, y toco el checkbox, me queda where solo
             }
-            
+
+            string[] vector_query = Query.ToArray(typeof(string)) as string[];
+            string query_final = string.Join(" AND ", vector_query);
+
+            sb.Append(query_final);
+
+            return sb.ToString();            
         }
 
         private void bt_limpiar_Click(object sender, EventArgs e)

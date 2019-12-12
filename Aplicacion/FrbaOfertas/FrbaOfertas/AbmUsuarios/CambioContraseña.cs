@@ -60,7 +60,7 @@ namespace FrbaOfertas.AbmUsuarios
 
             conn.Open();
 
-            SqlCommand command = new SqlCommand("modificar_password", conn);
+            SqlCommand command = new SqlCommand("ZTS_DB.modificar_password", conn);
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;

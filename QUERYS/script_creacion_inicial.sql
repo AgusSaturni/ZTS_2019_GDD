@@ -7,8 +7,6 @@ EXEC('create schema ZTS_DB')
 END;
 GO
 
-
-
 ---------------------------TABLA DIRECCIONES-----------------------------------
 IF NOT EXISTS (select * from sysobjects where name='DIRECCION' and xtype='U')
 CREATE TABLE ZTS_DB.DIRECCION
@@ -344,6 +342,32 @@ from gd_esquema.Maestra gd join ZTS_DB.proveedores p
 on gd.Provee_rs = p.razon_social
 where gd.Oferta_Codigo is not null )
 
+
+-------------------------------------------------------------------------------
+
+-----------------------TABLA DE FACTURAS---------------------------------------
+
+IF NOT EXISTS (select * from sysobjects where name='FACTURAS' and xtype='U')
+CREATE TABLE ZTS_DB.FACTURAS
+( 
+	Numero bigint not null,
+	Proveedor_Id varchar(19) not null,
+	Fecha datetime not null,
+	ImporteTotal numeric(20,2),
+	PRIMARY KEY(Numero),
+	FOREIGN KEY(Proveedor_Id) REFERENCES ZTS_DB.PROVEEDORES(Proveedor_Id)
+)
+GO
+
+----MIGRACION DE FACTURAS---------
+
+INSERT INTO ZTS_DB.FACTURAS
+(Proveedor_Id,FECHA, Numero,ImporteTotal)
+(select  p.proveedor_id,Factura_Fecha, Factura_Nro,sum(Oferta_Precio) from gd_esquema.Maestra gd join ZTS_DB.Proveedores p
+on gd.Provee_RS = p.razon_social
+where Factura_Nro is not null
+group by Factura_Fecha,Factura_Nro,p.Proveedor_Id)
+
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE COMPRAS----------------------------------------
@@ -356,7 +380,9 @@ CREATE TABLE ZTS_DB.COMPRAS
   Cliente_Id varchar(17),
   Fecha_compra datetime not null,
   Cantidad SMALLINT,
+  Factura_id bigint,
   PRIMARY KEY(Compra_Id),
+  FOREIGN KEY(Factura_id) REFERENCES ZTS_DB.FACTURAS(numero),
   FOREIGN KEY(Cliente_Id) REFERENCES ZTS_DB.CLIENTES(Cliente_Id),
   FOREIGN KEY(Codigo_oferta) REFERENCES ZTS_DB.OFERTAS(Codigo_oferta)
 )
@@ -367,6 +393,8 @@ insert into ZTS_DB.compras(Codigo_oferta,cliente_id,fecha_Compra, Cantidad)
 (select distinct o.Codigo_oferta,cliente_id,oferta_Fecha_compra, 1 from gd_esquema.Maestra gd join ZTS_DB.ofertas o on gd.Oferta_Codigo = o.Codigo_oferta
 join ZTS_DB.CLIENTES c on gd.Cli_Dni = c.DNI)
 
+update ZTS_DB.compras
+set Factura_Id = (select top 1  gd.Factura_Nro from gd_esquema.Maestra gd where Fecha_compra = gd.Oferta_Fecha_Compra and Codigo_oferta = gd.Oferta_Codigo order by 1 desc)
 
 -------------------------------------------------------------------------------
 
@@ -402,31 +430,6 @@ where Oferta_Entregado_Fecha is not null
 
 update ZTS_DB.CUPONES
 set codigo_cupon= (select newId())
-
--------------------------------------------------------------------------------
-
------------------------TABLA DE FACTURAS---------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='FACTURAS' and xtype='U')
-CREATE TABLE ZTS_DB.FACTURAS
-( 
-	Numero bigint not null,
-	Proveedor_Id varchar(19) not null,
-	Fecha datetime not null,
-	ImporteTotal numeric(20,2),
-	PRIMARY KEY(Numero),
-	FOREIGN KEY(Proveedor_Id) REFERENCES ZTS_DB.PROVEEDORES(Proveedor_Id)
-)
-GO
-
-----MIGRACION DE FACTURAS---------
-
-INSERT INTO ZTS_DB.FACTURAS
-(Proveedor_Id,FECHA, Numero,ImporteTotal)
-(select  p.proveedor_id,Factura_Fecha, Factura_Nro,sum(Oferta_Precio) from gd_esquema.Maestra gd join ZTS_DB.Proveedores p
-on gd.Provee_RS = p.razon_social
-where Factura_Nro is not null
-group by Factura_Fecha,Factura_Nro,p.Proveedor_Id)
 
 -------------------------------------------------------------------------------
 
@@ -921,17 +924,19 @@ IF OBJECT_ID('modificar_password') IS NOT NULL
 GO
 CREATE PROCEDURE ZTS_DB.modificar_password(@username varchar(255), @vieja_password varchar(255), @nueva_password varchar(255))
 AS BEGIN
-IF not exists (select 1 from ZTS_DB.USUARIOS where Username = @username)
-	throw 50002,'Usuario Inexistente',1
-IF((select password from ZTS_DB.USUARIOS where username = @username) = HASHBYTES('SHA2_256',@vieja_password) )
+	IF not exists (select 1 from USUARIOS where Username = @username)
+		throw 50002,'Usuario Inexistente',1
+	IF(@vieja_password = @nueva_password)
+		throw 50003,'La contraseña nueva no puede ser igual a la actual, elija otra.',1
+	IF((select password from USUARIOS where username = @username) = HASHBYTES('SHA2_256',@vieja_password) )
 		begin
-			update ZTS_DB.USUARIOS
+			update USUARIOS
 			set password =HASHBYTES('SHA2_256',@nueva_password)  where username = @username
 		end
-ELSE
-	begin
-	THROW 50001, 'La contraseña actual ingresada es INCORRECTA', 1
-	end
+	ELSE
+		begin
+			THROW 50001, 'La contraseña actual ingresada es INCORRECTA', 1
+		end
 END
 GO
 
@@ -1356,7 +1361,7 @@ as begin
 declare @facturacionTotal numeric(10,2)
 
 set @facturacionTotal = (select  sum(Precio_oferta * cantidad) from ZTS_DB.COMPRAS c join ZTS_DB.OFERTAS o on  c.Codigo_oferta = o.Codigo_Oferta
-where Fecha_compra  between CONVERT(datetime,@fecha1,121)  and  CONVERT(datetime,@fecha2, 121) and C.Factura_Id is not null 
+where Fecha_compra  between CONVERT(datetime,@fecha1,121)  and  CONVERT(datetime,@fecha2, 121) and Factura_Id is not null 
 and o.Proveedor_referenciado = @proveedor)
 
 return @facturacionTotal
@@ -1366,10 +1371,10 @@ GO
 
 
 --DROP TABLE ZTS_DB.CARGAS
---DROP TABLE ZTS_DB.FACTURAS
 --DROP TABLE ZTS_DB.CUPONES
 --DROP TABLE ZTS_DB.COMPRAS
 --DROP TABLE ZTS_DB.OFERTAS
+--DROP TABLE ZTS_DB.FACTURAS
 --DROP TABLE ZTS_DB.FUNCIONES_POR_ROL
 --DROP TABLE ZTS_DB.FUNCIONES
 --DROP TABLE ZTS_DB.ROLES_POR_USUARIO

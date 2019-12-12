@@ -49,7 +49,7 @@ namespace FrbaOfertas.AbmCliente
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("SELECT Cliente_Id, username, nombre, apellido, DNI, telefono, mail, Fecha_Nacimiento, DineroDisponible, estado, d.Direccion, Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto FROM CLIENTES c join DIRECCION d on c.direccion = d.id_direccion WHERE ");
+            sb.Append("SELECT Cliente_Id, username, nombre, apellido, DNI, telefono, mail, Fecha_Nacimiento, DineroDisponible, estado, d.Direccion, Codigo_Postal, Localidad, Ciudad, Numero_Piso, Depto FROM ZTS_DB.CLIENTES c join ZTS_DB.DIRECCION d on c.direccion = d.id_direccion WHERE ");
 
             ArrayList Query = new ArrayList();
 
@@ -117,7 +117,7 @@ namespace FrbaOfertas.AbmCliente
                 {
                     var row = contenedor_clientes.CurrentRow;
 
-                    SqlCommand command = new SqlCommand("baja_logica_cliente", conexion_sql);
+                    SqlCommand command = new SqlCommand("ZTS_DB.baja_logica_cliente", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Float).Value = Int32.Parse(row.Cells[6].Value.ToString());
                     command.Parameters.AddWithValue("@username", SqlDbType.Float).Value = row.Cells[3].Value.ToString();

@@ -40,7 +40,7 @@ namespace FrbaOfertas.AbmRol
         private void cargar_estado(String item_seleccionado)
         {
 
-            string query = "SELECT Estado FROM ROLES where Rol_Id = '" + item_seleccionado + "'";
+            string query = "SELECT Estado FROM ZTS_DB.ROLES where Rol_Id = '" + item_seleccionado + "'";
             SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
 
@@ -71,7 +71,7 @@ namespace FrbaOfertas.AbmRol
         {
             //CARGA DE PRIMERA LISTA
 
-            String query = "select Descripcion from FUNCIONES_POR_ROL FPR join FUNCIONES F on FPR.Funcion_Id = F.Funcion_Id where Rol_Id = '" + comboBox_roles.SelectedItem.ToString() + "'";
+            String query = "select Descripcion from ZTS_DB.FUNCIONES_POR_ROL FPR join ZTS_DB.FUNCIONES F on FPR.Funcion_Id = F.Funcion_Id where Rol_Id = '" + comboBox_roles.SelectedItem.ToString() + "'";
             SqlCommand cmd = new SqlCommand(query, conn);
             conn.Open();
 
@@ -184,7 +184,7 @@ namespace FrbaOfertas.AbmRol
 
         private void remover_funciones_viejas(string Rol, SqlConnection conexion)
         {
-            SqlCommand cmd = new SqlCommand("eliminar_funciones_por_rol", conexion);
+            SqlCommand cmd = new SqlCommand("ZTS_DB.eliminar_funciones_por_rol", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = Rol;
 
@@ -193,7 +193,7 @@ namespace FrbaOfertas.AbmRol
 
         private void carga_logica_funciones_nuevas(SqlConnection conexion)
         {
-            String query = "select Funcion_Id, Descripcion from Funciones";
+            String query = "select Funcion_Id, Descripcion from ZTS_DB.Funciones";
             SqlCommand cmd = new SqlCommand(query, conexion);
 
             SqlDataReader reader = cmd.ExecuteReader();
@@ -221,7 +221,7 @@ namespace FrbaOfertas.AbmRol
             if (result == DialogResult.Yes)
             {
 
-                SqlCommand command = new SqlCommand("deshabilitar_rol", conn);
+                SqlCommand command = new SqlCommand("ZTS_DB.deshabilitar_rol", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = comboBox_roles.SelectedItem.ToString();
 
@@ -255,7 +255,7 @@ namespace FrbaOfertas.AbmRol
             if (result == DialogResult.Yes)
             {
 
-                SqlCommand command = new SqlCommand("habilitar_rol", conn);
+                SqlCommand command = new SqlCommand("ZTS_DB.habilitar_rol", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Rol_Id", SqlDbType.Char).Value = comboBox_roles.SelectedItem.ToString();
 

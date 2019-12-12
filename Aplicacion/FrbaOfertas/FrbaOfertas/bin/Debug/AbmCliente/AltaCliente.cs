@@ -63,7 +63,7 @@ namespace FrbaOfertas.AbmCliente
             else
             {
                 conexion_sql.Open();
-                SqlCommand verificacion_cliente = new SqlCommand("verificar_existencia_cliente_gemelo", conexion_sql);
+                SqlCommand verificacion_cliente = new SqlCommand("ZTS_DB.verificar_existencia_cliente_gemelo", conexion_sql);
                 verificacion_cliente.CommandType = CommandType.StoredProcedure;
 
                 verificacion_cliente.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = Nombre.Text;

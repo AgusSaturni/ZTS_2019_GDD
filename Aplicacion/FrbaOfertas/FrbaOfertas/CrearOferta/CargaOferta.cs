@@ -121,7 +121,7 @@ namespace FrbaOfertas.CrearOferta
 
             conn.Open();
 
-            SqlCommand command = new SqlCommand("confeccion_oferta", conn);
+            SqlCommand command = new SqlCommand("ZTS_DB.confeccion_oferta", conn);
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@descripcion", SqlDbType.Char).Value = Descripcion.Text;

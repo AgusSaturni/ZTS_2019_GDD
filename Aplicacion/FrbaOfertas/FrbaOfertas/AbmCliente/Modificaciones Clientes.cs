@@ -52,7 +52,7 @@ namespace FrbaOfertas.AbmCliente
 
                 try
                 {
-                    SqlCommand command = new SqlCommand("habilitar_cliente", conexion_sql);
+                    SqlCommand command = new SqlCommand("ZTS_DB.habilitar_cliente", conexion_sql);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@DNI_CLIENTE", SqlDbType.Int).Value = Int32.Parse(txt_dni.Text);
                     command.Parameters.AddWithValue("@username", SqlDbType.Int).Value = txt_username.Text;
@@ -192,7 +192,7 @@ namespace FrbaOfertas.AbmCliente
             conexion_sql.Open();
             try
             {
-                SqlCommand command = new SqlCommand("actualizar_cliente", conexion_sql);
+                SqlCommand command = new SqlCommand("ZTS_DB.actualizar_cliente", conexion_sql);
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@username", SqlDbType.Char).Value = (txt_username.Text);

@@ -56,9 +56,9 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                  conexionBD conexion = conexionBD.getConexion();
                  SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
-                
 
-                     SqlCommand command = new SqlCommand("comprar_oferta", conexion_sql);
+
+                 SqlCommand command = new SqlCommand("ZTS_DB.comprar_oferta", conexion_sql);
                      command.CommandType = CommandType.StoredProcedure;
 
                      SqlParameter codigo_oferta = new SqlParameter("@codigoOferta", SqlDbType.Char);
@@ -78,7 +78,7 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
          
             //consigo el codigo oferta por select
 
-                        string codigo = "select top 1 Codigo_Oferta from OFERTAS where Proveedor_referenciado = '"+proveedor_semilla2+"' and Descripcion ='"+descripcion_semilla2+"' and Cantidad_disponible > 0 and Precio_lista= "+precio_lista2+" and Precio_oferta ="+precio_oferta2;
+                       string codigo = "select top 1 Codigo_Oferta from ZTS_DB.OFERTAS where Proveedor_referenciado = '" + proveedor_semilla2 + "' and Descripcion ='" + descripcion_semilla2 + "' and Cantidad_disponible > 0 and Precio_lista= " + precio_lista2 + " and Precio_oferta =" + precio_oferta2;
                         SqlCommand command2 = new SqlCommand(codigo, conexion_sql);
 
                         SqlDataReader reader_codigo = command2.ExecuteReader();
@@ -96,7 +96,7 @@ public    CantidadAComprar(string descripcion_semilla,string proveedor_semilla,f
                             command.ExecuteNonQuery();
 
 
-                            string cmd = "SELECT top 1 codigo_cupon FROM CUPONES  WHERE Codigo_oferta = '" + codigo_oferta.Value.ToString() + "' order by 1 desc "; 
+                            string cmd = "SELECT top 1 codigo_cupon FROM ZTS_DB.CUPONES  WHERE Codigo_oferta = '" + codigo_oferta.Value.ToString() + "' order by 1 desc "; 
                             SqlCommand command1 = new SqlCommand(cmd, conexion_sql);
                           
                             SqlDataReader reader = command1.ExecuteReader();

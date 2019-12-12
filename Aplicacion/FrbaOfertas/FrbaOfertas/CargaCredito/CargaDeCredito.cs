@@ -61,7 +61,7 @@ namespace FrbaOfertas.CragaCredito
         private void cargar_saldoactual()
         {
 
-            string query = "SELECT DineroDisponible FROM Clientes where username = '" + sesion.get_username() + "'";
+            string query = "SELECT DineroDisponible FROM ZTS_DB.Clientes where username = '" + sesion.get_username() + "'";
             SqlCommand cmd = new SqlCommand(query, conexion_sql);
 
             conexion_sql.Open();
@@ -111,7 +111,7 @@ namespace FrbaOfertas.CragaCredito
             conexion_sql.Open();
             try
             {
-                SqlCommand persistir_carga = new SqlCommand("persistir_carga", conexion_sql);
+                SqlCommand persistir_carga = new SqlCommand("ZTS_DB.persistir_carga", conexion_sql);
                 persistir_carga.CommandType = CommandType.StoredProcedure;
 
                 if (!sesion.verificar_rol_administrador())

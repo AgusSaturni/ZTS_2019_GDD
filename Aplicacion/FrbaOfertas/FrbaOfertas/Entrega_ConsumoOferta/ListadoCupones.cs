@@ -62,7 +62,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo AS 'Fecha Consumo', O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id, C.Cantidad_disponible from CUPONES C JOIN COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE ");
+            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo AS 'Fecha Consumo', O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id, C.Cantidad_disponible from ZTS_DB.CUPONES C JOIN ZTS_DB.COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN ZTS_DB.CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN ZTS_DB.OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN ZTS_DB.PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE ");
 
             ArrayList Query = new ArrayList();
 

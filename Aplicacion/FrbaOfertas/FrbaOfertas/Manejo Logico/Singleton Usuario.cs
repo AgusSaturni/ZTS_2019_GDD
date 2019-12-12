@@ -44,7 +44,7 @@ namespace FrbaOfertas.Manejo_Logico
 
             conexion_sql.Open();
             //------------------------------------------------------------Ojo si tira error hacer trim del username
-            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion  FROM ROLES_POR_USUARIO RPU JOIN FUNCIONES_POR_ROL FPR on RPU.Rol_Id = FPR.Rol_Id JOIN FUNCIONES F on F.Funcion_Id = FPR.Funcion_Id where RPU.Username = '" + username + "'";
+            string consulta_roles = "SELECT DISTINCT RPU.Rol_Id, F.Descripcion  FROM ZTS_DB.ROLES_POR_USUARIO RPU JOIN ZTS_DB.FUNCIONES_POR_ROL FPR on RPU.Rol_Id = FPR.Rol_Id JOIN ZTS_DB.FUNCIONES F on F.Funcion_Id = FPR.Funcion_Id where RPU.Username = '" + username + "'";
 
             SqlCommand cmd = new SqlCommand(consulta_roles, conexion_sql);
             SqlDataReader reader = cmd.ExecuteReader();
