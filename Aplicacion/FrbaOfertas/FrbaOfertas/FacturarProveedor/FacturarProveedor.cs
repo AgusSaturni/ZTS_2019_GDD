@@ -205,7 +205,7 @@ namespace FrbaOfertas.Facturar
             else if (cbo_visualizacion.Text == "Ambos") { visualizacion = ""; }
 
             //string query = "SELECT o.Codigo_Oferta, o.Descripcion, com.Compra_Id, Cantidad*Precio_oferta AS Facturado, com.Fecha_compra FROM COMPRAS com JOIN OFERTAS o ON o.Codigo_oferta = com.Codigo_oferta WHERE o.Proveedor_referenciado = '" + proveedor_id + "' AND com.Fecha_compra BETWEEN '" + fecha_desde + "' AND '" + fecha_hasta + "' AND com.Factura_Id IS NULL";
-            string query = "SELECT o.Codigo_Oferta, o.Descripcion, com.Compra_Id, Cantidad*Precio_oferta AS Facturado, com.Fecha_compra FROM COMPRAS com JOIN OFERTAS o ON o.Codigo_oferta = com.Codigo_oferta WHERE o.Proveedor_referenciado = '" + proveedor_id + "' AND com.Fecha_compra BETWEEN '" + fecha_desde + "' AND '" + fecha_hasta + "'" + visualizacion;
+            string query = "SELECT o.Codigo_Oferta, o.Descripcion, com.Compra_Id, Cantidad*Precio_oferta AS Facturado, com.Fecha_compra FROM zts_db.COMPRAS com JOIN zts_db.OFERTAS o ON o.Codigo_oferta = com.Codigo_oferta WHERE o.Proveedor_referenciado = '" + proveedor_id + "' AND com.Fecha_compra BETWEEN '" + fecha_desde + "' AND '" + fecha_hasta + "'" + visualizacion;
             
             return query;
         }
@@ -265,6 +265,11 @@ namespace FrbaOfertas.Facturar
         {
             dgv_facturas.DataSource = null;
             dgv_facturas.Refresh();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -33,7 +33,6 @@ C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.RegistroUsuario.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Properties.Resources.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.Cache
-C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuABM.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.AltaProveedor.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.CargaDeCredito.resources
 C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.frm_clie_bajas.resources
@@ -187,3 +186,5 @@ C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GD
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ListadoEstadistico.ListadoEstadistico.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.ElegirCliente.resources
 C:\Users\agustin\OneDrive\Documentos\UTN\3ºAÑO\Gestion de Datos\TP\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.CambiarNombreRol.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.CambiarNombreRol.resources
+C:\Users\agust\Desktop\ZTS_2019_GDD\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.ElegirCliente.resources

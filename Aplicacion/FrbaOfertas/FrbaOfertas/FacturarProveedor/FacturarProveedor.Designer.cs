@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacturarProveedor));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbo_visualizacion = new System.Windows.Forms.ComboBox();
             this.btn_visualizar = new System.Windows.Forms.Button();
             this.lbl_total_facturado = new System.Windows.Forms.Label();
             this.btn_volver = new System.Windows.Forms.Button();
@@ -41,8 +44,6 @@
             this.lbl_hasta = new System.Windows.Forms.Label();
             this.lbl_desde = new System.Windows.Forms.Label();
             this.lbl_proveedor = new System.Windows.Forms.Label();
-            this.cbo_visualizacion = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_facturas)).BeginInit();
             this.SuspendLayout();
@@ -68,7 +69,30 @@
             this.groupBox1.Size = new System.Drawing.Size(656, 474);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Visualizacion";
+            // 
+            // cbo_visualizacion
+            // 
+            this.cbo_visualizacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_visualizacion.FormattingEnabled = true;
+            this.cbo_visualizacion.Items.AddRange(new object[] {
+            "No Facturado",
+            "Facturado",
+            "Ambos"});
+            this.cbo_visualizacion.Location = new System.Drawing.Point(132, 190);
+            this.cbo_visualizacion.Name = "cbo_visualizacion";
+            this.cbo_visualizacion.Size = new System.Drawing.Size(200, 21);
+            this.cbo_visualizacion.TabIndex = 14;
+            this.cbo_visualizacion.TextChanged += new System.EventHandler(this.cbo_visualizacion_TextChanged);
             // 
             // btn_visualizar
             // 
@@ -181,35 +205,13 @@
             this.lbl_proveedor.TabIndex = 0;
             this.lbl_proveedor.Text = "Proveedor";
             // 
-            // cbo_visualizacion
-            // 
-            this.cbo_visualizacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_visualizacion.FormattingEnabled = true;
-            this.cbo_visualizacion.Items.AddRange(new object[] {
-            "No Facturado",
-            "Facturado",
-            "Ambos"});
-            this.cbo_visualizacion.Location = new System.Drawing.Point(132, 190);
-            this.cbo_visualizacion.Name = "cbo_visualizacion";
-            this.cbo_visualizacion.Size = new System.Drawing.Size(200, 21);
-            this.cbo_visualizacion.TabIndex = 14;
-            this.cbo_visualizacion.TextChanged += new System.EventHandler(this.cbo_visualizacion_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 193);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Visualizacion";
-            // 
             // FacturarProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 495);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FacturarProveedor";
             this.Text = "Facturación a Proveedor";
             this.groupBox1.ResumeLayout(false);

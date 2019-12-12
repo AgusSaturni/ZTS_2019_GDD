@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ofertas));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rango = new System.Windows.Forms.CheckBox();
             this.maximo = new System.Windows.Forms.NumericUpDown();
@@ -197,6 +198,7 @@
             this.ClientSize = new System.Drawing.Size(806, 443);
             this.Controls.Add(this.contenedor_ofertas);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Ofertas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ofertas";

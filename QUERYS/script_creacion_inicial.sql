@@ -39,7 +39,7 @@ CREATE TABLE ZTS_DB.USUARIOS
   PRIMARY KEY(Username)
 )
 GO
-
+select * from zts_db.proveedores
 insert into ZTS_DB.USUARIOS (username,Password) values ('ADMIN',HASHBYTES('SHA2_256','w23e'))
 
 -------------------------------------------------------------------------------
@@ -1182,7 +1182,7 @@ GO
 IF OBJECT_ID('confeccion_oferta') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.confeccion_oferta
 GO
-CREATE PROCEDURE confeccion_oferta(@descripcion varchar(255),@fecha_publicacion datetime,
+CREATE PROCEDURE ZTS_DB.confeccion_oferta(@descripcion varchar(255),@fecha_publicacion datetime,
 								   @fecha_vencimiento datetime,@precio_oferta numeric(18,2),@precio_lista numeric(18,2),@cantidad_disponible numeric(18,0),@cantidad_maxima_por_usuario int,
 								   @codigo varchar(50),@proveedor_referenciado varchar(255))
 AS BEGIN
@@ -1394,24 +1394,24 @@ end
 GO
 
 
+/*
+DROP TABLE ZTS_DB.CARGAS
+DROP TABLE ZTS_DB.CUPONES
+DROP TABLE ZTS_DB.COMPRAS
+DROP TABLE ZTS_DB.OFERTAS
+DROP TABLE ZTS_DB.FACTURAS
+DROP TABLE ZTS_DB.FUNCIONES_POR_ROL
+DROP TABLE ZTS_DB.FUNCIONES
+DROP TABLE ZTS_DB.ROLES_POR_USUARIO
+DROP TABLE ZTS_DB.ROLES
+DROP TABLE ZTS_DB.TARJETAS
+DROP TABLE ZTS_DB.PROVEEDORES
+DROP TABLE ZTS_DB.CLIENTES
+DROP TABLE ZTS_DB.DIRECCION
+DROP TABLE ZTS_DB.USUARIOS
+DROP TABLE ZTS_DB.RUBROS
 
---DROP TABLE ZTS_DB.CARGAS
---DROP TABLE ZTS_DB.CUPONES
---DROP TABLE ZTS_DB.COMPRAS
---DROP TABLE ZTS_DB.OFERTAS
---DROP TABLE ZTS_DB.FACTURAS
---DROP TABLE ZTS_DB.FUNCIONES_POR_ROL
---DROP TABLE ZTS_DB.FUNCIONES
---DROP TABLE ZTS_DB.ROLES_POR_USUARIO
---DROP TABLE ZTS_DB.ROLES
---DROP TABLE ZTS_DB.TARJETAS
---DROP TABLE ZTS_DB.PROVEEDORES
---DROP TABLE ZTS_DB.CLIENTES
---DROP TABLE ZTS_DB.DIRECCION
---DROP TABLE ZTS_DB.USUARIOS
---DROP TABLE ZTS_DB.RUBROS
-
-
+*/
 
 
 
