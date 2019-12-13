@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -26,6 +27,7 @@ namespace FrbaOfertas.ComprarOferta
             private DateTime fecha_vencimiento;
             private string codigo_oferta;
             private string username = (Singleton_Usuario.getInstance()).get_username();
+            private DateTime fecha = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
 
         public CantidadAComprar()
         {
@@ -94,7 +96,7 @@ namespace FrbaOfertas.ComprarOferta
                      command.Parameters.AddWithValue("@cantidadCompra", SqlDbType.Int).Value = (Cantidad.Value);
                      command.Parameters.AddWithValue("@cantidadMaxUsuario", SqlDbType.Int).Value = (cantMaxUser2);
                      command.Parameters.AddWithValue("@codigoOferta", SqlDbType.Int).Value = (codigo_oferta);
-                    
+                     command.Parameters.AddWithValue("@fecha", SqlDbType.DateTime).Value = (fecha);
                        conexion_sql.Open();
                     
                       
@@ -122,9 +124,8 @@ namespace FrbaOfertas.ComprarOferta
                             return;
                         }
                  
-                         
-          conexion_sql.Close();
-          this.Hide();
+            conexion_sql.Close();
+            this.Hide();
         }            
 
 

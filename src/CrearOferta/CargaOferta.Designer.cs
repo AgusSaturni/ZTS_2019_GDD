@@ -46,8 +46,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.bt_volver = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bt_publicar = new System.Windows.Forms.Button();
             this.cbo_proveedores = new System.Windows.Forms.ComboBox();
+            this.bt_publicar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Cantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CantMax)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -58,7 +58,7 @@
             this.Descripcion.Location = new System.Drawing.Point(277, 62);
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.Size = new System.Drawing.Size(121, 20);
-            this.Descripcion.TabIndex = 15;
+            this.Descripcion.TabIndex = 1;
             // 
             // label1
             // 
@@ -85,7 +85,7 @@
             this.FechaPublicacion.Location = new System.Drawing.Point(203, 98);
             this.FechaPublicacion.Name = "FechaPublicacion";
             this.FechaPublicacion.Size = new System.Drawing.Size(196, 20);
-            this.FechaPublicacion.TabIndex = 26;
+            this.FechaPublicacion.TabIndex = 2;
             // 
             // label2
             // 
@@ -102,7 +102,7 @@
             this.FechaVencimiento.Location = new System.Drawing.Point(203, 131);
             this.FechaVencimiento.Name = "FechaVencimiento";
             this.FechaVencimiento.Size = new System.Drawing.Size(196, 20);
-            this.FechaVencimiento.TabIndex = 28;
+            this.FechaVencimiento.TabIndex = 3;
             // 
             // label3
             // 
@@ -119,7 +119,7 @@
             this.PrecioOferta.Location = new System.Drawing.Point(277, 172);
             this.PrecioOferta.Name = "PrecioOferta";
             this.PrecioOferta.Size = new System.Drawing.Size(121, 20);
-            this.PrecioOferta.TabIndex = 30;
+            this.PrecioOferta.TabIndex = 4;
             // 
             // label4
             // 
@@ -136,7 +136,7 @@
             this.PrecioLista.Location = new System.Drawing.Point(277, 209);
             this.PrecioLista.Name = "PrecioLista";
             this.PrecioLista.Size = new System.Drawing.Size(121, 20);
-            this.PrecioLista.TabIndex = 32;
+            this.PrecioLista.TabIndex = 5;
             // 
             // label7
             // 
@@ -153,7 +153,7 @@
             this.Cantidad.Location = new System.Drawing.Point(277, 244);
             this.Cantidad.Name = "Cantidad";
             this.Cantidad.Size = new System.Drawing.Size(120, 20);
-            this.Cantidad.TabIndex = 35;
+            this.Cantidad.TabIndex = 6;
             this.Cantidad.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // CantMax
@@ -161,7 +161,7 @@
             this.CantMax.Location = new System.Drawing.Point(277, 278);
             this.CantMax.Name = "CantMax";
             this.CantMax.Size = new System.Drawing.Size(120, 20);
-            this.CantMax.TabIndex = 37;
+            this.CantMax.TabIndex = 7;
             // 
             // label5
             // 
@@ -189,7 +189,7 @@
             this.bt_volver.Location = new System.Drawing.Point(16, 346);
             this.bt_volver.Name = "bt_volver";
             this.bt_volver.Size = new System.Drawing.Size(381, 26);
-            this.bt_volver.TabIndex = 41;
+            this.bt_volver.TabIndex = 9;
             this.bt_volver.Text = "Volver";
             this.bt_volver.UseVisualStyleBackColor = true;
             this.bt_volver.Click += new System.EventHandler(this.bt_volver_Click);
@@ -222,6 +222,17 @@
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
             // 
+            // cbo_proveedores
+            // 
+            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_proveedores.FormattingEnabled = true;
+            this.cbo_proveedores.Items.AddRange(new object[] {
+            "Elegir un proveedor..."});
+            this.cbo_proveedores.Location = new System.Drawing.Point(277, 27);
+            this.cbo_proveedores.Name = "cbo_proveedores";
+            this.cbo_proveedores.Size = new System.Drawing.Size(121, 21);
+            this.cbo_proveedores.TabIndex = 0;
+            // 
             // bt_publicar
             // 
             this.bt_publicar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -229,19 +240,10 @@
             this.bt_publicar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_publicar.Name = "bt_publicar";
             this.bt_publicar.Size = new System.Drawing.Size(381, 26);
-            this.bt_publicar.TabIndex = 42;
+            this.bt_publicar.TabIndex = 8;
             this.bt_publicar.Text = "Publicar Oferta";
             this.bt_publicar.UseVisualStyleBackColor = true;
             this.bt_publicar.Click += new System.EventHandler(this.bt_publicar_Click);
-            // 
-            // cbo_proveedores
-            // 
-            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_proveedores.FormattingEnabled = true;
-            this.cbo_proveedores.Location = new System.Drawing.Point(277, 27);
-            this.cbo_proveedores.Name = "cbo_proveedores";
-            this.cbo_proveedores.Size = new System.Drawing.Size(121, 21);
-            this.cbo_proveedores.TabIndex = 43;
             // 
             // CargaOferta
             // 

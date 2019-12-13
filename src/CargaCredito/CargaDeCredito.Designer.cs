@@ -38,11 +38,11 @@
             this.txt_num_tarjeta = new System.Windows.Forms.TextBox();
             this.txt_cod_segu = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.bt_cancelar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txt_saldo = new System.Windows.Forms.TextBox();
-            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +62,7 @@
             this.txt_monto.Location = new System.Drawing.Point(228, 102);
             this.txt_monto.Name = "txt_monto";
             this.txt_monto.Size = new System.Drawing.Size(178, 20);
-            this.txt_monto.TabIndex = 1;
+            this.txt_monto.TabIndex = 2;
             this.txt_monto.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
@@ -83,7 +83,7 @@
             this.combobox_tipopago.Location = new System.Drawing.Point(228, 64);
             this.combobox_tipopago.Name = "combobox_tipopago";
             this.combobox_tipopago.Size = new System.Drawing.Size(178, 21);
-            this.combobox_tipopago.TabIndex = 11;
+            this.combobox_tipopago.TabIndex = 1;
             // 
             // bt_cargar
             // 
@@ -91,7 +91,7 @@
             this.bt_cargar.Location = new System.Drawing.Point(438, 155);
             this.bt_cargar.Name = "bt_cargar";
             this.bt_cargar.Size = new System.Drawing.Size(303, 35);
-            this.bt_cargar.TabIndex = 12;
+            this.bt_cargar.TabIndex = 5;
             this.bt_cargar.Text = "Cargar";
             this.bt_cargar.UseVisualStyleBackColor = true;
             this.bt_cargar.Click += new System.EventHandler(this.bt_cargar_Click);
@@ -121,14 +121,14 @@
             this.txt_num_tarjeta.Location = new System.Drawing.Point(228, 144);
             this.txt_num_tarjeta.Name = "txt_num_tarjeta";
             this.txt_num_tarjeta.Size = new System.Drawing.Size(178, 20);
-            this.txt_num_tarjeta.TabIndex = 16;
+            this.txt_num_tarjeta.TabIndex = 3;
             // 
             // txt_cod_segu
             // 
             this.txt_cod_segu.Location = new System.Drawing.Point(228, 188);
             this.txt_cod_segu.Name = "txt_cod_segu";
             this.txt_cod_segu.Size = new System.Drawing.Size(178, 20);
-            this.txt_cod_segu.TabIndex = 17;
+            this.txt_cod_segu.TabIndex = 4;
             // 
             // groupBox1
             // 
@@ -151,6 +151,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Carga";
             // 
+            // cbo_usuarios
+            // 
+            this.cbo_usuarios.DisplayMember = "1";
+            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_usuarios.FormattingEnabled = true;
+            this.cbo_usuarios.Items.AddRange(new object[] {
+            "Elegir usuario..."});
+            this.cbo_usuarios.Location = new System.Drawing.Point(228, 33);
+            this.cbo_usuarios.Name = "cbo_usuarios";
+            this.cbo_usuarios.Size = new System.Drawing.Size(178, 21);
+            this.cbo_usuarios.TabIndex = 0;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -168,7 +180,7 @@
             this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_cancelar.Name = "bt_cancelar";
             this.bt_cancelar.Size = new System.Drawing.Size(303, 35);
-            this.bt_cancelar.TabIndex = 18;
+            this.bt_cancelar.TabIndex = 6;
             this.bt_cancelar.Text = "Cancelar";
             this.bt_cancelar.UseVisualStyleBackColor = true;
             this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
@@ -194,20 +206,8 @@
             this.txt_saldo.Name = "txt_saldo";
             this.txt_saldo.ReadOnly = true;
             this.txt_saldo.Size = new System.Drawing.Size(271, 70);
-            this.txt_saldo.TabIndex = 20;
+            this.txt_saldo.TabIndex = 15;
             this.txt_saldo.TextChanged += new System.EventHandler(this.txt_saldo_TextChanged);
-            // 
-            // cbo_usuarios
-            // 
-            this.cbo_usuarios.DisplayMember = "1";
-            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_usuarios.FormattingEnabled = true;
-            this.cbo_usuarios.Items.AddRange(new object[] {
-            "Elegir usuario..."});
-            this.cbo_usuarios.Location = new System.Drawing.Point(228, 33);
-            this.cbo_usuarios.Name = "cbo_usuarios";
-            this.cbo_usuarios.Size = new System.Drawing.Size(178, 21);
-            this.cbo_usuarios.TabIndex = 20;
             // 
             // CargaDeCredito
             // 

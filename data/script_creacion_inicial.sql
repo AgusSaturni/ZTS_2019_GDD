@@ -1186,11 +1186,11 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('comprar_oferta') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.comprar_oferta') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.comprar_oferta
 GO
 CREATE PROCEDURE ZTS_DB.comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
-								  @clienteUsuario varchar(50),@cantidadDisponible int,@cantidadCompra int, @cantidadMaxUsuario int)
+								  @clienteUsuario varchar(50),@cantidadDisponible int,@cantidadCompra int, @cantidadMaxUsuario int, @fecha datetime)
 AS BEGIN
 DECLARE @cliente_id varchar(20)= (select cliente_id from ZTS_DB.CLIENTES where username = @clienteUsuario)
 if(@cantidadCompra = 0)
@@ -1199,11 +1199,11 @@ IF(@cantidadCompra > @cantidadDisponible)
 	throw 50001,'La cantidad de ofertas que desea adquirir es mayor a la Disponible.',1
 
 	insert into ZTS_DB.COMPRAS(Cliente_Id,Codigo_oferta,Fecha_compra,Cantidad)
-	values(@cliente_id,@codigoOferta,SYSDATETIME(),@cantidadCompra)
+	values(@cliente_id,@codigoOferta,CONVERT(datetime,@fecha,121),@cantidadCompra)
 END
 GO
 
-IF OBJECT_ID('trigger_compras') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.trigger_compras') IS NOT NULL
 	DROP TRIGGER ZTS_DB.trigger_compras
 GO
 CREATE TRIGGER ZTS_DB.trigger_compras
@@ -1213,13 +1213,18 @@ as begin
 declare @cliente_id varchar(20) = (select cliente_id from INSERTED)
 declare @codigoOferta varchar(50) = (select codigo_Oferta from INSERTED)
 declare @cantidadCompra int = (select Cantidad from inserted)
+declare @fecha datetime = (select Fecha_compra from inserted)
+declare @max_x_usuario int = (select cantidad_maxima_por_usuario from ZTS_DB.OFERTAS where Codigo_Oferta = @codigoOferta)
 
-IF(select SUM(Cantidad) from ZTS_DB.COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) <
-	(select cantidad_maxima_por_usuario from ZTS_DB.OFERTAS where Codigo_Oferta = @codigoOferta) OR (select SUM(Cantidad) from ZTS_DB.COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) is null
+if(@cantidadCompra > @max_x_usuario)
+	throw 50005,'No se pueden comprar mas ofertas que la cantidad maxima por usuario', 1
+
+IF((select SUM(Cantidad) from ZTS_DB.COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) + @cantidadCompra ) <=
+	@max_x_usuario OR (select SUM(Cantidad) from ZTS_DB.COMPRAS where Cliente_Id = @cliente_id and Codigo_oferta = @codigoOferta) is null 
 begin
 	begin transaction
 		insert into ZTS_DB.COMPRAS(Cliente_Id,Codigo_oferta,Fecha_compra,Cantidad)
-		values(@cliente_id,@codigoOferta,SYSDATETIME(),@cantidadCompra)
+		values(@cliente_id,@codigoOferta,CONVERT(datetime,@fecha,121),@cantidadCompra)
 
 		declare @compra_id varchar(20) = (select top 1 compra_id from ZTS_DB.compras order by 1 desc)
 
@@ -1239,7 +1244,6 @@ begin
 		throw 50002,'Usted alcanzó la cantidad máxima de compras posibles de esta Oferta.',1
 end
 GO
-
 
 IF OBJECT_ID('oferta_disponible') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.oferta_disponible

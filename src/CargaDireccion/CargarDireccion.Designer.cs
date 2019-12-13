@@ -112,7 +112,7 @@
             this.Direccion.Location = new System.Drawing.Point(115, 27);
             this.Direccion.Name = "Direccion";
             this.Direccion.Size = new System.Drawing.Size(198, 23);
-            this.Direccion.TabIndex = 6;
+            this.Direccion.TabIndex = 0;
             this.Direccion.TextChanged += new System.EventHandler(this.Direccion_TextChanged);
             // 
             // CodigoPostal
@@ -120,42 +120,42 @@
             this.CodigoPostal.Location = new System.Drawing.Point(115, 57);
             this.CodigoPostal.Name = "CodigoPostal";
             this.CodigoPostal.Size = new System.Drawing.Size(198, 23);
-            this.CodigoPostal.TabIndex = 7;
+            this.CodigoPostal.TabIndex = 1;
             // 
             // Localidad
             // 
             this.Localidad.Location = new System.Drawing.Point(115, 89);
             this.Localidad.Name = "Localidad";
             this.Localidad.Size = new System.Drawing.Size(198, 23);
-            this.Localidad.TabIndex = 8;
+            this.Localidad.TabIndex = 2;
             // 
             // Ciudad
             // 
             this.Ciudad.Location = new System.Drawing.Point(115, 121);
             this.Ciudad.Name = "Ciudad";
             this.Ciudad.Size = new System.Drawing.Size(198, 23);
-            this.Ciudad.TabIndex = 9;
+            this.Ciudad.TabIndex = 3;
             // 
             // NroPiso
             // 
             this.NroPiso.Location = new System.Drawing.Point(115, 155);
             this.NroPiso.Name = "NroPiso";
             this.NroPiso.Size = new System.Drawing.Size(198, 23);
-            this.NroPiso.TabIndex = 10;
+            this.NroPiso.TabIndex = 4;
             // 
             // Departamento
             // 
             this.Departamento.Location = new System.Drawing.Point(115, 192);
             this.Departamento.Name = "Departamento";
             this.Departamento.Size = new System.Drawing.Size(198, 23);
-            this.Departamento.TabIndex = 11;
+            this.Departamento.TabIndex = 5;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(162, 233);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(149, 23);
-            this.button1.TabIndex = 12;
+            this.button1.TabIndex = 6;
             this.button1.Text = "Finalizar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -178,9 +178,9 @@
             this.groupBox1.Controls.Add(this.Direccion);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(327, 271);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
@@ -190,10 +190,10 @@
             // bt_volver
             // 
             this.bt_volver.Location = new System.Drawing.Point(8, 233);
-            this.bt_volver.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_volver.Margin = new System.Windows.Forms.Padding(2);
             this.bt_volver.Name = "bt_volver";
             this.bt_volver.Size = new System.Drawing.Size(149, 23);
-            this.bt_volver.TabIndex = 13;
+            this.bt_volver.TabIndex = 7;
             this.bt_volver.Text = "Volver";
             this.bt_volver.UseVisualStyleBackColor = true;
             this.bt_volver.Click += new System.EventHandler(this.bt_volver_Click);

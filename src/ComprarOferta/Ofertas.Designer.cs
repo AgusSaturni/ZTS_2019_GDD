@@ -85,6 +85,11 @@
             // maximo
             // 
             this.maximo.Location = new System.Drawing.Point(259, 98);
+            this.maximo.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.maximo.Name = "maximo";
             this.maximo.Size = new System.Drawing.Size(120, 20);
             this.maximo.TabIndex = 13;
@@ -92,6 +97,11 @@
             // minimo
             // 
             this.minimo.Location = new System.Drawing.Point(64, 98);
+            this.minimo.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.minimo.Name = "minimo";
             this.minimo.Size = new System.Drawing.Size(120, 20);
             this.minimo.TabIndex = 12;
@@ -219,7 +229,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bt_limpiar;
-        private System.Windows.Forms.Button bt_buscar;
         private System.Windows.Forms.TextBox Descripcion;
         private System.Windows.Forms.DataGridView contenedor_ofertas;
         private System.Windows.Forms.DataGridViewButtonColumn Column1;
@@ -227,5 +236,6 @@
         private System.Windows.Forms.NumericUpDown maximo;
         private System.Windows.Forms.NumericUpDown minimo;
         private System.Windows.Forms.CheckBox rango;
+        public System.Windows.Forms.Button bt_buscar;
     }
 }

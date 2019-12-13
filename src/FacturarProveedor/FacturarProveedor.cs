@@ -15,6 +15,7 @@ namespace FrbaOfertas.Facturar
 {
     public partial class FacturarProveedor : Form
     {
+        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         private conexionBD conexion = conexionBD.getConexion();
         private SqlConnection conexion_sql;
 
@@ -58,7 +59,7 @@ namespace FrbaOfertas.Facturar
 
         private void verificar_campos()
         {
-            if (string.IsNullOrEmpty(txt_proveedor.Text))
+            if (cbo_proveedores.SelectedIndex == 0)
             {
                 MessageBox.Show("El campo PROVEEDOR es obligatorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -93,7 +94,7 @@ namespace FrbaOfertas.Facturar
         {
             SqlCommand proveedor_existente = new SqlCommand("ZTS_DB.proveedor_existente", conexion_sql);
             proveedor_existente.CommandType = CommandType.StoredProcedure;
-            proveedor_existente.Parameters.AddWithValue("@proveedor", SqlDbType.Char).Value = txt_proveedor.Text;
+            proveedor_existente.Parameters.AddWithValue("@proveedor", SqlDbType.Char).Value = cbo_proveedores.Text;
 
             try
             {
@@ -217,7 +218,7 @@ namespace FrbaOfertas.Facturar
             conexion_sql.Open();
 
             string proveedor_Id = "";
-            string query = "SELECT Proveedor_Id FROM ZTS_DB.PROVEEDORES WHERE username = '" + txt_proveedor.Text + "'";
+            string query = "SELECT Proveedor_Id FROM ZTS_DB.PROVEEDORES WHERE username = '" + cbo_proveedores.Text + "'";
             SqlCommand get_proveedorID = new SqlCommand(query, conexion_sql);
 
             SqlDataReader readIn = get_proveedorID.ExecuteReader();
@@ -270,6 +271,12 @@ namespace FrbaOfertas.Facturar
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void FacturarProveedor_Load(object sender, EventArgs e)
+        {
+            commonQueries_instance.cargar_objeto(cbo_proveedores, "PROVEEDORES");
+            cbo_proveedores.SelectedIndex = 0;
         }
     }
 }

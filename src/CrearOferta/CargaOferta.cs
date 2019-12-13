@@ -58,6 +58,7 @@ namespace FrbaOfertas.CrearOferta
             FechaVencimiento.Value = Fecha_Config;
 
             commonQueries_instance.cargar_objeto(cbo_proveedores, "PROVEEDORES");
+            cbo_proveedores.SelectedIndex = 0;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -76,14 +77,12 @@ namespace FrbaOfertas.CrearOferta
 
             return false;
         }
-
-
+        
         private void bt_volver_Click(object sender, EventArgs e)
         {
             Form menu = new Interfaces.menu_principal();
             menu.Show();
             this.Close();
-
         }
 
         private bool verificar_datos()
@@ -169,7 +168,7 @@ namespace FrbaOfertas.CrearOferta
             CantMax.Value = 0;
             if (this.bit_admin)
             {
-                cbo_proveedores.Text = "";
+                cbo_proveedores.SelectedIndex = 0;
             }
         }
 

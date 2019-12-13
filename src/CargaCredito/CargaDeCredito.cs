@@ -47,6 +47,7 @@ namespace FrbaOfertas.CragaCredito
             this.cargar_combobox();
 
             commonQueries_instance.cargar_objeto(cbo_usuarios, "CLIENTES");
+            cbo_usuarios.SelectedIndex = 0;
         }
 
         private void cargar_combobox()
@@ -162,17 +163,32 @@ namespace FrbaOfertas.CragaCredito
                 MessageBox.Show("Seleccione el tipo de Tarjeta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (txt_num_tarjeta.Text.Length != 16 || txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)))
+            if (txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)))
             {
-                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 6 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El Numero de tarjeta es un campo numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (txt_cod_segu.Text.Length != 3 || txt_cod_segu.Text.Any(x => !char.IsNumber(x)))
+            if (txt_cod_segu.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("El código de seguridad es un campo numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_monto.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("El monto es un campo numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_num_tarjeta.Text.Length != 16)
+            {
+                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 16 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (txt_cod_segu.Text.Length != 3)
             {
                 MessageBox.Show("El Codigo de seguridad debe ser unicamente de 3 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (txt_monto.Text.Any(x => !char.IsNumber(x)) || Int32.Parse(txt_monto.Text) <= 0)
+            if (Int32.Parse(txt_monto.Text) <= 0)
             {
                 MessageBox.Show("El monto debe ser numerico y mayor a 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;

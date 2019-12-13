@@ -64,19 +64,17 @@
             // 
             // Usuario
             // 
-            this.Usuario.Location = new System.Drawing.Point(157, 200);
-            this.Usuario.Multiline = true;
+            this.Usuario.Location = new System.Drawing.Point(156, 206);
             this.Usuario.Name = "Usuario";
-            this.Usuario.Size = new System.Drawing.Size(287, 31);
+            this.Usuario.Size = new System.Drawing.Size(287, 20);
             this.Usuario.TabIndex = 0;
             // 
             // Password
             // 
-            this.Password.Location = new System.Drawing.Point(157, 237);
-            this.Password.Multiline = true;
+            this.Password.Location = new System.Drawing.Point(156, 243);
             this.Password.Name = "Password";
             this.Password.PasswordChar = '•';
-            this.Password.Size = new System.Drawing.Size(287, 31);
+            this.Password.Size = new System.Drawing.Size(287, 20);
             this.Password.TabIndex = 1;
             // 
             // label1

@@ -40,16 +40,17 @@
             this.dgv_facturas = new System.Windows.Forms.DataGridView();
             this.dtp_hasta = new System.Windows.Forms.DateTimePicker();
             this.dtp_desde = new System.Windows.Forms.DateTimePicker();
-            this.txt_proveedor = new System.Windows.Forms.TextBox();
             this.lbl_hasta = new System.Windows.Forms.Label();
             this.lbl_desde = new System.Windows.Forms.Label();
             this.lbl_proveedor = new System.Windows.Forms.Label();
+            this.cbo_proveedores = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_facturas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbo_proveedores);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbo_visualizacion);
             this.groupBox1.Controls.Add(this.btn_visualizar);
@@ -60,7 +61,6 @@
             this.groupBox1.Controls.Add(this.dgv_facturas);
             this.groupBox1.Controls.Add(this.dtp_hasta);
             this.groupBox1.Controls.Add(this.dtp_desde);
-            this.groupBox1.Controls.Add(this.txt_proveedor);
             this.groupBox1.Controls.Add(this.lbl_hasta);
             this.groupBox1.Controls.Add(this.lbl_desde);
             this.groupBox1.Controls.Add(this.lbl_proveedor);
@@ -171,13 +171,6 @@
             this.dtp_desde.Size = new System.Drawing.Size(200, 20);
             this.dtp_desde.TabIndex = 6;
             // 
-            // txt_proveedor
-            // 
-            this.txt_proveedor.Location = new System.Drawing.Point(132, 38);
-            this.txt_proveedor.Name = "txt_proveedor";
-            this.txt_proveedor.Size = new System.Drawing.Size(200, 20);
-            this.txt_proveedor.TabIndex = 5;
-            // 
             // lbl_hasta
             // 
             this.lbl_hasta.AutoSize = true;
@@ -205,6 +198,17 @@
             this.lbl_proveedor.TabIndex = 0;
             this.lbl_proveedor.Text = "Proveedor";
             // 
+            // cbo_proveedores
+            // 
+            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_proveedores.FormattingEnabled = true;
+            this.cbo_proveedores.Items.AddRange(new object[] {
+            "Elegir un proveedor..."});
+            this.cbo_proveedores.Location = new System.Drawing.Point(132, 35);
+            this.cbo_proveedores.Name = "cbo_proveedores";
+            this.cbo_proveedores.Size = new System.Drawing.Size(200, 21);
+            this.cbo_proveedores.TabIndex = 16;
+            // 
             // FacturarProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +218,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FacturarProveedor";
             this.Text = "Facturación a Proveedor";
+            this.Load += new System.EventHandler(this.FacturarProveedor_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_facturas)).EndInit();
@@ -231,12 +236,12 @@
         private System.Windows.Forms.DataGridView dgv_facturas;
         private System.Windows.Forms.DateTimePicker dtp_hasta;
         private System.Windows.Forms.DateTimePicker dtp_desde;
-        private System.Windows.Forms.TextBox txt_proveedor;
         private System.Windows.Forms.Label lbl_hasta;
         private System.Windows.Forms.Label lbl_desde;
         private System.Windows.Forms.Label lbl_proveedor;
         private System.Windows.Forms.Button btn_visualizar;
         private System.Windows.Forms.ComboBox cbo_visualizacion;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbo_proveedores;
     }
 }

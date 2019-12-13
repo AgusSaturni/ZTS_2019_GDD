@@ -27,6 +27,12 @@ namespace FrbaOfertas.AbmRol
 
         private void bt_cambiar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txt_nombre.Text.Trim()))
+            {
+                MessageBox.Show("Introduzca un nuevo nombre", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
             SqlCommand cmd = new SqlCommand("ZTS_DB.Actualizar_nombre_rol", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre_rol_nuevo", SqlDbType.Char).Value = txt_nombre.Text.Trim();

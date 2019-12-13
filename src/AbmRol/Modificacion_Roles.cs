@@ -150,6 +150,8 @@ namespace FrbaOfertas.AbmRol
         private void bt_finalizar_Click(object sender, EventArgs e)
         {
             //Cierro y abro la conexion 2 veces porque no se puede utilizar 2 DataReaders en 1 conexion sola
+            if (comboBox_roles.SelectedIndex == -1) { return; }
+
             conn.Open();
             this.remover_funciones_viejas(comboBox_roles.SelectedItem.ToString(), conn);
             this.carga_logica_funciones_nuevas(conn);
