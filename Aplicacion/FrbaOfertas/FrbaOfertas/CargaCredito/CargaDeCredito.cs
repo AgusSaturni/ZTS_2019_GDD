@@ -15,7 +15,7 @@ namespace FrbaOfertas.CragaCredito
 {
     public partial class CargaDeCredito : Form
     {
-
+        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         private string username = (Singleton_Usuario.getInstance()).get_username();
         conexionBD conexion_class = conexionBD.getConexion();
         SqlConnection conexion_sql;
@@ -37,19 +37,16 @@ namespace FrbaOfertas.CragaCredito
 
             if (!sesion.verificar_rol_administrador())
             {
-                Usuario.Text = username;
-                Usuario.ReadOnly = true;
+                cbo_usuarios.Text = username;
                 this.cargar_saldoactual();
             }
             else
             {
                 txt_saldo.Text = "No Disponible";
             }
-
-
             this.cargar_combobox();
 
-
+            commonQueries_instance.cargar_objeto(cbo_usuarios, "CLIENTES");
         }
 
         private void cargar_combobox()
@@ -60,7 +57,6 @@ namespace FrbaOfertas.CragaCredito
 
         private void cargar_saldoactual()
         {
-
             string query = "SELECT DineroDisponible FROM ZTS_DB.Clientes where username = '" + sesion.get_username() + "'";
             SqlCommand cmd = new SqlCommand(query, conexion_sql);
 
@@ -103,7 +99,6 @@ namespace FrbaOfertas.CragaCredito
 
         private void bt_cargar_Click(object sender, EventArgs e)
         {
-
             string Fecha = GetEntradaConfig("fecha");
 
             if (this.verificar_parametros()) { return; }
@@ -120,7 +115,7 @@ namespace FrbaOfertas.CragaCredito
                 }
                 else
                 {
-                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = Usuario.Text;
+                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = cbo_usuarios.Text;
                 }
 
                 persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
@@ -157,6 +152,11 @@ namespace FrbaOfertas.CragaCredito
                 MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
+            if (string.IsNullOrEmpty(cbo_usuarios.Text))
+            {
+                MessageBox.Show("Seleccione un usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
             if (index == -1)
             {
                 MessageBox.Show("Seleccione el tipo de Tarjeta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -164,7 +164,7 @@ namespace FrbaOfertas.CragaCredito
             }
             if (txt_num_tarjeta.Text.Length != 16 || txt_num_tarjeta.Text.Any(x => !char.IsNumber(x)))
             {
-                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 20 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El Numero de tarjeta debe ser unicamente de 6 digitos numericos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             if (txt_cod_segu.Text.Length != 3 || txt_cod_segu.Text.Any(x => !char.IsNumber(x)))

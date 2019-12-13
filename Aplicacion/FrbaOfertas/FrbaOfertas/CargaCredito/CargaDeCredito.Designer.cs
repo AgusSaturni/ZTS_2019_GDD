@@ -38,11 +38,11 @@
             this.txt_num_tarjeta = new System.Windows.Forms.TextBox();
             this.txt_cod_segu = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.bt_cancelar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txt_saldo = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.Usuario = new System.Windows.Forms.TextBox();
+            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -78,12 +78,12 @@
             // 
             // combobox_tipopago
             // 
+            this.combobox_tipopago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combobox_tipopago.FormattingEnabled = true;
-            this.combobox_tipopago.Location = new System.Drawing.Point(228, 60);
+            this.combobox_tipopago.Location = new System.Drawing.Point(228, 64);
             this.combobox_tipopago.Name = "combobox_tipopago";
             this.combobox_tipopago.Size = new System.Drawing.Size(178, 21);
             this.combobox_tipopago.TabIndex = 11;
-            this.combobox_tipopago.Text = "Seleccione";
             // 
             // bt_cargar
             // 
@@ -132,7 +132,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.Usuario);
+            this.groupBox1.Controls.Add(this.cbo_usuarios);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txt_cod_segu);
@@ -143,49 +143,13 @@
             this.groupBox1.Controls.Add(this.combobox_tipopago);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(11, 11);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(422, 234);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Carga";
-            // 
-            // bt_cancelar
-            // 
-            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_cancelar.Location = new System.Drawing.Point(438, 203);
-            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.bt_cancelar.Name = "bt_cancelar";
-            this.bt_cancelar.Size = new System.Drawing.Size(303, 35);
-            this.bt_cancelar.TabIndex = 18;
-            this.bt_cancelar.Text = "Cancelar";
-            this.bt_cancelar.UseVisualStyleBackColor = true;
-            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.txt_saldo);
-            this.groupBox2.Location = new System.Drawing.Point(438, 11);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(303, 130);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Saldo Actual";
-            // 
-            // txt_saldo
-            // 
-            this.txt_saldo.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_saldo.Location = new System.Drawing.Point(17, 29);
-            this.txt_saldo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.txt_saldo.Multiline = true;
-            this.txt_saldo.Name = "txt_saldo";
-            this.txt_saldo.ReadOnly = true;
-            this.txt_saldo.Size = new System.Drawing.Size(271, 70);
-            this.txt_saldo.TabIndex = 20;
-            this.txt_saldo.TextChanged += new System.EventHandler(this.txt_saldo_TextChanged);
             // 
             // label5
             // 
@@ -197,12 +161,53 @@
             this.label5.TabIndex = 18;
             this.label5.Text = "Usuario";
             // 
-            // Usuario
+            // bt_cancelar
             // 
-            this.Usuario.Location = new System.Drawing.Point(228, 29);
-            this.Usuario.Name = "Usuario";
-            this.Usuario.Size = new System.Drawing.Size(178, 20);
-            this.Usuario.TabIndex = 19;
+            this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bt_cancelar.Location = new System.Drawing.Point(438, 203);
+            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2);
+            this.bt_cancelar.Name = "bt_cancelar";
+            this.bt_cancelar.Size = new System.Drawing.Size(303, 35);
+            this.bt_cancelar.TabIndex = 18;
+            this.bt_cancelar.Text = "Cancelar";
+            this.bt_cancelar.UseVisualStyleBackColor = true;
+            this.bt_cancelar.Click += new System.EventHandler(this.bt_cancelar_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txt_saldo);
+            this.groupBox2.Location = new System.Drawing.Point(438, 11);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(303, 130);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Saldo Actual";
+            // 
+            // txt_saldo
+            // 
+            this.txt_saldo.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_saldo.Location = new System.Drawing.Point(17, 29);
+            this.txt_saldo.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_saldo.Multiline = true;
+            this.txt_saldo.Name = "txt_saldo";
+            this.txt_saldo.ReadOnly = true;
+            this.txt_saldo.Size = new System.Drawing.Size(271, 70);
+            this.txt_saldo.TabIndex = 20;
+            this.txt_saldo.TextChanged += new System.EventHandler(this.txt_saldo_TextChanged);
+            // 
+            // cbo_usuarios
+            // 
+            this.cbo_usuarios.DisplayMember = "1";
+            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_usuarios.FormattingEnabled = true;
+            this.cbo_usuarios.Items.AddRange(new object[] {
+            "Elegir usuario..."});
+            this.cbo_usuarios.Location = new System.Drawing.Point(228, 33);
+            this.cbo_usuarios.Name = "cbo_usuarios";
+            this.cbo_usuarios.Size = new System.Drawing.Size(178, 21);
+            this.cbo_usuarios.TabIndex = 20;
             // 
             // CargaDeCredito
             // 
@@ -240,7 +245,7 @@
         private System.Windows.Forms.Button bt_cancelar;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txt_saldo;
-        private System.Windows.Forms.TextBox Usuario;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbo_usuarios;
     }
 }

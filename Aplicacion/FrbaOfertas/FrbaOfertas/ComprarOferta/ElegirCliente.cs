@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaOfertas.Manejo_Logico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace FrbaOfertas.ComprarOferta
 {
     public partial class ElegirCliente : Form
     {
+        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         private List<String> lista_clientes = new List<String>();
 
         public ElegirCliente()
@@ -39,34 +41,7 @@ namespace FrbaOfertas.ComprarOferta
 
         private void cargar_cmb_clientes()
         {
-            actualizar_lista_clientes();
-
-            for (int i = 0; i < lista_clientes.Count(); i++)
-            {
-                cmb_clientes.Items.Add(lista_clientes.ElementAt(i).ToString());
-            }
-        }
-
-        private void actualizar_lista_clientes()
-        {
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-            conexion_sql.Open(); 
-            
-            string consulta_clientes = "SELECT DISTINCT username FROM zts_db.CLIENTES";
-
-            SqlCommand cmd = new SqlCommand(consulta_clientes, conexion_sql);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                if (reader[0].ToString() != "")
-                {
-                    lista_clientes.Add(reader[0].ToString().Trim());
-
-                }
-            }
-            conexion_sql.Close();
+            commonQueries_instance.cargar_objeto(this.cmb_clientes, "CLIENTES");
         }
 
         //---------------------------AUXILIARES--------------------------------

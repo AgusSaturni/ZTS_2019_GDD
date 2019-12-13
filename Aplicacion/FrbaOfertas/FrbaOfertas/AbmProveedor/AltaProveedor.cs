@@ -106,11 +106,6 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("Todos los campos son obligatorios menos el nombre de contacto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            if (RS.Text.Any(x => char.IsNumber(x)))
-            {
-                MessageBox.Show("Razon Social Invalida. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
-            }
             if (Rubro.Text.Any(x => char.IsNumber(x)))
             {
                 MessageBox.Show("Rubro Invalido. No se permite ingresar Numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

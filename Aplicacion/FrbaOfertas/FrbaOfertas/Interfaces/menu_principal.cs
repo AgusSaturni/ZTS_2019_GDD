@@ -99,10 +99,6 @@ namespace FrbaOfertas.Interfaces
                         Form facturarProveedor = new Facturar.FacturarProveedor();
                         facturarProveedor.Show();
                         break;
-                    case "Registrar Usuarios":
-                        Form registro = new RegistroUsuario();
-                        registro.Show();
-                        break;
                 }
                 this.Hide();
             }

@@ -35,12 +35,12 @@
             this.bt_cancelar = new System.Windows.Forms.Button();
             this.bt_limpiar = new System.Windows.Forms.Button();
             this.bt_buscar = new System.Windows.Forms.Button();
-            this.txt_cliente = new System.Windows.Forms.TextBox();
             this.txt_ofertaid = new System.Windows.Forms.TextBox();
             this.txt_cuponid = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_cupones)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -72,11 +72,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbo_usuarios);
             this.groupBox1.Controls.Add(this.checkBox_consumidos);
             this.groupBox1.Controls.Add(this.bt_cancelar);
             this.groupBox1.Controls.Add(this.bt_limpiar);
             this.groupBox1.Controls.Add(this.bt_buscar);
-            this.groupBox1.Controls.Add(this.txt_cliente);
             this.groupBox1.Controls.Add(this.txt_ofertaid);
             this.groupBox1.Controls.Add(this.txt_cuponid);
             this.groupBox1.Controls.Add(this.label3);
@@ -138,14 +138,6 @@
             this.bt_buscar.UseVisualStyleBackColor = true;
             this.bt_buscar.Click += new System.EventHandler(this.bt_buscar_Click);
             // 
-            // txt_cliente
-            // 
-            this.txt_cliente.Location = new System.Drawing.Point(182, 97);
-            this.txt_cliente.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_cliente.Name = "txt_cliente";
-            this.txt_cliente.Size = new System.Drawing.Size(134, 20);
-            this.txt_cliente.TabIndex = 5;
-            // 
             // txt_ofertaid
             // 
             this.txt_ofertaid.Location = new System.Drawing.Point(182, 62);
@@ -195,6 +187,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Codigo Cupon";
             // 
+            // cbo_usuarios
+            // 
+            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_usuarios.FormattingEnabled = true;
+            this.cbo_usuarios.Location = new System.Drawing.Point(182, 95);
+            this.cbo_usuarios.Name = "cbo_usuarios";
+            this.cbo_usuarios.Size = new System.Drawing.Size(134, 21);
+            this.cbo_usuarios.TabIndex = 9;
+            // 
             // ListadoCupones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,7 +222,6 @@
         private System.Windows.Forms.Button bt_cancelar;
         private System.Windows.Forms.Button bt_limpiar;
         private System.Windows.Forms.Button bt_buscar;
-        private System.Windows.Forms.TextBox txt_cliente;
         private System.Windows.Forms.TextBox txt_ofertaid;
         private System.Windows.Forms.TextBox txt_cuponid;
         private System.Windows.Forms.Label label3;
@@ -229,5 +229,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewButtonColumn Entregar;
         private System.Windows.Forms.CheckBox checkBox_consumidos;
+        private System.Windows.Forms.ComboBox cbo_usuarios;
     }
 }
