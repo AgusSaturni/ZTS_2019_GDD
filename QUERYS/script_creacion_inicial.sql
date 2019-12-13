@@ -39,7 +39,7 @@ CREATE TABLE ZTS_DB.USUARIOS
   PRIMARY KEY(Username)
 )
 GO
-select * from zts_db.proveedores
+
 insert into ZTS_DB.USUARIOS (username,Password) values ('ADMIN',HASHBYTES('SHA2_256','w23e'))
 
 -------------------------------------------------------------------------------
@@ -574,16 +574,6 @@ END
 GO
 
 
-IF OBJECT_ID('verificar_si_no_es_cliente') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.verificar_si_no_es_cliente
-GO
-CREATE PROCEDURE ZTS_DB.verificar_si_no_es_cliente(@username varchar(255))
-AS begin
-if exists (select 1 from ZTS_DB.ROLES_POR_USUARIO where Username = @username and Rol_Id = 'Administrador')
-	throw 50005,'No es Cliente',1
-end
-GO
-
 
 -------------------------------------------------------------------------------
 ----CARGAS---------------------------------------------------------------------
@@ -798,14 +788,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('verificar_si_no_es_proveedor') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.verificar_si_no_es_proveedor
-GO
-CREATE PROCEDURE ZTS_DB.verificar_si_no_es_proveedor(@username varchar(255))
-AS begin
-if exists (select 1 from ZTS_DB.ROLES_POR_USUARIO where Username = @username and Rol_Id = 'Administrador')
-	throw 50005,'No es proveedor',1
-end
+
 
 
 -------------------------------------------------------------------------------
@@ -940,25 +923,9 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('baja_usuario') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.baja_usuario
-GO
-CREATE PROCEDURE ZTS_DB.baja_usuario(@username varchar(255))
-AS BEGIN
-update ZTS_DB.USUARIOS
-set Estado = 'Deshabilitado' where username = @username
-END
-GO
 
-IF OBJECT_ID('habilitacion_usuario') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.habilitacion_usuario
-GO
-CREATE PROCEDURE ZTS_DB.habilitacion_usuario(@username varchar(255))
-AS BEGIN
-update ZTS_DB.USUARIOS
-set Estado = 'Habilitado' where username = @username
-END
-GO
+
+
 
 IF OBJECT_ID('inhabilitacion_usuario') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.inhabilitacion_usuario
@@ -1065,6 +1032,31 @@ AS BEGIN
 END
 GO
 
+IF OBJECT_ID('Actualizar_nombre_rol') IS NOT NULL
+	DROP PROCEDURE ZTS_DB.Actualizar_nombre_rol
+GO
+CREATE PROCEDURE ZTS_DB.Actualizar_nombre_rol (@nombre_rol_nuevo varchar(255),@nombre_rol_viejo varchar(255))
+AS BEGIN
+
+	ALTER TABLE ZTS_DB.ROLES NOCHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO NOCHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL NOCHECK CONSTRAINT ALL
+	
+	update ZTS_DB.ROLES set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	update ZTS_DB.ROLES_POR_USUARIO set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	update ZTS_DB.FUNCIONES_POR_ROL set Rol_Id = @nombre_rol_nuevo
+	where Rol_Id = @nombre_rol_viejo
+
+	ALTER TABLE ZTS_DB.ROLES CHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO CHECK CONSTRAINT ALL
+	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL CHECK CONSTRAINT ALL
+END
+GO
+
 IF OBJECT_ID('habilitar_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.habilitar_rol
 GO
@@ -1082,17 +1074,6 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('insertar_rol_por_usuario') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.insertar_rol_por_usuario
-GO
-CREATE PROCEDURE ZTS_DB.insertar_rol_por_usuario(@Rol_Id varchar(255), @username varchar(255))
-AS BEGIN
-	if exists(select 1 from ZTS_DB.ROLES where Rol_Id = @Rol_Id and Estado = 'Habilitado')
-		insert into ZTS_DB.ROLES_POR_USUARIO (Rol_Id, Username) values (@Rol_Id, @username)
-	else
-		throw 90000, 'Rol Inhabilitado', 1
-END
-GO
 
 
 IF OBJECT_ID('insertar_funciones_por_rol') IS NOT NULL
@@ -1149,30 +1130,6 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('Actulizar_nombre_rol') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.Actulizar_nombre_rol
-GO
-CREATE PROCEDURE ZTS_DB.Actulizar_nombre_rol (@nombre_rol_nuevo varchar(255),@nombre_rol_viejo varchar(255))
-AS BEGIN
-
-	ALTER TABLE ZTS_DB.ROLES NOCHECK CONSTRAINT ALL
-	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO NOCHECK CONSTRAINT ALL
-	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL NOCHECK CONSTRAINT ALL
-	
-	update ZTS_DB.ROLES set Rol_Id = @nombre_rol_nuevo
-	where Rol_Id = @nombre_rol_viejo
-
-	update ZTS_DB.ROLES_POR_USUARIO set Rol_Id = @nombre_rol_nuevo
-	where Rol_Id = @nombre_rol_viejo
-
-	update ZTS_DB.FUNCIONES_POR_ROL set Rol_Id = @nombre_rol_nuevo
-	where Rol_Id = @nombre_rol_viejo
-
-	ALTER TABLE ZTS_DB.ROLES CHECK CONSTRAINT ALL
-	ALTER TABLE ZTS_DB.ROLES_POR_USUARIO CHECK CONSTRAINT ALL
-	ALTER TABLE ZTS_DB.FUNCIONES_POR_ROL CHECK CONSTRAINT ALL
-END
-GO
 
 -------------------------------------------------------------------------------
 ----OFERTAS--------------------------------------------------------------------
@@ -1278,32 +1235,6 @@ end
 GO
 
 
-IF OBJECT_ID('obtener_codigo') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.obtener_codigo
-GO
-CREATE PROCEDURE ZTS_DB.obtener_codigo (@proveedor_id varchar(20),@descripcion varchar(255),@precio_oferta numeric(12,2),@precio_lista numeric(12,2))
-as begin
-declare @codigo varchar(50) = (select top 1 Codigo_Oferta from ZTS_DB.OFERTAS where Proveedor_referenciado = @proveedor_id and Descripcion =@descripcion and Cantidad_disponible > 0
-and Precio_lista=@precio_lista and Precio_oferta =@precio_oferta)
-if exists(select 1 from ZTS_DB.OFERTAS where Codigo_Oferta= @codigo)
-throw 50001,@codigo,1
-end
-GO
-
-
-IF OBJECT_ID('oferta_existente') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.oferta_existente
-GO
-CREATE PROCEDURE ZTS_DB.oferta_existente (@ofertaCodigo varchar(255))
-AS BEGIN
-IF not exists (SELECT 1 FROM ZTS_DB.OFERTAS WHERE Codigo_Oferta = @ofertaCodigo)
-	BEGIN
-		THROW 90001,'La oferta ingresada no es correcta.',1
-	END
-END
-GO
-
-
 IF OBJECT_ID('oferta_disponible') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.oferta_disponible
 GO
@@ -1319,22 +1250,6 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('verificar_proveedor') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.verificar_proveedor
-GO
-CREATE PROCEDURE ZTS_DB.verificar_proveedor (@cuponId varchar(255), @proveedor varchar(255))
-AS BEGIN
-	DECLARE @proveedorId VARCHAR(255)
-	SET @proveedorId = (SELECT Proveedor_Id FROM ZTS_DB.PROVEEDORES WHERE username = @proveedor)
-	IF not exists (SELECT 1 FROM ZTS_DB.CUPONES c 
-					JOIN ZTS_DB.OFERTAS o ON o.Codigo_Oferta = c.Codigo_oferta
-					WHERE @cuponId = c.Cupon_Id
-					AND @proveedorId = o.Proveedor_referenciado)
-	BEGIN
-		THROW 90003,'Este cupon no le pertenece.',1
-	END
-END
-GO
 
 
 IF OBJECT_ID('utilizar_cupon') IS NOT NULL

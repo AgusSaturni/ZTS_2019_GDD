@@ -19,7 +19,6 @@ namespace FrbaOfertas.CrearOferta
         conexionBD conexion = conexionBD.getConexion();
         SqlConnection conn;
         private DateTime Fecha_Config = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
-        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         private bool bit_admin = false;
 
         public string crear_codigo(int longitud)
@@ -47,17 +46,18 @@ namespace FrbaOfertas.CrearOferta
 
             if (sesion.verificar_rol_administrador())
             {
+                ProveedorUser.ReadOnly = false;
                 bit_admin = true;
             }
             else
             {
-                cbo_proveedores.Text = sesion.get_username();
+                ProveedorUser.ReadOnly = true;
+                ProveedorUser.Text = sesion.get_username();
             }
 
             FechaPublicacion.Value = Fecha_Config;
             FechaVencimiento.Value = Fecha_Config;
 
-            commonQueries_instance.cargar_objeto(cbo_proveedores, "PROVEEDORES");
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace FrbaOfertas.CrearOferta
 
             if (this.bit_admin)
             {
-                command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = cbo_proveedores.Text;
+                command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = ProveedorUser.Text;
             }
             else
             {
@@ -169,7 +169,7 @@ namespace FrbaOfertas.CrearOferta
             CantMax.Value = 0;
             if (this.bit_admin)
             {
-                cbo_proveedores.Text = "";
+                ProveedorUser.Text = "";
             }
         }
 

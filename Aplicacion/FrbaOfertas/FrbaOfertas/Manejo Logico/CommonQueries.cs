@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace FrbaOfertas.Manejo_Logico
 {
@@ -91,34 +90,6 @@ namespace FrbaOfertas.Manejo_Logico
 
             return reader;
         }
-
-        public void cargar_objeto(ComboBox cmb_objeto, string tabla) 
-        {
-            List<String> listado = new List<String>();
-
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
-            conexion_sql.Open();
-
-            string consulta_clientes = "SELECT DISTINCT username FROM zts_db." + tabla;
-
-            SqlCommand cmd = new SqlCommand(consulta_clientes, conexion_sql);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                if (reader[0].ToString() != "")
-                {
-                    listado.Add(reader[0].ToString().Trim());
-
-                }
-            }
-            conexion_sql.Close();
-
-            for (int i = 0; i < listado.Count(); i++)
-            {
-                cmb_objeto.Items.Add(listado.ElementAt(i).ToString());
-            }
-        }    
+    
     }
 }

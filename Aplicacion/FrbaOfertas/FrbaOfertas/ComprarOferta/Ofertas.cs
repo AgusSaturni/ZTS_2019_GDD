@@ -30,7 +30,7 @@ namespace FrbaOfertas.ComprarOferta
             maximo.Increment = 0;
             rango.Checked = false;
             sesion_username = username;
-            //this.contenedor_ofertas.Columns[9].Visible = false;
+            this.contenedor_ofertas.Columns[9].Visible = false;
         }
         public Ofertas()
         {

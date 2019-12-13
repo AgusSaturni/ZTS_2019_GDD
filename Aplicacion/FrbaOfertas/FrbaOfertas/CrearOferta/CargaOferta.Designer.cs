@@ -44,10 +44,10 @@
             this.CantMax = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.ProveedorUser = new System.Windows.Forms.TextBox();
             this.bt_volver = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.bt_publicar = new System.Windows.Forms.Button();
-            this.cbo_proveedores = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.Cantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CantMax)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -183,6 +183,13 @@
             this.label8.TabIndex = 39;
             this.label8.Text = "Proveedor Username";
             // 
+            // ProveedorUser
+            // 
+            this.ProveedorUser.Location = new System.Drawing.Point(277, 28);
+            this.ProveedorUser.Name = "ProveedorUser";
+            this.ProveedorUser.Size = new System.Drawing.Size(121, 20);
+            this.ProveedorUser.TabIndex = 40;
+            // 
             // bt_volver
             // 
             this.bt_volver.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
@@ -196,11 +203,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cbo_proveedores);
             this.groupBox1.Controls.Add(this.bt_publicar);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.bt_volver);
             this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.ProveedorUser);
             this.groupBox1.Controls.Add(this.Descripcion);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.FechaPublicacion);
@@ -215,9 +222,9 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.PrecioLista);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Size = new System.Drawing.Size(427, 390);
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
@@ -226,22 +233,13 @@
             // 
             this.bt_publicar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_publicar.Location = new System.Drawing.Point(16, 315);
-            this.bt_publicar.Margin = new System.Windows.Forms.Padding(2);
+            this.bt_publicar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_publicar.Name = "bt_publicar";
             this.bt_publicar.Size = new System.Drawing.Size(381, 26);
             this.bt_publicar.TabIndex = 42;
             this.bt_publicar.Text = "Publicar Oferta";
             this.bt_publicar.UseVisualStyleBackColor = true;
             this.bt_publicar.Click += new System.EventHandler(this.bt_publicar_Click);
-            // 
-            // cbo_proveedores
-            // 
-            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_proveedores.FormattingEnabled = true;
-            this.cbo_proveedores.Location = new System.Drawing.Point(277, 27);
-            this.cbo_proveedores.Name = "cbo_proveedores";
-            this.cbo_proveedores.Size = new System.Drawing.Size(121, 21);
-            this.cbo_proveedores.TabIndex = 43;
             // 
             // CargaOferta
             // 
@@ -279,9 +277,9 @@
         private System.Windows.Forms.NumericUpDown CantMax;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox ProveedorUser;
         private System.Windows.Forms.Button bt_volver;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button bt_publicar;
-        private System.Windows.Forms.ComboBox cbo_proveedores;
     }
 }

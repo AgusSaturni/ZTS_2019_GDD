@@ -57,10 +57,8 @@ namespace FrbaOfertas.Manejo_Logico
                     {
                         Roles.Add(reader[0].ToString().Trim());
                     }
-                    if (reader[1].ToString().Trim() != "Registrar Usuarios")
-                    {
-                        Permisos.Add(reader[1].ToString().Trim());
-                    }
+                    Permisos.Add(reader[1].ToString().Trim());
+
                 }
             }
             conexion_sql.Close();

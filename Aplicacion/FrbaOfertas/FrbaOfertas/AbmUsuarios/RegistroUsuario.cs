@@ -118,6 +118,7 @@ namespace FrbaOfertas
                 MessageBox.Show("Nombre de Usuario ya existente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conexion_sql.Close();
+
         }
 
         private void bt_cancelar_Click(object sender, EventArgs e)

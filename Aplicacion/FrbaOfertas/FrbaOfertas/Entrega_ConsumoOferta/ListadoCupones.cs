@@ -17,7 +17,6 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
     {
         conexionBD conexion = conexionBD.getConexion();
         private Singleton_Usuario sesion = Singleton_Usuario.getInstance();
-        private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         SqlConnection conexion_sql;
 
         public ListadoCupones()
@@ -30,7 +29,6 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
         private void ListadoCupones_Load(object sender, EventArgs e)
         {
             conexion_sql = new SqlConnection(conexion.get_cadena());
-            commonQueries_instance.cargar_objeto(cbo_usuarios, "CLIENTES");
         }
 
         private void bt_buscar_Click(object sender, EventArgs e)
@@ -76,9 +74,9 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
             {
                 Query.Add("C.Codigo_oferta LIKE '%" + txt_ofertaid.Text + "%'");
             }
-            if (cbo_usuarios.Text != "")
+            if (txt_cliente.Text != "")
             {
-                Query.Add("CL.username LIKE '%" + cbo_usuarios.Text + "%'");
+                Query.Add("CL.username LIKE '%" + txt_cliente.Text + "%'");
             }
             if (checkBox_consumidos.Checked == false)
             {
@@ -113,7 +111,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
 
         private void bt_limpiar_Click(object sender, EventArgs e)
         {
-            cbo_usuarios.Text = "";
+            txt_cliente.Text = "";
             txt_cuponid.Text = "";
             txt_ofertaid.Text = "";
             checkBox_consumidos.Checked = false;
