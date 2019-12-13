@@ -452,7 +452,7 @@ set codigo_cupon= (select newId())
 ----CLIENTES-------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-IF OBJECT_ID('baja_logica_cliente') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.baja_logica_cliente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.baja_logica_cliente
 GO
 CREATE PROCEDURE ZTS_DB.baja_logica_cliente(@DNI_CLIENTE numeric(18,0),@username varchar(255))
@@ -470,7 +470,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('habilitar_cliente') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.habilitar_cliente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.habilitar_cliente
 GO
 CREATE PROCEDURE ZTS_DB.habilitar_cliente(@DNI_CLIENTE numeric(18,0),@username varchar(255))
@@ -490,7 +490,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('actualizar_cliente') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.actualizar_cliente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.actualizar_cliente
 GO
 Create Procedure ZTS_DB.actualizar_cliente(@username varchar(255),@nombre varchar(255), @apellido varchar(255), @DNI numeric(18,0), @telefono numeric(18,0),
@@ -579,7 +579,7 @@ GO
 ----CARGAS---------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-IF OBJECT_ID('persistir_carga') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.persistir_carga') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.persistir_carga
 GO
 CREATE PROCEDURE ZTS_DB.persistir_carga(@username varchar(255),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_tarj varchar(20),@monto numeric(10,0),
@@ -607,7 +607,7 @@ AS BEGIN
 END
 
 
-IF OBJECT_ID('ACTUALIZACION_MONTO_CLIENTE') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.ACTUALIZACION_MONTO_CLIENTE') IS NOT NULL
 	DROP TRIGGER ZTS_DB.ACTUALIZACION_MONTO_CLIENTE
 GO
 CREATE TRIGGER ZTS_DB.ACTUALIZACION_MONTO_CLIENTE ON ZTS_DB.CARGAS AFTER INSERT
@@ -628,7 +628,7 @@ GO
 ----PROVEEDORES----------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-IF OBJECT_ID('baja_logica_proveedor') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.baja_logica_proveedor') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.baja_logica_proveedor
 GO
 CREATE PROCEDURE ZTS_DB.baja_logica_proveedor(@CUIT varchar(255),@username varchar(255))
@@ -648,7 +648,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('habilitar_proveedor') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.habilitar_proveedor') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.habilitar_proveedor
 GO
 CREATE PROCEDURE ZTS_DB.habilitar_proveedor(@CUIT varchar(255), @Username varchar(255))
@@ -670,7 +670,7 @@ else
 END
 GO
 
-IF OBJECT_ID('actualizar_proveedor') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.actualizar_proveedor') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.actualizar_proveedor
 GO
 Create Procedure ZTS_DB.actualizar_proveedor(@username varchar(255),@razonSocial varchar(255), @rubro varchar(255), @CUIT varchar(255), @telefono numeric(18,0),
@@ -757,19 +757,19 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('proveedor_existente') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.proveedor_existente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.proveedor_existente
 GO
 CREATE PROCEDURE ZTS_DB.proveedor_existente(@proveedor VARCHAR(255))
 AS BEGIN
 	If NOT EXISTS (SELECT 1 FROM ZTS_DB.PROVEEDORES WHERE username = @proveedor)
 	BEGIN
-		THROW 90003,'El proveedor no esta registrado.',1
+		THROW 90003,'ZTS_DB.El proveedor no esta registrado.',1
 	END
 END
 GO
 
-IF OBJECT_ID('pedir_proveedorID') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.pedir_proveedorID') IS NOT NULL
 	DROP FUNCTION ZTS_DB.pedir_proveedorID
 GO
 CREATE FUNCTION ZTS_DB.pedir_proveedorID(@proveedor_username VARCHAR(255))
@@ -779,7 +779,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('insertar_factura') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.insertar_factura') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.insertar_factura
 GO
 CREATE PROCEDURE ZTS_DB.insertar_factura(@proveedor_id varchar(255), @fecha datetime, @numero_id bigint, @importe numeric(20,2))
@@ -796,7 +796,7 @@ GO
 -------------------------------------------------------------------------------
 
 
-IF OBJECT_ID('registrar_usuario_cliente') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.registrar_usuario_cliente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.registrar_usuario_cliente
 GO
 CREATE PROCEDURE ZTS_DB.registrar_usuario_cliente(@Username varchar(255), @Password varchar(255),@Rol varchar(255),
@@ -844,7 +844,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('registrar_usuario_proveedor') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.registrar_usuario_proveedor') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.registrar_usuario_proveedor
 GO
 CREATE PROCEDURE ZTS_DB.registrar_usuario_proveedor(@Username varchar(255), @Password varchar(255),@Rol varchar(255),
@@ -902,7 +902,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('modificar_password') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.modificar_password') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.modificar_password
 GO
 CREATE PROCEDURE ZTS_DB.modificar_password(@username varchar(255), @vieja_password varchar(255), @nueva_password varchar(255))
@@ -927,7 +927,7 @@ GO
 
 
 
-IF OBJECT_ID('inhabilitacion_usuario') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.inhabilitacion_usuario') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.inhabilitacion_usuario
 GO
 CREATE PROCEDURE ZTS_DB.inhabilitacion_usuario(@username varchar(255))
@@ -937,7 +937,7 @@ set Estado = 'Inhabilitado' where username = @username
 END
 GO
 
-IF OBJECT_ID('verificar_existencia_de_usuario') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_existencia_de_usuario') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_existencia_de_usuario
 GO
 CREATE PROCEDURE ZTS_DB.verificar_existencia_de_usuario(@username varchar(255))
@@ -949,7 +949,7 @@ if exists(select 1 from ZTS_DB.USUARIOS where Username = RTRIM(@username))
 end
 GO
 
-IF OBJECT_ID('verificar_existencia_cliente_gemelo') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_existencia_cliente_gemelo') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_existencia_cliente_gemelo
 GO
 CREATE PROCEDURE ZTS_DB.verificar_existencia_cliente_gemelo(@nombre varchar(255),@apellido varchar(255),@DNI numeric(18,0),@telefono numeric(18,0),@mail varchar(255),@fecha_nacimiento datetime)
@@ -962,7 +962,7 @@ as begin
 end
 GO
 
-IF OBJECT_ID('verificar_existencia_proveedor_gemelo') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_existencia_proveedor_gemelo') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_existencia_proveedor_gemelo
 GO
 CREATE PROCEDURE ZTS_DB.verificar_existencia_proveedor_gemelo(@cuit varchar(255),@razon_social varchar(255))
@@ -974,7 +974,7 @@ as begin
 end
 GO
 
-IF OBJECT_ID('verificar_usuario') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_usuario') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_usuario
 GO
 CREATE PROCEDURE ZTS_DB.verificar_usuario(@username varchar(255))
@@ -984,7 +984,7 @@ if not exists(select 1 from ZTS_DB.USUARIOS where Username = @username)
 END
 GO
 
-IF OBJECT_ID('verificar_password') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_password') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_usuario
 GO
 CREATE PROCEDURE ZTS_DB.verificar_password(@username varchar(255),@password varchar(255))
@@ -1004,7 +1004,7 @@ GO
 -------------------------------------------------------------------------------
 
 
-IF OBJECT_ID('deshabilitar_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.deshabilitar_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.deshabilitar_rol
 GO
 CREATE PROCEDURE ZTS_DB.deshabilitar_rol(@Rol_Id varchar(255))
@@ -1032,7 +1032,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('Actualizar_nombre_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.Actualizar_nombre_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.Actualizar_nombre_rol
 GO
 CREATE PROCEDURE ZTS_DB.Actualizar_nombre_rol (@nombre_rol_nuevo varchar(255),@nombre_rol_viejo varchar(255))
@@ -1063,7 +1063,7 @@ if not exists(select 1 from ZTS_DB.ROLES where Rol_Id = @nombre_rol_nuevo)
 END
 GO
 
-IF OBJECT_ID('habilitar_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.habilitar_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.habilitar_rol
 GO
 CREATE PROCEDURE ZTS_DB.habilitar_rol(@Rol_Id varchar(255))
@@ -1082,7 +1082,7 @@ GO
 
 
 
-IF OBJECT_ID('insertar_funciones_por_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.insertar_funciones_por_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.insertar_funciones_por_rol
 GO
 CREATE PROCEDURE ZTS_DB.insertar_funciones_por_rol(@Rol_Id varchar(255), @funcionID varchar(17))
@@ -1099,7 +1099,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('insertar_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.insertar_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.insertar_rol
 GO
 CREATE PROCEDURE ZTS_DB.insertar_rol(@Rol_Id varchar(255))
@@ -1117,7 +1117,7 @@ END
 GO
 
 
-IF OBJECT_ID('eliminar_funciones_por_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.eliminar_funciones_por_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.eliminar_funciones_por_rol
 GO
 CREATE PROCEDURE ZTS_DB.eliminar_funciones_por_rol(@Rol_Id varchar(255))
@@ -1126,7 +1126,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('verificar_estado_rol') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.verificar_estado_rol') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.verificar_estado_rol
 GO
 CREATE PROCEDURE ZTS_DB.verificar_estado_rol(@Rol_Id varchar(255))
@@ -1142,7 +1142,7 @@ GO
 -------------------------------------------------------------------------------
 
 
-IF OBJECT_ID('confeccion_oferta') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.confeccion_oferta') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.confeccion_oferta
 GO
 CREATE PROCEDURE ZTS_DB.confeccion_oferta(@descripcion varchar(255),@fecha_publicacion datetime,
@@ -1188,7 +1188,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('ZTS_DB.comprar_oferta') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.ZTS_DB.comprar_oferta') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.comprar_oferta
 GO
 CREATE PROCEDURE ZTS_DB.comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
@@ -1207,7 +1207,7 @@ IF(@cantidadCompra > @cantidadDisponible)
 END
 GO
 
-IF OBJECT_ID('ZTS_DB.trigger_compras') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.ZTS_DB.trigger_compras') IS NOT NULL
 	DROP TRIGGER ZTS_DB.trigger_compras
 GO
 CREATE TRIGGER ZTS_DB.trigger_compras
@@ -1250,7 +1250,7 @@ begin
 end
 GO
 
-IF OBJECT_ID('oferta_disponible') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.oferta_disponible') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.oferta_disponible
 GO
 CREATE PROCEDURE ZTS_DB.oferta_disponible (@cuponId varchar(255), @ofertaFecha datetime) 
@@ -1260,14 +1260,14 @@ AS BEGIN
 	IF not exists (SELECT 1 FROM ZTS_DB.OFERTAS
 	WHERE convert(datetime,@ofertaFecha,121) between Fecha_publicacion and Fecha_Vencimiento and Codigo_Oferta = @ofertaCodigo)
 		BEGIN
-			THROW 90002,'La oferta se ha Vencido. No se puede canjear el cupon.',1
+			THROW 90002,'La fecha actual no se encuentra entre la fecha de publicacion y vencimiento de la oferta.',1
 		END
 END
 GO
 
 
 
-IF OBJECT_ID('utilizar_cupon') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.utilizar_cupon') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.utilizar_cupon
 GO
 CREATE PROCEDURE ZTS_DB.utilizar_cupon(@cuponId varchar(255), @fecha datetime)
@@ -1277,7 +1277,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('cupon_utilizado') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.cupon_utilizado') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.cupon_utilizado
 GO
 CREATE PROCEDURE ZTS_DB.cupon_utilizado(@cuponId varchar(255))
@@ -1293,7 +1293,7 @@ GO
 ----LISTADO ESTADISTICO--------------------------------------------------------
 -------------------------------------------------------------------------------
 
-IF OBJECT_ID('suma_porcentajes_de_ofertas') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.suma_porcentajes_de_ofertas') IS NOT NULL
 	DROP function ZTS_DB.suma_porcentajes_de_ofertas
 GO
 create function ZTS_DB.suma_porcentajes_de_ofertas(@proveedor varchar(20),@fecha1 datetime,@fecha2 datetime)
@@ -1307,7 +1307,7 @@ return @porcentaje
 end
 GO
 
-IF OBJECT_ID('suma_facturacion_proveedor') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.suma_facturacion_proveedor') IS NOT NULL
 	DROP function ZTS_DB.suma_facturacion_proveedor
 GO
 create function ZTS_DB.suma_facturacion_proveedor(@proveedor varchar(20),@fecha1 datetime,@fecha2 datetime)

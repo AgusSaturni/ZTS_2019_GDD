@@ -47,7 +47,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
 
         }
 
-        private void eliminar_oferta_btn_Click(object sender, EventArgs e)
+        private void eliminar_oferta_btn_Click(object sender, EventArgs e) //es entregar
         {
             conexionBD conexion = conexionBD.getConexion();
             SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -19,6 +20,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
         private Singleton_Usuario sesion = Singleton_Usuario.getInstance();
         private CommonQueries commonQueries_instance = CommonQueries.getInstance();
         SqlConnection conexion_sql;
+        private string Fecha_Config = (ConfigurationManager.AppSettings["fecha"]).ToString();
 
         public ListadoCupones()
         {
@@ -42,6 +44,8 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conexion_sql);
 
+                MessageBox.Show(query);
+
                 conexion_sql.Open();
 
                 DataTable tabla_clientes = new DataTable();
@@ -64,9 +68,14 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo AS 'Fecha Consumo', O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id, C.Cantidad_disponible from ZTS_DB.CUPONES C JOIN ZTS_DB.COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN ZTS_DB.CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN ZTS_DB.OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN ZTS_DB.PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE ");
+            sb.Append("select C.codigo_cupon, C.Codigo_oferta, CL.username ,O.Descripcion ,C.Fecha_Consumo AS 'Fecha Consumo', O.Fecha_Vencimiento as 'Fecha de Vecimiento Oferta',C.Cupon_Id, C.Cantidad_disponible from ZTS_DB.CUPONES C JOIN ZTS_DB.COMPRAS COMP on COMP.Compra_Id = C.Compra_Id JOIN ZTS_DB.CLIENTES CL on CL.Cliente_Id = COMP.Cliente_Id JOIN ZTS_DB.OFERTAS O on O.Codigo_Oferta = comp.Codigo_oferta AND O.Codigo_Oferta = C.Codigo_oferta JOIN ZTS_DB.PROVEEDORES P on P.Proveedor_Id = O.Proveedor_referenciado WHERE " );
 
             ArrayList Query = new ArrayList();
+
+            //PONGO QUE FILTREMOS SIEMPRE LAS QUE TIENE FECHA DE PUBLICACION IGUAL O MENOS A LA ACTUAL PARA FACILITAR LOS FILTROS
+
+            Query.Add("O.fecha_publicacion <= CONVERT(datetime,'" + Fecha_Config.ToString() + "', 121)");
+            Query.Add("O.fecha_vencimiento >= CONVERT(datetime,'" + Fecha_Config.ToString() + "', 121)");
 
             if (txt_cuponid.Text != "")
             {
@@ -78,7 +87,7 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
             }
             if (cbo_usuarios.Text != "")
             {
-                Query.Add("CL.username LIKE '%" + cbo_usuarios.Text + "%'");
+                Query.Add("CL.username = '" + cbo_usuarios.Text + "'");
             }
             if (checkBox_consumidos.Checked == false)
             {
