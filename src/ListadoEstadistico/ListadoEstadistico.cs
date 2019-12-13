@@ -20,7 +20,7 @@ namespace FrbaOfertas.ListadoEstadistico
         public ListadoEstadistico()
         {
             InitializeComponent();
-            MaximizeBox = false;
+            MaximizeBox = false;     
             dtp_año.Format = DateTimePickerFormat.Custom;
             dtp_año.CustomFormat = "yyyy";
         }
@@ -37,7 +37,7 @@ namespace FrbaOfertas.ListadoEstadistico
 
             cargar_fechas();
 
-            sb.Append("select top 5 proveedor_id ,coalesce(ZTS_DB.suma_porcentajes_de_ofertas(proveedor_Id,'" + fecha_desde + "','" + fecha_hasta + "'),0)Porcentaje_de_Descuento,count(o.codigo_oferta) AS 'Cantidad Ofertas Publicadas', SUM(Cantidad) AS 'Cantidad de Ofertas Vendidas' from ZTS_DB.PROVEEDORES p join ZTS_DB.ofertas o on p.Proveedor_Id = o.Proveedor_referenciado join ZTS_DB.COMPRAS c on o.codigo_oferta=c.codigo_oferta where Fecha_publicacion between '" + fecha_desde + "' and  '" + fecha_hasta + "' group by p.proveedor_id order by 2 desc");
+            sb.Append("select top 5 proveedor_id ,coalesce(ZTS_DB.suma_porcentajes_de_ofertas(proveedor_Id,'" + fecha_desde + "','" + fecha_hasta + "'),0)Porcentaje_de_Descuento,count(o.codigo_oferta) AS 'Cantidad Ofertas Publicadas', SUM(c.Cantidad) AS 'Cantidad de Ofertas Vendidas' from ZTS_DB.PROVEEDORES p join ZTS_DB.ofertas o on p.Proveedor_Id = o.Proveedor_referenciado join ZTS_DB.COMPRAS c on o.codigo_oferta=c.codigo_oferta where Fecha_publicacion between '" + fecha_desde + "' and  '" + fecha_hasta + "' group by p.proveedor_id order by 2 desc");
             
             return sb.ToString();
         }

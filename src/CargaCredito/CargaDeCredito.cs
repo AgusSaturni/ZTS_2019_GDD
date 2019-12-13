@@ -37,17 +37,21 @@ namespace FrbaOfertas.CragaCredito
 
             if (!sesion.verificar_rol_administrador())
             {
-                cbo_usuarios.Text = username;
+                cbo_usuarios.Items.Add(username);
+                cbo_usuarios.SelectedIndex = 1;
+                cbo_usuarios.Enabled = false ;
                 this.cargar_saldoactual();
+             
             }
             else
             {
                 txt_saldo.Text = "No Disponible";
+                commonQueries_instance.cargar_objeto(cbo_usuarios, "CLIENTES");
+                cbo_usuarios.SelectedIndex = 0;
             }
             this.cargar_combobox();
-
-            commonQueries_instance.cargar_objeto(cbo_usuarios, "CLIENTES");
-            cbo_usuarios.SelectedIndex = 0;
+  
+           
         }
 
         private void cargar_combobox()

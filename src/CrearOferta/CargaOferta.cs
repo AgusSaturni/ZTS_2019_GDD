@@ -48,17 +48,22 @@ namespace FrbaOfertas.CrearOferta
             if (sesion.verificar_rol_administrador())
             {
                 bit_admin = true;
+                commonQueries_instance.cargar_objeto(cbo_proveedores, "PROVEEDORES");
+                cbo_proveedores.SelectedIndex = 0;
             }
             else
             {
-                cbo_proveedores.Text = sesion.get_username();
+             
+                cbo_proveedores.Items.Add(sesion.get_username());
+                cbo_proveedores.SelectedIndex = 1;
+                 cbo_proveedores.Enabled = false;
+
             }
 
             FechaPublicacion.Value = Fecha_Config;
             FechaVencimiento.Value = Fecha_Config;
 
-            commonQueries_instance.cargar_objeto(cbo_proveedores, "PROVEEDORES");
-            cbo_proveedores.SelectedIndex = 0;
+           
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -87,6 +92,11 @@ namespace FrbaOfertas.CrearOferta
 
         private bool verificar_datos()
         {
+            if (PrecioLista.Text.Any(x => !char.IsNumber(x)) || PrecioOferta.Text.Any(x => !char.IsNumber(x)))
+            {
+                MessageBox.Show("Los precios deben ser numéricos.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
             if (Convert.ToDecimal(PrecioLista.Text) < Convert.ToDecimal(PrecioOferta.Text))
             {
                 MessageBox.Show("El precio de oferta debe ser menor al de lista", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -140,6 +150,7 @@ namespace FrbaOfertas.CrearOferta
             {
                 command.Parameters.AddWithValue("@proveedor_referenciado", SqlDbType.Char).Value = sesion.get_username();
             }
+
 
 
             try
@@ -196,6 +207,16 @@ namespace FrbaOfertas.CrearOferta
             {
                 e.Handled = true;
             }
+        }
+
+        private void cbo_proveedores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

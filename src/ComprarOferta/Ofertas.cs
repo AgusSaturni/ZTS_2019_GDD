@@ -144,7 +144,7 @@ namespace FrbaOfertas.ComprarOferta
             }     
             if (maximo!= 0)
             {
-                string cadena = "precio_lista between " + minimo + "and " + maximo;
+                string cadena = "precio_oferta between " + minimo + "and " + maximo;
                 Query.Add(cadena);
             }
             else

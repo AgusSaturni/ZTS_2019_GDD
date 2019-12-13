@@ -1156,6 +1156,8 @@ AS BEGIN
 	IF EXISTS(SELECT 1 FROM ZTS_DB.PROVEEDORES WHERE username = @proveedor_referenciado)
 	BEGIN
 		
+		if(@fecha_vencimiento <= @fecha_publicacion)
+		throw 50007,'La fecha de vencimiento no puede ser igual a la fecha de publicacion',1
 		IF NOT EXISTS(SELECT 1 FROM ZTS_DB.OFERTAS WHERE Descripcion = @descripcion and Fecha_publicacion = convert(datetime,@fecha_publicacion,121)
 		and Fecha_Vencimiento = convert(datetime,@fecha_vencimiento,121) and Precio_lista = @precio_lista and Precio_oferta =@precio_oferta
 		and Proveedor_referenciado = @ID)
@@ -1194,7 +1196,9 @@ CREATE PROCEDURE ZTS_DB.comprar_oferta (@codigoOferta varchar(50),@precioLista n
 AS BEGIN
 DECLARE @cliente_id varchar(20)= (select cliente_id from ZTS_DB.CLIENTES where username = @clienteUsuario)
 if(@cantidadCompra = 0)
-			throw 50004,'Debe seleccionar la cantidad de Ofertas que desea comprar.',1
+	throw 50004,'Debe seleccionar la cantidad de Ofertas que desea comprar.',1
+if((select DineroDisponible from ZTS_DB.CLIENTES where username = @clienteUsuario) < @precio_oferta*@cantidadCompra)
+	throw 50004,'Usted no tiene el dinero disponible para realizar esta compra.',1
 IF(@cantidadCompra > @cantidadDisponible)
 	throw 50001,'La cantidad de ofertas que desea adquirir es mayor a la Disponible.',1
 
@@ -1238,6 +1242,7 @@ begin
 		update ZTS_DB.CLIENTES
 		set DineroDisponible = DineroDisponible - (select precio_oferta from ZTS_DB.OFERTAS where Codigo_Oferta = @codigoOferta) * @cantidadCompra
 		where Cliente_Id = @cliente_id
+	
 	commit transaction
 	end
 	else

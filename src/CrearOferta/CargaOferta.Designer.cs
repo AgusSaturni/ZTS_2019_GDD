@@ -151,6 +151,11 @@
             // Cantidad
             // 
             this.Cantidad.Location = new System.Drawing.Point(277, 244);
+            this.Cantidad.Maximum = new decimal(new int[] {
+            9000000,
+            0,
+            0,
+            0});
             this.Cantidad.Name = "Cantidad";
             this.Cantidad.Size = new System.Drawing.Size(120, 20);
             this.Cantidad.TabIndex = 6;
@@ -159,6 +164,11 @@
             // CantMax
             // 
             this.CantMax.Location = new System.Drawing.Point(277, 278);
+            this.CantMax.Maximum = new decimal(new int[] {
+            9000000,
+            0,
+            0,
+            0});
             this.CantMax.Name = "CantMax";
             this.CantMax.Size = new System.Drawing.Size(120, 20);
             this.CantMax.TabIndex = 7;
@@ -221,6 +231,7 @@
             this.groupBox1.Size = new System.Drawing.Size(427, 390);
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // cbo_proveedores
             // 
@@ -232,6 +243,7 @@
             this.cbo_proveedores.Name = "cbo_proveedores";
             this.cbo_proveedores.Size = new System.Drawing.Size(121, 21);
             this.cbo_proveedores.TabIndex = 0;
+            this.cbo_proveedores.SelectedIndexChanged += new System.EventHandler(this.cbo_proveedores_SelectedIndexChanged);
             // 
             // bt_publicar
             // 
