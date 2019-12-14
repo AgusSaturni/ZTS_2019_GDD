@@ -796,6 +796,8 @@ GO
 -------------------------------------------------------------------------------
 
 
+
+
 IF OBJECT_ID('ZTS_DB.registrar_usuario_cliente') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.registrar_usuario_cliente
 GO
@@ -923,6 +925,17 @@ AS BEGIN
 END
 GO
 
+
+
+IF OBJECT_ID('ZTS_DB.verificar_fecha_nacimiento') IS NOT NULL
+	DROP PROCEDURE ZTS_DB.modificar_password
+GO
+CREATE PROCEDURE ZTS_DB.verificar_fecha_nacimiento(@fechaNacimiento varchar(255),@FechaActual varchar(255))
+AS BEGIN
+	if(convert(datetime,@fechaNacimiento,121)> convert(datetime,@FechaActual,121))
+	throw 50001,'Fecha de nacimiento Invalida',1
+END
+GO
 
 
 
