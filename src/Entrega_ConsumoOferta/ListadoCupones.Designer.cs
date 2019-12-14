@@ -31,6 +31,7 @@
             this.contenedor_cupones = new System.Windows.Forms.DataGridView();
             this.Entregar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             this.checkBox_consumidos = new System.Windows.Forms.CheckBox();
             this.bt_cancelar = new System.Windows.Forms.Button();
             this.bt_limpiar = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbo_usuarios = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.contenedor_cupones)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -90,6 +90,15 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de Busqueda";
+            // 
+            // cbo_usuarios
+            // 
+            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_usuarios.FormattingEnabled = true;
+            this.cbo_usuarios.Location = new System.Drawing.Point(182, 95);
+            this.cbo_usuarios.Name = "cbo_usuarios";
+            this.cbo_usuarios.Size = new System.Drawing.Size(134, 21);
+            this.cbo_usuarios.TabIndex = 9;
             // 
             // checkBox_consumidos
             // 
@@ -187,20 +196,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Codigo Cupon";
             // 
-            // cbo_usuarios
-            // 
-            this.cbo_usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_usuarios.FormattingEnabled = true;
-            this.cbo_usuarios.Location = new System.Drawing.Point(182, 95);
-            this.cbo_usuarios.Name = "cbo_usuarios";
-            this.cbo_usuarios.Size = new System.Drawing.Size(134, 21);
-            this.cbo_usuarios.TabIndex = 9;
-            // 
             // ListadoCupones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(555, 440);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.contenedor_cupones);
             this.Margin = new System.Windows.Forms.Padding(2);

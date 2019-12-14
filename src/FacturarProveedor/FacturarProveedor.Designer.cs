@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacturarProveedor));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbo_proveedores = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbo_visualizacion = new System.Windows.Forms.ComboBox();
             this.btn_visualizar = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.lbl_hasta = new System.Windows.Forms.Label();
             this.lbl_desde = new System.Windows.Forms.Label();
             this.lbl_proveedor = new System.Windows.Forms.Label();
-            this.cbo_proveedores = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_facturas)).BeginInit();
             this.SuspendLayout();
@@ -70,6 +70,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cbo_proveedores
+            // 
+            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_proveedores.FormattingEnabled = true;
+            this.cbo_proveedores.Items.AddRange(new object[] {
+            "Elegir un proveedor..."});
+            this.cbo_proveedores.Location = new System.Drawing.Point(132, 35);
+            this.cbo_proveedores.Name = "cbo_proveedores";
+            this.cbo_proveedores.Size = new System.Drawing.Size(200, 21);
+            this.cbo_proveedores.TabIndex = 16;
             // 
             // label1
             // 
@@ -198,25 +209,16 @@
             this.lbl_proveedor.TabIndex = 0;
             this.lbl_proveedor.Text = "Proveedor";
             // 
-            // cbo_proveedores
-            // 
-            this.cbo_proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_proveedores.FormattingEnabled = true;
-            this.cbo_proveedores.Items.AddRange(new object[] {
-            "Elegir un proveedor..."});
-            this.cbo_proveedores.Location = new System.Drawing.Point(132, 35);
-            this.cbo_proveedores.Name = "cbo_proveedores";
-            this.cbo_proveedores.Size = new System.Drawing.Size(200, 21);
-            this.cbo_proveedores.TabIndex = 16;
-            // 
             // FacturarProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 495);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FacturarProveedor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facturación a Proveedor";
             this.Load += new System.EventHandler(this.FacturarProveedor_Load);
             this.groupBox1.ResumeLayout(false);

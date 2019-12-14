@@ -56,18 +56,21 @@
             this.groupBox1.Controls.Add(this.bt_der_a_izq);
             this.groupBox1.Controls.Add(this.contenedor_funciones_totales);
             this.groupBox1.Controls.Add(this.contenedor_funciones_del_rol);
-            this.groupBox1.Location = new System.Drawing.Point(12, 8);
+            this.groupBox1.Location = new System.Drawing.Point(8, 5);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(930, 537);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(620, 349);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // bt_finalizar
             // 
             this.bt_finalizar.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_finalizar.Location = new System.Drawing.Point(529, 476);
+            this.bt_finalizar.Location = new System.Drawing.Point(353, 309);
+            this.bt_finalizar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_finalizar.Name = "bt_finalizar";
-            this.bt_finalizar.Size = new System.Drawing.Size(378, 44);
+            this.bt_finalizar.Size = new System.Drawing.Size(252, 29);
             this.bt_finalizar.TabIndex = 17;
             this.bt_finalizar.Text = "Finalizar";
             this.bt_finalizar.UseVisualStyleBackColor = true;
@@ -76,9 +79,10 @@
             // bt_cancelar
             // 
             this.bt_cancelar.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_cancelar.Location = new System.Drawing.Point(21, 476);
+            this.bt_cancelar.Location = new System.Drawing.Point(14, 309);
+            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_cancelar.Name = "bt_cancelar";
-            this.bt_cancelar.Size = new System.Drawing.Size(378, 44);
+            this.bt_cancelar.Size = new System.Drawing.Size(252, 29);
             this.bt_cancelar.TabIndex = 16;
             this.bt_cancelar.Text = "Cancelar";
             this.bt_cancelar.UseVisualStyleBackColor = true;
@@ -88,9 +92,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(17, 116);
+            this.label2.Location = new System.Drawing.Point(11, 75);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(284, 19);
+            this.label2.Size = new System.Drawing.Size(203, 14);
             this.label2.TabIndex = 15;
             this.label2.Text = "Seleccione las Funciones Deseadas";
             // 
@@ -98,25 +103,28 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(16, 34);
+            this.label1.Location = new System.Drawing.Point(11, 22);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(288, 19);
+            this.label1.Size = new System.Drawing.Size(207, 14);
             this.label1.TabIndex = 14;
             this.label1.Text = "Introduzca el nombre del nuevo ROL";
             // 
             // txt_nombre_rol
             // 
-            this.txt_nombre_rol.Location = new System.Drawing.Point(20, 68);
+            this.txt_nombre_rol.Location = new System.Drawing.Point(13, 44);
+            this.txt_nombre_rol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txt_nombre_rol.Name = "txt_nombre_rol";
-            this.txt_nombre_rol.Size = new System.Drawing.Size(339, 26);
+            this.txt_nombre_rol.Size = new System.Drawing.Size(227, 20);
             this.txt_nombre_rol.TabIndex = 13;
             // 
             // bt_izq_a_der
             // 
             this.bt_izq_a_der.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_izq_a_der.Location = new System.Drawing.Point(415, 212);
+            this.bt_izq_a_der.Location = new System.Drawing.Point(277, 138);
+            this.bt_izq_a_der.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_izq_a_der.Name = "bt_izq_a_der";
-            this.bt_izq_a_der.Size = new System.Drawing.Size(100, 79);
+            this.bt_izq_a_der.Size = new System.Drawing.Size(67, 51);
             this.bt_izq_a_der.TabIndex = 11;
             this.bt_izq_a_der.Text = ">";
             this.bt_izq_a_der.UseVisualStyleBackColor = true;
@@ -125,9 +133,10 @@
             // bt_der_a_izq
             // 
             this.bt_der_a_izq.Font = new System.Drawing.Font("Arial Narrow", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_der_a_izq.Location = new System.Drawing.Point(415, 316);
+            this.bt_der_a_izq.Location = new System.Drawing.Point(277, 205);
+            this.bt_der_a_izq.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_der_a_izq.Name = "bt_der_a_izq";
-            this.bt_der_a_izq.Size = new System.Drawing.Size(100, 79);
+            this.bt_der_a_izq.Size = new System.Drawing.Size(67, 51);
             this.bt_der_a_izq.TabIndex = 12;
             this.bt_der_a_izq.Text = "<";
             this.bt_der_a_izq.UseVisualStyleBackColor = true;
@@ -137,9 +146,11 @@
             // 
             this.contenedor_funciones_totales.Controls.Add(this.list_totales);
             this.contenedor_funciones_totales.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contenedor_funciones_totales.Location = new System.Drawing.Point(19, 157);
+            this.contenedor_funciones_totales.Location = new System.Drawing.Point(13, 102);
+            this.contenedor_funciones_totales.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.contenedor_funciones_totales.Name = "contenedor_funciones_totales";
-            this.contenedor_funciones_totales.Size = new System.Drawing.Size(380, 304);
+            this.contenedor_funciones_totales.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.contenedor_funciones_totales.Size = new System.Drawing.Size(253, 198);
             this.contenedor_funciones_totales.TabIndex = 9;
             this.contenedor_funciones_totales.TabStop = false;
             this.contenedor_funciones_totales.Text = "Funciones Disponibles del Sistema";
@@ -147,19 +158,22 @@
             // list_totales
             // 
             this.list_totales.FormattingEnabled = true;
-            this.list_totales.ItemHeight = 19;
-            this.list_totales.Location = new System.Drawing.Point(17, 25);
+            this.list_totales.ItemHeight = 14;
+            this.list_totales.Location = new System.Drawing.Point(11, 16);
+            this.list_totales.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.list_totales.Name = "list_totales";
-            this.list_totales.Size = new System.Drawing.Size(339, 270);
+            this.list_totales.Size = new System.Drawing.Size(227, 172);
             this.list_totales.TabIndex = 9;
             // 
             // contenedor_funciones_del_rol
             // 
             this.contenedor_funciones_del_rol.Controls.Add(this.list_rol);
             this.contenedor_funciones_del_rol.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contenedor_funciones_del_rol.Location = new System.Drawing.Point(532, 157);
+            this.contenedor_funciones_del_rol.Location = new System.Drawing.Point(355, 102);
+            this.contenedor_funciones_del_rol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.contenedor_funciones_del_rol.Name = "contenedor_funciones_del_rol";
-            this.contenedor_funciones_del_rol.Size = new System.Drawing.Size(375, 304);
+            this.contenedor_funciones_del_rol.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.contenedor_funciones_del_rol.Size = new System.Drawing.Size(250, 198);
             this.contenedor_funciones_del_rol.TabIndex = 10;
             this.contenedor_funciones_del_rol.TabStop = false;
             this.contenedor_funciones_del_rol.Text = "Funciones a Asignar";
@@ -167,18 +181,21 @@
             // list_rol
             // 
             this.list_rol.FormattingEnabled = true;
-            this.list_rol.ItemHeight = 19;
-            this.list_rol.Location = new System.Drawing.Point(15, 25);
+            this.list_rol.ItemHeight = 14;
+            this.list_rol.Location = new System.Drawing.Point(10, 16);
+            this.list_rol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.list_rol.Name = "list_rol";
-            this.list_rol.Size = new System.Drawing.Size(339, 270);
+            this.list_rol.Size = new System.Drawing.Size(227, 172);
             this.list_rol.TabIndex = 0;
             // 
             // alta_rol
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(956, 557);
+            this.ClientSize = new System.Drawing.Size(637, 362);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "alta_rol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Alta de Roles";

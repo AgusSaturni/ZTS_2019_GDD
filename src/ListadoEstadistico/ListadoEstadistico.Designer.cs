@@ -54,19 +54,20 @@
             this.groupBox1.Controls.Add(this.MayorFacturacion);
             this.groupBox1.Controls.Add(this.bt_limpiar);
             this.groupBox1.Controls.Add(this.bt_buscar);
-            this.groupBox1.Location = new System.Drawing.Point(12, 0);
+            this.groupBox1.Location = new System.Drawing.Point(8, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(904, 295);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(603, 192);
             this.groupBox1.TabIndex = 45;
             this.groupBox1.TabStop = false;
             // 
             // btn_limpiar
             // 
             this.btn_limpiar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btn_limpiar.Location = new System.Drawing.Point(604, 192);
-            this.btn_limpiar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_limpiar.Location = new System.Drawing.Point(403, 125);
             this.btn_limpiar.Name = "btn_limpiar";
-            this.btn_limpiar.Size = new System.Drawing.Size(264, 48);
+            this.btn_limpiar.Size = new System.Drawing.Size(176, 31);
             this.btn_limpiar.TabIndex = 13;
             this.btn_limpiar.Text = "Limpiar";
             this.btn_limpiar.UseVisualStyleBackColor = true;
@@ -78,11 +79,9 @@
             this.groupBox2.Controls.Add(this.dtp_año);
             this.groupBox2.Controls.Add(this.rbt_segundo_semestre);
             this.groupBox2.Controls.Add(this.rbt_primer_semestre);
-            this.groupBox2.Location = new System.Drawing.Point(26, 142);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Location = new System.Drawing.Point(17, 92);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(506, 111);
+            this.groupBox2.Size = new System.Drawing.Size(337, 72);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Seleccionar Semestre:";
@@ -90,29 +89,26 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(260, 55);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(173, 36);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 20);
+            this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 15;
             this.label2.Text = "Año:";
             // 
             // dtp_año
             // 
             this.dtp_año.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp_año.Location = new System.Drawing.Point(333, 46);
-            this.dtp_año.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dtp_año.Location = new System.Drawing.Point(222, 30);
             this.dtp_año.Name = "dtp_año";
-            this.dtp_año.Size = new System.Drawing.Size(115, 26);
+            this.dtp_año.Size = new System.Drawing.Size(78, 20);
             this.dtp_año.TabIndex = 14;
             // 
             // rbt_segundo_semestre
             // 
             this.rbt_segundo_semestre.AutoSize = true;
-            this.rbt_segundo_semestre.Location = new System.Drawing.Point(30, 75);
-            this.rbt_segundo_semestre.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbt_segundo_semestre.Location = new System.Drawing.Point(20, 49);
             this.rbt_segundo_semestre.Name = "rbt_segundo_semestre";
-            this.rbt_segundo_semestre.Size = new System.Drawing.Size(172, 24);
+            this.rbt_segundo_semestre.Size = new System.Drawing.Size(115, 17);
             this.rbt_segundo_semestre.TabIndex = 13;
             this.rbt_segundo_semestre.TabStop = true;
             this.rbt_segundo_semestre.Text = "Segundo Semestre";
@@ -121,10 +117,9 @@
             // rbt_primer_semestre
             // 
             this.rbt_primer_semestre.AutoSize = true;
-            this.rbt_primer_semestre.Location = new System.Drawing.Point(30, 29);
-            this.rbt_primer_semestre.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbt_primer_semestre.Location = new System.Drawing.Point(20, 19);
             this.rbt_primer_semestre.Name = "rbt_primer_semestre";
-            this.rbt_primer_semestre.Size = new System.Drawing.Size(152, 24);
+            this.rbt_primer_semestre.Size = new System.Drawing.Size(101, 17);
             this.rbt_primer_semestre.TabIndex = 12;
             this.rbt_primer_semestre.TabStop = true;
             this.rbt_primer_semestre.Text = "Primer Semestre";
@@ -134,10 +129,9 @@
             // 
             this.PorcentajeDescuento.AutoSize = true;
             this.PorcentajeDescuento.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.PorcentajeDescuento.Location = new System.Drawing.Point(26, 32);
-            this.PorcentajeDescuento.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.PorcentajeDescuento.Location = new System.Drawing.Point(17, 21);
             this.PorcentajeDescuento.Name = "PorcentajeDescuento";
-            this.PorcentajeDescuento.Size = new System.Drawing.Size(338, 28);
+            this.PorcentajeDescuento.Size = new System.Drawing.Size(252, 20);
             this.PorcentajeDescuento.TabIndex = 0;
             this.PorcentajeDescuento.Text = "Mayor Porcentaje de Descuento";
             this.PorcentajeDescuento.UseVisualStyleBackColor = true;
@@ -147,10 +141,9 @@
             // 
             this.MayorFacturacion.AutoSize = true;
             this.MayorFacturacion.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.MayorFacturacion.Location = new System.Drawing.Point(26, 72);
-            this.MayorFacturacion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MayorFacturacion.Location = new System.Drawing.Point(17, 47);
             this.MayorFacturacion.Name = "MayorFacturacion";
-            this.MayorFacturacion.Size = new System.Drawing.Size(213, 28);
+            this.MayorFacturacion.Size = new System.Drawing.Size(157, 20);
             this.MayorFacturacion.TabIndex = 1;
             this.MayorFacturacion.Text = "Mayor Facturacion";
             this.MayorFacturacion.UseVisualStyleBackColor = true;
@@ -159,9 +152,10 @@
             // bt_limpiar
             // 
             this.bt_limpiar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_limpiar.Location = new System.Drawing.Point(604, 116);
+            this.bt_limpiar.Location = new System.Drawing.Point(403, 75);
+            this.bt_limpiar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_limpiar.Name = "bt_limpiar";
-            this.bt_limpiar.Size = new System.Drawing.Size(264, 48);
+            this.bt_limpiar.Size = new System.Drawing.Size(176, 31);
             this.bt_limpiar.TabIndex = 6;
             this.bt_limpiar.Text = "Volver";
             this.bt_limpiar.UseVisualStyleBackColor = true;
@@ -170,9 +164,10 @@
             // bt_buscar
             // 
             this.bt_buscar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.bt_buscar.Location = new System.Drawing.Point(604, 42);
+            this.bt_buscar.Location = new System.Drawing.Point(403, 27);
+            this.bt_buscar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_buscar.Name = "bt_buscar";
-            this.bt_buscar.Size = new System.Drawing.Size(264, 43);
+            this.bt_buscar.Size = new System.Drawing.Size(176, 28);
             this.bt_buscar.TabIndex = 5;
             this.bt_buscar.Text = "Generar";
             this.bt_buscar.UseVisualStyleBackColor = true;
@@ -186,27 +181,27 @@
             this.contenedor_proveedores.BackgroundColor = System.Drawing.Color.White;
             this.contenedor_proveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_proveedores.Enabled = false;
-            this.contenedor_proveedores.Location = new System.Drawing.Point(12, 303);
-            this.contenedor_proveedores.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.contenedor_proveedores.Location = new System.Drawing.Point(8, 197);
             this.contenedor_proveedores.MultiSelect = false;
             this.contenedor_proveedores.Name = "contenedor_proveedores";
             this.contenedor_proveedores.ReadOnly = true;
             this.contenedor_proveedores.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.contenedor_proveedores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.contenedor_proveedores.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.contenedor_proveedores.Size = new System.Drawing.Size(910, 234);
+            this.contenedor_proveedores.Size = new System.Drawing.Size(607, 152);
             this.contenedor_proveedores.TabIndex = 44;
             // 
             // ListadoEstadistico
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(932, 543);
+            this.ClientSize = new System.Drawing.Size(621, 353);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.contenedor_proveedores);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ListadoEstadistico";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ListadoEstadistico";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

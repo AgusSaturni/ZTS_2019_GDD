@@ -244,6 +244,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 376);
+            this.ControlBox = false;
             this.Controls.Add(this.bt_volver);
             this.Controls.Add(this.bt_der_a_izq);
             this.Controls.Add(this.bt_izq_a_der);

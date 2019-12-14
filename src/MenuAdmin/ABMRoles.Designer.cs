@@ -42,9 +42,9 @@
             this.groupBox1.Controls.Add(this.bt_alta_rol);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(341, 150);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -53,7 +53,7 @@
             // 
             this.bt_cancelar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.bt_cancelar.Location = new System.Drawing.Point(4, 109);
-            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_cancelar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_cancelar.Name = "bt_cancelar";
             this.bt_cancelar.Size = new System.Drawing.Size(329, 26);
             this.bt_cancelar.TabIndex = 2;
@@ -65,7 +65,7 @@
             // 
             this.bt_modificar_rol.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.bt_modificar_rol.Location = new System.Drawing.Point(4, 68);
-            this.bt_modificar_rol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_modificar_rol.Margin = new System.Windows.Forms.Padding(2);
             this.bt_modificar_rol.Name = "bt_modificar_rol";
             this.bt_modificar_rol.Size = new System.Drawing.Size(329, 26);
             this.bt_modificar_rol.TabIndex = 1;
@@ -77,7 +77,7 @@
             // 
             this.bt_alta_rol.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
             this.bt_alta_rol.Location = new System.Drawing.Point(4, 26);
-            this.bt_alta_rol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_alta_rol.Margin = new System.Windows.Forms.Padding(2);
             this.bt_alta_rol.Name = "bt_alta_rol";
             this.bt_alta_rol.Size = new System.Drawing.Size(329, 26);
             this.bt_alta_rol.TabIndex = 0;
@@ -90,8 +90,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(356, 169);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ABMRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMRoles";

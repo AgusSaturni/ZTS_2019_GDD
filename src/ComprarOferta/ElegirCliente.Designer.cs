@@ -39,19 +39,17 @@
             // 
             this.cmb_clientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_clientes.FormattingEnabled = true;
-            this.cmb_clientes.Location = new System.Drawing.Point(18, 27);
-            this.cmb_clientes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cmb_clientes.Location = new System.Drawing.Point(12, 18);
             this.cmb_clientes.Name = "cmb_clientes";
-            this.cmb_clientes.Size = new System.Drawing.Size(293, 28);
+            this.cmb_clientes.Size = new System.Drawing.Size(197, 21);
             this.cmb_clientes.TabIndex = 0;
             // 
             // btn_seleccionar
             // 
             this.btn_seleccionar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_seleccionar.Location = new System.Drawing.Point(18, 78);
-            this.btn_seleccionar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_seleccionar.Location = new System.Drawing.Point(12, 51);
             this.btn_seleccionar.Name = "btn_seleccionar";
-            this.btn_seleccionar.Size = new System.Drawing.Size(293, 35);
+            this.btn_seleccionar.Size = new System.Drawing.Size(195, 23);
             this.btn_seleccionar.TabIndex = 1;
             this.btn_seleccionar.Text = "Seleccionar";
             this.btn_seleccionar.UseVisualStyleBackColor = true;
@@ -60,10 +58,9 @@
             // btn_volver
             // 
             this.btn_volver.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_volver.Location = new System.Drawing.Point(18, 123);
-            this.btn_volver.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_volver.Location = new System.Drawing.Point(12, 80);
             this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(293, 35);
+            this.btn_volver.Size = new System.Drawing.Size(195, 23);
             this.btn_volver.TabIndex = 2;
             this.btn_volver.Text = "Volver";
             this.btn_volver.UseVisualStyleBackColor = true;
@@ -74,20 +71,22 @@
             this.groupBox1.Controls.Add(this.btn_volver);
             this.groupBox1.Controls.Add(this.cmb_clientes);
             this.groupBox1.Controls.Add(this.btn_seleccionar);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(334, 177);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(223, 115);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccionar Cliente";
             // 
             // ElegirCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 196);
+            this.ClientSize = new System.Drawing.Size(237, 127);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ElegirCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ElegirCliente";

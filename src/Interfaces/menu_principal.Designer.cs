@@ -43,9 +43,9 @@
             // 
             this.groupBox1.Controls.Add(this.comboBox_funciones);
             this.groupBox1.Location = new System.Drawing.Point(8, 45);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(355, 47);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -56,7 +56,7 @@
             this.comboBox_funciones.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_funciones.FormattingEnabled = true;
             this.comboBox_funciones.Location = new System.Drawing.Point(11, 16);
-            this.comboBox_funciones.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox_funciones.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_funciones.Name = "comboBox_funciones";
             this.comboBox_funciones.Size = new System.Drawing.Size(331, 21);
             this.comboBox_funciones.TabIndex = 0;
@@ -78,7 +78,7 @@
             // 
             this.bt_ejecutar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_ejecutar.Location = new System.Drawing.Point(189, 236);
-            this.bt_ejecutar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_ejecutar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_ejecutar.Name = "bt_ejecutar";
             this.bt_ejecutar.Size = new System.Drawing.Size(174, 29);
             this.bt_ejecutar.TabIndex = 1;
@@ -90,7 +90,7 @@
             // 
             this.bt_cerrar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_cerrar.Location = new System.Drawing.Point(8, 236);
-            this.bt_cerrar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bt_cerrar.Margin = new System.Windows.Forms.Padding(2);
             this.bt_cerrar.Name = "bt_cerrar";
             this.bt_cerrar.Size = new System.Drawing.Size(174, 29);
             this.bt_cerrar.TabIndex = 2;
@@ -103,7 +103,7 @@
             this.pictureBox1.ErrorImage = null;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(8, 96);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(355, 136);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -115,12 +115,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 273);
+            this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bt_cerrar);
             this.Controls.Add(this.bt_ejecutar);
             this.Controls.Add(this.lbl_bienvenida);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimizeBox = false;
             this.Name = "menu_principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

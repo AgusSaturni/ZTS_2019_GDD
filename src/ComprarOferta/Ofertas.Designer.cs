@@ -185,6 +185,7 @@
             // 
             this.contenedor_ofertas.AllowUserToAddRows = false;
             this.contenedor_ofertas.AllowUserToDeleteRows = false;
+            this.contenedor_ofertas.BackgroundColor = System.Drawing.SystemColors.Window;
             this.contenedor_ofertas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.contenedor_ofertas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
@@ -206,6 +207,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 443);
+            this.ControlBox = false;
             this.Controls.Add(this.contenedor_ofertas);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
