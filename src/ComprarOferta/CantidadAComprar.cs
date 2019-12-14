@@ -117,7 +117,7 @@ namespace FrbaOfertas.ComprarOferta
                 while (reader.Read())
                 {       
                         string codigoCupon = (reader[0].ToString());
-                        MessageBox.Show("Compra realizada con Éxito. Su código de cupón es: " + codigoCupon);
+                        MessageBox.Show("Compra realizada con Éxito. Su código de cupón es: " + codigoCupon, "Compra de Ofertas", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
             }
@@ -136,7 +136,7 @@ namespace FrbaOfertas.ComprarOferta
 
         private void bt_volver_Click(object sender, EventArgs e)
         {
-            Form ofertas = new Ofertas();
+            Form ofertas = new Ofertas(username);
             ofertas.Show();
             this.Close();
         }            

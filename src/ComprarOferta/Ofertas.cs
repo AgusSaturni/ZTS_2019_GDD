@@ -143,16 +143,18 @@ namespace FrbaOfertas.ComprarOferta
             if (descripcion != "")
             {
                 Query.Add("Descripcion LIKE '%" + descripcion + "%'");
-            }     
-            if (maximo!= 0)
-            {
-                string cadena = "precio_oferta between " + minimo + "and " + maximo;
-                Query.Add(cadena);
             }
-            else
+
+            if (rango.Checked == true) 
             {
-                Query.Add(" 1 = 1"); // ya que si no tengo ningun campo lleno, y toco el checkbox, me queda where solo
+                if (maximo != 0)
+                {
+                    string cadena = "precio_oferta between " + minimo + "and " + maximo;
+                    Query.Add(cadena);
+                }
             }
+
+            Query.Add(" 1 = 1"); // ya que si no tengo ningun campo lleno, y toco el checkbox, me queda where solo
 
             string[] vector_query = Query.ToArray(typeof(string)) as string[];
             string query_final = string.Join(" AND ", vector_query);
@@ -169,7 +171,7 @@ namespace FrbaOfertas.ComprarOferta
 
         private void limpiar_form() //hacemos esto para refrescar el datagridview
         {
-            Form compraOferta = new ComprarOferta.Ofertas();
+            Form compraOferta = new ComprarOferta.Ofertas(sesion_username);
             compraOferta.Show();
             this.Close();
         }

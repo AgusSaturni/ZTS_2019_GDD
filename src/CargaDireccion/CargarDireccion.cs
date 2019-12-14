@@ -94,8 +94,16 @@ namespace FrbaOfertas.CargaDireccion
 
                     common_queries_instance.filtrar_nulos(command, CodigoPostal.Text, Localidad.Text, NroPiso.Text, Departamento.Text);
 
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException exception) 
+                    {
+                        SqlError errores = exception.Errors[0];
+                        MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-                    command.ExecuteNonQuery();
                     MessageBox.Show("Registro de Cliente Finalizado", "Registro de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     break;
@@ -126,7 +134,16 @@ namespace FrbaOfertas.CargaDireccion
 
                     common_queries_instance.filtrar_nulos(command1, CodigoPostal.Text, Localidad.Text, NroPiso.Text, Departamento.Text);
 
-                    command1.ExecuteNonQuery();
+                    try
+                    {
+                        command1.ExecuteNonQuery();
+                    }
+                    catch (SqlException exception)
+                    {
+                        SqlError errores = exception.Errors[0];
+                        MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
 
                     MessageBox.Show("Registro de Proveedor Finalizado", "Registro de Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

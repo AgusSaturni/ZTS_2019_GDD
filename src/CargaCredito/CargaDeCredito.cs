@@ -159,6 +159,13 @@ namespace FrbaOfertas.CragaCredito
                 MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
+
+            if (sesion.verificar_rol_administrador() && cbo_usuarios.SelectedItem.ToString() == "Elegir usuario...") 
+            {
+                MessageBox.Show("Seleccione un usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
             if (string.IsNullOrEmpty(cbo_usuarios.Text))
             {
                 MessageBox.Show("Seleccione un usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

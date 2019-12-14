@@ -86,6 +86,7 @@
             // 
             // ComboBox_Rol
             // 
+            this.ComboBox_Rol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox_Rol.FormattingEnabled = true;
             this.ComboBox_Rol.Items.AddRange(new object[] {
             "Cliente",
@@ -95,7 +96,6 @@
             this.ComboBox_Rol.Name = "ComboBox_Rol";
             this.ComboBox_Rol.Size = new System.Drawing.Size(208, 32);
             this.ComboBox_Rol.TabIndex = 10;
-            this.ComboBox_Rol.Text = "Seleccione";
             this.ComboBox_Rol.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label3
