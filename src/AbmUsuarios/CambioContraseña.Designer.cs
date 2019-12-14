@@ -42,37 +42,41 @@
             // 
             // Usuario
             // 
-            this.Usuario.Location = new System.Drawing.Point(165, 23);
+            this.Usuario.Location = new System.Drawing.Point(248, 35);
+            this.Usuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Usuario.Multiline = true;
             this.Usuario.Name = "Usuario";
-            this.Usuario.Size = new System.Drawing.Size(186, 24);
+            this.Usuario.Size = new System.Drawing.Size(277, 35);
             this.Usuario.TabIndex = 3;
             // 
             // passwordV
             // 
-            this.passwordV.Location = new System.Drawing.Point(165, 57);
+            this.passwordV.Location = new System.Drawing.Point(248, 88);
+            this.passwordV.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.passwordV.Multiline = true;
             this.passwordV.Name = "passwordV";
             this.passwordV.PasswordChar = '•';
-            this.passwordV.Size = new System.Drawing.Size(186, 26);
+            this.passwordV.Size = new System.Drawing.Size(277, 38);
             this.passwordV.TabIndex = 4;
             // 
             // passwordN
             // 
-            this.passwordN.Location = new System.Drawing.Point(165, 94);
+            this.passwordN.Location = new System.Drawing.Point(248, 145);
+            this.passwordN.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.passwordN.Multiline = true;
             this.passwordN.Name = "passwordN";
             this.passwordN.PasswordChar = '•';
-            this.passwordN.Size = new System.Drawing.Size(186, 26);
+            this.passwordN.Size = new System.Drawing.Size(277, 38);
             this.passwordN.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(14, 23);
+            this.label1.Location = new System.Drawing.Point(21, 35);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 16);
+            this.label1.Size = new System.Drawing.Size(192, 24);
             this.label1.TabIndex = 6;
             this.label1.Text = "Nombre de Usuario";
             // 
@@ -80,9 +84,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(14, 57);
+            this.label2.Location = new System.Drawing.Point(21, 88);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(135, 16);
+            this.label2.Size = new System.Drawing.Size(183, 24);
             this.label2.TabIndex = 7;
             this.label2.Text = "Contraseña Actual";
             // 
@@ -90,9 +95,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(14, 94);
+            this.label3.Location = new System.Drawing.Point(21, 145);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 16);
+            this.label3.Size = new System.Drawing.Size(184, 24);
             this.label3.TabIndex = 8;
             this.label3.Text = "Contraseña Nueva";
             // 
@@ -107,11 +113,9 @@
             this.groupBox1.Controls.Add(this.passwordN);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(11, 11);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(16, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(369, 207);
+            this.groupBox1.Size = new System.Drawing.Size(554, 318);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
@@ -119,9 +123,10 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(13, 162);
+            this.button2.Location = new System.Drawing.Point(20, 249);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(337, 23);
+            this.button2.Size = new System.Drawing.Size(506, 35);
             this.button2.TabIndex = 10;
             this.button2.Text = "Volver";
             this.button2.UseVisualStyleBackColor = true;
@@ -130,21 +135,23 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(13, 132);
+            this.button1.Location = new System.Drawing.Point(20, 203);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(337, 23);
+            this.button1.Size = new System.Drawing.Size(506, 35);
             this.button1.TabIndex = 9;
-            this.button1.Text = "Hecho";
+            this.button1.Text = "Finalizar Cambio";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CambioContraseña
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(388, 226);
+            this.ClientSize = new System.Drawing.Size(582, 348);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CambioContraseña";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cambio de Contraseña";

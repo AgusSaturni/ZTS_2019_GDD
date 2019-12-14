@@ -23,9 +23,9 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
 
         public Entrega_ConsumoOferta()
         {
+            InitializeComponent();
             MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            InitializeComponent();
             this.fecha_consumo_dtp.Value = (Fecha_Config);
         }
 
@@ -119,7 +119,17 @@ namespace FrbaOfertas.Entrega_ConsumoOferta
             utilizar_cupon.CommandType = CommandType.StoredProcedure;
             utilizar_cupon.Parameters.AddWithValue("@cuponId", SqlDbType.Char).Value = indice_cupon;
             utilizar_cupon.Parameters.AddWithValue("@fecha", SqlDbType.Char).Value = fecha_consumo_dtp.Value;
-            utilizar_cupon.ExecuteNonQuery();
+
+            try
+            {
+                utilizar_cupon.ExecuteNonQuery();
+            }
+            catch (SqlException exepcion)
+            {
+                SqlError errores = exepcion.Errors[0];
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             MessageBox.Show("Oferta Entregada correctamente", "Canje Cupon", MessageBoxButtons.OK, MessageBoxIcon.Information);
             limpiar_form();
         }

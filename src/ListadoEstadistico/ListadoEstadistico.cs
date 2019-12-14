@@ -20,7 +20,8 @@ namespace FrbaOfertas.ListadoEstadistico
         public ListadoEstadistico()
         {
             InitializeComponent();
-            MaximizeBox = false;     
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             dtp_año.Format = DateTimePickerFormat.Custom;
             dtp_año.CustomFormat = "yyyy";
         }
@@ -56,8 +57,8 @@ namespace FrbaOfertas.ListadoEstadistico
 
         private void bt_buscar_Click(object sender, EventArgs e)
         {
-            if (MayorFacturacion.Checked == false && PorcentajeDescuento.Checked == false) { MessageBox.Show("Seleccione un tipo de Listado."); return; }
-            else if (rbt_primer_semestre.Checked == false && rbt_segundo_semestre.Checked == false) { MessageBox.Show("Seleccione un semestre."); return; }
+            if (MayorFacturacion.Checked == false && PorcentajeDescuento.Checked == false) { MessageBox.Show("Seleccione un tipo de Listado.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
+            else if (rbt_primer_semestre.Checked == false && rbt_segundo_semestre.Checked == false) { MessageBox.Show("Seleccione un semestre.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
 
             conexionBD conexion = conexionBD.getConexion();
 
@@ -101,7 +102,7 @@ namespace FrbaOfertas.ListadoEstadistico
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
-                MessageBox.Show(errores.Message.ToString());
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conn.Close();
         }

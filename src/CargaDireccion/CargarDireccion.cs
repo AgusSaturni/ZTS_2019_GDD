@@ -30,6 +30,8 @@ namespace FrbaOfertas.CargaDireccion
         private int bit_accion;
         private Form formulario_anterior;
         private CommonQueries common_queries_instance = CommonQueries.getInstance();
+        conexionBD conexion = conexionBD.getConexion();
+        SqlConnection conn;
 
         public CargarDireccion()
         {
@@ -63,12 +65,8 @@ namespace FrbaOfertas.CargaDireccion
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //BOTON FINALIZAR
         {
-
-            conexionBD conexion = conexionBD.getConexion();
-            SqlConnection conn = new SqlConnection(conexion.get_cadena());
-
             conn.Open();
 
             switch (rol)
@@ -239,6 +237,7 @@ namespace FrbaOfertas.CargaDireccion
 
         private void CargarDireccion_Load(object sender, EventArgs e)
         {
+            conn = new SqlConnection(conexion.get_cadena());
 
         }
 

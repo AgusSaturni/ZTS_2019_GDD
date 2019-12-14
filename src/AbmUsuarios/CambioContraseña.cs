@@ -70,7 +70,7 @@ namespace FrbaOfertas.AbmUsuarios
             try
             {
                 command.ExecuteNonQuery();
-                MessageBox.Show("Hecho");
+                MessageBox.Show("Contraseña Modificada.", "Modificacion de Contraseña", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Visible = false;
                 Form iniciar = new InicioDeSesion();
                 iniciar.Show();

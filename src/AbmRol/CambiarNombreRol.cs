@@ -42,6 +42,7 @@ namespace FrbaOfertas.AbmRol
             try
             {
                 cmd.ExecuteNonQuery();
+                MessageBox.Show("Modificacion Finalizada", "Modificacion de Roles", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Form mod = new Modificacion_Roles();
                 mod.Show();
                 this.Close();

@@ -20,6 +20,8 @@ namespace FrbaOfertas.ComprarOferta
         public ElegirCliente()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             cargar_cmb_clientes();
         }
 

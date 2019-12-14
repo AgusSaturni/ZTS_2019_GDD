@@ -120,7 +120,7 @@ namespace FrbaOfertas.CragaCredito
                 }
                 else
                 {
-                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = cbo_usuarios.Text;
+                    persistir_carga.Parameters.AddWithValue("@username", SqlDbType.Char).Value = cbo_usuarios.SelectedItem.ToString();
                 }
 
                 persistir_carga.Parameters.AddWithValue("@tarjeta_nro", SqlDbType.Float).Value = Int64.Parse(txt_num_tarjeta.Text);
@@ -132,17 +132,19 @@ namespace FrbaOfertas.CragaCredito
                 persistir_carga.ExecuteNonQuery();
 
                 MessageBox.Show("Carga Realizada con Exito", "Carga de Saldo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (!sesion.verificar_rol_administrador())
-                {
-                    txt_saldo.Text = "$" + (this.saldo + Int32.Parse(txt_monto.Text)).ToString();
-                }
+
+                conexion_sql.Close();
+
+                saldo = 0;
+                this.cargar_saldoactual();
             }
             catch (SqlException exepcion)
             {
                 SqlError errores = exepcion.Errors[0];
                 MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexion_sql.Close();
             }
-            conexion_sql.Close();
+            
 
 
         }

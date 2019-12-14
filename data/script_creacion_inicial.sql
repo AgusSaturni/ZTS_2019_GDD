@@ -583,7 +583,7 @@ IF OBJECT_ID('ZTS_DB.persistir_carga') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.persistir_carga
 GO
 CREATE PROCEDURE ZTS_DB.persistir_carga(@username varchar(255),@tarjeta_nro numeric(20),@cod_segu numeric(3),@tipo_tarj varchar(20),@monto numeric(10,0),
-							  @fecha varchar(10))
+							  @fecha varchar(255))
 AS BEGIN
 	--Solo puede existir una tarjeta con igual numero y codigo de seguridad
 	IF EXISTS(SELECT 1 FROM ZTS_DB.TARJETAS WHERE (Numero_Tarjeta = @tarjeta_nro and Codigo_Seguridad != @cod_segu) OR (Numero_Tarjeta = @tarjeta_nro and tipo_Tarjeta != @tipo_tarj) )
@@ -612,7 +612,8 @@ IF OBJECT_ID('ZTS_DB.ACTUALIZACION_MONTO_CLIENTE') IS NOT NULL
 GO
 CREATE TRIGGER ZTS_DB.ACTUALIZACION_MONTO_CLIENTE ON ZTS_DB.CARGAS AFTER INSERT
 AS
-BEGIN	
+BEGIN
+	BEGIN TRANSACTION
 
 	DECLARE @Cliente_ID varchar(17) = (SELECT Cliente_Id from inserted);
 	DECLARE @Monto numeric(10,0) = (SELECT Monto from inserted);
@@ -621,6 +622,7 @@ BEGIN
 		SET DineroDisponible += @Monto
 		where Cliente_Id = @Cliente_ID
 
+	commit transaction
 END
 GO
 
@@ -924,21 +926,6 @@ AS BEGIN
 		end
 END
 GO
-
-
-
-IF OBJECT_ID('ZTS_DB.verificar_fecha_nacimiento') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.modificar_password
-GO
-CREATE PROCEDURE ZTS_DB.verificar_fecha_nacimiento(@fechaNacimiento varchar(255),@FechaActual varchar(255))
-AS BEGIN
-	if(convert(datetime,@fechaNacimiento,121)> convert(datetime,@FechaActual,121))
-	throw 50001,'Fecha de nacimiento Invalida',1
-END
-GO
-
-
-
 
 IF OBJECT_ID('ZTS_DB.inhabilitacion_usuario') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.inhabilitacion_usuario

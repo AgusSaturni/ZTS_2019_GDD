@@ -67,12 +67,6 @@ namespace FrbaOfertas.AbmCliente
                 SqlCommand verificacion_cliente = new SqlCommand("ZTS_DB.verificar_existencia_cliente_gemelo", conexion_sql);
                 verificacion_cliente.CommandType = CommandType.StoredProcedure;
 
-                SqlCommand verificacion_fecha = new SqlCommand("ZTS_DB.verificar_fecha_nacimiento", conexion_sql);
-                verificacion_fecha.CommandType = CommandType.StoredProcedure;
-
-
-                string fecha = ConfigurationManager.AppSettings["fecha"].ToString();
-
                 verificacion_cliente.Parameters.AddWithValue("@nombre", SqlDbType.Char).Value = Nombre.Text;
                 verificacion_cliente.Parameters.AddWithValue("@apellido", SqlDbType.Char).Value = Apellido.Text;
                 verificacion_cliente.Parameters.AddWithValue("@DNI", SqlDbType.Float).Value = Dni.Text;
@@ -80,12 +74,8 @@ namespace FrbaOfertas.AbmCliente
                 verificacion_cliente.Parameters.AddWithValue("@mail", SqlDbType.Char).Value = Mail.Text;
                 verificacion_cliente.Parameters.AddWithValue("@fecha_nacimiento", SqlDbType.Date).Value = FechaNacimiento.Value;
 
-                verificacion_fecha.Parameters.AddWithValue("@fechaNacimiento", SqlDbType.Char).Value = FechaNacimiento.Value.ToString();
-                verificacion_fecha.Parameters.AddWithValue("@FechaActual", SqlDbType.Char).Value = fecha;
                 try
                 {
-
-                    verificacion_cliente.ExecuteNonQuery();
                     verificacion_cliente.ExecuteNonQuery();
 
                     this.determinar_accion();
@@ -93,7 +83,7 @@ namespace FrbaOfertas.AbmCliente
                 catch (SqlException excepcion1)
                 {
                     SqlError errores = excepcion1.Errors[0];
-                    MessageBox.Show(errores.Message.ToString());
+                    MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 

@@ -49,7 +49,7 @@ namespace FrbaOfertas.ComprarOferta
         {
             if (contenedor_ofertas.Rows.Count == 0)
             {
-                MessageBox.Show("Aplique algun filtro.");
+                MessageBox.Show("Aplique algun filtro.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (contenedor_ofertas.CurrentCell.ColumnIndex == 0)
@@ -70,11 +70,13 @@ namespace FrbaOfertas.ComprarOferta
                 
                 if (sesion_username == "")
                 {
+                    this.Close();
                     Form comprar = new ComprarOferta.CantidadAComprar(descripcion_semilla, proveedor_semilla, precio_lista_semilla, precio_oferta_semilla, precio_oferta, precio_lista, cantidadDispo, cantMaxUser, fecha_publicacion, fecha_vencimiento, codigo_oferta);
                     comprar.Show();
                 }
                 else
                 {
+                    this.Close();
                     Form comprar = new ComprarOferta.CantidadAComprar(sesion_username, descripcion_semilla, proveedor_semilla, precio_lista_semilla, precio_oferta_semilla, precio_oferta, precio_lista, cantidadDispo, cantMaxUser, fecha_publicacion, fecha_vencimiento, codigo_oferta);
                     comprar.Show();
                 }
@@ -165,7 +167,7 @@ namespace FrbaOfertas.ComprarOferta
             limpiar_form();
         }
 
-        private void limpiar_form() //Verificar alternativas
+        private void limpiar_form() //hacemos esto para refrescar el datagridview
         {
             Form compraOferta = new ComprarOferta.Ofertas();
             compraOferta.Show();

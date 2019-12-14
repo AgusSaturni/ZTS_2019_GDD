@@ -33,13 +33,13 @@ namespace FrbaOfertas.ComprarOferta
         {
             InitializeComponent();
             MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         public CantidadAComprar(string descripcion_semilla, string proveedor_semilla, float precio_lista_semilla, float precio_oferta_semilla, float precio_oferta, float precio_lista, int cantidadDispo, int cantMaxUser, DateTime fecha_publicacion, DateTime fecha_vencimiento, string codigo_oferta)
         {
             // TODO: Complete member initialization
             InitializeComponent();
-            MaximizeBox = false;
             this.descripcion_semilla2 = descripcion_semilla;
             this.proveedor_semilla2 = proveedor_semilla;
             this.precio_lista_semilla2 = precio_lista_semilla;
@@ -51,6 +51,8 @@ namespace FrbaOfertas.ComprarOferta
             this.fecha_publicacion = fecha_publicacion;
             this.fecha_vencimiento = fecha_vencimiento;
             this.codigo_oferta = codigo_oferta;
+            MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         public CantidadAComprar(string sesion_username, string descripcion_semilla, string proveedor_semilla, float precio_lista_semilla, float precio_oferta_semilla, float precio_oferta, float precio_lista, int cantidadDispo, int cantMaxUser, DateTime fecha_publicacion, DateTime fecha_vencimiento, string codigo_oferta)
@@ -58,6 +60,7 @@ namespace FrbaOfertas.ComprarOferta
             // TODO: Complete member initialization
             InitializeComponent();
             MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.descripcion_semilla2 = descripcion_semilla;
             this.proveedor_semilla2 = proveedor_semilla;
             this.precio_lista_semilla2 = precio_lista_semilla;
@@ -80,54 +83,65 @@ namespace FrbaOfertas.ComprarOferta
         private void bt_buscar_Click(object sender, EventArgs e)
         {
             
-                 conexionBD conexion = conexionBD.getConexion();
-                 SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
+            conexionBD conexion = conexionBD.getConexion();
+            SqlConnection conexion_sql = new SqlConnection(conexion.get_cadena());
 
 
 
-                 SqlCommand command = new SqlCommand("ZTS_DB.comprar_oferta", conexion_sql);
-                     command.CommandType = CommandType.StoredProcedure;
+            SqlCommand command = new SqlCommand("ZTS_DB.comprar_oferta", conexion_sql);
+            command.CommandType = CommandType.StoredProcedure;
 
 
-                     command.Parameters.AddWithValue("@precioLista", SqlDbType.Float).Value = (precio_lista2);
-                     command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value =(precio_oferta2);
-                     command.Parameters.AddWithValue("@clienteUsuario", SqlDbType.Char).Value = (username);
-                     command.Parameters.AddWithValue("@cantidadDisponible", SqlDbType.Int).Value =(cantidadDispo2);
-                     command.Parameters.AddWithValue("@cantidadCompra", SqlDbType.Int).Value = (Cantidad.Value);
-                     command.Parameters.AddWithValue("@cantidadMaxUsuario", SqlDbType.Int).Value = (cantMaxUser2);
-                     command.Parameters.AddWithValue("@codigoOferta", SqlDbType.Int).Value = (codigo_oferta);
-                     command.Parameters.AddWithValue("@fecha", SqlDbType.DateTime).Value = (fecha);
-                       conexion_sql.Open();
+            command.Parameters.AddWithValue("@precioLista", SqlDbType.Float).Value = (precio_lista2);
+            command.Parameters.AddWithValue("@precio_oferta", SqlDbType.Float).Value =(precio_oferta2);
+            command.Parameters.AddWithValue("@clienteUsuario", SqlDbType.Char).Value = (username);
+            command.Parameters.AddWithValue("@cantidadDisponible", SqlDbType.Int).Value =(cantidadDispo2);
+            command.Parameters.AddWithValue("@cantidadCompra", SqlDbType.Int).Value = (Cantidad.Value);
+            command.Parameters.AddWithValue("@cantidadMaxUsuario", SqlDbType.Int).Value = (cantMaxUser2);
+            command.Parameters.AddWithValue("@codigoOferta", SqlDbType.Int).Value = (codigo_oferta);
+            command.Parameters.AddWithValue("@fecha", SqlDbType.DateTime).Value = (fecha);
+
+            conexion_sql.Open();
                     
                       
-                    try
-                        {
-                            command.ExecuteNonQuery();
+            try
+            {
+                command.ExecuteNonQuery();
 
 
-                            string cmd = "SELECT top 1 codigo_cupon FROM ZTS_DB.CUPONES  WHERE Codigo_oferta = '" + codigo_oferta + "' order by 1 desc "; 
-                            SqlCommand command1 = new SqlCommand(cmd, conexion_sql);
+                string cmd = "SELECT top 1 codigo_cupon FROM ZTS_DB.CUPONES  WHERE Codigo_oferta = '" + codigo_oferta + "' order by 1 desc "; 
+                SqlCommand command1 = new SqlCommand(cmd, conexion_sql);
                           
-                            SqlDataReader reader = command1.ExecuteReader();
+                SqlDataReader reader = command1.ExecuteReader();
 
-                            while (reader.Read())
-                            {       
-                                   string codigoCupon = (reader[0].ToString());
-                                   MessageBox.Show("Compra realizada con Éxito. Su código de cupón es: " + codigoCupon);
+                while (reader.Read())
+                {       
+                        string codigoCupon = (reader[0].ToString());
+                        MessageBox.Show("Compra realizada con Éxito. Su código de cupón es: " + codigoCupon);
 
-                            }
-                        }
-                        catch (SqlException excepcion1)
-                        {
-                            SqlError errores = excepcion1.Errors[0];
-                            MessageBox.Show(errores.Message.ToString());
-                            return;
-                        }
+                }
+            }
+            catch (SqlException excepcion1)
+            {
+                SqlError errores = excepcion1.Errors[0];
+                MessageBox.Show(errores.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexion_sql.Close();
+                return;
+            }
                  
             conexion_sql.Close();
-            this.Hide();
+            bt_volver.PerformClick();
+           
+        }
+
+        private void bt_volver_Click(object sender, EventArgs e)
+        {
+            Form ofertas = new Ofertas();
+            ofertas.Show();
+            this.Close();
         }            
 
+        
 
    }
 }

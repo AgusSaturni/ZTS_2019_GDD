@@ -100,7 +100,7 @@ namespace FrbaOfertas.AbmRol
                 MessageBox.Show("Agregue al menos una funcion", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (txt_nombre_rol.Text == "")
+            if (string.IsNullOrEmpty(txt_nombre_rol.Text.Trim()))
             {
                 MessageBox.Show("Introduzca el nombre del nuevo Rol", "Alta de Roles", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
