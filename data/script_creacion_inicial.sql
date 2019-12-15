@@ -1,14 +1,43 @@
 use GD2C2019;
 
-
 IF NOT EXISTS (select * from sys.schemas where name = 'ZTS_DB')
 BEGIN
 EXEC('create schema ZTS_DB')
 END;
 GO
 
+IF OBJECT_ID('ZTS_DB.CARGAS') IS NOT NULL
+	DROP TABLE ZTS_DB.CARGAS
+IF OBJECT_ID('ZTS_DB.CUPONES') IS NOT NULL
+	DROP TABLE ZTS_DB.CUPONES
+IF OBJECT_ID('ZTS_DB.COMPRAS') IS NOT NULL
+	DROP TABLE ZTS_DB.COMPRAS
+IF OBJECT_ID('ZTS_DB.OFERTAS') IS NOT NULL
+	DROP TABLE ZTS_DB.OFERTAS
+IF OBJECT_ID('ZTS_DB.FACTURAS') IS NOT NULL
+	DROP TABLE ZTS_DB.FACTURAS
+IF OBJECT_ID('ZTS_DB.FUNCIONES_POR_ROL') IS NOT NULL
+	DROP TABLE ZTS_DB.FUNCIONES_POR_ROL
+IF OBJECT_ID('ZTS_DB.FUNCIONES') IS NOT NULL
+	DROP TABLE ZTS_DB.FUNCIONES
+IF OBJECT_ID('ZTS_DB.ROLES_POR_USUARIO') IS NOT NULL
+	DROP TABLE ZTS_DB.ROLES_POR_USUARIO
+IF OBJECT_ID('ZTS_DB.ROLES') IS NOT NULL
+	DROP TABLE ZTS_DB.ROLES
+IF OBJECT_ID('ZTS_DB.TARJETAS') IS NOT NULL
+	DROP TABLE ZTS_DB.TARJETAS
+IF OBJECT_ID('ZTS_DB.PROVEEDORES') IS NOT NULL
+	DROP TABLE ZTS_DB.PROVEEDORES
+IF OBJECT_ID('ZTS_DB.CLIENTES') IS NOT NULL
+	DROP TABLE ZTS_DB.CLIENTES
+IF OBJECT_ID('ZTS_DB.DIRECCION') IS NOT NULL
+	DROP TABLE ZTS_DB.DIRECCION
+IF OBJECT_ID('ZTS_DB.RUBROS') IS NOT NULL
+	DROP TABLE ZTS_DB.RUBROS
+IF OBJECT_ID('ZTS_DB.USUARIOS') IS NOT NULL
+	DROP TABLE ZTS_DB.USUARIOS
+
 ---------------------------TABLA DIRECCIONES-----------------------------------
-IF NOT EXISTS (select * from sysobjects where name='DIRECCION' and xtype='U')
 CREATE TABLE ZTS_DB.DIRECCION
 (
 	Id_Direccion INT IDENTITY(0,1) PRIMARY KEY not null,
@@ -31,7 +60,6 @@ SELECT DISTINCT Provee_Dom,Provee_Ciudad FROM gd_esquema.Maestra where Provee_Ci
 -------------------------------------------------------------------------------
 
 ---------------------------TABLA USUARIOS--------------------------------------
-IF NOT EXISTS (select * from sysobjects where name='USUARIOS' and xtype='U')
 CREATE TABLE ZTS_DB.USUARIOS
 ( Username varchar(255) not null,
   Password	varchar(255) not null,
@@ -45,8 +73,6 @@ insert into ZTS_DB.USUARIOS (username,Password) values ('ADMIN',HASHBYTES('SHA2_
 -------------------------------------------------------------------------------
 
 ---------------------------TABLA CLIENTES--------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='CLIENTES' and xtype='U')
 CREATE TABLE ZTS_DB.CLIENTES
 ( Indice INT IDENTITY(1,1) NOT NULL ,
   Cliente_Id AS 'ClienteID' +  CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -81,7 +107,6 @@ set username = B.username from ZTS_DB.CLIENTES as A,ZTS_DB.USUARIOS as B where B
 -------------------------------------------------------------------------------
 
 ---------------------------TABLA RUBROS----------------------------------------
-IF NOT EXISTS (select * from sysobjects where name='RUBROS' and xtype='U')
 CREATE TABLE ZTS_DB.RUBROS
 (	Indice INT IDENTITY(1,1) NOT NULL,
 	Rubro_Id AS 'RubroID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -96,8 +121,6 @@ INSERT INTO ZTS_DB.RUBROS (rubro_descripcion)
 -------------------------------------------------------------------------------
 
 ---------------------------TABLA DE PROVEEDORES--------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='PROVEEDORES' and xtype='U')
 CREATE TABLE ZTS_DB.PROVEEDORES
 (	Indice INT IDENTITY(1,1) NOT NULL,
 	Proveedor_Id AS 'ProveedorID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -139,8 +162,6 @@ set Mail = (username + '@gmail.com')
 -------------------------------------------------------------------------------
 
 ---------------------------TABLA DE ROLES--------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='ROLES' and xtype='U')
 CREATE TABLE ZTS_DB.ROLES
 (Rol_Id varchar(255) not null,
 Estado varchar(255) default 'Habilitado' not null
@@ -162,7 +183,6 @@ values('Proveedor')
 -------------------------------------------------------------------------------
 
 ------------------------TABLA ROLES  POR USUARIO-------------------------------
-IF NOT EXISTS (select * from sysobjects where name='ROLES_POR_USUARIO' and xtype='U')
 CREATE TABLE ZTS_DB.ROLES_POR_USUARIO
 (
  Rol_Id varchar(255),
@@ -181,8 +201,6 @@ insert into ZTS_DB.ROLES_POR_USUARIO (Rol_Id, Username) values('Administrador','
 -------------------------------------------------------------------------------
 
 ------------------TABLA FUNCIONES----------------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='FUNCIONES' and xtype='U')
 CREATE TABLE ZTS_DB.FUNCIONES
 (Indice INT IDENTITY(1,1) NOT NULL,
   Funcion_Id AS 'FuncionID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -206,8 +224,6 @@ insert into ZTS_DB.FUNCIONES (Descripcion) values ('Facturar a Proveedor')
 -------------------------------------------------------------------------------
 
 ------------------TABLA FUNCIONES POR ROL--------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='FUNCIONES_POR_ROL' and xtype='U')
 CREATE TABLE ZTS_DB.FUNCIONES_POR_ROL
 (Rol_Id varchar(255) not null,
  Funcion_Id varchar(17) not null
@@ -252,8 +268,6 @@ where Descripcion = 'Facturar a Proveedor')
 -------------------------------------------------------------------------------
 
 --------------------TABLA DE TARJETAS------------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='TARJETAS' and xtype='U')
 CREATE TABLE ZTS_DB.TARJETAS
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Tarjeta_Id AS 'TarjetaID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -273,8 +287,6 @@ where Tipo_Pago_Desc is not null)
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE CARGAS-----------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='CARGAS' and xtype='U')
 CREATE TABLE ZTS_DB.CARGAS
 (
 	Indice INT IDENTITY(1,1) NOT NULL,
@@ -304,8 +316,6 @@ where gd.Carga_Fecha is not null and gd.Carga_Credito is not null and gd.Tipo_Pa
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE OFERTAS----------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='OFERTAS' and xtype='U')
 CREATE TABLE ZTS_DB.OFERTAS
 (	
 	Codigo_Oferta varchar(255) not null,
@@ -346,8 +356,6 @@ where gd.Oferta_Codigo is not null )
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE FACTURAS---------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='FACTURAS' and xtype='U')
 CREATE TABLE ZTS_DB.FACTURAS
 ( 
 	Numero bigint not null,
@@ -371,8 +379,6 @@ group by Factura_Fecha,Factura_Nro,p.Proveedor_Id)
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE COMPRAS----------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='COMPRAS' and xtype='U')
 CREATE TABLE ZTS_DB.COMPRAS
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Compra_Id AS 'CompraID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -399,8 +405,6 @@ set Factura_Id = (select top 1  gd.Factura_Nro from gd_esquema.Maestra gd where 
 -------------------------------------------------------------------------------
 
 -----------------------TABLA DE CUPONES----------------------------------------
-
-IF NOT EXISTS (select * from sysobjects where name='CUPONES' and xtype='U')
 CREATE TABLE ZTS_DB.CUPONES
 ( Indice INT IDENTITY(1,1) NOT NULL,
   Cupon_Id AS 'CuponID' + CAST(Indice AS VARCHAR(8)) PERSISTED not null,
@@ -985,7 +989,7 @@ END
 GO
 
 IF OBJECT_ID('ZTS_DB.verificar_password') IS NOT NULL
-	DROP PROCEDURE ZTS_DB.verificar_usuario
+	DROP PROCEDURE ZTS_DB.verificar_password
 GO
 CREATE PROCEDURE ZTS_DB.verificar_password(@username varchar(255),@password varchar(255))
 AS BEGIN
@@ -1188,7 +1192,7 @@ AS BEGIN
 END
 GO
 
-IF OBJECT_ID('ZTS_DB.ZTS_DB.comprar_oferta') IS NOT NULL
+IF OBJECT_ID('ZTS_DB.comprar_oferta') IS NOT NULL
 	DROP PROCEDURE ZTS_DB.comprar_oferta
 GO
 CREATE PROCEDURE ZTS_DB.comprar_oferta (@codigoOferta varchar(50),@precioLista numeric(12,2),@precio_oferta numeric(12,2),
