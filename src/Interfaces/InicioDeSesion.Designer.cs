@@ -143,7 +143,6 @@
             this.Name = "InicioDeSesion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InicioDeSesion_FormClosed);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.InicioDeSesion_Layout);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
